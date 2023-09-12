@@ -2,10 +2,10 @@
 # Site settings
 # -----------------------------------------------------------------------------
 
-title: Dr. Nam V. Tran # the website title (if blank, full name will be used instead)
-first_name: 
-middle_name:
-last_name:
+title: # the website title (if blank, full name will be used instead)
+first_name: Nam
+middle_name: V.
+last_name: Tran
 email: vannam.tran@ntu.edu.sg
 description: 
 footer_text: >
