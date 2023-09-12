@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-I have been awared a Ph.D. in Material Engineering at UoW with an outstanding degree! :sparkles: :smile:
+I have been awared a Ph.D. in Material Engineering at UoW with an <b>outstanding degree</b>! :sparkles: :smile:
