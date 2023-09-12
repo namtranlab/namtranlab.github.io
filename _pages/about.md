@@ -6,7 +6,7 @@ subtitle: <i>School of Materials Science and Engineering (MSE),<br> Nanyang Tech
 
 profile:
   align: right
-  image: HEAs.png
+  image: profile_pic.jpeg
   image_circular: false # crops the image to make it circular
   address: 
 
