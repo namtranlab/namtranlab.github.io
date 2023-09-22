@@ -18,7 +18,7 @@ Employing Density Functional Theory (DFT), Ab Initio Molecular Dynamics (AIMD), 
 </div>
 
 <h3>References</h3>
-[1]. Marcel Schreier, Paul Kenis, Fanglin Che, and Anthony Shoji Hall, ACS Energy Lett. 2023, 8, 9, 3935–3940
+[1]. Nam V. Tran and M.C. Righi , Carbon 199 (2022) 497–507
 
 <br>
 <br>
