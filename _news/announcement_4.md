@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-The manuscript of my first Ph.D student Arman Hobhaydar has been accepted by <b>Journal of Alloys and Compounds</b>! 🎉🎊
+The manuscript colab with Prof. Hongtao Zhu has been accepted by <b>Journal of Alloys and Compounds</b>! 🎉🎊
