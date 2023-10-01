@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-The manuscript colab with Prof. Hongtao Zhu has been accepted by <b>Journal of Alloys and Compounds</b>! 🎉🎊
+Our work about High Entropy Alloys for nuclear applications has been accepted by <b>Journal of Alloys and Compounds</b>! 🎉🎊
