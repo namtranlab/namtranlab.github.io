@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Our work on oxidation mechanism of CrTaTiMo RMEA has been accepted by <b>Materials & Design</b>! 🎉🎊
+Another paper colab with Prof. M. C. Righi (Unibo), Prof. M. I. de Barros Bouchet (ECL), and Prof. J. M. Martin (ECL) has been accepted <b>Carbon</b>! 🎉🎊
