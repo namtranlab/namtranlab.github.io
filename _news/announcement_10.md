@@ -4,4 +4,4 @@ date: 2025-07-01 07:59:00-0400
 inline: true
 related_posts: false
 ---
-Our study, <i>"Influence of Short-Range Ordering on the Mechanical Properties of FeCrV-Based Refractory Medium-Entropy Alloys via Deep Neural Network Potentials"</i> has been published in the <b>Journal of Materials Science & Technology (JMST)</b>. 🎉🎊
+Our Research examining the impact of short-range order on the mechanical performance of FeCrV-based RMEA utilizing deep neural network potentials has been published in <b>JMST</b>. 🎉🎊
