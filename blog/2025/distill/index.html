@@ -5,7 +5,7 @@
       "authors": [
         {
           "author": "Nam Tran",
-          "authorURL": "https://en.wikipedia.org/wiki/Albert_Einstein",
+          "authorURL": "/",
           "affiliations": [
             {
               "name": "MSE, NTU",
@@ -32,16 +32,16 @@
     }</script> </d-front-matter> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/">Nam V. Tran</a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">About</a> </li> <li class="nav-item active"> <a class="nav-link" href="/news/">News <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">Publications</a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">Projects</a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">CV</a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="fas fa-moon"></i> <i class="fas fa-sun"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="post distill"> <d-title> <h1>Configure a HPC system - Part 1</h1> <p>Instruction for NFS and module system1</p> </d-title> <d-byline></d-byline> <d-article> <d-contents> <nav class="l-text figcaption"> <h3>Contents</h3> <div><a href="#module-system">Module system</a></div> <div><a href="#nfs">NFS</a></div> </nav> </d-contents> <h2 id="module-system">Module system</h2> <p>Install environment-modules on your head node.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get <span class="nb">install </span>environment-modules
 <span class="nb">source</span> /usr/share/modules/init/bash <span class="o">&gt;&gt;</span> /etc/profile
 <span class="nb">export </span><span class="nv">MODULEPATH</span><span class="o">=</span><span class="nv">$MODULEPATH</span>:/opt/module_file/
-</code></pre></div></div> <hr> <h2 id="nfs">NFS</h2> <p>Install nfs-kernel-server on your head node and nfs-common on your compute node. For head node</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt <span class="nb">install </span>nfs-kernel-server
+</code></pre></div></div> <hr> <h2 id="nfs">NFS</h2> <p>Install <code class="language-plaintext highlighter-rouge">nfs-kernel-server</code> on your head node and <code class="language-plaintext highlighter-rouge">nfs-common</code> on your compute node.</p> <p>For head node</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt <span class="nb">install </span>nfs-kernel-server
 </code></pre></div></div> <p>For compute node</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt <span class="nb">install </span>nfs-common
-</code></pre></div></div> <p>Configure the shared dir from your head node by modifying /etc/exportfs</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/opt 192.168.1.0/24<span class="o">(</span>ro,sync,no_subtree_check<span class="o">)</span>
+</code></pre></div></div> <p>Configure the shared dir from your head node by modifying <code class="language-plaintext highlighter-rouge">/etc/exportfs</code>.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/opt 192.168.1.0/24<span class="o">(</span>ro,sync,no_subtree_check<span class="o">)</span>
 /home 192.168.1.0/24<span class="o">(</span>rw,sync,no_subtree_check<span class="o">)</span>
 /scratch 192.168.1.0/24<span class="o">(</span>rw,sync,no_subtree_check<span class="o">)</span>
-</code></pre></div></div> <p>Run the command</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/sbin/exportfs <span class="nt">-ra</span>
-</code></pre></div></div> <p>to make the settings take effect</p> <p>Mount the shared dir in compute node.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mount j35a:/opt /opt
+</code></pre></div></div> <p>Run the following command to make the settings take effect.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/sbin/exportfs <span class="nt">-ra</span>
+</code></pre></div></div> <p>Mount the shared dir in compute node.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mount j35a:/opt /opt
 mount j35a:/home /home 
 mount j35a:/scratch /scratch 
-</code></pre></div></div> <p>Setup auto mount by editing /etc/fstab</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div> <p>Add user with user id and the same group id. This has to be done on very node (head node an compute nodes)</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/sbin/adduser <span class="nt">-u</span> 1002 chenxi
+</code></pre></div></div> <p>Setup auto mount by editing <code class="language-plaintext highlighter-rouge">/etc/fstab</code>.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div> <p>Add user with user id and the same group id. This has to be done on very node (head node an compute nodes)</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/sbin/adduser <span class="nt">-u</span> 1002 chenxi
 /sbin/adduser <span class="nt">-u</span> 1003 nam
 /sbin/adduser <span class="nt">-u</span> 1004 jianghong
 
@@ -52,7 +52,7 @@ mount j35a:/scratch /scratch
 /sbin/adduser <span class="nt">-u</span> 1008 junbo
 /sbin/adduser <span class="nt">-u</span> 1009 haoyang
 /sbin/adduser <span class="nt">-u</span> 1010 choi
-</code></pre></div></div> <p>Create a dir in shared /scratch links for every user and give them permision example. This only need to be done on head node.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /scratch
+</code></pre></div></div> <p>Create a dir in shared /scratch links for every user and give them permision. This only need to be done on head node.</p> <p>Example.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /scratch
 <span class="nb">mkdir </span>chenxi
 <span class="nb">chown </span>chenxi:chenxi ./chenxi
 <span class="nb">ln</span> <span class="nt">-s</span> /scratch/chenxi /home/chenxi/scratch
