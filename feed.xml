@@ -1,1 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://namtranlab.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://namtranlab.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2025-07-03T09:23:46+00:00</updated><id>https://namtranlab.github.io/feed.xml</id><title type="html">Nam V. Tran</title></feed>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://namtranlab.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://namtranlab.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2025-07-03T09:27:10+00:00</updated><id>https://namtranlab.github.io/feed.xml</id><title type="html">Nam V. Tran</title><entry><title type="html">Configure a HPC system - Part 1</title><link href="https://namtranlab.github.io/blog/2025/distill/" rel="alternate" type="text/html" title="Configure a HPC system - Part 1"/><published>2025-05-22T00:00:00+00:00</published><updated>2025-05-22T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/distill</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/distill/"><![CDATA[<h2 id="module-system">Module system</h2> <p>Install environment-modules on your head node.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get <span class="nb">install </span>environment-modules
+<span class="nb">source</span> /usr/share/modules/init/bash <span class="o">&gt;&gt;</span> /etc/profile
+<span class="nb">export </span><span class="nv">MODULEPATH</span><span class="o">=</span><span class="nv">$MODULEPATH</span>:/opt/module_file/
+</code></pre></div></div> <hr/> <h2 id="nfs">NFS</h2> <p>Install <code class="language-plaintext highlighter-rouge">nfs-kernel-server</code> on your head node and <code class="language-plaintext highlighter-rouge">nfs-common</code> on your compute node.</p> <p>For head node</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt <span class="nb">install </span>nfs-kernel-server
+</code></pre></div></div> <p>For compute node</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt <span class="nb">install </span>nfs-common
+</code></pre></div></div> <p>Configure the shared dir from your head node by modifying <code class="language-plaintext highlighter-rouge">/etc/exportfs</code>.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/opt 192.168.1.0/24<span class="o">(</span>ro,sync,no_subtree_check<span class="o">)</span>
+/home 192.168.1.0/24<span class="o">(</span>rw,sync,no_subtree_check<span class="o">)</span>
+/scratch 192.168.1.0/24<span class="o">(</span>rw,sync,no_subtree_check<span class="o">)</span>
+</code></pre></div></div> <p>Run the following command to make the settings take effect.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/sbin/exportfs <span class="nt">-ra</span>
+</code></pre></div></div> <p>Mount the shared dir in compute node.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mount j35a:/opt /opt
+mount j35a:/home /home 
+mount j35a:/scratch /scratch 
+</code></pre></div></div> <p>Setup auto mount by editing <code class="language-plaintext highlighter-rouge">/etc/fstab</code>.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div> <p>Add user with user id and the same group id. This has to be done on very node (head node an compute nodes)</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/sbin/adduser <span class="nt">-u</span> 1002 chenxi
+/sbin/adduser <span class="nt">-u</span> 1003 nam
+/sbin/adduser <span class="nt">-u</span> 1004 jianghong
+
+/sbin/adduser <span class="nt">-u</span> 1005 guanming
+/sbin/adduser <span class="nt">-u</span> 1006 chengxi
+/sbin/adduser <span class="nt">-u</span> 1007 ningwen
+
+/sbin/adduser <span class="nt">-u</span> 1008 junbo
+/sbin/adduser <span class="nt">-u</span> 1009 haoyang
+/sbin/adduser <span class="nt">-u</span> 1010 choi
+</code></pre></div></div> <p>Create a dir in shared /scratch links for every user and give them permision. This only need to be done on head node.</p> <p>Example.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /scratch
+<span class="nb">mkdir </span>chenxi
+<span class="nb">chown </span>chenxi:chenxi ./chenxi
+<span class="nb">ln</span> <span class="nt">-s</span> /scratch/chenxi /home/chenxi/scratch
+</code></pre></div></div>]]></content><author><name>Nam Tran</name></author><category term="Tutorial"/><summary type="html"><![CDATA[Instruction for NFS and module system1]]></summary></entry></feed>
