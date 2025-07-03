@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <hr> <h2 id="module-system">Module system</h2> <p>Install environment-modules on your head node.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get <span class="nb">install </span>environment-modules
+<span class="nb">source</span> /usr/share/modules/init/bash <span class="o">&gt;&gt;</span> /etc/profile
+<span class="nb">export </span><span class="nv">MODULEPATH</span><span class="o">=</span><span class="nv">$MODULEPATH</span>:/opt/module_file/
+</code></pre></div></div> <hr> <h2 id="nfs">NFS</h2> <p>Install nfs-kernel-server on your head node and nfs-common on your compute node. For head node</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt <span class="nb">install </span>nfs-kernel-server
+</code></pre></div></div> <p>For compute node</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt <span class="nb">install </span>nfs-common
+</code></pre></div></div> <p>Configure the shared dir from your head node by modifying /etc/exportfs</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/opt 192.168.1.0/24<span class="o">(</span>ro,sync,no_subtree_check<span class="o">)</span>
+/home 192.168.1.0/24<span class="o">(</span>rw,sync,no_subtree_check<span class="o">)</span>
+/scratch 192.168.1.0/24<span class="o">(</span>rw,sync,no_subtree_check<span class="o">)</span>
+</code></pre></div></div> <p>Run the command</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/sbin/exportfs <span class="nt">-ra</span>
+</code></pre></div></div> <p>to make the settings take effect</p> <p>Mount the shared dir in compute node.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mount j35a:/opt /opt
+mount j35a:/home /home 
+mount j35a:/scratch /scratch 
+</code></pre></div></div> <p>Setup auto mount by editing /etc/fstab</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div> <p>Add user with user id and the same group id. This has to be done on very node (head node an compute nodes)</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/sbin/adduser <span class="nt">-u</span> 1002 chenxi
+/sbin/adduser <span class="nt">-u</span> 1003 nam
+/sbin/adduser <span class="nt">-u</span> 1004 jianghong
+
+/sbin/adduser <span class="nt">-u</span> 1005 guanming
+/sbin/adduser <span class="nt">-u</span> 1006 chengxi
+/sbin/adduser <span class="nt">-u</span> 1007 ningwen
+
+/sbin/adduser <span class="nt">-u</span> 1008 junbo
+/sbin/adduser <span class="nt">-u</span> 1009 haoyang
+/sbin/adduser <span class="nt">-u</span> 1010 choi
+</code></pre></div></div> <p>Create a dir in shared /scratch links for every user and give them permision example. This only need to be done on head node.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /scratch
+<span class="nb">mkdir </span>chenxi
+<span class="nb">chown </span>chenxi:chenxi ./chenxi
+<span class="nb">ln</span> <span class="nt">-s</span> /scratch/chenxi /home/chenxi/scratch
+</code></pre></div></div> </body></html>
