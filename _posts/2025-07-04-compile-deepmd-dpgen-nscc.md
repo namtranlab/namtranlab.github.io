@@ -177,7 +177,7 @@ def make_vasp_incar(jdata, filename):
     return incar
 ```
 
-When running dpgen the following tag with informattion about initial MAGMON or Plus+U should be added.
+When running dpgen the following tags (```fp_incar_magom``` and ```fp_incar_plus_u```) with informattion about initial MAGMON or Plus+U should be added.
 
 For example:
 
