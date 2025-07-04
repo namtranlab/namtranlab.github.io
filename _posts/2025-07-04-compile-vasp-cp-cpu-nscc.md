@@ -55,12 +55,18 @@ _styles: >
 Assume the vasp source was downloaded in extracted in ```$HOME/vasp.6.4.0_cp_cpu```
 
 You need ```VASPSOL``` for ```VASP.6.3.0```.
+
+- VASPSol:  
+    [https://github.com/henniggroup/VASPsol/issues/64](https://github.com/henniggroup/VASPsol/issues/64)
+
 ```bash
 solvation.F
 VASPsol_VASP630.patch
 ```
 
-And ```VASP-CP``` patch.
+- VASP-CP:  
+    [https://github.com/yuanyue-liu-group/CP-VASP/](https://github.com/yuanyue-liu-group/CP-VASP/)
+
 ```bash
 cp-vaspsol.patch
 ```
