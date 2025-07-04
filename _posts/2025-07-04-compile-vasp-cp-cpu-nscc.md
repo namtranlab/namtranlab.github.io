@@ -83,7 +83,6 @@ cp VASPsol_VASP630.patch $HOME/vasp.6.4.0_cp_cpu/src
 Then execute the batch.
 
 ```bash
-cd $HOME/vasp.6.4.0_cp_cpu/src
 patch -p0 < VASPsol_VASP630.patch
 ```
 ***
