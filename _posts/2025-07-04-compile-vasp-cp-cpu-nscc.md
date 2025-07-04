@@ -1,12 +1,12 @@
 ---
 layout: distill
-title: How to compile DeepMD-kit on NSCC
-description: Instruction for compiling deepmd-kit and dpgen on NSCC
+title: How to compile VASP-CP CPU (v6.4.0) on NSCC
+description: Instruction for compiling vasp cpu with grand-canonical approach on NSCC
 tags: Tutorial
 giscus_comments: true
 date: 2025-05-4
 featured: true
-thumbnail: https://github.com/deepmodeling/deepmd-kit/raw/master/doc/_static/logo.svg
+thumbnail: https://wiki.snu.edu.in/images/b/b4/275px-vasp_logo.1716182944939.png
 images:
   lightbox2: true
   photoswipe: true
@@ -21,14 +21,17 @@ authors:
 
 
 toc:
-  - name: Related resource 
+  - name: Download packages
     # if a section has subsections, you can add them as follows:
     # subsections:
     #   - name: Example Child Subsection 1
     #   - name: Example Child Subsection 2
-  - name: DeepMD-kit Installation
-  - name: DPGEN Installation
-
+  - name: Patch VASPSOL
+  - name: Patch VASP-CP
+  - name: Load libs
+  - name: Modify the makefile
+  - name: Installtion
+  - name: Vasp script
 
 _styles: >
   .fake-img {
@@ -48,181 +51,167 @@ _styles: >
 
 ---
 
-## Related resource 
+## Download packages
+Assume the vasp source was downloaded in extracted in ```$HOME/vasp.6.4.0_cp_cpu```
 
-- DeepMD-kit GitHub:  
-    [https://github.com/deepmodeling/deepmd-kit](https://github.com/deepmodeling/deepmd-kit)
-- DeepModeling:  
-    [https://deepmodeling.com](https://deepmodeling.com/)
-- Instruction:  
-    [https://www.bohrium.com/notebooks/16449433825](https://www.bohrium.com/notebooks/16449433825)
+You need ```VASPSOL``` for ```VASP.6.3.0```.
+```bash
+solvation.F
+VASPsol_VASP630.patch
+```
 
+And ```VASP-CP``` patch.
+```bash
+cp-vaspsol.patch
+```
 ***
 
-## DeepMD-kit Installation
+## Patch VASPSOL
 
-Install ```nfs-kernel-server``` on your head node and ```nfs-common``` on your compute node.
-
-
-### 1. Download the installation package
-
-``` shell
-wget [https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.0](https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.0)  
-wget [https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.1](https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.1)  
-```
-
-### 2. Merge installation files
-
-``` shell
-cat deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.0 \  
-deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.1 > \  
-deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh  
-
-```
-
-### 3. Execute installation script
-
-```
-sh deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh  
-```
-
-The software will as you where to install the binary.
-
-### 4. Environment variable configuration
+Copy ```solvation.F and VASPsol_VASP630.patch``` to ```src``` folder of vasp source code
 
 ```bash
-source /root/deepmd-kit/bin/activate /root/deepmd-kit
+cp solvation.F $HOME/vasp.6.4.0_cp_cpu/src
+cp VASPsol_VASP630.patch $HOME/vasp.6.4.0_cp_cpu/src
 ```
-You have to put the above command to your bash script.
+Then execute the batch.
 
+```bash
+cd $HOME/vasp.6.4.0_cp_cpu/src
+patch -p0 < VASPsol_VASP630.patch
+```
 ***
 
-## DPGEN Installation
+## Patch VASP-CP
 
-### 1. Download dp-gen from github link below
+Copy ```cp-vaspsol.patch``` to ```src``` folder of vasp source code
 
-The current version is v0.13.1.
-
-```shell
-https://github.com/deepmodeling/dpgen
+```bash
+cp cp-vaspsol.patch $HOME/vasp.6.4.0_cp_cpu/src
 ```
 
-### 2. Edit the code for MAGMON and PLUS U
+Then execute the batch.
 
-Modify the ```make_vasp_incar``` function in dpgen/generator/run.py as follow.
-
-```python
-def make_vasp_incar(jdata, filename):
-    if "fp_incar" in jdata.keys():
-        fp_incar_path = jdata["fp_incar"]
-        assert os.path.exists(fp_incar_path)
-        fp_incar_path = os.path.abspath(fp_incar_path)
-        fr = open(fp_incar_path)
-        incar = fr.read()
-        ### adding magmom or plus U
-        
-        if "fp_incar_magom" in jdata:
-            fp_incar_magmom = jdata["fp_incar_magom"]
-            poscar_file = open(os.path.abspath("POSCAR"))
-            poscar_data = poscar_file.readlines()
-            elements_order = [ele.strip() for ele in poscar_data[5].split()]
-            element_counts = [ele.strip() for ele in poscar_data[6].split()]
-            magmom = "MAGMOM ="
-            for idx, element in enumerate(elements_order):
-                mag = fp_incar_magmom[element]
-                magmom = magmom + " " + element_counts[idx] + "*" + str(mag)
-        incar = incar + "\n" + magmom
-
-        
-        if "fp_incar_plus_u" in jdata:
-            fp_incar_plus_u = jdata["fp_incar_plus_u"]
-            poscar_file = open(os.path.abspath("POSCAR"))
-            poscar_data = poscar_file.readlines()
-            elements_order = [ele.strip() for ele in poscar_data[5].split()]
-            total_added_u = 0
-            max_ul = 0
-            ldaul = "LDAUL ="
-            ldauu = "LDAUU ="
-            ldauj = "LDAUJ ="
-            for element in elements_order:
-                ul = fp_incar_plus_u[element]['ul']
-                if ul>max_ul: max_ul = ul
-                ldaul = ldaul + " " + str(ul)
-                uu = fp_incar_plus_u[element]['uu']
-                ldauu = ldauu + " " + str(uu)
-                total_added_u +=uu
-                uj = fp_incar_plus_u[element]['uj']
-                ldauj = ldauj + " " + str(uj)
-                total_added_u +=uj
-
-            if total_added_u > 0:
-                incar = incar + "\n" + "LDAU = .TRUE."
-                incar = incar + "\n" + ldaul
-                incar = incar + "\n" + ldauu
-                incar = incar + "\n" + ldauj
-                if max_ul > 2:
-                    incar = incar + "\n" + "LMAXMIX = 6"
-                else:
-                    incar = incar + "\n" + "LMAXMIX = 4"
-
-        ### end of adding magmon or plus U
-        fr.close()
-    elif "user_fp_params" in jdata.keys():
-        incar = write_incar_dict(jdata["user_fp_params"])
-    else:
-        incar = make_vasp_incar_user_dict(jdata["fp_params"])
-    
-    with open(filename, "w") as fp:
-        fp.write(incar)
-    return incar
+```bash
+patch -p0 < cp-vaspsol++.patch
 ```
+***
 
-When running dpgen the following tags (```fp_incar_magom``` and ```fp_incar_plus_u```) with informattion about initial MAGMON or Plus+U should be added.
+## Load libs
 
-For example:
+Clean all loaded modules and load intel oneapi packages.
 
-```json
-.......
-"fp_incar": "./INCAR",
-'fp_incar_magom': {'C': 0,  
-                    'Ce': 3,     
-                    'O': 0, 
-                    'Ti': 3,
-                    'Pd': 3,
-                    'H': 0},
-'fp_incar_plus_u': {'C': {'ul':-1, 'uu': 0.00, 'uj': 0.00},  
-                    'Ce': {'ul':3, 'uu': 5.50, 'uj': 1.00},     
-                    'O': {'ul':-1, 'uu': 0.00, 'uj': 0.00}, 
-                    'Ti': {'ul':2, 'uu': 5.50, 'uj': 1.00},
-                    'Pd': {'ul':-1, 'uu': 0.00, 'uj': 0.00}, 
-                    'H': {'ul':-1, 'uu': 0.00, 'uj': 0.00},
-                    }
+``` bash
+module purge
+source /app/apps/oneapi/2022.1.2/setvars.sh
 ```
+***
 
-### 3. Install the package
+## Modify the makefile
 
-Create an environment (tested with python version 3.11.7)
+Modify the makefile.include as follow.
 
-```shell
-python3 -m venv dpgen_env
+```bash
+# Default precompiler options
+CPP_OPTIONS = -DHOST=\"LinuxIFC\" \
+              -DMPI -DMPI_BLOCK=8000 -Duse_collective \
+              -DscaLAPACK \
+              -DCACHE_SIZE=4000 \
+              -Davoidalloc \
+              -Dvasp6 \
+              -Duse_bse_te \
+              -Dtbdyn \
+              -Dfock_dblbuf \
+              -D_OPENMP \
+              -Dsol_compat
+
+CPP         = fpp -f_com=no -free -w0  $*$(FUFFIX) $*$(SUFFIX) $(CPP_OPTIONS)
+
+FC          = mpiifort -qopenmp
+FCL         = mpiifort
+
+FREE        = -free -names lowercase
+
+FFLAGS      = -assume byterecl -w
+
+OFLAG       = -O2
+OFLAG_IN    = $(OFLAG)
+DEBUG       = -O0
+
+OBJECTS     = fftmpiw.o fftmpi_map.o fftw3d.o fft3dlib.o
+OBJECTS_O1 += fftw3d.o fftmpi.o fftmpiw.o
+OBJECTS_O2 += fft3dlib.o
+
+# For what used to be vasp.5.lib
+CPP_LIB     = $(CPP)
+FC_LIB      = $(FC)
+CC_LIB      = icc
+CFLAGS_LIB  = -O
+FFLAGS_LIB  = -O1
+FREE_LIB    = $(FREE)
+
+OBJECTS_LIB = linpack_double.o
+
+# For the parser library
+CXX_PARS    = icpc
+LLIBS       = -lstdc++
+
+##
+## Customize as of this point! Of course you may change the preceding
+## part of this file as well if you like, but it should rarely be
+## necessary ...
+##
+
+# When compiling on the target machine itself, change this to the
+# relevant target when cross-compiling for another architecture
+VASP_TARGET_CPU ?= -march=core-avx2
+FFLAGS     += $(VASP_TARGET_CPU)
+
+# Intel MKL (FFTW, BLAS, LAPACK, and scaLAPACK)
+# (Note: for Intel Parallel Studio's MKL use -mkl instead of -qmkl)
+FCL        += -qmkl
+MKLROOT    ?= /path/to/your/mkl/installation
+LLIBS      += -L$(MKLROOT)/lib/intel64 -lmkl_scalapack_lp64 -lmkl_blacs_intelmpi_lp64
+INCS        =-I$(MKLROOT)/include/fftw
 ```
+***
 
-Activate the environment.
-```shell
-source /home/users/ntu/vannamtr/dpgen_env/bin/activate
+## Installtion
+
+Then install the vasp package with:
+
+```bash
+make DEPS=1 -j4 all
 ```
-You must add the above command to your bash script
+***
 
-Then install the package with
+## Vasp script
 
-```shell
-pip install ./dpgen
+The bash script to run vasp can be set as follow.
+
+```bash
+#!/bin/bash
+
+#PBS -N CPU-vasp
+#PBS -q normal
+#PBS -P personal-vannamtr
+#PBS -l select=1:ncpus=128:mpiprocs=64:mem=420G
+#PBS -l walltime=1:00:00
+#PBS -j oe
+
+# Change directory to the one where the job was submitted
+idir=${PBS_O_WORKDIR}
+cd $idir
+# Set scratch environment
+
+module purge
+source /app/apps/oneapi/2022.1.2/setvars.sh
+
+EXECROOT=/home/users/ntu/vannamtr/vasp.6.4.0_cp_cpu/intel_omp
+
+MPIFLAGS='-genv I_MPI_PIN_DOMAIN=omp -genv I_MPI_PIN=yes -genv OMP_NUM_THREADS=4 -genv OMP_STACKSIZE=512m -genv OMP_PLACES=cores -genv OMP_PROC_BIND=close'
+
+time mpirun $MPIFLAGS $EXECROOT/vasp_std > print-out
+
+echo $(date) $PBS_JOBNAME ${PBS_O_WORKDIR} >> ~/LOG
 ```
-
-To test if the installation is successful, you may execute
-
-```shell
-dpgen -h
-```
-
-Note: The above tutorial should work on NCI as well.
