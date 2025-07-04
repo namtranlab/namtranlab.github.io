@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://namtranlab.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://namtranlab.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2025-07-04T04:45:03+00:00</updated><id>https://namtranlab.github.io/feed.xml</id><title type="html">Nam V. Tran</title><entry><title type="html">How to compile DeepMD-kit on NSCC</title><link href="https://namtranlab.github.io/blog/2025/compile-deepmd-dpgen-nscc/" rel="alternate" type="text/html" title="How to compile DeepMD-kit on NSCC"/><published>2025-05-04T00:00:00+00:00</published><updated>2025-05-04T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/compile-deepmd-dpgen-nscc</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/compile-deepmd-dpgen-nscc/"><![CDATA[<h2 id="related-resource">Related resource</h2> <ul> <li>DeepMD-kit GitHub:<br/> <a href="https://github.com/deepmodeling/deepmd-kit">https://github.com/deepmodeling/deepmd-kit</a></li> <li>DeepModeling:<br/> <a href="https://deepmodeling.com/">https://deepmodeling.com</a></li> <li>Instruction:<br/> <a href="https://www.bohrium.com/notebooks/16449433825">https://www.bohrium.com/notebooks/16449433825</a></li> </ul> <hr/> <h2 id="deepmd-kit-installation">DeepMD-kit Installation</h2> <p>Install <code class="language-plaintext highlighter-rouge">nfs-kernel-server</code> on your head node and <code class="language-plaintext highlighter-rouge">nfs-common</code> on your compute node.</p> <h3 id="1-download-the-installation-package">1. Download the installation package</h3> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget [https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.0]<span class="o">(</span>https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.0<span class="o">)</span>  
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://namtranlab.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://namtranlab.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2025-07-04T05:16:25+00:00</updated><id>https://namtranlab.github.io/feed.xml</id><title type="html">Nam V. Tran</title><entry><title type="html">How to compile DeepMD-kit on NSCC</title><link href="https://namtranlab.github.io/blog/2025/compile-deepmd-dpgen-nscc/" rel="alternate" type="text/html" title="How to compile DeepMD-kit on NSCC"/><published>2025-05-04T00:00:00+00:00</published><updated>2025-05-04T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/compile-deepmd-dpgen-nscc</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/compile-deepmd-dpgen-nscc/"><![CDATA[<h2 id="related-resource">Related resource</h2> <ul> <li>DeepMD-kit GitHub:<br/> <a href="https://github.com/deepmodeling/deepmd-kit">https://github.com/deepmodeling/deepmd-kit</a></li> <li>DeepModeling:<br/> <a href="https://deepmodeling.com/">https://deepmodeling.com</a></li> <li>Instruction:<br/> <a href="https://www.bohrium.com/notebooks/16449433825">https://www.bohrium.com/notebooks/16449433825</a></li> </ul> <hr/> <h2 id="deepmd-kit-installation">DeepMD-kit Installation</h2> <p>Install <code class="language-plaintext highlighter-rouge">nfs-kernel-server</code> on your head node and <code class="language-plaintext highlighter-rouge">nfs-common</code> on your compute node.</p> <h3 id="1-download-the-installation-package">1. Download the installation package</h3> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget [https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.0]<span class="o">(</span>https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.0<span class="o">)</span>  
 wget [https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.1]<span class="o">(</span>https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.1<span class="o">)</span>  
 </code></pre></div></div> <h3 id="2-merge-installation-files">2. Merge installation files</h3> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.0 <span class="se">\ </span> 
 deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.1 <span class="o">&gt;</span> <span class="se">\ </span> 
@@ -89,7 +89,287 @@ deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh
 </code></pre></div></div> <p>Activate the environment.</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> /home/users/ntu/vannamtr/dpgen_env/bin/activate
 </code></pre></div></div> <p>You must add the above command to your bash script</p> <p>Then install the package with</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install</span> ./dpgen
 </code></pre></div></div> <p>To test if the installation is successful, you may execute</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dpgen <span class="nt">-h</span>
-</code></pre></div></div> <p>Note: The above tutorial should work on NCI as well.</p>]]></content><author><name>Nam Tran</name></author><category term="Tutorial"/><summary type="html"><![CDATA[Instruction for compiling deepmd-kit and dpgen on NSCC]]></summary></entry><entry><title type="html">Configure a HPC system - Part 1</title><link href="https://namtranlab.github.io/blog/2025/small-hpc-part1/" rel="alternate" type="text/html" title="Configure a HPC system - Part 1"/><published>2025-05-02T00:00:00+00:00</published><updated>2025-05-02T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/small-hpc-part1</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/small-hpc-part1/"><![CDATA[<h2 id="module-system">Module system</h2> <p>Install environment-modules on your head node.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get <span class="nb">install </span>environment-modules
+</code></pre></div></div> <p>Note: The above tutorial should work on NCI as well.</p>]]></content><author><name>Nam Tran</name></author><category term="Tutorial"/><summary type="html"><![CDATA[Instruction for compiling deepmd-kit and dpgen on NSCC]]></summary></entry><entry><title type="html">How to compile DeepMD-kit on NSCC</title><link href="https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-nscc/" rel="alternate" type="text/html" title="How to compile DeepMD-kit on NSCC"/><published>2025-05-04T00:00:00+00:00</published><updated>2025-05-04T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-nscc</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-nscc/"><![CDATA[<h2 id="related-resource">Related resource</h2> <ul> <li>DeepMD-kit GitHub:<br/> <a href="https://github.com/deepmodeling/deepmd-kit">https://github.com/deepmodeling/deepmd-kit</a></li> <li>DeepModeling:<br/> <a href="https://deepmodeling.com/">https://deepmodeling.com</a></li> <li>Instruction:<br/> <a href="https://www.bohrium.com/notebooks/16449433825">https://www.bohrium.com/notebooks/16449433825</a></li> </ul> <hr/> <h2 id="deepmd-kit-installation">DeepMD-kit Installation</h2> <p>Install <code class="language-plaintext highlighter-rouge">nfs-kernel-server</code> on your head node and <code class="language-plaintext highlighter-rouge">nfs-common</code> on your compute node.</p> <h3 id="1-download-the-installation-package">1. Download the installation package</h3> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget [https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.0]<span class="o">(</span>https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.0<span class="o">)</span>  
+wget [https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.1]<span class="o">(</span>https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.1<span class="o">)</span>  
+</code></pre></div></div> <h3 id="2-merge-installation-files">2. Merge installation files</h3> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.0 <span class="se">\ </span> 
+deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.1 <span class="o">&gt;</span> <span class="se">\ </span> 
+deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh  
+
+</code></pre></div></div> <h3 id="3-execute-installation-script">3. Execute installation script</h3> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sh deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh  
+</code></pre></div></div> <p>The software will as you where to install the binary.</p> <h3 id="4-environment-variable-configuration">4. Environment variable configuration</h3> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> /root/deepmd-kit/bin/activate /root/deepmd-kit
+</code></pre></div></div> <p>You have to put the above command to your bash script.</p> <hr/> <h2 id="dpgen-installation">DPGEN Installation</h2> <h3 id="1-download-dp-gen-from-github-link-below">1. Download dp-gen from github link below</h3> <p>The current version is v0.13.1.</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://github.com/deepmodeling/dpgen
+</code></pre></div></div> <h3 id="2-edit-the-code-for-magmon-and-plus-u">2. Edit the code for MAGMON and PLUS U</h3> <p>Modify the <code class="language-plaintext highlighter-rouge">make_vasp_incar</code> function in dpgen/generator/run.py as follow.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">make_vasp_incar</span><span class="p">(</span><span class="n">jdata</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="k">if</span> <span class="sh">"</span><span class="s">fp_incar</span><span class="sh">"</span> <span class="ow">in</span> <span class="n">jdata</span><span class="p">.</span><span class="nf">keys</span><span class="p">():</span>
+        <span class="n">fp_incar_path</span> <span class="o">=</span> <span class="n">jdata</span><span class="p">[</span><span class="sh">"</span><span class="s">fp_incar</span><span class="sh">"</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">exists</span><span class="p">(</span><span class="n">fp_incar_path</span><span class="p">)</span>
+        <span class="n">fp_incar_path</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">abspath</span><span class="p">(</span><span class="n">fp_incar_path</span><span class="p">)</span>
+        <span class="n">fr</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="n">fp_incar_path</span><span class="p">)</span>
+        <span class="n">incar</span> <span class="o">=</span> <span class="n">fr</span><span class="p">.</span><span class="nf">read</span><span class="p">()</span>
+        <span class="c1">### adding magmom or plus U
+</span>        
+        <span class="k">if</span> <span class="sh">"</span><span class="s">fp_incar_magom</span><span class="sh">"</span> <span class="ow">in</span> <span class="n">jdata</span><span class="p">:</span>
+            <span class="n">fp_incar_magmom</span> <span class="o">=</span> <span class="n">jdata</span><span class="p">[</span><span class="sh">"</span><span class="s">fp_incar_magom</span><span class="sh">"</span><span class="p">]</span>
+            <span class="n">poscar_file</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">abspath</span><span class="p">(</span><span class="sh">"</span><span class="s">POSCAR</span><span class="sh">"</span><span class="p">))</span>
+            <span class="n">poscar_data</span> <span class="o">=</span> <span class="n">poscar_file</span><span class="p">.</span><span class="nf">readlines</span><span class="p">()</span>
+            <span class="n">elements_order</span> <span class="o">=</span> <span class="p">[</span><span class="n">ele</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">ele</span> <span class="ow">in</span> <span class="n">poscar_data</span><span class="p">[</span><span class="mi">5</span><span class="p">].</span><span class="nf">split</span><span class="p">()]</span>
+            <span class="n">element_counts</span> <span class="o">=</span> <span class="p">[</span><span class="n">ele</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">ele</span> <span class="ow">in</span> <span class="n">poscar_data</span><span class="p">[</span><span class="mi">6</span><span class="p">].</span><span class="nf">split</span><span class="p">()]</span>
+            <span class="n">magmom</span> <span class="o">=</span> <span class="sh">"</span><span class="s">MAGMOM =</span><span class="sh">"</span>
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">element</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">elements_order</span><span class="p">):</span>
+                <span class="n">mag</span> <span class="o">=</span> <span class="n">fp_incar_magmom</span><span class="p">[</span><span class="n">element</span><span class="p">]</span>
+                <span class="n">magmom</span> <span class="o">=</span> <span class="n">magmom</span> <span class="o">+</span> <span class="sh">"</span><span class="s"> </span><span class="sh">"</span> <span class="o">+</span> <span class="n">element_counts</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">+</span> <span class="sh">"</span><span class="s">*</span><span class="sh">"</span> <span class="o">+</span> <span class="nf">str</span><span class="p">(</span><span class="n">mag</span><span class="p">)</span>
+        <span class="n">incar</span> <span class="o">=</span> <span class="n">incar</span> <span class="o">+</span> <span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="n">magmom</span>
+
+        
+        <span class="k">if</span> <span class="sh">"</span><span class="s">fp_incar_plus_u</span><span class="sh">"</span> <span class="ow">in</span> <span class="n">jdata</span><span class="p">:</span>
+            <span class="n">fp_incar_plus_u</span> <span class="o">=</span> <span class="n">jdata</span><span class="p">[</span><span class="sh">"</span><span class="s">fp_incar_plus_u</span><span class="sh">"</span><span class="p">]</span>
+            <span class="n">poscar_file</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">abspath</span><span class="p">(</span><span class="sh">"</span><span class="s">POSCAR</span><span class="sh">"</span><span class="p">))</span>
+            <span class="n">poscar_data</span> <span class="o">=</span> <span class="n">poscar_file</span><span class="p">.</span><span class="nf">readlines</span><span class="p">()</span>
+            <span class="n">elements_order</span> <span class="o">=</span> <span class="p">[</span><span class="n">ele</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">ele</span> <span class="ow">in</span> <span class="n">poscar_data</span><span class="p">[</span><span class="mi">5</span><span class="p">].</span><span class="nf">split</span><span class="p">()]</span>
+            <span class="n">total_added_u</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">max_ul</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">ldaul</span> <span class="o">=</span> <span class="sh">"</span><span class="s">LDAUL =</span><span class="sh">"</span>
+            <span class="n">ldauu</span> <span class="o">=</span> <span class="sh">"</span><span class="s">LDAUU =</span><span class="sh">"</span>
+            <span class="n">ldauj</span> <span class="o">=</span> <span class="sh">"</span><span class="s">LDAUJ =</span><span class="sh">"</span>
+            <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">elements_order</span><span class="p">:</span>
+                <span class="n">ul</span> <span class="o">=</span> <span class="n">fp_incar_plus_u</span><span class="p">[</span><span class="n">element</span><span class="p">][</span><span class="sh">'</span><span class="s">ul</span><span class="sh">'</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">ul</span><span class="o">&gt;</span><span class="n">max_ul</span><span class="p">:</span> <span class="n">max_ul</span> <span class="o">=</span> <span class="n">ul</span>
+                <span class="n">ldaul</span> <span class="o">=</span> <span class="n">ldaul</span> <span class="o">+</span> <span class="sh">"</span><span class="s"> </span><span class="sh">"</span> <span class="o">+</span> <span class="nf">str</span><span class="p">(</span><span class="n">ul</span><span class="p">)</span>
+                <span class="n">uu</span> <span class="o">=</span> <span class="n">fp_incar_plus_u</span><span class="p">[</span><span class="n">element</span><span class="p">][</span><span class="sh">'</span><span class="s">uu</span><span class="sh">'</span><span class="p">]</span>
+                <span class="n">ldauu</span> <span class="o">=</span> <span class="n">ldauu</span> <span class="o">+</span> <span class="sh">"</span><span class="s"> </span><span class="sh">"</span> <span class="o">+</span> <span class="nf">str</span><span class="p">(</span><span class="n">uu</span><span class="p">)</span>
+                <span class="n">total_added_u</span> <span class="o">+=</span><span class="n">uu</span>
+                <span class="n">uj</span> <span class="o">=</span> <span class="n">fp_incar_plus_u</span><span class="p">[</span><span class="n">element</span><span class="p">][</span><span class="sh">'</span><span class="s">uj</span><span class="sh">'</span><span class="p">]</span>
+                <span class="n">ldauj</span> <span class="o">=</span> <span class="n">ldauj</span> <span class="o">+</span> <span class="sh">"</span><span class="s"> </span><span class="sh">"</span> <span class="o">+</span> <span class="nf">str</span><span class="p">(</span><span class="n">uj</span><span class="p">)</span>
+                <span class="n">total_added_u</span> <span class="o">+=</span><span class="n">uj</span>
+
+            <span class="k">if</span> <span class="n">total_added_u</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">incar</span> <span class="o">=</span> <span class="n">incar</span> <span class="o">+</span> <span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">LDAU = .TRUE.</span><span class="sh">"</span>
+                <span class="n">incar</span> <span class="o">=</span> <span class="n">incar</span> <span class="o">+</span> <span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="n">ldaul</span>
+                <span class="n">incar</span> <span class="o">=</span> <span class="n">incar</span> <span class="o">+</span> <span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="n">ldauu</span>
+                <span class="n">incar</span> <span class="o">=</span> <span class="n">incar</span> <span class="o">+</span> <span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="n">ldauj</span>
+                <span class="k">if</span> <span class="n">max_ul</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">incar</span> <span class="o">=</span> <span class="n">incar</span> <span class="o">+</span> <span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">LMAXMIX = 6</span><span class="sh">"</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">incar</span> <span class="o">=</span> <span class="n">incar</span> <span class="o">+</span> <span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">LMAXMIX = 4</span><span class="sh">"</span>
+
+        <span class="c1">### end of adding magmon or plus U
+</span>        <span class="n">fr</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="sh">"</span><span class="s">user_fp_params</span><span class="sh">"</span> <span class="ow">in</span> <span class="n">jdata</span><span class="p">.</span><span class="nf">keys</span><span class="p">():</span>
+        <span class="n">incar</span> <span class="o">=</span> <span class="nf">write_incar_dict</span><span class="p">(</span><span class="n">jdata</span><span class="p">[</span><span class="sh">"</span><span class="s">user_fp_params</span><span class="sh">"</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">incar</span> <span class="o">=</span> <span class="nf">make_vasp_incar_user_dict</span><span class="p">(</span><span class="n">jdata</span><span class="p">[</span><span class="sh">"</span><span class="s">fp_params</span><span class="sh">"</span><span class="p">])</span>
+    
+    <span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="sh">"</span><span class="s">w</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="n">fp</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">incar</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">incar</span>
+</code></pre></div></div> <p>When running dpgen the following tags (<code class="language-plaintext highlighter-rouge">fp_incar_magom</code> and <code class="language-plaintext highlighter-rouge">fp_incar_plus_u</code>) with informattion about initial MAGMON or Plus+U should be added.</p> <p>For example:</p> <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">.......</span><span class="w">
+</span><span class="nl">"fp_incar"</span><span class="p">:</span><span class="w"> </span><span class="s2">"./INCAR"</span><span class="err">,</span><span class="w">
+</span><span class="err">'fp_incar_magom':</span><span class="w"> </span><span class="p">{</span><span class="err">'C':</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
+                    </span><span class="err">'Ce':</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">     
+                    </span><span class="err">'O':</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> 
+                    </span><span class="err">'Ti':</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+                    </span><span class="err">'Pd':</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+                    </span><span class="err">'H':</span><span class="w"> </span><span class="mi">0</span><span class="p">}</span><span class="err">,</span><span class="w">
+</span><span class="err">'fp_incar_plus_u':</span><span class="w"> </span><span class="p">{</span><span class="err">'C':</span><span class="w"> </span><span class="p">{</span><span class="err">'ul':</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="err">'uu':</span><span class="w"> </span><span class="mf">0.00</span><span class="p">,</span><span class="w"> </span><span class="err">'uj':</span><span class="w"> </span><span class="mf">0.00</span><span class="p">},</span><span class="w">  
+                    </span><span class="err">'Ce':</span><span class="w"> </span><span class="p">{</span><span class="err">'ul':</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="err">'uu':</span><span class="w"> </span><span class="mf">5.50</span><span class="p">,</span><span class="w"> </span><span class="err">'uj':</span><span class="w"> </span><span class="mf">1.00</span><span class="p">},</span><span class="w">     
+                    </span><span class="err">'O':</span><span class="w"> </span><span class="p">{</span><span class="err">'ul':</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="err">'uu':</span><span class="w"> </span><span class="mf">0.00</span><span class="p">,</span><span class="w"> </span><span class="err">'uj':</span><span class="w"> </span><span class="mf">0.00</span><span class="p">},</span><span class="w"> 
+                    </span><span class="err">'Ti':</span><span class="w"> </span><span class="p">{</span><span class="err">'ul':</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="err">'uu':</span><span class="w"> </span><span class="mf">5.50</span><span class="p">,</span><span class="w"> </span><span class="err">'uj':</span><span class="w"> </span><span class="mf">1.00</span><span class="p">},</span><span class="w">
+                    </span><span class="err">'Pd':</span><span class="w"> </span><span class="p">{</span><span class="err">'ul':</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="err">'uu':</span><span class="w"> </span><span class="mf">0.00</span><span class="p">,</span><span class="w"> </span><span class="err">'uj':</span><span class="w"> </span><span class="mf">0.00</span><span class="p">},</span><span class="w"> 
+                    </span><span class="err">'H':</span><span class="w"> </span><span class="p">{</span><span class="err">'ul':</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="err">'uu':</span><span class="w"> </span><span class="mf">0.00</span><span class="p">,</span><span class="w"> </span><span class="err">'uj':</span><span class="w"> </span><span class="mf">0.00</span><span class="p">},</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div> <h3 id="3-install-the-package">3. Install the package</h3> <p>Create an environment (tested with python version 3.11.7)</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 <span class="nt">-m</span> venv dpgen_env
+</code></pre></div></div> <p>Activate the environment.</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> /home/users/ntu/vannamtr/dpgen_env/bin/activate
+</code></pre></div></div> <p>You must add the above command to your bash script</p> <p>Then install the package with</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install</span> ./dpgen
+</code></pre></div></div> <p>To test if the installation is successful, you may execute</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dpgen <span class="nt">-h</span>
+</code></pre></div></div> <p>Note: The above tutorial should work on NCI as well.</p>]]></content><author><name>Nam Tran</name></author><category term="Tutorial"/><summary type="html"><![CDATA[Instruction for compiling deepmd-kit and dpgen on NSCC]]></summary></entry><entry><title type="html">How to compile VASP GPU (v6.4.0) on NSCC</title><link href="https://namtranlab.github.io/blog/2025/compile-vasp-gpu-nscc/" rel="alternate" type="text/html" title="How to compile VASP GPU (v6.4.0) on NSCC"/><published>2025-05-04T00:00:00+00:00</published><updated>2025-05-04T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/compile-vasp-gpu-nscc</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/compile-vasp-gpu-nscc/"><![CDATA[<h2 id="load-libs">Load libs</h2> <p>Assume the vasp source was downloaded in extracted in $HOME/vasp.6.4.0_gpu</p> <p>Clean all loaded modules.</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module purge
+</code></pre></div></div> <p>Load intel mkl lib.</p> <p>All packages from intel oneapi can be found in <code class="language-plaintext highlighter-rouge">/app/apps/oneapi/</code></p> <p>In this tutorial we will use version 2022.1.2</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> /app/apps/oneapi/2022.1.2/mkl/2022.0.2/env/vars.sh
+</code></pre></div></div> <p>Next we need to load the compiler and libs from nvidia hpc skl (nvhpc).</p> <p>Create a file named <code class="language-plaintext highlighter-rouge">vasp_nv</code> and put it under the vasp source code folder.</p> <p>Different of nvhpc can be found at <code class="language-plaintext highlighter-rouge">/app/apps/nvhpc/</code>. In this tutorial we will use version 22.5 with cuda version of 11.7</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#%Module1.0</span>
+
+<span class="c"># Copyright (c) 2021, NVIDIA CORPORATION.  All rights reserved.</span>
+<span class="c">#</span>
+<span class="c"># NVIDIA CORPORATION and its licensors retain all intellectual property</span>
+<span class="c"># and proprietary rights in and to this software, related documentation</span>
+<span class="c"># and any modifications thereto.  Any use, reproduction, disclosure or</span>
+<span class="c"># distribution of this software and related documentation without an express</span>
+<span class="c"># license agreement from NVIDIA CORPORATION is strictly prohibited.</span>
+
+conflict nvidia
+conflict nvhpc
+conflict nvhpc-nompi
+conflict nvhpc-byo-compiler
+
+<span class="nb">set </span>nvhome /app/apps/nvhpc/22.5
+<span class="nb">set </span>target Linux_x86_64
+<span class="nb">set </span>version 22.5
+
+<span class="nb">set </span>nvcudadir <span class="nv">$nvhome</span>/<span class="nv">$target</span>/<span class="nv">$version</span>/cuda
+<span class="nb">set </span>nvcompdir <span class="nv">$nvhome</span>/<span class="nv">$target</span>/<span class="nv">$version</span>/compilers
+<span class="nb">set </span>nvmathdir <span class="nv">$nvhome</span>/<span class="nv">$target</span>/<span class="nv">$version</span>/math_libs
+<span class="nb">set </span>nvcommdir <span class="nv">$nvhome</span>/<span class="nv">$target</span>/<span class="nv">$version</span>/comm_libs
+
+setenv NVHPC <span class="nv">$nvhome</span>
+setenv NVHPC_ROOT <span class="nv">$nvhome</span>/<span class="nv">$target</span>/<span class="nv">$version</span>
+setenv CC <span class="nv">$nvcompdir</span>/bin/nvc
+setenv CXX <span class="nv">$nvcompdir</span>/bin/nvc++
+setenv FC <span class="nv">$nvcompdir</span>/bin/nvfortran
+setenv F90 <span class="nv">$nvcompdir</span>/bin/nvfortran
+setenv F77 <span class="nv">$nvcompdir</span>/bin/nvfortran
+setenv CPP cpp
+
+prepend-path PATH <span class="nv">$nvcudadir</span>/bin
+prepend-path PATH <span class="nv">$nvcompdir</span>/bin
+prepend-path PATH <span class="nv">$nvcommdir</span>/mpi/bin
+prepend-path PATH <span class="nv">$nvcompdir</span>/extras/qd/bin
+
+prepend-path LD_LIBRARY_PATH <span class="nv">$nvcudadir</span>/lib64
+prepend-path LD_LIBRARY_PATH <span class="nv">$nvcudadir</span>/extras/CUPTI/lib64
+prepend-path LD_LIBRARY_PATH <span class="nv">$nvcompdir</span>/extras/qd/lib
+prepend-path LD_LIBRARY_PATH <span class="nv">$nvcompdir</span>/lib
+prepend-path LD_LIBRARY_PATH <span class="nv">$nvmathdir</span>/lib64
+prepend-path LD_LIBRARY_PATH <span class="nv">$nvcommdir</span>/mpi/lib
+prepend-path LD_LIBRARY_PATH <span class="nv">$nvcommdir</span>/nccl/lib
+prepend-path LD_LIBRARY_PATH <span class="nv">$nvcommdir</span>/nvshmem/lib
+
+prepend-path CPATH <span class="nv">$nvmathdir</span>/include
+prepend-path CPATH <span class="nv">$nvcommdir</span>/mpi/include
+prepend-path CPATH <span class="nv">$nvcommdir</span>/nccl/include
+prepend-path CPATH <span class="nv">$nvcommdir</span>/nvshmem/include
+prepend-path CPATH <span class="nv">$nvcompdir</span>/extras/qd/include/qd
+
+prepend-path MANPATH <span class="nv">$nvcompdir</span>/man
+
+setenv OPAL_PREFIX <span class="nv">$nvcommdir</span>/mpi
+
+setenv NVHPC_PATH               <span class="nv">$env</span><span class="o">(</span>NVHPC_ROOT<span class="o">)</span>
+setenv NVHPC_VERSION            <span class="nv">$version</span>
+
+setenv CRAY_NVIDIA_PREFIX       <span class="nv">$env</span><span class="o">(</span>NVHPC_ROOT<span class="o">)</span>
+setenv CRAY_NVIDIA_VERSION      <span class="nv">$version</span>
+ 
+
+setenv OMP_NUM_THREADS 16
+setenv OMP_STACKSIZE 512m
+setenv OMP_PLACES cores
+setenv OMP_PROC_BIND close
+
+
+module-whatis <span class="s2">"Nvidia HPC Compilers"</span>
+</code></pre></div></div> <p>Then load the packages by:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module load <span class="nv">$HOME</span>/vasp.6.4.0_gpu/vasp_nv
+</code></pre></div></div> <hr/> <h2 id="modify-the-makefile">Modify the makefile</h2> <p>Modify the makefile.include as follow.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Default precompiler options</span>
+CPP_OPTIONS <span class="o">=</span> <span class="nt">-DHOST</span><span class="o">=</span><span class="se">\"</span>LinuxNV<span class="se">\"</span> <span class="se">\</span>
+              <span class="nt">-DMPI</span> <span class="nt">-DMPI_INPLACE</span> <span class="nt">-DMPI_BLOCK</span><span class="o">=</span>8000 <span class="nt">-Duse_collective</span> <span class="se">\</span>
+              <span class="nt">-DscaLAPACK</span> <span class="se">\</span>
+              <span class="nt">-DCACHE_SIZE</span><span class="o">=</span>4000 <span class="se">\</span>
+              <span class="nt">-Davoidalloc</span> <span class="se">\</span>
+              <span class="nt">-Dvasp6</span> <span class="se">\</span>
+              <span class="nt">-Duse_bse_te</span> <span class="se">\</span>
+              <span class="nt">-Dtbdyn</span> <span class="se">\</span>
+              <span class="nt">-Dqd_emulate</span> <span class="se">\</span>
+              <span class="nt">-Dfock_dblbuf</span> <span class="se">\</span>
+              <span class="nt">-D_OPENMP</span> <span class="se">\</span>
+              <span class="nt">-D_OPENACC</span> <span class="se">\</span>
+              <span class="nt">-DUSENCCL</span> <span class="se">\</span>
+              <span class="nt">-DUSENCCLP2P</span>
+
+CPP         <span class="o">=</span> nvfortran <span class="nt">-Mpreprocess</span> <span class="nt">-Mfree</span> <span class="nt">-Mextend</span> <span class="nt">-E</span> <span class="si">$(</span>CPP_OPTIONS<span class="si">)</span> <span class="nv">$*</span><span class="si">$(</span>FUFFIX<span class="si">)</span>  <span class="o">&gt;</span> <span class="nv">$*</span><span class="si">$(</span>SUFFIX<span class="si">)</span>
+
+<span class="c"># N.B.: you might need to change the cuda-version here</span>
+<span class="c">#       to one that comes with your NVIDIA-HPC SDK</span>
+FC          <span class="o">=</span> mpif90 <span class="nt">-acc</span> <span class="nt">-gpu</span><span class="o">=</span>cc60,cc70,cc80,cuda11.7 <span class="nt">-mp</span>
+FCL         <span class="o">=</span> mpif90 <span class="nt">-acc</span> <span class="nt">-gpu</span><span class="o">=</span>cc60,cc70,cc80,cuda11.7 <span class="nt">-mp</span> <span class="nt">-c</span>++libs
+
+FREE        <span class="o">=</span> <span class="nt">-Mfree</span>
+
+FFLAGS      <span class="o">=</span> <span class="nt">-Mbackslash</span> <span class="nt">-Mlarge_arrays</span>
+
+OFLAG       <span class="o">=</span> <span class="nt">-fast</span>
+
+DEBUG       <span class="o">=</span> <span class="nt">-Mfree</span> <span class="nt">-O0</span> <span class="nt">-traceback</span>
+
+OBJECTS     <span class="o">=</span> fftmpiw.o fftmpi_map.o fftw3d.o fft3dlib.o
+
+LLIBS       <span class="o">=</span> <span class="nt">-cudalib</span><span class="o">=</span>cublas,cusolver,cufft,nccl <span class="nt">-cuda</span>
+
+<span class="c"># Redefine the standard list of O1 and O2 objects</span>
+SOURCE_O1  :<span class="o">=</span> pade_fit.o minimax_dependence.o
+SOURCE_O2  :<span class="o">=</span> pead.o
+
+<span class="c"># For what used to be vasp.5.lib</span>
+CPP_LIB     <span class="o">=</span> <span class="si">$(</span>CPP<span class="si">)</span>
+FC_LIB      <span class="o">=</span> nvfortran
+CC_LIB      <span class="o">=</span> nvc <span class="nt">-w</span>
+CFLAGS_LIB  <span class="o">=</span> <span class="nt">-O</span>
+FFLAGS_LIB  <span class="o">=</span> <span class="nt">-O1</span> <span class="nt">-Mfixed</span>
+FREE_LIB    <span class="o">=</span> <span class="si">$(</span>FREE<span class="si">)</span>
+
+OBJECTS_LIB <span class="o">=</span> linpack_double.o
+
+<span class="c"># For the parser library</span>
+CXX_PARS    <span class="o">=</span> nvc++ <span class="nt">--no_warnings</span>
+
+<span class="c">##</span>
+<span class="c">## Customize as of this point! Of course you may change the preceding</span>
+<span class="c">## part of this file as well if you like, but it should rarely be</span>
+<span class="c">## necessary ...</span>
+<span class="c">##</span>
+<span class="c"># When compiling on the target machine itself , change this to the</span>
+<span class="c"># relevant target when cross-compiling for another architecture</span>
+VASP_TARGET_CPU ?<span class="o">=</span> <span class="nt">-tp</span> host
+FFLAGS     +<span class="o">=</span> <span class="si">$(</span>VASP_TARGET_CPU<span class="si">)</span>
+
+<span class="c"># Specify your NV HPC-SDK installation (mandatory)</span>
+<span class="c">#... first try to set it automatically</span>
+NVROOT      <span class="o">=</span><span class="si">$(</span>shell which nvfortran | <span class="nb">awk</span> <span class="nt">-F</span> /compilers/bin/nvfortran <span class="s1">'{ print $$1 }'</span><span class="si">)</span>
+
+<span class="c"># If the above fails, then NVROOT needs to be set manually</span>
+<span class="c">#NVHPC      ?= /opt/nvidia/hpc_sdk</span>
+<span class="c">#NVVERSION   = 21.11</span>
+<span class="c">#NVROOT      = $(NVHPC)/Linux_x86_64/$(NVVERSION)</span>
+
+<span class="c">## Improves performance when using NV HPC-SDK &gt;=21.11 and CUDA &gt;11.2</span>
+<span class="c">#OFLAG_IN   = -fast -Mwarperf</span>
+<span class="c">#SOURCE_IN  := nonlr.o</span>
+
+<span class="c"># Software emulation of quadruple precsion (mandatory)</span>
+QD         ?<span class="o">=</span> <span class="si">$(</span>NVROOT<span class="si">)</span>/compilers/extras/qd
+LLIBS      +<span class="o">=</span> <span class="nt">-L</span><span class="si">$(</span>QD<span class="si">)</span>/lib <span class="nt">-lqdmod</span> <span class="nt">-lqd</span>
+INCS       +<span class="o">=</span> <span class="nt">-I</span><span class="si">$(</span>QD<span class="si">)</span>/include/qd
+
+<span class="c"># Intel MKL for FFTW, BLAS, LAPACK, and scaLAPACK</span>
+MKLROOT    ?<span class="o">=</span> /path/to/your/mkl/installation
+LLIBS_MKL   <span class="o">=</span> <span class="nt">-Mmkl</span> <span class="nt">-L</span><span class="si">$(</span>MKLROOT<span class="si">)</span>/lib/intel64 <span class="nt">-lmkl_scalapack_lp64</span> <span class="nt">-lmkl_blacs_openmpi_lp64</span>
+INCS       +<span class="o">=</span> <span class="nt">-I</span><span class="si">$(</span>MKLROOT<span class="si">)</span>/include/fftw
+
+<span class="c"># Use a separate scaLAPACK installation (optional but recommended in combination with OpenMPI)</span>
+<span class="c"># Comment out the two lines below if you want to use scaLAPACK from MKL instead</span>
+<span class="c">#SCALAPACK_ROOT ?= /opt/nvidia/hpc_sdk/Linux_x86_64/23.11/comm_libs/12.3/hpcx/hpcx-2.16/ompi</span>
+<span class="c">#LLIBS_MKL   = -L$(SCALAPACK_ROOT)/lib -lscalapack -Mmkl</span>
+
+
+LLIBS      +<span class="o">=</span> <span class="si">$(</span>LLIBS_MKL<span class="si">)</span>
+</code></pre></div></div> <hr/> <h2 id="installtion">Installtion</h2> <p>Then install the vasp package with:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make <span class="nv">DEPS</span><span class="o">=</span>1 <span class="nt">-j4</span> all
+</code></pre></div></div> <hr/> <h2 id="vasp-script">Vasp script</h2> <p>The bash script to run vasp can be set as follow.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="c">#PBS -N JOB_NAME</span>
+<span class="c">#PBS -q normal</span>
+<span class="c">#PBS -P PROJECT_ID</span>
+<span class="c">#PBS -l select=1:ncpus=64:ngpus=4</span>
+<span class="c">#PBS -l walltime=24:00:00</span>
+<span class="c">#PBS -j oe</span>
+
+<span class="c"># Change directory to the one where the job was submitted</span>
+<span class="nv">idir</span><span class="o">=</span><span class="k">${</span><span class="nv">PBS_O_WORKDIR</span><span class="k">}</span>
+<span class="nb">cd</span> <span class="nv">$idir</span>/<span class="nv">$target</span>
+
+<span class="c"># Set scratch environment</span>
+module purge
+
+<span class="nb">source</span> /app/apps/oneapi/2022.1.2/mkl/2022.0.2/env/vars.sh
+module load <span class="nv">$HOME</span>/vasp.6.4.0_gpu/vasp_nv
+
+<span class="c"># VASP path</span>
+<span class="nv">vasp_exe</span><span class="o">=</span><span class="nv">$HOME</span>/vasp.6.4.0_gpu/bin/vasp_std
+
+<span class="nb">time </span>mpirun <span class="nt">-np</span> 4 <span class="nt">--mca</span> btl <span class="s1">'^openib'</span> <span class="nt">--map-by</span> ppr:4:node:PE<span class="o">=</span>16 <span class="nt">--bind-to</span> core <span class="nv">$vasp_exe</span> <span class="o">&gt;</span> print-out
+</code></pre></div></div>]]></content><author><name>Nam Tran</name></author><category term="Tutorial"/><summary type="html"><![CDATA[Instruction for compiling vasp gpu on NSCC]]></summary></entry><entry><title type="html">Configure a HPC system - Part 1</title><link href="https://namtranlab.github.io/blog/2025/small-hpc-part1/" rel="alternate" type="text/html" title="Configure a HPC system - Part 1"/><published>2025-05-02T00:00:00+00:00</published><updated>2025-05-02T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/small-hpc-part1</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/small-hpc-part1/"><![CDATA[<h2 id="module-system">Module system</h2> <p>Install environment-modules on your head node.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get <span class="nb">install </span>environment-modules
 <span class="nb">source</span> /usr/share/modules/init/bash <span class="o">&gt;&gt;</span> /etc/profile
 <span class="nb">export </span><span class="nv">MODULEPATH</span><span class="o">=</span><span class="nv">$MODULEPATH</span>:/opt/module_file/
 </code></pre></div></div> <hr/> <h2 id="nfs">NFS</h2> <p>Install <code class="language-plaintext highlighter-rouge">nfs-kernel-server</code> on your head node and <code class="language-plaintext highlighter-rouge">nfs-common</code> on your compute node.</p> <p>For head node</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt <span class="nb">install </span>nfs-kernel-server
