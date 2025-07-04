@@ -69,7 +69,7 @@ source /app/apps/oneapi/2022.1.2/mkl/2022.0.2/env/vars.sh
 
 Next we need to load the compiler and libs from nvidia hpc skl (nvhpc).
 
-Create a file named ```vasp_nv``` and put it under the vasp source code folder. Different version of nvhpc can be found at ```/app/apps/nvhpc/```. In this tutorial we will use version 22.5 with cuda version of 11.7
+Create a file named ```vasp_nv``` and put it under the vasp source code folder. Different version of nvhpc can be found at ```/app/apps/nvhpc/```. In this tutorial we will use version 22.5 with cuda version of 11.7. Add the following to ```vasp_nv```.
 
 ```bash
 #%Module1.0
