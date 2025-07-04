@@ -6,7 +6,7 @@ tags: Tutorial
 giscus_comments: true
 date: 2025-05-4
 featured: true
-thumbnail: https://github.com/deepmodeling/deepmd-kit/raw/master/doc/_static/logo.svg
+thumbnail: https://wiki.snu.edu.in/images/b/b4/275px-vasp_logo.1716182944939.png
 images:
   lightbox2: true
   photoswipe: true
@@ -51,7 +51,7 @@ _styles: >
 
 ## Load libs
 
-Assume the vasp source was downloaded in extracted in $HOME/vasp.6.4.0_gpu
+Assume the vasp source was downloaded in extracted in ```$HOME/vasp.6.4.0_gpu```
 
 Clean all loaded modules.
 
@@ -59,9 +59,7 @@ Clean all loaded modules.
 module purge
 ```
 
-Load intel mkl lib.
-
-All packages from intel oneapi can be found in ```/app/apps/oneapi/```
+We need to load intel mkl lib which can be found intel oneapi at ```/app/apps/oneapi/```
 
 In this tutorial we will use version 2022.1.2
 
@@ -71,9 +69,7 @@ source /app/apps/oneapi/2022.1.2/mkl/2022.0.2/env/vars.sh
 
 Next we need to load the compiler and libs from nvidia hpc skl (nvhpc).
 
-Create a file named ```vasp_nv``` and put it under the vasp source code folder.
-
-Different of nvhpc can be found at ```/app/apps/nvhpc/```. In this tutorial we will use version 22.5 with cuda version of 11.7
+Create a file named ```vasp_nv``` and put it under the vasp source code folder. Different version of nvhpc can be found at ```/app/apps/nvhpc/```. In this tutorial we will use version 22.5 with cuda version of 11.7
 
 ```bash
 #%Module1.0
