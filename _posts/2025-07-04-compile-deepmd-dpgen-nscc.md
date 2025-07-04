@@ -56,6 +56,7 @@ _styles: >
     [https://deepmodeling.com](https://deepmodeling.com/)
 - Instruction:  
     [https://www.bohrium.com/notebooks/16449433825](https://www.bohrium.com/notebooks/16449433825)
+
 ***
 
 ## DeepMD-kit Installation
@@ -174,6 +175,28 @@ def make_vasp_incar(jdata, filename):
     with open(filename, "w") as fp:
         fp.write(incar)
     return incar
+```
+
+When running dpgen the following tag with informattion about initial MAGMON or Plus+U should be added.
+
+For example:
+
+```json
+.......
+"fp_incar": "./INCAR",
+'fp_incar_magom': {'C': 0,  
+                    'Ce': 3,     
+                    'O': 0, 
+                    'Ti': 3,
+                    'Pd': 3,
+                    'H': 0},
+'fp_incar_plus_u': {'C': {'ul':-1, 'uu': 0.00, 'uj': 0.00},  
+                    'Ce': {'ul':3, 'uu': 5.50, 'uj': 1.00},     
+                    'O': {'ul':-1, 'uu': 0.00, 'uj': 0.00}, 
+                    'Ti': {'ul':2, 'uu': 5.50, 'uj': 1.00},
+                    'Pd': {'ul':-1, 'uu': 0.00, 'uj': 0.00}, 
+                    'H': {'ul':-1, 'uu': 0.00, 'uj': 0.00},
+                    }
 ```
 
 ### 3. Install the package
