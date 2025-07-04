@@ -21,14 +21,14 @@ authors:
 
 
 toc:
-  - name: Related resource 
+  - name: Load libs
     # if a section has subsections, you can add them as follows:
     # subsections:
     #   - name: Example Child Subsection 1
     #   - name: Example Child Subsection 2
-  - name: DeepMD-kit Installation
-  - name: DPGEN Installation
-
+  - name: Modify the makefile
+  - name: Installtion
+  - name: Vasp script
 
 _styles: >
   .fake-img {
@@ -48,23 +48,8 @@ _styles: >
 
 ---
 
-## Related resource 
 
-- DeepMD-kit GitHub:  
-    [https://github.com/deepmodeling/deepmd-kit](https://github.com/deepmodeling/deepmd-kit)
-- DeepModeling:  
-    [https://deepmodeling.com](https://deepmodeling.com/)
-- Instruction:  
-    [https://www.bohrium.com/notebooks/16449433825](https://www.bohrium.com/notebooks/16449433825)
-
-***
-
-## DeepMD-kit Installation
-
-Install ```nfs-kernel-server``` on your head node and ```nfs-common``` on your compute node.
-
-
-### 1. Load libs
+## Load libs
 
 Assume the vasp source was downloaded in extracted in $HOME/vasp.6.4.0_gpu
 
@@ -170,6 +155,10 @@ Then load the packages by:
 module load $HOME/vasp.6.4.0_gpu/vasp_nv
 ```
 
+***
+
+## Modify the makefile
+
 Modify the makefile.include as follow.
 
 ```bash
@@ -267,13 +256,19 @@ INCS       += -I$(MKLROOT)/include/fftw
 LLIBS      += $(LLIBS_MKL)
 ```
 
+***
+
+## Installtion
+
 Then install the vasp package with:
 
 ```bash
 make DEPS=1 -j4 all
 ```
 
-### Vasp script
+***
+
+## Vasp script
 
 The bash script to run vasp can be set as follow.
 
