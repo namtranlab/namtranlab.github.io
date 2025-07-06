@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: Configuration of a Small-Scale High-Performance Computing System – Part I
-description: High-Performance Computing Setup – Part I: Network File System and Module Management Configuration
+description: High-Performance Computing Setup – Part I - Network File System and Module Management Configuration
 tags: Tutorial
 giscus_comments: true
 date: 2025-05-2
