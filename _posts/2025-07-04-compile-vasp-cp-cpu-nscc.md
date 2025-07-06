@@ -1,6 +1,6 @@
 ---
 layout: distill
-title: How to compile VASP-CP CPU (v6.4.0) on NSCC
+title: Step-by-Step Compilation of VASP (CPU) Incorporating Grand-Canonical Methods on NSCC
 description: Instruction for compiling vasp cpu with grand-canonical approach on NSCC
 tags: Tutorial
 giscus_comments: true

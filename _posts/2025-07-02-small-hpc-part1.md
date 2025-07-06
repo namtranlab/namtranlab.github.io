@@ -1,7 +1,7 @@
 ---
 layout: distill
-title: Configure a HPC system - Part 1
-description: Instruction for NFS and module system1
+title: Configuration of a Small-Scale High-Performance Computing System – Part I
+description: High-Performance Computing Setup – Part I: Network File System and Module Management Configuration
 tags: Tutorial
 giscus_comments: true
 date: 2025-05-2

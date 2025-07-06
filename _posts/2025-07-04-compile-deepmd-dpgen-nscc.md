@@ -1,6 +1,6 @@
 ---
 layout: distill
-title: How to compile DeepMD-kit on NSCC
+title: Step-by-Step Guide to Compile DeepMD-kit and DPGEN on NSCC
 description: Instruction for compiling deepmd-kit and dpgen on NSCC
 tags: Tutorial
 giscus_comments: true

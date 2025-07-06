@@ -1,6 +1,6 @@
 ---
 layout: distill
-title: How to compile VASP GPU (v6.4.0) on NSCC
+title: Instructions for Compiling VASP 6.4.0 with GPU Support on NSCC
 description: Instruction for compiling vasp gpu on NSCC
 tags: Tutorial
 giscus_comments: true
