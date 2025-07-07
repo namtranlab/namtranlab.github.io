@@ -52,9 +52,9 @@ _styles: >
 ---
 
 ## Download packages
-Assume the vasp source was downloaded in extracted in ```$HOME/vasp.6.4.0_cp_cpu```
+Assume the vasp source code was downloaded in extracted in ```$HOME/vasp.6.4.0_cp_cpu```
 
-You need ```VASPSOL``` for ```VASP.6.3.0```.
+You need the patch ```VASPSOL``` for ```VASP.6.3.0``` and ```VASP-CP```. Those patches can be found in the links below.
 
 - VASPSol:  
     [https://github.com/henniggroup/VASPsol/issues/64](https://github.com/henniggroup/VASPsol/issues/64)
@@ -80,7 +80,7 @@ Copy ```solvation.F and VASPsol_VASP630.patch``` to ```src``` folder of vasp sou
 cp solvation.F $HOME/vasp.6.4.0_cp_cpu/src
 cp VASPsol_VASP630.patch $HOME/vasp.6.4.0_cp_cpu/src
 ```
-Then execute the batch.
+Then execute the patch.
 
 ```bash
 patch -p0 < VASPsol_VASP630.patch
@@ -95,7 +95,7 @@ Copy ```cp-vaspsol.patch``` to ```src``` folder of vasp source code
 cp cp-vaspsol.patch $HOME/vasp.6.4.0_cp_cpu/src
 ```
 
-Then execute the batch.
+Then execute the patch.
 
 ```bash
 patch -p0 < cp-vaspsol++.patch
@@ -183,10 +183,10 @@ INCS        =-I$(MKLROOT)/include/fftw
 
 ## Installtion
 
-Then install the vasp package with:
+Then install the vasp package with the command below. Remember to change ```N``` in the command.
 
 ```bash
-make DEPS=1 -j4 all
+make DEPS=1 -jN all
 ```
 ***
 

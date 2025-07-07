@@ -61,9 +61,6 @@ _styles: >
 
 ## DeepMD-kit Installation
 
-Install ```nfs-kernel-server``` on your head node and ```nfs-common``` on your compute node.
-
-
 ### 1. Download the installation package
 
 ``` shell

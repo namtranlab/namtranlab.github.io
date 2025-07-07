@@ -51,7 +51,7 @@ _styles: >
 
 ## Load libs
 
-Assume the vasp source was downloaded in extracted in ```$HOME/vasp.6.4.0_gpu```
+Assume the vasp source code was downloaded in extracted in ```$HOME/vasp.6.4.0_gpu```
 
 Clean all loaded modules.
 
@@ -59,7 +59,7 @@ Clean all loaded modules.
 module purge
 ```
 
-We need to load intel mkl lib which can be found intel oneapi at ```/app/apps/oneapi/```
+We need to load the intel mkl lib which can be found in intel oneapi package at ```/app/apps/oneapi/```
 
 In this tutorial we will use version 2022.1.2
 
@@ -256,10 +256,10 @@ LLIBS      += $(LLIBS_MKL)
 
 ## Installtion
 
-Then install the vasp package with:
+Then install the vasp package with the command below. Remember to change ```N``` in the command.
 
 ```bash
-make DEPS=1 -j4 all
+make DEPS=1 -jN all
 ```
 
 ***
