@@ -52,13 +52,13 @@ _styles: >
 
 ## Install Docker from a package
 
-1. Go to [https://download.docker.com/linux/debian/dists/](https://download.docker.com/linux/debian/dists/).
+### 1. Go to [https://download.docker.com/linux/debian/dists/](https://download.docker.com/linux/debian/dists/).
 
-2. Select your Debian version in the list.
+### 2. Select your Debian version in the list.
 
-3. Go to ```pool/stable/``` and select the applicable architecture (```amd64```, ```armhf```, ```arm64```, or ```s390x```).
+### 3. Go to ```pool/stable/``` and select the applicable architecture (```amd64```, ```armhf```, ```arm64```, or ```s390x```).
 
-4. Download the following deb files for the Docker Engine, CLI, containerd, and Docker Compose packages:
+### 4. Download the following deb files for the Docker Engine, CLI, containerd, and Docker Compose packages:
 
 ``` shell
   - containerd.io_<version>_<arch>.deb
@@ -68,14 +68,14 @@ _styles: >
   - docker-compose-plugin_<version>_<arch>.deb
 ```
 
-5. Install the ```.deb``` packages. Update the paths in the following example to where you downloaded the Docker packages.
+### 5. Install the ```.deb``` packages. Update the paths in the following example to where you downloaded the Docker packages.
 
 ``` shell
 sudo dpkg -i ./containerd.io_<version>_<arch>.deb
 sudo dpkg -i ./docker-ce_<version>_<arch>.deb
 ...
 ```
-6. Verify that the installation is successful by running the hello-world image
+### 6. Verify that the installation is successful by running the hello-world image
 
 ``` shell
  sudo service docker start
@@ -85,7 +85,7 @@ sudo dpkg -i ./docker-ce_<version>_<arch>.deb
 
 ## Installing the NVIDIA Container Toolkit
 
-1. Configure the production repository:
+### 1. Configure the production repository:
 
 ``` shell
 curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
@@ -94,13 +94,13 @@ curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dear
     sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
 ```
 
-2. Update the packages list from the repository:
+### 2. Update the packages list from the repository:
 
 ``` shell
 sudo apt-get update
 ```
 
-3. Install the ```NVIDIA Container Toolkit``` packages:
+### 3. Install the ```NVIDIA Container Toolkit``` packages:
 
 ``` shell
 export NVIDIA_CONTAINER_TOOLKIT_VERSION=1.17.8-1
@@ -114,7 +114,7 @@ export NVIDIA_CONTAINER_TOOLKIT_VERSION=1.17.8-1
 
 ## Configuring Docker
 
-1. Create the docker group (if it doesn’t exist)
+### 1. Create the docker group (if it doesn’t exist)
 
 Check if a docker group exist using
 ``` shell
@@ -127,13 +127,13 @@ If it does not exist, then create a new group
 sudo groupadd docker
 ```
 
-2. Add your user to the group
+### 2. Add your user to the group
 
 ``` shell
 sudo usermod -aG docker nam
 ```
 
-3. Configure the container runtime by using the ```nvidia-ctk``` command:
+### 3. Configure the container runtime by using the ```nvidia-ctk``` command:
 
 ``` shell
 sudo nvidia-ctk runtime configure --runtime=docker
@@ -142,13 +142,13 @@ sudo nvidia-ctk runtime configure --runtime=docker
 The ```nvidia-ctk``` command modifies the ```/etc/docker/daemon.json``` file on the host. The file is updated so that Docker can use the NVIDIA Container Runtime.
 
 
-4. Restart the Docker daemon:
+### 4. Restart the Docker daemon:
 
 ``` shell
 sudo systemctl restart docker
 ```
 
-5. Run a sample CUDA container:
+### 5. Run a sample CUDA container:
 
 ``` shell
 sudo docker run --rm --runtime=nvidia --gpus all ubuntu nvidia-smi
