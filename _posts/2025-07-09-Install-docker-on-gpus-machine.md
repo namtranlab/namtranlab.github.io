@@ -52,21 +52,23 @@ _styles: >
 
 ## Install Docker from a package
 
-1. Go to https://download.docker.com/linux/debian/dists/.
+1. Go to [https://download.docker.com/linux/debian/dists/](https://download.docker.com/linux/debian/dists/).
 
 2. Select your Debian version in the list.
 
-3. Go to pool/stable/ and select the applicable architecture (amd64, armhf, arm64, or s390x).
+3. Go to ```pool/stable/``` and select the applicable architecture (```amd64```, ```armhf```, ```arm64```, or ```s390x```).
 
 4. Download the following deb files for the Docker Engine, CLI, containerd, and Docker Compose packages:
 
+``` shell
   - containerd.io_<version>_<arch>.deb
   - docker-ce_<version>_<arch>.deb
   - docker-ce-cli_<version>_<arch>.deb
   - docker-buildx-plugin_<version>_<arch>.deb
   - docker-compose-plugin_<version>_<arch>.deb
+```
 
-5. Install the .deb packages. Update the paths in the following example to where you downloaded the Docker packages.
+5. Install the ```.deb``` packages. Update the paths in the following example to where you downloaded the Docker packages.
 
 ``` shell
 sudo dpkg -i ./containerd.io_<version>_<arch>.deb
@@ -98,7 +100,7 @@ curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dear
 sudo apt-get update
 ```
 
-3. Install the NVIDIA Container Toolkit packages:
+3. Install the ```NVIDIA Container Toolkit``` packages:
 
 ``` shell
 export NVIDIA_CONTAINER_TOOLKIT_VERSION=1.17.8-1
@@ -131,13 +133,13 @@ sudo groupadd docker
 sudo usermod -aG docker nam
 ```
 
-3. Configure the container runtime by using the nvidia-ctk command:
+3. Configure the container runtime by using the ```nvidia-ctk``` command:
 
 ``` shell
 sudo nvidia-ctk runtime configure --runtime=docker
 ```
 
-The nvidia-ctk command modifies the /etc/docker/daemon.json file on the host. The file is updated so that Docker can use the NVIDIA Container Runtime.
+The ```nvidia-ctk``` command modifies the ```/etc/docker/daemon.json``` file on the host. The file is updated so that Docker can use the NVIDIA Container Runtime.
 
 
 4. Restart the Docker daemon:
