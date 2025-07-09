@@ -27,7 +27,8 @@ toc:
     #   - name: Example Child Subsection 1
     #   - name: Example Child Subsection 2
   - name: Installing the NVIDIA Container Toolkit
-  - name: Installtion
+  - name: Configuring Docker
+  - name: How to run
 
 
 _styles: >
@@ -149,4 +150,13 @@ sudo systemctl restart docker
 
 ``` shell
 sudo docker run --rm --runtime=nvidia --gpus all ubuntu nvidia-smi
+```
+
+## How to run
+
+``` shell
+docker run -it --rm \
+  --gpus all  \
+  --runtime=nvidia \
+  registry.bohrium.dp.tech/dptech/dp/native/prod-759944/deepmd:dEdN /bin/bash
 ```
