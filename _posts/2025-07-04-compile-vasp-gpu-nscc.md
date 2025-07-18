@@ -6,7 +6,7 @@ tags: Tutorial
 giscus_comments: true
 date: 2025-05-4
 featured: true
-thumbnail: https://wiki.snu.edu.in/images/b/b4/275px-vasp_logo.1716182944939.png
+thumbnail: https://cmp.univie.ac.at/fileadmin/_processed_/csm_vasp_logo_3956c6ee63.png
 images:
   lightbox2: true
   photoswipe: true
