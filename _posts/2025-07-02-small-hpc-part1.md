@@ -26,7 +26,8 @@ toc:
     # subsections:
     #   - name: Example Child Subsection 1
     #   - name: Example Child Subsection 2
-  - name: NFS
+  - name: Config NFS
+  - name: Config SLURMN
 
 _styles: >
   .fake-img {
@@ -58,7 +59,7 @@ export MODULEPATH=$MODULEPATH:/opt/module_file/
 
 ***
 
-## NFS
+## Config NFS
 
 Install ```nfs-kernel-server``` on your head node and ```nfs-common``` on your compute node.
 
@@ -94,7 +95,21 @@ mount j35a:/scratch /scratch
 ```
 
 Setup auto mount by editing ```/etc/fstab```.
+
+On head node we need to auto mount the external hard drive to ```scratch``` folders.
+UUID of the external hard drive can be found using ```lsblk -f /dev/sda1```.
 ```bash
+# written by chenxi, for /scratch dirctory
+UUID=fd2391a4-72ca-4926-bd1c-8bd0d44a4448 /scratch ext4 defaults 0 2
+# written by chenxi, for scratch2
+UUID=2cf23a6c-2524-4fa1-963e-4d3465b99008 /scratch2 ext4 defaults 0 2
+```
+
+On compute nodes we need to auto mount the shared dirs (opt, home and scratch) from head node (ip:192.168.1.1)
+```bash
+192.168.1.1:/opt /opt nfs defaults,_netdev 0 0
+192.168.1.1:/home /home nfs defaults,_netdev 0 0
+192.168.1.1:/scratch /scratch nfs defaults,_netdev 0 0
 ```
 
 
@@ -123,4 +138,75 @@ cd /scratch
 mkdir chenxi
 chown chenxi:chenxi ./chenxi
 ln -s /scratch/chenxi /home/chenxi/scratch
+```
+
+***
+
+
+## Config SLURM 
+
+Install slurm using the following command on both head node and compute nodes.
+```bash
+```sudo apt-get install slurm-wlm```
+```
+
+Check slurm status. On head node we need both ```slurmctld``` and ```slurmd```. On compute node we only need ```slurmd``` to run
+```bash
+sudo systemctl status slurmctld
+sudo systemctl status slurmd
+```
+
+If not running we can start using
+```bash
+sudo systemctl start slurmctld
+sudo systemctl start slurmd
+```
+
+You may want Slurm to auto-start after reboot
+```bash
+sudo systemctl enable slurmctld
+sudo systemctl enable slurmd
+```
+
+Edit ```/etc/slurm/slurm.conf``` as following
+```bash
+ClusterName=LiCPU
+ControlMachine=j35a
+
+SlurmUser=slurm
+SlurmctldPort=6817
+SlurmdPort=6818
+AuthType=auth/munge
+
+StateSaveLocation=/var/log/slurm/slurmctld
+SlurmdSpoolDir=/var/log/slurm/slurmd
+SlurmctldPidFile=/var/log/slurm/slurmctld.pid
+SlurmdPidFile=/var/log/slurm/slurmd.pid
+
+ReturnToService=2
+ProctrackType=proctrack/linuxproc
+
+SlurmctldLogFile=/var/log/slurm/slurmctld.log
+SlurmdLogFile=/var/log/slurm/slurmd.log
+GresTypes=cpu
+
+TaskPlugin=task/cgroup
+
+SelectType=select/cons_res
+SelectTypeParameters=CR_Core_Memory
+
+NodeName=j35a  NodeAddr=192.168.1.1  Sockets=2 CoresPerSocket=42 ThreadsPerCore=2 RealMemory=500000 State=UNKNOWN
+NodeName=j35b  NodeAddr=192.168.1.2  Sockets=2 CoresPerSocket=48 ThreadsPerCore=2 RealMemory=500000 State=UNKNOWN
+PartitionName=Normal Nodes=ALL Default=YES MaxTime=INFINITE State=UP OverSubscribe=NO
+```
+
+Make sure all the files mentioned in slurm.conf editable by the user 'slurm'. User slurm will be automatically created when install slurm.
+
+Create/edit the ```/etc/slurm/cgroup.conf``` as following.
+```bash
+CgroupAutomount=no
+ConstrainCores=yes
+ConstrainRAMSpace=yes
+##TaskAffinity=yes
+ConstrainDevices=no
 ```
