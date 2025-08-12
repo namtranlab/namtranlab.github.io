@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://namtranlab.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://namtranlab.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2025-07-18T08:15:43+00:00</updated><id>https://namtranlab.github.io/feed.xml</id><title type="html">Nam V. Tran</title><entry><title type="html">Installing Docker on a GPU Machine</title><link href="https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine/" rel="alternate" type="text/html" title="Installing Docker on a GPU Machine"/><published>2025-05-08T00:00:00+00:00</published><updated>2025-05-08T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine/"><![CDATA[<h2 id="install-docker-from-a-package">Install Docker from a package</h2> <h3 id="1-go-to-httpsdownloaddockercomlinuxdebiandists">1. Go to <a href="https://download.docker.com/linux/debian/dists/">https://download.docker.com/linux/debian/dists/</a>.</h3> <h3 id="2-select-your-debian-version-in-the-list">2. Select your Debian version in the list.</h3> <h3 id="3-go-to-poolstable-and-select-the-applicable-architecture-amd64-armhf-arm64-or-s390x">3. Go to <code class="language-plaintext highlighter-rouge">pool/stable/</code> and select the applicable architecture (<code class="language-plaintext highlighter-rouge">amd64</code>, <code class="language-plaintext highlighter-rouge">armhf</code>, <code class="language-plaintext highlighter-rouge">arm64</code>, or <code class="language-plaintext highlighter-rouge">s390x</code>).</h3> <h3 id="4-download-the-following-deb-files-for-the-docker-engine-cli-containerd-and-docker-compose-packages">4. Download the following deb files for the Docker Engine, CLI, containerd, and Docker Compose packages:</h3> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  - containerd.io_&lt;version&gt;_&lt;<span class="nb">arch</span><span class="o">&gt;</span>.deb
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://namtranlab.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://namtranlab.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2025-08-12T09:17:52+00:00</updated><id>https://namtranlab.github.io/feed.xml</id><title type="html">Nam V. Tran</title><entry><title type="html">Installing Docker on a GPU Machine</title><link href="https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine/" rel="alternate" type="text/html" title="Installing Docker on a GPU Machine"/><published>2025-05-08T00:00:00+00:00</published><updated>2025-05-08T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine/"><![CDATA[<h2 id="install-docker-from-a-package">Install Docker from a package</h2> <h3 id="1-go-to-httpsdownloaddockercomlinuxdebiandists">1. Go to <a href="https://download.docker.com/linux/debian/dists/">https://download.docker.com/linux/debian/dists/</a>.</h3> <h3 id="2-select-your-debian-version-in-the-list">2. Select your Debian version in the list.</h3> <h3 id="3-go-to-poolstable-and-select-the-applicable-architecture-amd64-armhf-arm64-or-s390x">3. Go to <code class="language-plaintext highlighter-rouge">pool/stable/</code> and select the applicable architecture (<code class="language-plaintext highlighter-rouge">amd64</code>, <code class="language-plaintext highlighter-rouge">armhf</code>, <code class="language-plaintext highlighter-rouge">arm64</code>, or <code class="language-plaintext highlighter-rouge">s390x</code>).</h3> <h3 id="4-download-the-following-deb-files-for-the-docker-engine-cli-containerd-and-docker-compose-packages">4. Download the following deb files for the Docker Engine, CLI, containerd, and Docker Compose packages:</h3> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  - containerd.io_&lt;version&gt;_&lt;<span class="nb">arch</span><span class="o">&gt;</span>.deb
   - docker-ce_&lt;version&gt;_&lt;<span class="nb">arch</span><span class="o">&gt;</span>.deb
   - docker-ce-cli_&lt;version&gt;_&lt;<span class="nb">arch</span><span class="o">&gt;</span>.deb
   - docker-buildx-plugin_&lt;version&gt;_&lt;<span class="nb">arch</span><span class="o">&gt;</span>.deb
@@ -120,7 +120,7 @@ deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh
 </code></pre></div></div> <p>Activate the environment.</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> /home/users/ntu/vannamtr/dpgen_env/bin/activate
 </code></pre></div></div> <p>You must add the above command to your bash script</p> <p>Then install the package with</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install</span> ./dpgen
 </code></pre></div></div> <p>To test if the installation is successful, you may execute</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dpgen <span class="nt">-h</span>
-</code></pre></div></div> <p>Note: The above tutorial should work on NCI as well.</p>]]></content><author><name>Nam Tran</name></author><category term="Tutorial"/><summary type="html"><![CDATA[Instruction for compiling deepmd-kit and dpgen on NSCC]]></summary></entry><entry><title type="html">Step-by-Step Compilation of VASP (CPU) Incorporating Grand-Canonical Methods on NSCC</title><link href="https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-nscc/" rel="alternate" type="text/html" title="Step-by-Step Compilation of VASP (CPU) Incorporating Grand-Canonical Methods on NSCC"/><published>2025-05-04T00:00:00+00:00</published><updated>2025-05-04T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-nscc</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-nscc/"><![CDATA[<h2 id="download-packages">Download packages</h2> <p>Assume the vasp source code was downloaded in extracted in <code class="language-plaintext highlighter-rouge">$HOME/vasp.6.4.0_cp_cpu</code></p> <p>You need the patch <code class="language-plaintext highlighter-rouge">VASPSOL</code> for <code class="language-plaintext highlighter-rouge">VASP.6.3.0</code> and <code class="language-plaintext highlighter-rouge">VASP-CP</code>. Those patches can be found in the links below.</p> <ul> <li>VASPSol:<br/> <a href="https://github.com/henniggroup/VASPsol/issues/64">https://github.com/henniggroup/VASPsol/issues/64</a></li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>solvation.F
+</code></pre></div></div> <p>Note: The above tutorial should work on NCI as well.</p>]]></content><author><name>Nam Tran</name></author><category term="Tutorial"/><summary type="html"><![CDATA[Instruction for compiling deepmd-kit and dpgen on NSCC]]></summary></entry><entry><title type="html">Step-by-Step Compilation of VASP (CPU) Incorporating Grand-Canonical Methods with Intel OneAPI</title><link href="https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-intel_oneapi/" rel="alternate" type="text/html" title="Step-by-Step Compilation of VASP (CPU) Incorporating Grand-Canonical Methods with Intel OneAPI"/><published>2025-05-04T00:00:00+00:00</published><updated>2025-05-04T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-intel_oneapi</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-intel_oneapi/"><![CDATA[<h2 id="download-packages">Download packages</h2> <p>Assume the vasp source code was downloaded in extracted in <code class="language-plaintext highlighter-rouge">$HOME/vasp.6.4.0_cp_cpu</code></p> <p>You need the patch <code class="language-plaintext highlighter-rouge">VASPSOL</code> for <code class="language-plaintext highlighter-rouge">VASP.6.3.0</code> and <code class="language-plaintext highlighter-rouge">VASP-CP</code>. Those patches can be found in the links below.</p> <ul> <li>VASPSol:<br/> <a href="https://github.com/henniggroup/VASPsol/issues/64">https://github.com/henniggroup/VASPsol/issues/64</a></li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>solvation.F
 VASPsol_VASP630.patch
 </code></pre></div></div> <ul> <li>VASP-CP:<br/> <a href="https://github.com/yuanyue-liu-group/CP-VASP/">https://github.com/yuanyue-liu-group/CP-VASP/</a></li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cp-vaspsol.patch
 </code></pre></div></div> <hr/> <h2 id="patch-vaspsol">Patch VASPSOL</h2> <p>Copy <code class="language-plaintext highlighter-rouge">solvation.F and VASPsol_VASP630.patch</code> to <code class="language-plaintext highlighter-rouge">src</code> folder of vasp source code</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>solvation.F <span class="nv">$HOME</span>/vasp.6.4.0_cp_cpu/src
@@ -216,6 +216,119 @@ module purge
 <span class="nb">time </span>mpirun <span class="nv">$MPIFLAGS</span> <span class="nv">$EXECROOT</span>/vasp_std <span class="o">&gt;</span> print-out
 
 <span class="nb">echo</span> <span class="si">$(</span><span class="nb">date</span><span class="si">)</span> <span class="nv">$PBS_JOBNAME</span> <span class="k">${</span><span class="nv">PBS_O_WORKDIR</span><span class="k">}</span> <span class="o">&gt;&gt;</span> ~/LOG
+</code></pre></div></div>]]></content><author><name>Nam Tran</name></author><category term="Tutorial"/><summary type="html"><![CDATA[Instruction for compiling vasp cpu with grand-canonical approach on with Intel OneAPI]]></summary></entry><entry><title type="html">Step-by-Step Compilation of VASP (CPU) Incorporating Grand-Canonical Methods on NSCC</title><link href="https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-nscc/" rel="alternate" type="text/html" title="Step-by-Step Compilation of VASP (CPU) Incorporating Grand-Canonical Methods on NSCC"/><published>2025-05-04T00:00:00+00:00</published><updated>2025-05-04T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-nscc</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-nscc/"><![CDATA[<h2 id="download-packages">Download packages</h2> <p>Assume the vasp source code was downloaded in extracted in <code class="language-plaintext highlighter-rouge">$HOME/vasp.6.4.0_cp_cpu</code></p> <p>You need the patch <code class="language-plaintext highlighter-rouge">VASPSOL</code> for <code class="language-plaintext highlighter-rouge">VASP.6.3.0</code> and <code class="language-plaintext highlighter-rouge">VASP-CP</code>. Those patches can be found in the links below.</p> <ul> <li>VASPSol:<br/> <a href="https://github.com/henniggroup/VASPsol/issues/64">https://github.com/henniggroup/VASPsol/issues/64</a></li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>solvation.F
+VASPsol_VASP630.patch
+</code></pre></div></div> <ul> <li>VASP-CP:<br/> <a href="https://github.com/yuanyue-liu-group/CP-VASP/">https://github.com/yuanyue-liu-group/CP-VASP/</a></li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cp-vaspsol.patch
+</code></pre></div></div> <hr/> <h2 id="patch-vaspsol">Patch VASPSOL</h2> <p>Copy <code class="language-plaintext highlighter-rouge">solvation.F and VASPsol_VASP630.patch</code> to <code class="language-plaintext highlighter-rouge">src</code> folder of vasp source code</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>solvation.F <span class="nv">$HOME</span>/vasp.6.4.0_cp_cpu/src
+<span class="nb">cp </span>VASPsol_VASP630.patch <span class="nv">$HOME</span>/vasp.6.4.0_cp_cpu/src
+</code></pre></div></div> <p>Then execute the patch.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>patch <span class="nt">-p0</span> &lt; VASPsol_VASP630.patch
+</code></pre></div></div> <hr/> <h2 id="patch-vasp-cp">Patch VASP-CP</h2> <p>Copy <code class="language-plaintext highlighter-rouge">cp-vaspsol.patch</code> to <code class="language-plaintext highlighter-rouge">src</code> folder of vasp source code</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>cp-vaspsol.patch <span class="nv">$HOME</span>/vasp.6.4.0_cp_cpu/src
+</code></pre></div></div> <p>Then execute the patch.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>patch <span class="nt">-p0</span> &lt; cp-vaspsol++.patch
+</code></pre></div></div> <hr/> <h2 id="load-libs">Load libs</h2> <p>Clean all loaded modules and swap PrgEnv from cray to intel. Default the <strong>MKL</strong> environment variable <strong>MKLROOT</strong> will be setup by module file “mkl”. The module “mkl” has several version. You can switch it and find the best one for you. Here choose the default version of mkl, which is 2024.0.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module swap PrgEnv-cray PrgEnv-intel
+module swap intel intel/2022.1.0
+module load mkl
+module load cray-hdf5
+</code></pre></div></div> <hr/> <h2 id="modify-the-makefile">Modify the makefile</h2> <p>Modify the makefile.include as follow.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Default precompiler options</span>
+CPP_OPTIONS <span class="o">=</span> <span class="nt">-DHOST</span><span class="o">=</span><span class="se">\"</span>LinuxIFC<span class="se">\"</span> <span class="se">\</span>
+              <span class="nt">-DMPI</span> <span class="nt">-DMPI_BLOCK</span><span class="o">=</span>8000 <span class="nt">-Duse_collective</span> <span class="se">\</span>
+              <span class="nt">-DscaLAPACK</span> <span class="se">\</span>
+              <span class="nt">-DCACHE_SIZE</span><span class="o">=</span>4000 <span class="se">\</span>
+              <span class="nt">-Davoidalloc</span> <span class="se">\</span>
+              <span class="nt">-Dvasp6</span> <span class="se">\</span>
+              <span class="nt">-Duse_bse_te</span> <span class="se">\</span>
+              <span class="nt">-Dtbdyn</span> <span class="se">\</span>
+              <span class="nt">-Dfock_dblbuf</span> <span class="se">\</span>
+              <span class="nt">-D_OPENMP</span> <span class="se">\</span>
+              <span class="nt">-Dsol_compat</span>
+
+CPP         <span class="o">=</span> fpp <span class="nt">-f_com</span><span class="o">=</span>no <span class="nt">-free</span> <span class="nt">-w0</span>  <span class="nv">$*</span><span class="si">$(</span>FUFFIX<span class="si">)</span> <span class="nv">$*</span><span class="si">$(</span>SUFFIX<span class="si">)</span> <span class="si">$(</span>CPP_OPTIONS<span class="si">)</span>
+
+FC          <span class="o">=</span> ftn <span class="nt">-qopenmp</span>
+FCL         <span class="o">=</span> ftn
+
+FREE        <span class="o">=</span> <span class="nt">-free</span> <span class="nt">-names</span> lowercase
+
+FFLAGS      <span class="o">=</span> <span class="nt">-assume</span> byterecl <span class="nt">-w</span>
+
+OFLAG       <span class="o">=</span> <span class="nt">-O2</span>
+OFLAG_IN    <span class="o">=</span> <span class="si">$(</span>OFLAG<span class="si">)</span>
+DEBUG       <span class="o">=</span> <span class="nt">-O0</span>
+
+OBJECTS     <span class="o">=</span> fftmpiw.o fftmpi_map.o fftw3d.o fft3dlib.o
+OBJECTS_O1 +<span class="o">=</span> fftw3d.o fftmpi.o fftmpiw.o
+OBJECTS_O2 +<span class="o">=</span> fft3dlib.o
+
+<span class="c"># For what used to be vasp.5.lib</span>
+CPP_LIB     <span class="o">=</span> <span class="si">$(</span>CPP<span class="si">)</span>
+FC_LIB      <span class="o">=</span> <span class="si">$(</span>FC<span class="si">)</span>
+CC_LIB      <span class="o">=</span> cc
+CFLAGS_LIB  <span class="o">=</span> <span class="nt">-O</span>
+FFLAGS_LIB  <span class="o">=</span> <span class="nt">-O1</span>
+FREE_LIB    <span class="o">=</span> <span class="si">$(</span>FREE<span class="si">)</span>
+
+OBJECTS_LIB <span class="o">=</span> linpack_double.o
+
+<span class="c"># For the parser library</span>
+CXX_PARS    <span class="o">=</span> CC
+LLIBS       <span class="o">=</span> <span class="nt">-lstdc</span>++
+
+<span class="c">##</span>
+<span class="c">## Customize as of this point! Of course you may change the preceding</span>
+<span class="c">## part of this file as well if you like, but it should rarely be</span>
+<span class="c">## necessary ...</span>
+<span class="c">##</span>
+
+<span class="c"># When compiling on the target machine itself, change this to the</span>
+<span class="c"># relevant target when cross-compiling for another architecture</span>
+<span class="c"># -xHost will show error for vm or the amd cpu.</span>
+FFLAGS     +<span class="o">=</span> <span class="nt">-O3</span>
+
+<span class="c"># Intel MKL (FFTW, BLAS, LAPACK, and scaLAPACK)</span>
+<span class="c"># (Note: for Intel Parallel Studio's MKL use -mkl instead of -qmkl)</span>
+FCL        +<span class="o">=</span> <span class="nt">-qmkl</span>
+MKLROOT    ?<span class="o">=</span> /app/apps/oneapi/2024.0/mkl/2024.0
+LLIBS      +<span class="o">=</span> <span class="nt">-L</span><span class="si">$(</span>MKLROOT<span class="si">)</span>/lib <span class="nt">-lmkl_scalapack_lp64</span> <span class="nt">-lmkl_intel_lp64</span> <span class="nt">-lmkl_intel_thread</span> <span class="nt">-lmkl_core</span> <span class="nt">-lmkl_blacs_intelmpi_lp64</span> <span class="nt">-liomp5</span> <span class="nt">-lpthread</span> <span class="nt">-lm</span> <span class="nt">-ldl</span>
+<span class="c"># If compile with GNU, use this MKL link flags</span>
+<span class="c">#  LLIBS      +=  -m64  -L${MKLROOT}/lib -lmkl_scalapack_lp64 -Wl,--no-as-needed -lmkl_cdft_core -lmkl_intel_lp64 -lmkl_gnu_thread -lmkl_core -lmkl_blacs_intelmpi_lp64 -lgomp -lpthread -lm -ldl</span>
+INCS        <span class="o">=</span><span class="nt">-I</span><span class="si">$(</span>MKLROOT<span class="si">)</span>/include/fftw
+
+<span class="c"># HDF5-support (optional but strongly recommended)</span>
+CPP_OPTIONS+<span class="o">=</span> <span class="nt">-DVASP_HDF5</span>
+HDF5_ROOT  ?<span class="o">=</span> /opt/cray/pe/hdf5/1.12.1.1/INTEL/19.0/lib
+LLIBS      +<span class="o">=</span> <span class="nt">-L</span><span class="si">$(</span>HDF5_ROOT<span class="si">)</span>/lib <span class="nt">-lhdf5_fortran</span>
+INCS       +<span class="o">=</span> <span class="nt">-I</span><span class="si">$(</span>HDF5_ROOT<span class="si">)</span>/include
+
+<span class="c"># For the VASP-2-Wannier90 interface (optional)</span>
+<span class="c">#CPP_OPTIONS    += -DVASP2WANNIER90</span>
+<span class="c">#WANNIER90_ROOT ?= /path/to/your/wannier90/installation</span>
+<span class="c">#LLIBS          += -L$(WANNIER90_ROOT)/lib -lwannier</span>
+
+<span class="c"># For the fftlib library (experimental)</span>
+<span class="c">#CPP_OPTION += -Dsysv</span>
+<span class="c">#FCL         = mpif90 fftlib.o -qmkl</span>
+<span class="c">#CXX_FFTLIB  = icpc -qopenmp -std=c++11 -DFFTLIB_USE_MKL -DFFTLIB_THREADSAFE</span>
+<span class="c">#INCS_FFTLIB = -I./include -I$(MKLROOT)/include/fftw</span>
+<span class="c">#LIBS       += fftlib</span>
+</code></pre></div></div> <hr/> <h2 id="installtion">Installtion</h2> <p>Then install the vasp package with the command below. Remember to change <code class="language-plaintext highlighter-rouge">N</code> in the command.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make <span class="nv">DEPS</span><span class="o">=</span>1 <span class="nt">-jN</span> all
+</code></pre></div></div> <hr/> <h2 id="vasp-script">Vasp script</h2> <p>The bash script to run vasp can be set as follow.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="c">#PBS -P &lt;project_id&gt;</span>
+<span class="c">#PBS -q normal</span>
+<span class="c">#PBS -l select=1:ncpus=128:mem=440gb:mpiprocs=128:ompthreads=1</span>
+<span class="c">#PBS -l walltime=24:00:00</span>
+<span class="c">#PBS -j oe</span>
+<span class="c">#PBS -N &lt;job_name&gt;</span>
+
+<span class="nb">cd</span> <span class="nv">$PBS_O_WORKDIR</span>
+
+module swap PrgEnv-cray PrgEnv-intel
+module swap intel intel/2022.1.0
+module load mkl
+module load cray-hdf5
+
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/path/to/my/vasp/bin:<span class="nv">$PATH</span>
+
+mpirun <span class="nt">-np</span> 128 <span class="nt">--cpu-bind</span> depth <span class="nt">-d</span> 1 vasp_std <span class="o">&gt;</span> print-out
 </code></pre></div></div>]]></content><author><name>Nam Tran</name></author><category term="Tutorial"/><summary type="html"><![CDATA[Instruction for compiling vasp cpu with grand-canonical approach on NSCC]]></summary></entry><entry><title type="html">Instructions for Compiling VASP 6.4.0 with GPU Support on NSCC</title><link href="https://namtranlab.github.io/blog/2025/compile-vasp-gpu-nscc/" rel="alternate" type="text/html" title="Instructions for Compiling VASP 6.4.0 with GPU Support on NSCC"/><published>2025-05-04T00:00:00+00:00</published><updated>2025-05-04T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/compile-vasp-gpu-nscc</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/compile-vasp-gpu-nscc/"><![CDATA[<h2 id="load-libs">Load libs</h2> <p>Assume the vasp source code was downloaded in extracted in <code class="language-plaintext highlighter-rouge">$HOME/vasp.6.4.0_gpu</code></p> <p>Clean all loaded modules.</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module purge
 </code></pre></div></div> <p>We need to load the intel mkl lib which can be found in intel oneapi package at <code class="language-plaintext highlighter-rouge">/app/apps/oneapi/</code></p> <p>In this tutorial we will use version 2022.1.2</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> /app/apps/oneapi/2022.1.2/mkl/2022.0.2/env/vars.sh
 </code></pre></div></div> <p>Next we need to load the compiler and libs from nvidia hpc skl (nvhpc).</p> <p>Create a module file named <code class="language-plaintext highlighter-rouge">vasp_nv</code> and put it under the vasp source code folder. Different version of nvhpc can be found at <code class="language-plaintext highlighter-rouge">/app/apps/nvhpc/</code>. In this tutorial we will use version 22.5 with cuda version of 11.7. Add the following to <code class="language-plaintext highlighter-rouge">vasp_nv</code>.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#%Module1.0</span>

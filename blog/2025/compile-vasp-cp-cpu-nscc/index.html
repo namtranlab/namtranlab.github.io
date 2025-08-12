@@ -37,8 +37,10 @@ VASPsol_VASP630.patch
 </code></pre></div></div> <p>Then execute the patch.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>patch <span class="nt">-p0</span> &lt; VASPsol_VASP630.patch
 </code></pre></div></div> <hr> <h2 id="patch-vasp-cp">Patch VASP-CP</h2> <p>Copy <code class="language-plaintext highlighter-rouge">cp-vaspsol.patch</code> to <code class="language-plaintext highlighter-rouge">src</code> folder of vasp source code</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>cp-vaspsol.patch <span class="nv">$HOME</span>/vasp.6.4.0_cp_cpu/src
 </code></pre></div></div> <p>Then execute the patch.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>patch <span class="nt">-p0</span> &lt; cp-vaspsol++.patch
-</code></pre></div></div> <hr> <h2 id="load-libs">Load libs</h2> <p>Clean all loaded modules and load intel oneapi packages.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module purge
-<span class="nb">source</span> /app/apps/oneapi/2022.1.2/setvars.sh
+</code></pre></div></div> <hr> <h2 id="load-libs">Load libs</h2> <p>Clean all loaded modules and swap PrgEnv from cray to intel. Default the <strong>MKL</strong> environment variable <strong>MKLROOT</strong> will be setup by module file “mkl”. The module “mkl” has several version. You can switch it and find the best one for you. Here choose the default version of mkl, which is 2024.0.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module swap PrgEnv-cray PrgEnv-intel
+module swap intel intel/2022.1.0
+module load mkl
+module load cray-hdf5
 </code></pre></div></div> <hr> <h2 id="modify-the-makefile">Modify the makefile</h2> <p>Modify the makefile.include as follow.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Default precompiler options</span>
 CPP_OPTIONS <span class="o">=</span> <span class="nt">-DHOST</span><span class="o">=</span><span class="se">\"</span>LinuxIFC<span class="se">\"</span> <span class="se">\</span>
               <span class="nt">-DMPI</span> <span class="nt">-DMPI_BLOCK</span><span class="o">=</span>8000 <span class="nt">-Duse_collective</span> <span class="se">\</span>
@@ -54,8 +56,8 @@ CPP_OPTIONS <span class="o">=</span> <span class="nt">-DHOST</span><span class="
 
 CPP         <span class="o">=</span> fpp <span class="nt">-f_com</span><span class="o">=</span>no <span class="nt">-free</span> <span class="nt">-w0</span>  <span class="nv">$*</span><span class="si">$(</span>FUFFIX<span class="si">)</span> <span class="nv">$*</span><span class="si">$(</span>SUFFIX<span class="si">)</span> <span class="si">$(</span>CPP_OPTIONS<span class="si">)</span>
 
-FC          <span class="o">=</span> mpiifort <span class="nt">-qopenmp</span>
-FCL         <span class="o">=</span> mpiifort
+FC          <span class="o">=</span> ftn <span class="nt">-qopenmp</span>
+FCL         <span class="o">=</span> ftn
 
 FREE        <span class="o">=</span> <span class="nt">-free</span> <span class="nt">-names</span> lowercase
 
@@ -72,7 +74,7 @@ OBJECTS_O2 +<span class="o">=</span> fft3dlib.o
 <span class="c"># For what used to be vasp.5.lib</span>
 CPP_LIB     <span class="o">=</span> <span class="si">$(</span>CPP<span class="si">)</span>
 FC_LIB      <span class="o">=</span> <span class="si">$(</span>FC<span class="si">)</span>
-CC_LIB      <span class="o">=</span> icc
+CC_LIB      <span class="o">=</span> cc
 CFLAGS_LIB  <span class="o">=</span> <span class="nt">-O</span>
 FFLAGS_LIB  <span class="o">=</span> <span class="nt">-O1</span>
 FREE_LIB    <span class="o">=</span> <span class="si">$(</span>FREE<span class="si">)</span>
@@ -80,7 +82,7 @@ FREE_LIB    <span class="o">=</span> <span class="si">$(</span>FREE<span class="
 OBJECTS_LIB <span class="o">=</span> linpack_double.o
 
 <span class="c"># For the parser library</span>
-CXX_PARS    <span class="o">=</span> icpc
+CXX_PARS    <span class="o">=</span> CC
 LLIBS       <span class="o">=</span> <span class="nt">-lstdc</span>++
 
 <span class="c">##</span>
@@ -91,38 +93,53 @@ LLIBS       <span class="o">=</span> <span class="nt">-lstdc</span>++
 
 <span class="c"># When compiling on the target machine itself, change this to the</span>
 <span class="c"># relevant target when cross-compiling for another architecture</span>
-VASP_TARGET_CPU ?<span class="o">=</span> <span class="nt">-march</span><span class="o">=</span>core-avx2
-FFLAGS     +<span class="o">=</span> <span class="si">$(</span>VASP_TARGET_CPU<span class="si">)</span>
+<span class="c"># -xHost will show error for vm or the amd cpu.</span>
+FFLAGS     +<span class="o">=</span> <span class="nt">-O3</span>
 
 <span class="c"># Intel MKL (FFTW, BLAS, LAPACK, and scaLAPACK)</span>
 <span class="c"># (Note: for Intel Parallel Studio's MKL use -mkl instead of -qmkl)</span>
 FCL        +<span class="o">=</span> <span class="nt">-qmkl</span>
-MKLROOT    ?<span class="o">=</span> /path/to/your/mkl/installation
-LLIBS      +<span class="o">=</span> <span class="nt">-L</span><span class="si">$(</span>MKLROOT<span class="si">)</span>/lib/intel64 <span class="nt">-lmkl_scalapack_lp64</span> <span class="nt">-lmkl_blacs_intelmpi_lp64</span>
+MKLROOT    ?<span class="o">=</span> /app/apps/oneapi/2024.0/mkl/2024.0
+LLIBS      +<span class="o">=</span> <span class="nt">-L</span><span class="si">$(</span>MKLROOT<span class="si">)</span>/lib <span class="nt">-lmkl_scalapack_lp64</span> <span class="nt">-lmkl_intel_lp64</span> <span class="nt">-lmkl_intel_thread</span> <span class="nt">-lmkl_core</span> <span class="nt">-lmkl_blacs_intelmpi_lp64</span> <span class="nt">-liomp5</span> <span class="nt">-lpthread</span> <span class="nt">-lm</span> <span class="nt">-ldl</span>
+<span class="c"># If compile with GNU, use this MKL link flags</span>
+<span class="c">#  LLIBS      +=  -m64  -L${MKLROOT}/lib -lmkl_scalapack_lp64 -Wl,--no-as-needed -lmkl_cdft_core -lmkl_intel_lp64 -lmkl_gnu_thread -lmkl_core -lmkl_blacs_intelmpi_lp64 -lgomp -lpthread -lm -ldl</span>
 INCS        <span class="o">=</span><span class="nt">-I</span><span class="si">$(</span>MKLROOT<span class="si">)</span>/include/fftw
+
+<span class="c"># HDF5-support (optional but strongly recommended)</span>
+CPP_OPTIONS+<span class="o">=</span> <span class="nt">-DVASP_HDF5</span>
+HDF5_ROOT  ?<span class="o">=</span> /opt/cray/pe/hdf5/1.12.1.1/INTEL/19.0/lib
+LLIBS      +<span class="o">=</span> <span class="nt">-L</span><span class="si">$(</span>HDF5_ROOT<span class="si">)</span>/lib <span class="nt">-lhdf5_fortran</span>
+INCS       +<span class="o">=</span> <span class="nt">-I</span><span class="si">$(</span>HDF5_ROOT<span class="si">)</span>/include
+
+<span class="c"># For the VASP-2-Wannier90 interface (optional)</span>
+<span class="c">#CPP_OPTIONS    += -DVASP2WANNIER90</span>
+<span class="c">#WANNIER90_ROOT ?= /path/to/your/wannier90/installation</span>
+<span class="c">#LLIBS          += -L$(WANNIER90_ROOT)/lib -lwannier</span>
+
+<span class="c"># For the fftlib library (experimental)</span>
+<span class="c">#CPP_OPTION += -Dsysv</span>
+<span class="c">#FCL         = mpif90 fftlib.o -qmkl</span>
+<span class="c">#CXX_FFTLIB  = icpc -qopenmp -std=c++11 -DFFTLIB_USE_MKL -DFFTLIB_THREADSAFE</span>
+<span class="c">#INCS_FFTLIB = -I./include -I$(MKLROOT)/include/fftw</span>
+<span class="c">#LIBS       += fftlib</span>
 </code></pre></div></div> <hr> <h2 id="installtion">Installtion</h2> <p>Then install the vasp package with the command below. Remember to change <code class="language-plaintext highlighter-rouge">N</code> in the command.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make <span class="nv">DEPS</span><span class="o">=</span>1 <span class="nt">-jN</span> all
 </code></pre></div></div> <hr> <h2 id="vasp-script">Vasp script</h2> <p>The bash script to run vasp can be set as follow.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
 
-<span class="c">#PBS -N CPU-vasp</span>
+<span class="c">#PBS -P &lt;project_id&gt;</span>
 <span class="c">#PBS -q normal</span>
-<span class="c">#PBS -P personal-vannamtr</span>
-<span class="c">#PBS -l select=1:ncpus=128:mpiprocs=64:mem=420G</span>
-<span class="c">#PBS -l walltime=1:00:00</span>
+<span class="c">#PBS -l select=1:ncpus=128:mem=440gb:mpiprocs=128:ompthreads=1</span>
+<span class="c">#PBS -l walltime=24:00:00</span>
 <span class="c">#PBS -j oe</span>
+<span class="c">#PBS -N &lt;job_name&gt;</span>
 
-<span class="c"># Change directory to the one where the job was submitted</span>
-<span class="nv">idir</span><span class="o">=</span><span class="k">${</span><span class="nv">PBS_O_WORKDIR</span><span class="k">}</span>
-<span class="nb">cd</span> <span class="nv">$idir</span>
-<span class="c"># Set scratch environment</span>
+<span class="nb">cd</span> <span class="nv">$PBS_O_WORKDIR</span>
 
-module purge
-<span class="nb">source</span> /app/apps/oneapi/2022.1.2/setvars.sh
+module swap PrgEnv-cray PrgEnv-intel
+module swap intel intel/2022.1.0
+module load mkl
+module load cray-hdf5
 
-<span class="nv">EXECROOT</span><span class="o">=</span>/home/users/ntu/vannamtr/vasp.6.4.0_cp_cpu/intel_omp
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/path/to/my/vasp/bin:<span class="nv">$PATH</span>
 
-<span class="nv">MPIFLAGS</span><span class="o">=</span><span class="s1">'-genv I_MPI_PIN_DOMAIN=omp -genv I_MPI_PIN=yes -genv OMP_NUM_THREADS=4 -genv OMP_STACKSIZE=512m -genv OMP_PLACES=cores -genv OMP_PROC_BIND=close'</span>
-
-<span class="nb">time </span>mpirun <span class="nv">$MPIFLAGS</span> <span class="nv">$EXECROOT</span>/vasp_std <span class="o">&gt;</span> print-out
-
-<span class="nb">echo</span> <span class="si">$(</span><span class="nb">date</span><span class="si">)</span> <span class="nv">$PBS_JOBNAME</span> <span class="k">${</span><span class="nv">PBS_O_WORKDIR</span><span class="k">}</span> <span class="o">&gt;&gt;</span> ~/LOG
+mpirun <span class="nt">-np</span> 128 <span class="nt">--cpu-bind</span> depth <span class="nt">-d</span> 1 vasp_std <span class="o">&gt;</span> print-out
 </code></pre></div></div> </d-article> <d-appendix> <d-footnote-list></d-footnote-list> <d-citation-list></d-citation-list> </d-appendix> <d-bibliography src="/assets/bibliography/"></d-bibliography> </div> <footer class="fixed-bottom"> <div class="container mt-0"> © Copyright 2025 Nam V. Tran. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> </body> </html>
