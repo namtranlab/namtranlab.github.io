@@ -1,7 +1,7 @@
 ---
 layout: distill
-title: Step-by-Step Compilation of VASP (CPU) Incorporating Grand-Canonical Methods on NSCC
-description: Instruction for compiling vasp cpu with grand-canonical approach on NSCC
+title: Step-by-Step Compilation of VASP (CPU) Incorporating Grand-Canonical Methods with Intel OneAPI
+description: Instruction for compiling vasp cpu with grand-canonical approach on with Intel OneAPI
 tags: Tutorial
 giscus_comments: true
 date: 2025-05-4
@@ -104,13 +104,11 @@ patch -p0 < cp-vaspsol++.patch
 
 ## Load libs
 
-Clean all loaded modules and swap PrgEnv from cray to intel. Default the __MKL__ environment variable __MKLROOT__ will be setup by module file "mkl". The module "mkl" has several version. You can switch it and find the best one for you. Here choose the default version of mkl, which is 2024.0. 
+Clean all loaded modules and load intel oneapi packages.
 
 ``` bash
-module swap PrgEnv-cray PrgEnv-intel
-module swap intel intel/2022.1.0
-module load mkl
-module load cray-hdf5
+module purge
+source /app/apps/oneapi/2022.1.2/setvars.sh
 ```
 ***
 
@@ -134,8 +132,8 @@ CPP_OPTIONS = -DHOST=\"LinuxIFC\" \
 
 CPP         = fpp -f_com=no -free -w0  $*$(FUFFIX) $*$(SUFFIX) $(CPP_OPTIONS)
 
-FC          = ftn -qopenmp
-FCL         = ftn
+FC          = mpiifort -qopenmp
+FCL         = mpiifort
 
 FREE        = -free -names lowercase
 
@@ -152,7 +150,7 @@ OBJECTS_O2 += fft3dlib.o
 # For what used to be vasp.5.lib
 CPP_LIB     = $(CPP)
 FC_LIB      = $(FC)
-CC_LIB      = cc
+CC_LIB      = icc
 CFLAGS_LIB  = -O
 FFLAGS_LIB  = -O1
 FREE_LIB    = $(FREE)
@@ -160,7 +158,7 @@ FREE_LIB    = $(FREE)
 OBJECTS_LIB = linpack_double.o
 
 # For the parser library
-CXX_PARS    = CC
+CXX_PARS    = icpc
 LLIBS       = -lstdc++
 
 ##
@@ -171,35 +169,15 @@ LLIBS       = -lstdc++
 
 # When compiling on the target machine itself, change this to the
 # relevant target when cross-compiling for another architecture
-# -xHost will show error for vm or the amd cpu.
-FFLAGS     += -O3
+VASP_TARGET_CPU ?= -march=core-avx2
+FFLAGS     += $(VASP_TARGET_CPU)
 
 # Intel MKL (FFTW, BLAS, LAPACK, and scaLAPACK)
 # (Note: for Intel Parallel Studio's MKL use -mkl instead of -qmkl)
 FCL        += -qmkl
-MKLROOT    ?= /app/apps/oneapi/2024.0/mkl/2024.0
-LLIBS      += -L$(MKLROOT)/lib -lmkl_scalapack_lp64 -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -lmkl_blacs_intelmpi_lp64 -liomp5 -lpthread -lm -ldl
-# If compile with GNU, use this MKL link flags
-#  LLIBS      +=  -m64  -L${MKLROOT}/lib -lmkl_scalapack_lp64 -Wl,--no-as-needed -lmkl_cdft_core -lmkl_intel_lp64 -lmkl_gnu_thread -lmkl_core -lmkl_blacs_intelmpi_lp64 -lgomp -lpthread -lm -ldl
+MKLROOT    ?= /path/to/your/mkl/installation
+LLIBS      += -L$(MKLROOT)/lib/intel64 -lmkl_scalapack_lp64 -lmkl_blacs_intelmpi_lp64
 INCS        =-I$(MKLROOT)/include/fftw
-
-# HDF5-support (optional but strongly recommended)
-CPP_OPTIONS+= -DVASP_HDF5
-HDF5_ROOT  ?= /opt/cray/pe/hdf5/1.12.1.1/INTEL/19.0/lib
-LLIBS      += -L$(HDF5_ROOT)/lib -lhdf5_fortran
-INCS       += -I$(HDF5_ROOT)/include
-
-# For the VASP-2-Wannier90 interface (optional)
-#CPP_OPTIONS    += -DVASP2WANNIER90
-#WANNIER90_ROOT ?= /path/to/your/wannier90/installation
-#LLIBS          += -L$(WANNIER90_ROOT)/lib -lwannier
-
-# For the fftlib library (experimental)
-#CPP_OPTION += -Dsysv
-#FCL         = mpif90 fftlib.o -qmkl
-#CXX_FFTLIB  = icpc -qopenmp -std=c++11 -DFFTLIB_USE_MKL -DFFTLIB_THREADSAFE
-#INCS_FFTLIB = -I./include -I$(MKLROOT)/include/fftw
-#LIBS       += fftlib
 ```
 ***
 
@@ -219,21 +197,26 @@ The bash script to run vasp can be set as follow.
 ```bash
 #!/bin/bash
 
-#PBS -P <project_id>
+#PBS -N CPU-vasp
 #PBS -q normal
-#PBS -l select=1:ncpus=128:mem=440gb:mpiprocs=128:ompthreads=1
-#PBS -l walltime=24:00:00
+#PBS -P personal-vannamtr
+#PBS -l select=1:ncpus=128:mpiprocs=64:mem=420G
+#PBS -l walltime=1:00:00
 #PBS -j oe
-#PBS -N <job_name>
 
-cd $PBS_O_WORKDIR
+# Change directory to the one where the job was submitted
+idir=${PBS_O_WORKDIR}
+cd $idir
+# Set scratch environment
 
-module swap PrgEnv-cray PrgEnv-intel
-module swap intel intel/2022.1.0
-module load mkl
-module load cray-hdf5
+module purge
+source /app/apps/oneapi/2022.1.2/setvars.sh
 
-export PATH=/path/to/my/vasp/bin:$PATH
+EXECROOT=/home/users/ntu/vannamtr/vasp.6.4.0_cp_cpu/intel_omp
 
-mpirun -np 128 --cpu-bind depth -d 1 vasp_std > print-out
+MPIFLAGS='-genv I_MPI_PIN_DOMAIN=omp -genv I_MPI_PIN=yes -genv OMP_NUM_THREADS=4 -genv OMP_STACKSIZE=512m -genv OMP_PLACES=cores -genv OMP_PROC_BIND=close'
+
+time mpirun $MPIFLAGS $EXECROOT/vasp_std > print-out
+
+echo $(date) $PBS_JOBNAME ${PBS_O_WORKDIR} >> ~/LOG
 ```
