@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://namtranlab.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://namtranlab.github.io/" rel="alternate" type="text/html" hreflang="en" /><updated>2025-08-12T09:51:07+00:00</updated><id>https://namtranlab.github.io/feed.xml</id><title type="html">Nam V. Tran</title><entry><title type="html">Installing Docker on a GPU Machine</title><link href="https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine/" rel="alternate" type="text/html" title="Installing Docker on a GPU Machine" /><published>2025-05-08T00:00:00+00:00</published><updated>2025-05-08T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine/"><![CDATA[<h2 id="install-docker-from-a-package">Install Docker from a package</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://namtranlab.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://namtranlab.github.io/" rel="alternate" type="text/html" hreflang="en" /><updated>2025-08-14T07:55:12+00:00</updated><id>https://namtranlab.github.io/feed.xml</id><title type="html">Nam V. Tran</title><entry><title type="html">Installing Docker on a GPU Machine</title><link href="https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine/" rel="alternate" type="text/html" title="Installing Docker on a GPU Machine" /><published>2025-05-08T00:00:00+00:00</published><updated>2025-05-08T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine/"><![CDATA[<h2 id="install-docker-from-a-package">Install Docker from a package</h2>
 
 <h3 id="1-go-to-httpsdownloaddockercomlinuxdebiandists">1. Go to <a href="https://download.docker.com/linux/debian/dists/">https://download.docker.com/linux/debian/dists/</a>.</h3>
 
@@ -836,18 +836,7 @@ module load <span class="nv">$HOME</span>/vasp.6.4.0_gpu/vasp_nv
 <span class="nv">vasp_exe</span><span class="o">=</span><span class="nv">$HOME</span>/vasp.6.4.0_gpu/bin/vasp_std
 
 <span class="nb">time </span>mpirun <span class="nt">-np</span> 4 <span class="nt">--mca</span> btl <span class="s1">'^openib'</span> <span class="nt">--map-by</span> ppr:4:node:PE<span class="o">=</span>16 <span class="nt">--bind-to</span> core <span class="nv">$vasp_exe</span> <span class="o">&gt;</span> print-out
-</code></pre></div></div>]]></content><author><name>Nam Tran</name></author><category term="Tutorial" /><summary type="html"><![CDATA[Instruction for compiling vasp gpu on NSCC]]></summary></entry><entry><title type="html">Configuration of a Small-Scale High-Performance Computing System – Part I</title><link href="https://namtranlab.github.io/blog/2025/small-hpc-part1/" rel="alternate" type="text/html" title="Configuration of a Small-Scale High-Performance Computing System – Part I" /><published>2025-05-02T00:00:00+00:00</published><updated>2025-05-02T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/small-hpc-part1</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/small-hpc-part1/"><![CDATA[<h2 id="module-system">Module system</h2>
-
-<p>Install environment-modules on your head node.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get <span class="nb">install </span>environment-modules
-<span class="nb">source</span> /usr/share/modules/init/bash <span class="o">&gt;&gt;</span> /etc/profile
-<span class="nb">export </span><span class="nv">MODULEPATH</span><span class="o">=</span><span class="nv">$MODULEPATH</span>:/opt/module_file/
-</code></pre></div></div>
-
-<hr />
-
-<h2 id="config-nfs">Config NFS</h2>
+</code></pre></div></div>]]></content><author><name>Nam Tran</name></author><category term="Tutorial" /><summary type="html"><![CDATA[Instruction for compiling vasp gpu on NSCC]]></summary></entry><entry><title type="html">Configuration of a Small-Scale High-Performance Computing System – Part I</title><link href="https://namtranlab.github.io/blog/2025/small-hpc-part1/" rel="alternate" type="text/html" title="Configuration of a Small-Scale High-Performance Computing System – Part I" /><published>2025-05-02T00:00:00+00:00</published><updated>2025-05-02T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/small-hpc-part1</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/small-hpc-part1/"><![CDATA[<h2 id="config-nfs">Config NFS</h2>
 
 <p>Install <code class="language-plaintext highlighter-rouge">nfs-kernel-server</code> on your head node and <code class="language-plaintext highlighter-rouge">nfs-common</code> on your compute node.</p>
 
@@ -979,4 +968,14 @@ UUID of the external hard drive can be found using <code class="language-plainte
 </span><span class="nv">ConstrainRAMSpace</span><span class="o">=</span><span class="nb">yes</span>
 <span class="c">##TaskAffinity=yes</span>
 <span class="nv">ConstrainDevices</span><span class="o">=</span>no
+</code></pre></div></div>
+<hr />
+
+<h2 id="module-system">Module system</h2>
+
+<p>Install environment-modules on your head node.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get <span class="nb">install </span>environment-modules
+<span class="nb">source</span> /usr/share/modules/init/bash <span class="o">&gt;&gt;</span> /etc/profile
+<span class="nb">export </span><span class="nv">MODULEPATH</span><span class="o">=</span><span class="nv">$MODULEPATH</span>:/opt/module_file/
 </code></pre></div></div>]]></content><author><name>Nam Tran</name></author><category term="Tutorial" /><summary type="html"><![CDATA[High-Performance Computing Setup – Part I - Network File System and Module Management Configuration]]></summary></entry></feed>
