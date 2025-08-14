@@ -21,13 +21,13 @@ authors:
 
 
 toc:
-  - name: Module system
+  - name: Config NFS
     # if a section has subsections, you can add them as follows:
     # subsections:
     #   - name: Example Child Subsection 1
     #   - name: Example Child Subsection 2
-  - name: Config NFS
   - name: Config SLURMN
+  - name: Module system
 
 _styles: >
   .fake-img {
@@ -46,18 +46,6 @@ _styles: >
   }
 
 ---
-
-## Module system
-
-Install environment-modules on your head node.
-
-```bash
-sudo apt-get install environment-modules
-source /usr/share/modules/init/bash >> /etc/profile
-export MODULEPATH=$MODULEPATH:/opt/module_file/
-```
-
-***
 
 ## Config NFS
 
@@ -209,4 +197,15 @@ ConstrainCores=yes
 ConstrainRAMSpace=yes
 ##TaskAffinity=yes
 ConstrainDevices=no
+```
+***
+
+## Module system
+
+Install environment-modules on your head node.
+
+```bash
+sudo apt-get install environment-modules
+source /usr/share/modules/init/bash >> /etc/profile
+export MODULEPATH=$MODULEPATH:/opt/module_file/
 ```
