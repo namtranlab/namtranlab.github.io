@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://namtranlab.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://namtranlab.github.io/" rel="alternate" type="text/html" hreflang="en" /><updated>2025-08-14T07:55:12+00:00</updated><id>https://namtranlab.github.io/feed.xml</id><title type="html">Nam V. Tran</title><entry><title type="html">Installing Docker on a GPU Machine</title><link href="https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine/" rel="alternate" type="text/html" title="Installing Docker on a GPU Machine" /><published>2025-05-08T00:00:00+00:00</published><updated>2025-05-08T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine/"><![CDATA[<h2 id="install-docker-from-a-package">Install Docker from a package</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://namtranlab.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://namtranlab.github.io/" rel="alternate" type="text/html" hreflang="en" /><updated>2025-08-14T08:02:52+00:00</updated><id>https://namtranlab.github.io/feed.xml</id><title type="html">Nam V. Tran</title><entry><title type="html">Installing Docker on a GPU Machine</title><link href="https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine/" rel="alternate" type="text/html" title="Installing Docker on a GPU Machine" /><published>2025-05-08T00:00:00+00:00</published><updated>2025-05-08T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine/"><![CDATA[<h2 id="install-docker-from-a-package">Install Docker from a package</h2>
 
 <h3 id="1-go-to-httpsdownloaddockercomlinuxdebiandists">1. Go to <a href="https://download.docker.com/linux/debian/dists/">https://download.docker.com/linux/debian/dists/</a>.</h3>
 
@@ -847,7 +847,7 @@ module load <span class="nv">$HOME</span>/vasp.6.4.0_gpu/vasp_nv
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt <span class="nb">install </span>nfs-common
 </code></pre></div></div>
 
-<p>Configure the shared dir from your head node by modifying <code class="language-plaintext highlighter-rouge">/etc/exportfs</code>.</p>
+<p>Configure the shared dir from your head node by modifying <code class="language-plaintext highlighter-rouge">/etc/exports</code>.</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/opt 192.168.1.0/24<span class="o">(</span>ro,sync,no_subtree_check<span class="o">)</span>
 /home 192.168.1.0/24<span class="o">(</span>rw,sync,no_subtree_check<span class="o">)</span>
@@ -858,7 +858,7 @@ module load <span class="nv">$HOME</span>/vasp.6.4.0_gpu/vasp_nv
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/sbin/exportfs <span class="nt">-ra</span>
 </code></pre></div></div>
 
-<p>Mount the shared dir in compute node.</p>
+<p>Mount the shared dir in compute nodes.</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mount j35a:/opt /opt
 mount j35a:/home /home 
@@ -869,9 +869,7 @@ mount j35a:/scratch /scratch
 
 <p>On head node we need to auto mount the external hard drive to <code class="language-plaintext highlighter-rouge">scratch</code> folders.
 UUID of the external hard drive can be found using <code class="language-plaintext highlighter-rouge">lsblk -f /dev/sda1</code>.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># written by chenxi, for /scratch dirctory</span>
-<span class="nv">UUID</span><span class="o">=</span>fd2391a4-72ca-4926-bd1c-8bd0d44a4448 /scratch ext4 defaults 0 2
-<span class="c"># written by chenxi, for scratch2</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">UUID</span><span class="o">=</span>fd2391a4-72ca-4926-bd1c-8bd0d44a4448 /scratch ext4 defaults 0 2
 <span class="nv">UUID</span><span class="o">=</span>2cf23a6c-2524-4fa1-963e-4d3465b99008 /scratch2 ext4 defaults 0 2
 </code></pre></div></div>
 
