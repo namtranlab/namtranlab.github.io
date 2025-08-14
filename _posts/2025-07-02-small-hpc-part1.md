@@ -60,7 +60,7 @@ For compute node
 apt install nfs-common
 ```
 
-Configure the shared dir from your head node by modifying ```/etc/exportfs```.
+Configure the shared dir from your head node by modifying ```/etc/exports```.
 
 ```bash
 /opt 192.168.1.0/24(ro,sync,no_subtree_check)
@@ -74,7 +74,7 @@ Run the following command to make the settings take effect.
 ``` 
 
 
-Mount the shared dir in compute node.
+Mount the shared dir in compute nodes.
 
 ```bash
 mount j35a:/opt /opt
@@ -87,9 +87,7 @@ Setup auto mount by editing ```/etc/fstab```.
 On head node we need to auto mount the external hard drive to ```scratch``` folders.
 UUID of the external hard drive can be found using ```lsblk -f /dev/sda1```.
 ```bash
-# written by chenxi, for /scratch dirctory
 UUID=fd2391a4-72ca-4926-bd1c-8bd0d44a4448 /scratch ext4 defaults 0 2
-# written by chenxi, for scratch2
 UUID=2cf23a6c-2524-4fa1-963e-4d3465b99008 /scratch2 ext4 defaults 0 2
 ```
 
