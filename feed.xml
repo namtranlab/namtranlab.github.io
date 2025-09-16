@@ -1,158 +1,44 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://namtranlab.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://namtranlab.github.io/" rel="alternate" type="text/html" hreflang="en" /><updated>2025-08-14T08:02:52+00:00</updated><id>https://namtranlab.github.io/feed.xml</id><title type="html">Nam V. Tran</title><entry><title type="html">Installing Docker on a GPU Machine</title><link href="https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine/" rel="alternate" type="text/html" title="Installing Docker on a GPU Machine" /><published>2025-05-08T00:00:00+00:00</published><updated>2025-05-08T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine/"><![CDATA[<h2 id="install-docker-from-a-package">Install Docker from a package</h2>
-
-<h3 id="1-go-to-httpsdownloaddockercomlinuxdebiandists">1. Go to <a href="https://download.docker.com/linux/debian/dists/">https://download.docker.com/linux/debian/dists/</a>.</h3>
-
-<h3 id="2-select-your-debian-version-in-the-list">2. Select your Debian version in the list.</h3>
-
-<h3 id="3-go-to-poolstable-and-select-the-applicable-architecture-amd64-armhf-arm64-or-s390x">3. Go to <code class="language-plaintext highlighter-rouge">pool/stable/</code> and select the applicable architecture (<code class="language-plaintext highlighter-rouge">amd64</code>, <code class="language-plaintext highlighter-rouge">armhf</code>, <code class="language-plaintext highlighter-rouge">arm64</code>, or <code class="language-plaintext highlighter-rouge">s390x</code>).</h3>
-
-<h3 id="4-download-the-following-deb-files-for-the-docker-engine-cli-containerd-and-docker-compose-packages">4. Download the following deb files for the Docker Engine, CLI, containerd, and Docker Compose packages:</h3>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  - containerd.io_&lt;version&gt;_&lt;<span class="nb">arch</span><span class="o">&gt;</span>.deb
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://namtranlab.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://namtranlab.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2025-09-16T06:52:35+00:00</updated><id>https://namtranlab.github.io/feed.xml</id><title type="html">Nam V. Tran</title><entry><title type="html">Installing Docker on a GPU Machine</title><link href="https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine/" rel="alternate" type="text/html" title="Installing Docker on a GPU Machine"/><published>2025-05-08T00:00:00+00:00</published><updated>2025-05-08T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/Install-docker-on-gpus-machine/"><![CDATA[<h2 id="install-docker-from-a-package">Install Docker from a package</h2> <h3 id="1-go-to-httpsdownloaddockercomlinuxdebiandists">1. Go to <a href="https://download.docker.com/linux/debian/dists/">https://download.docker.com/linux/debian/dists/</a>.</h3> <h3 id="2-select-your-debian-version-in-the-list">2. Select your Debian version in the list.</h3> <h3 id="3-go-to-poolstable-and-select-the-applicable-architecture-amd64-armhf-arm64-or-s390x">3. Go to <code class="language-plaintext highlighter-rouge">pool/stable/</code> and select the applicable architecture (<code class="language-plaintext highlighter-rouge">amd64</code>, <code class="language-plaintext highlighter-rouge">armhf</code>, <code class="language-plaintext highlighter-rouge">arm64</code>, or <code class="language-plaintext highlighter-rouge">s390x</code>).</h3> <h3 id="4-download-the-following-deb-files-for-the-docker-engine-cli-containerd-and-docker-compose-packages">4. Download the following deb files for the Docker Engine, CLI, containerd, and Docker Compose packages:</h3> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  - containerd.io_&lt;version&gt;_&lt;<span class="nb">arch</span><span class="o">&gt;</span>.deb
   - docker-ce_&lt;version&gt;_&lt;<span class="nb">arch</span><span class="o">&gt;</span>.deb
   - docker-ce-cli_&lt;version&gt;_&lt;<span class="nb">arch</span><span class="o">&gt;</span>.deb
   - docker-buildx-plugin_&lt;version&gt;_&lt;<span class="nb">arch</span><span class="o">&gt;</span>.deb
   - docker-compose-plugin_&lt;version&gt;_&lt;<span class="nb">arch</span><span class="o">&gt;</span>.deb
-</code></pre></div></div>
-
-<h3 id="5-install-the-deb-packages-update-the-paths-in-the-following-example-to-where-you-downloaded-the-docker-packages">5. Install the <code class="language-plaintext highlighter-rouge">.deb</code> packages. Update the paths in the following example to where you downloaded the Docker packages.</h3>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dpkg <span class="nt">-i</span> ./containerd.io_&lt;version&gt;_&lt;<span class="nb">arch</span><span class="o">&gt;</span>.deb
+</code></pre></div></div> <h3 id="5-install-the-deb-packages-update-the-paths-in-the-following-example-to-where-you-downloaded-the-docker-packages">5. Install the <code class="language-plaintext highlighter-rouge">.deb</code> packages. Update the paths in the following example to where you downloaded the Docker packages.</h3> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dpkg <span class="nt">-i</span> ./containerd.io_&lt;version&gt;_&lt;<span class="nb">arch</span><span class="o">&gt;</span>.deb
 <span class="nb">sudo </span>dpkg <span class="nt">-i</span> ./docker-ce_&lt;version&gt;_&lt;<span class="nb">arch</span><span class="o">&gt;</span>.deb
 ...
-</code></pre></div></div>
-<h3 id="6-verify-that-the-installation-is-successful-by-running-the-hello-world-image">6. Verify that the installation is successful by running the hello-world image</h3>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">sudo </span>service docker start
+</code></pre></div></div> <h3 id="6-verify-that-the-installation-is-successful-by-running-the-hello-world-image">6. Verify that the installation is successful by running the hello-world image</h3> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">sudo </span>service docker start
  <span class="nb">sudo </span>docker run hello-world
-</code></pre></div></div>
-<hr />
-
-<h2 id="installing-the-nvidia-container-toolkit">Installing the NVIDIA Container Toolkit</h2>
-
-<h3 id="1-configure-the-production-repository">1. Configure the production repository:</h3>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-fsSL</span> https://nvidia.github.io/libnvidia-container/gpgkey | <span class="nb">sudo </span>gpg <span class="nt">--dearmor</span> <span class="nt">-o</span> /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg <span class="se">\</span>
+</code></pre></div></div> <hr/> <h2 id="installing-the-nvidia-container-toolkit">Installing the NVIDIA Container Toolkit</h2> <h3 id="1-configure-the-production-repository">1. Configure the production repository:</h3> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-fsSL</span> https://nvidia.github.io/libnvidia-container/gpgkey | <span class="nb">sudo </span>gpg <span class="nt">--dearmor</span> <span class="nt">-o</span> /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg <span class="se">\</span>
   <span class="o">&amp;&amp;</span> curl <span class="nt">-s</span> <span class="nt">-L</span> https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | <span class="se">\</span>
     <span class="nb">sed</span> <span class="s1">'s#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g'</span> | <span class="se">\</span>
     <span class="nb">sudo tee</span> /etc/apt/sources.list.d/nvidia-container-toolkit.list
-</code></pre></div></div>
-
-<h3 id="2-update-the-packages-list-from-the-repository">2. Update the packages list from the repository:</h3>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get update
-</code></pre></div></div>
-
-<h3 id="3-install-the-nvidia-container-toolkit-packages">3. Install the <code class="language-plaintext highlighter-rouge">NVIDIA Container Toolkit</code> packages:</h3>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">NVIDIA_CONTAINER_TOOLKIT_VERSION</span><span class="o">=</span>1.17.8-1
+</code></pre></div></div> <h3 id="2-update-the-packages-list-from-the-repository">2. Update the packages list from the repository:</h3> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get update
+</code></pre></div></div> <h3 id="3-install-the-nvidia-container-toolkit-packages">3. Install the <code class="language-plaintext highlighter-rouge">NVIDIA Container Toolkit</code> packages:</h3> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">NVIDIA_CONTAINER_TOOLKIT_VERSION</span><span class="o">=</span>1.17.8-1
   <span class="nb">sudo </span>apt-get <span class="nb">install</span> <span class="nt">-y</span> <span class="se">\</span>
       nvidia-container-toolkit<span class="o">=</span><span class="k">${</span><span class="nv">NVIDIA_CONTAINER_TOOLKIT_VERSION</span><span class="k">}</span> <span class="se">\</span>
       nvidia-container-toolkit-base<span class="o">=</span><span class="k">${</span><span class="nv">NVIDIA_CONTAINER_TOOLKIT_VERSION</span><span class="k">}</span> <span class="se">\</span>
       libnvidia-container-tools<span class="o">=</span><span class="k">${</span><span class="nv">NVIDIA_CONTAINER_TOOLKIT_VERSION</span><span class="k">}</span> <span class="se">\</span>
       libnvidia-container1<span class="o">=</span><span class="k">${</span><span class="nv">NVIDIA_CONTAINER_TOOLKIT_VERSION</span><span class="k">}</span>
-</code></pre></div></div>
-<hr />
-
-<h2 id="configuring-docker">Configuring Docker</h2>
-
-<h3 id="1-create-the-docker-group-if-it-doesnt-exist">1. Create the docker group (if it doesn’t exist)</h3>
-
-<p>Check if a docker group exist using</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>getent group docker
-</code></pre></div></div>
-
-<p>If it does not exist, then create a new group</p>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>groupadd docker
-</code></pre></div></div>
-
-<h3 id="2-add-your-user-to-the-group">2. Add your user to the group</h3>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>usermod <span class="nt">-aG</span> docker nam
-</code></pre></div></div>
-
-<h3 id="3-configure-the-container-runtime-by-using-the-nvidia-ctk-command">3. Configure the container runtime by using the <code class="language-plaintext highlighter-rouge">nvidia-ctk</code> command:</h3>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>nvidia-ctk runtime configure <span class="nt">--runtime</span><span class="o">=</span>docker
-</code></pre></div></div>
-
-<p>The <code class="language-plaintext highlighter-rouge">nvidia-ctk</code> command modifies the <code class="language-plaintext highlighter-rouge">/etc/docker/daemon.json</code> file on the host. The file is updated so that Docker can use the NVIDIA Container Runtime.</p>
-
-<h3 id="4-restart-the-docker-daemon">4. Restart the Docker daemon:</h3>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl restart docker
-</code></pre></div></div>
-
-<h3 id="5-run-a-sample-cuda-container">5. Run a sample CUDA container:</h3>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>docker run <span class="nt">--rm</span> <span class="nt">--runtime</span><span class="o">=</span>nvidia <span class="nt">--gpus</span> all ubuntu nvidia-smi
-</code></pre></div></div>
-
-<h2 id="how-to-run">How to run</h2>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--rm</span> <span class="se">\</span>
+</code></pre></div></div> <hr/> <h2 id="configuring-docker">Configuring Docker</h2> <h3 id="1-create-the-docker-group-if-it-doesnt-exist">1. Create the docker group (if it doesn’t exist)</h3> <p>Check if a docker group exist using</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>getent group docker
+</code></pre></div></div> <p>If it does not exist, then create a new group</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>groupadd docker
+</code></pre></div></div> <h3 id="2-add-your-user-to-the-group">2. Add your user to the group</h3> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>usermod <span class="nt">-aG</span> docker nam
+</code></pre></div></div> <h3 id="3-configure-the-container-runtime-by-using-the-nvidia-ctk-command">3. Configure the container runtime by using the <code class="language-plaintext highlighter-rouge">nvidia-ctk</code> command:</h3> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>nvidia-ctk runtime configure <span class="nt">--runtime</span><span class="o">=</span>docker
+</code></pre></div></div> <p>The <code class="language-plaintext highlighter-rouge">nvidia-ctk</code> command modifies the <code class="language-plaintext highlighter-rouge">/etc/docker/daemon.json</code> file on the host. The file is updated so that Docker can use the NVIDIA Container Runtime.</p> <h3 id="4-restart-the-docker-daemon">4. Restart the Docker daemon:</h3> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl restart docker
+</code></pre></div></div> <h3 id="5-run-a-sample-cuda-container">5. Run a sample CUDA container:</h3> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>docker run <span class="nt">--rm</span> <span class="nt">--runtime</span><span class="o">=</span>nvidia <span class="nt">--gpus</span> all ubuntu nvidia-smi
+</code></pre></div></div> <h2 id="how-to-run">How to run</h2> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--rm</span> <span class="se">\</span>
   <span class="nt">--gpus</span> all  <span class="se">\</span>
   <span class="nt">--runtime</span><span class="o">=</span>nvidia <span class="se">\</span>
   registry.bohrium.dp.tech/dptech/dp/native/prod-759944/deepmd:dEdN /bin/bash
-</code></pre></div></div>]]></content><author><name>Nam Tran</name></author><category term="Tutorial" /><summary type="html"><![CDATA[Step-by-step Instruction for compiling Docker on a GPU Machine]]></summary></entry><entry><title type="html">Step-by-Step Guide to Compile DeepMD-kit and DPGEN on NSCC</title><link href="https://namtranlab.github.io/blog/2025/compile-deepmd-dpgen-nscc/" rel="alternate" type="text/html" title="Step-by-Step Guide to Compile DeepMD-kit and DPGEN on NSCC" /><published>2025-05-04T00:00:00+00:00</published><updated>2025-05-04T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/compile-deepmd-dpgen-nscc</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/compile-deepmd-dpgen-nscc/"><![CDATA[<h2 id="related-resource">Related resource</h2>
-
-<ul>
-  <li>DeepMD-kit GitHub:<br />
-  <a href="https://github.com/deepmodeling/deepmd-kit">https://github.com/deepmodeling/deepmd-kit</a></li>
-  <li>DeepModeling:<br />
-  <a href="https://deepmodeling.com/">https://deepmodeling.com</a></li>
-  <li>Instruction:<br />
-  <a href="https://www.bohrium.com/notebooks/16449433825">https://www.bohrium.com/notebooks/16449433825</a></li>
-</ul>
-
-<hr />
-
-<h2 id="deepmd-kit-installation">DeepMD-kit Installation</h2>
-
-<h3 id="1-download-the-installation-package">1. Download the installation package</h3>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget [https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.0]<span class="o">(</span>https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.0<span class="o">)</span>  
+</code></pre></div></div>]]></content><author><name>Nam Tran</name></author><category term="Tutorial"/><summary type="html"><![CDATA[Step-by-step Instruction for compiling Docker on a GPU Machine]]></summary></entry><entry><title type="html">Step-by-Step Guide to Compile DeepMD-kit and DPGEN on NSCC</title><link href="https://namtranlab.github.io/blog/2025/compile-deepmd-dpgen-nscc/" rel="alternate" type="text/html" title="Step-by-Step Guide to Compile DeepMD-kit and DPGEN on NSCC"/><published>2025-05-04T00:00:00+00:00</published><updated>2025-05-04T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/compile-deepmd-dpgen-nscc</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/compile-deepmd-dpgen-nscc/"><![CDATA[<h2 id="related-resource">Related resource</h2> <ul> <li>DeepMD-kit GitHub:<br/> <a href="https://github.com/deepmodeling/deepmd-kit">https://github.com/deepmodeling/deepmd-kit</a></li> <li>DeepModeling:<br/> <a href="https://deepmodeling.com/">https://deepmodeling.com</a></li> <li>Instruction:<br/> <a href="https://www.bohrium.com/notebooks/16449433825">https://www.bohrium.com/notebooks/16449433825</a></li> </ul> <hr/> <h2 id="deepmd-kit-installation">DeepMD-kit Installation</h2> <h3 id="1-download-the-installation-package">1. Download the installation package</h3> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget [https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.0]<span class="o">(</span>https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.0<span class="o">)</span>  
 wget [https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.1]<span class="o">(</span>https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.1<span class="o">)</span>  
-</code></pre></div></div>
-
-<h3 id="2-merge-installation-files">2. Merge installation files</h3>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.0 <span class="se">\ </span> 
+</code></pre></div></div> <h3 id="2-merge-installation-files">2. Merge installation files</h3> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.0 <span class="se">\ </span> 
 deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.1 <span class="o">&gt;</span> <span class="se">\ </span> 
 deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh  
 
-</code></pre></div></div>
-
-<h3 id="3-execute-installation-script">3. Execute installation script</h3>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sh deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh  
-</code></pre></div></div>
-
-<p>The software will as you where to install the binary.</p>
-
-<h3 id="4-environment-variable-configuration">4. Environment variable configuration</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> /root/deepmd-kit/bin/activate /root/deepmd-kit
-</code></pre></div></div>
-<p>You have to put the above command to your bash script.</p>
-
-<hr />
-
-<h2 id="dpgen-installation">DPGEN Installation</h2>
-
-<h3 id="1-download-dp-gen-from-github-link-below">1. Download dp-gen from github link below</h3>
-
-<p>The current version is v0.13.1.</p>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://github.com/deepmodeling/dpgen
-</code></pre></div></div>
-
-<h3 id="2-edit-the-code-for-magmon-and-plus-u">2. Edit the code for MAGMON and PLUS U</h3>
-
-<p>Modify the <code class="language-plaintext highlighter-rouge">make_vasp_incar</code> function in dpgen/generator/run.py as follow.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">make_vasp_incar</span><span class="p">(</span><span class="n">jdata</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+</code></pre></div></div> <h3 id="3-execute-installation-script">3. Execute installation script</h3> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sh deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh  
+</code></pre></div></div> <p>The software will as you where to install the binary.</p> <h3 id="4-environment-variable-configuration">4. Environment variable configuration</h3> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> /root/deepmd-kit/bin/activate /root/deepmd-kit
+</code></pre></div></div> <p>You have to put the above command to your bash script.</p> <hr/> <h2 id="dpgen-installation">DPGEN Installation</h2> <h3 id="1-download-dp-gen-from-github-link-below">1. Download dp-gen from github link below</h3> <p>The current version is v0.13.1.</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://github.com/deepmodeling/dpgen
+</code></pre></div></div> <h3 id="2-edit-the-code-for-magmon-and-plus-u">2. Edit the code for MAGMON and PLUS U</h3> <p>Modify the <code class="language-plaintext highlighter-rouge">make_vasp_incar</code> function in dpgen/generator/run.py as follow.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">make_vasp_incar</span><span class="p">(</span><span class="n">jdata</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
     <span class="k">if</span> <span class="sh">"</span><span class="s">fp_incar</span><span class="sh">"</span> <span class="ow">in</span> <span class="n">jdata</span><span class="p">.</span><span class="nf">keys</span><span class="p">():</span>
         <span class="n">fp_incar_path</span> <span class="o">=</span> <span class="n">jdata</span><span class="p">[</span><span class="sh">"</span><span class="s">fp_incar</span><span class="sh">"</span><span class="p">]</span>
         <span class="k">assert</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">exists</span><span class="p">(</span><span class="n">fp_incar_path</span><span class="p">)</span>
@@ -171,7 +57,7 @@ deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh
             <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">element</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">elements_order</span><span class="p">):</span>
                 <span class="n">mag</span> <span class="o">=</span> <span class="n">fp_incar_magmom</span><span class="p">[</span><span class="n">element</span><span class="p">]</span>
                 <span class="n">magmom</span> <span class="o">=</span> <span class="n">magmom</span> <span class="o">+</span> <span class="sh">"</span><span class="s"> </span><span class="sh">"</span> <span class="o">+</span> <span class="n">element_counts</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">+</span> <span class="sh">"</span><span class="s">*</span><span class="sh">"</span> <span class="o">+</span> <span class="nf">str</span><span class="p">(</span><span class="n">mag</span><span class="p">)</span>
-        <span class="n">incar</span> <span class="o">=</span> <span class="n">incar</span> <span class="o">+</span> <span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="n">magmom</span>
+            <span class="n">incar</span> <span class="o">=</span> <span class="n">incar</span> <span class="o">+</span> <span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="n">magmom</span>
 
         
         <span class="k">if</span> <span class="sh">"</span><span class="s">fp_incar_plus_u</span><span class="sh">"</span> <span class="ow">in</span> <span class="n">jdata</span><span class="p">:</span>
@@ -215,13 +101,7 @@ deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh
     <span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="sh">"</span><span class="s">w</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
         <span class="n">fp</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">incar</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">incar</span>
-</code></pre></div></div>
-
-<p>When running dpgen the following tags (<code class="language-plaintext highlighter-rouge">fp_incar_magom</code> and <code class="language-plaintext highlighter-rouge">fp_incar_plus_u</code>) with informattion about initial MAGMON or Plus+U should be added.</p>
-
-<p>For example:</p>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">.......</span><span class="w">
+</code></pre></div></div> <p>When running dpgen the following tags (<code class="language-plaintext highlighter-rouge">fp_incar_magom</code> and <code class="language-plaintext highlighter-rouge">fp_incar_plus_u</code>) with informattion about initial MAGMON or Plus+U should be added.</p> <p>For example:</p> <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">.......</span><span class="w">
 </span><span class="nl">"fp_incar"</span><span class="p">:</span><span class="w"> </span><span class="s2">"./INCAR"</span><span class="err">,</span><span class="w">
 </span><span class="err">'fp_incar_magom':</span><span class="w"> </span><span class="p">{</span><span class="err">'C':</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  
                     </span><span class="err">'Ce':</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">     
@@ -236,93 +116,21 @@ deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh
                     </span><span class="err">'Pd':</span><span class="w"> </span><span class="p">{</span><span class="err">'ul':</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="err">'uu':</span><span class="w"> </span><span class="mf">0.00</span><span class="p">,</span><span class="w"> </span><span class="err">'uj':</span><span class="w"> </span><span class="mf">0.00</span><span class="p">},</span><span class="w"> 
                     </span><span class="err">'H':</span><span class="w"> </span><span class="p">{</span><span class="err">'ul':</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="err">'uu':</span><span class="w"> </span><span class="mf">0.00</span><span class="p">,</span><span class="w"> </span><span class="err">'uj':</span><span class="w"> </span><span class="mf">0.00</span><span class="p">},</span><span class="w">
                     </span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-
-<h3 id="3-install-the-package">3. Install the package</h3>
-
-<p>Create an environment (tested with python version 3.11.7)</p>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 <span class="nt">-m</span> venv dpgen_env
-</code></pre></div></div>
-
-<p>Activate the environment.</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> /home/users/ntu/vannamtr/dpgen_env/bin/activate
-</code></pre></div></div>
-<p>You must add the above command to your bash script</p>
-
-<p>Then install the package with</p>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install</span> ./dpgen
-</code></pre></div></div>
-
-<p>To test if the installation is successful, you may execute</p>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dpgen <span class="nt">-h</span>
-</code></pre></div></div>
-
-<p>Note: The above tutorial should work on NCI as well.</p>]]></content><author><name>Nam Tran</name></author><category term="Tutorial" /><summary type="html"><![CDATA[Instruction for compiling deepmd-kit and dpgen on NSCC]]></summary></entry><entry><title type="html">Step-by-Step Compilation of VASP (CPU) Incorporating Grand-Canonical Methods with Intel OneAPI</title><link href="https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-intel_oneapi/" rel="alternate" type="text/html" title="Step-by-Step Compilation of VASP (CPU) Incorporating Grand-Canonical Methods with Intel OneAPI" /><published>2025-05-04T00:00:00+00:00</published><updated>2025-05-04T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-intel_oneapi</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-intel_oneapi/"><![CDATA[<h2 id="download-packages">Download packages</h2>
-<p>Assume the vasp source code was downloaded in extracted in <code class="language-plaintext highlighter-rouge">$HOME/vasp.6.4.0_cp_cpu</code></p>
-
-<p>You need the patch <code class="language-plaintext highlighter-rouge">VASPSOL</code> for <code class="language-plaintext highlighter-rouge">VASP.6.3.0</code> and <code class="language-plaintext highlighter-rouge">VASP-CP</code>. Those patches can be found in the links below.</p>
-
-<ul>
-  <li>VASPSol:<br />
-  <a href="https://github.com/henniggroup/VASPsol/issues/64">https://github.com/henniggroup/VASPsol/issues/64</a></li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>solvation.F
+</span></code></pre></div></div> <h3 id="3-install-the-package">3. Install the package</h3> <p>Create an environment (tested with python version 3.11.7)</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 <span class="nt">-m</span> venv dpgen_env
+</code></pre></div></div> <p>Activate the environment.</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> /home/users/ntu/vannamtr/dpgen_env/bin/activate
+</code></pre></div></div> <p>You must add the above command to your bash script</p> <p>Then install the package with</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install</span> ./dpgen
+</code></pre></div></div> <p>To test if the installation is successful, you may execute</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dpgen <span class="nt">-h</span>
+</code></pre></div></div> <p>Note: The above tutorial should work on NCI as well.</p>]]></content><author><name>Nam Tran</name></author><category term="Tutorial"/><summary type="html"><![CDATA[Instruction for compiling deepmd-kit and dpgen on NSCC]]></summary></entry><entry><title type="html">Step-by-Step Compilation of VASP (CPU) Incorporating Grand-Canonical Methods with Intel OneAPI</title><link href="https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-intel_oneapi/" rel="alternate" type="text/html" title="Step-by-Step Compilation of VASP (CPU) Incorporating Grand-Canonical Methods with Intel OneAPI"/><published>2025-05-04T00:00:00+00:00</published><updated>2025-05-04T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-intel_oneapi</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-intel_oneapi/"><![CDATA[<h2 id="download-packages">Download packages</h2> <p>Assume the vasp source code was downloaded in extracted in <code class="language-plaintext highlighter-rouge">$HOME/vasp.6.4.0_cp_cpu</code></p> <p>You need the patch <code class="language-plaintext highlighter-rouge">VASPSOL</code> for <code class="language-plaintext highlighter-rouge">VASP.6.3.0</code> and <code class="language-plaintext highlighter-rouge">VASP-CP</code>. Those patches can be found in the links below.</p> <ul> <li>VASPSol:<br/> <a href="https://github.com/henniggroup/VASPsol/issues/64">https://github.com/henniggroup/VASPsol/issues/64</a></li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>solvation.F
 VASPsol_VASP630.patch
-</code></pre></div></div>
-
-<ul>
-  <li>VASP-CP:<br />
-  <a href="https://github.com/yuanyue-liu-group/CP-VASP/">https://github.com/yuanyue-liu-group/CP-VASP/</a></li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cp-vaspsol.patch
-</code></pre></div></div>
-<hr />
-
-<h2 id="patch-vaspsol">Patch VASPSOL</h2>
-
-<p>Copy <code class="language-plaintext highlighter-rouge">solvation.F and VASPsol_VASP630.patch</code> to <code class="language-plaintext highlighter-rouge">src</code> folder of vasp source code</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>solvation.F <span class="nv">$HOME</span>/vasp.6.4.0_cp_cpu/src
+</code></pre></div></div> <ul> <li>VASP-CP:<br/> <a href="https://github.com/yuanyue-liu-group/CP-VASP/">https://github.com/yuanyue-liu-group/CP-VASP/</a></li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cp-vaspsol.patch
+</code></pre></div></div> <hr/> <h2 id="patch-vaspsol">Patch VASPSOL</h2> <p>Copy <code class="language-plaintext highlighter-rouge">solvation.F and VASPsol_VASP630.patch</code> to <code class="language-plaintext highlighter-rouge">src</code> folder of vasp source code</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>solvation.F <span class="nv">$HOME</span>/vasp.6.4.0_cp_cpu/src
 <span class="nb">cp </span>VASPsol_VASP630.patch <span class="nv">$HOME</span>/vasp.6.4.0_cp_cpu/src
-</code></pre></div></div>
-<p>Then execute the patch.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>patch <span class="nt">-p0</span> &lt; VASPsol_VASP630.patch
-</code></pre></div></div>
-<hr />
-
-<h2 id="patch-vasp-cp">Patch VASP-CP</h2>
-
-<p>Copy <code class="language-plaintext highlighter-rouge">cp-vaspsol.patch</code> to <code class="language-plaintext highlighter-rouge">src</code> folder of vasp source code</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>cp-vaspsol.patch <span class="nv">$HOME</span>/vasp.6.4.0_cp_cpu/src
-</code></pre></div></div>
-
-<p>Then execute the patch.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>patch <span class="nt">-p0</span> &lt; cp-vaspsol++.patch
-</code></pre></div></div>
-<hr />
-
-<h2 id="load-libs">Load libs</h2>
-
-<p>Clean all loaded modules and load intel oneapi packages.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module purge
+</code></pre></div></div> <p>Then execute the patch.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>patch <span class="nt">-p0</span> &lt; VASPsol_VASP630.patch
+</code></pre></div></div> <hr/> <h2 id="patch-vasp-cp">Patch VASP-CP</h2> <p>Copy <code class="language-plaintext highlighter-rouge">cp-vaspsol.patch</code> to <code class="language-plaintext highlighter-rouge">src</code> folder of vasp source code</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>cp-vaspsol.patch <span class="nv">$HOME</span>/vasp.6.4.0_cp_cpu/src
+</code></pre></div></div> <p>Then execute the patch.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>patch <span class="nt">-p0</span> &lt; cp-vaspsol++.patch
+</code></pre></div></div> <hr/> <h2 id="load-libs">Load libs</h2> <p>Clean all loaded modules and load intel oneapi packages.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module purge
 <span class="nb">source</span> /app/apps/oneapi/2022.1.2/setvars.sh
-</code></pre></div></div>
-<hr />
-
-<h2 id="modify-the-makefile">Modify the makefile</h2>
-
-<p>Modify the makefile.include as follow.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Default precompiler options</span>
+</code></pre></div></div> <hr/> <h2 id="modify-the-makefile">Modify the makefile</h2> <p>Modify the makefile.include as follow.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Default precompiler options</span>
 CPP_OPTIONS <span class="o">=</span> <span class="nt">-DHOST</span><span class="o">=</span><span class="se">\"</span>LinuxIFC<span class="se">\"</span> <span class="se">\</span>
               <span class="nt">-DMPI</span> <span class="nt">-DMPI_BLOCK</span><span class="o">=</span>8000 <span class="nt">-Duse_collective</span> <span class="se">\</span>
               <span class="nt">-DscaLAPACK</span> <span class="se">\</span>
@@ -383,22 +191,8 @@ FCL        +<span class="o">=</span> <span class="nt">-qmkl</span>
 MKLROOT    ?<span class="o">=</span> /path/to/your/mkl/installation
 LLIBS      +<span class="o">=</span> <span class="nt">-L</span><span class="si">$(</span>MKLROOT<span class="si">)</span>/lib/intel64 <span class="nt">-lmkl_scalapack_lp64</span> <span class="nt">-lmkl_blacs_intelmpi_lp64</span>
 INCS        <span class="o">=</span><span class="nt">-I</span><span class="si">$(</span>MKLROOT<span class="si">)</span>/include/fftw
-</code></pre></div></div>
-<hr />
-
-<h2 id="installtion">Installtion</h2>
-
-<p>Then install the vasp package with the command below. Remember to change <code class="language-plaintext highlighter-rouge">N</code> in the command.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make <span class="nv">DEPS</span><span class="o">=</span>1 <span class="nt">-jN</span> all
-</code></pre></div></div>
-<hr />
-
-<h2 id="vasp-script">Vasp script</h2>
-
-<p>The bash script to run vasp can be set as follow.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+</code></pre></div></div> <hr/> <h2 id="installtion">Installtion</h2> <p>Then install the vasp package with the command below. Remember to change <code class="language-plaintext highlighter-rouge">N</code> in the command.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make <span class="nv">DEPS</span><span class="o">=</span>1 <span class="nt">-jN</span> all
+</code></pre></div></div> <hr/> <h2 id="vasp-script">Vasp script</h2> <p>The bash script to run vasp can be set as follow.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
 
 <span class="c">#PBS -N CPU-vasp</span>
 <span class="c">#PBS -q normal</span>
@@ -422,71 +216,19 @@ module purge
 <span class="nb">time </span>mpirun <span class="nv">$MPIFLAGS</span> <span class="nv">$EXECROOT</span>/vasp_std <span class="o">&gt;</span> print-out
 
 <span class="nb">echo</span> <span class="si">$(</span><span class="nb">date</span><span class="si">)</span> <span class="nv">$PBS_JOBNAME</span> <span class="k">${</span><span class="nv">PBS_O_WORKDIR</span><span class="k">}</span> <span class="o">&gt;&gt;</span> ~/LOG
-</code></pre></div></div>]]></content><author><name>Nam Tran</name></author><category term="Tutorial" /><summary type="html"><![CDATA[Instruction for compiling vasp cpu with grand-canonical approach on with Intel OneAPI]]></summary></entry><entry><title type="html">Step-by-Step Compilation of VASP (CPU) Incorporating Grand-Canonical Methods on NSCC</title><link href="https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-nscc/" rel="alternate" type="text/html" title="Step-by-Step Compilation of VASP (CPU) Incorporating Grand-Canonical Methods on NSCC" /><published>2025-05-04T00:00:00+00:00</published><updated>2025-05-04T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-nscc</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-nscc/"><![CDATA[<h2 id="download-packages">Download packages</h2>
-<p>Assume the vasp source code was downloaded in extracted in <code class="language-plaintext highlighter-rouge">$HOME/vasp.6.4.0_cp_cpu</code></p>
-
-<p>You need the patch <code class="language-plaintext highlighter-rouge">VASPSOL</code> for <code class="language-plaintext highlighter-rouge">VASP.6.3.0</code> and <code class="language-plaintext highlighter-rouge">VASP-CP</code>. Those patches can be found in the links below.</p>
-
-<ul>
-  <li>VASPSol:<br />
-  <a href="https://github.com/henniggroup/VASPsol/issues/64">https://github.com/henniggroup/VASPsol/issues/64</a></li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>solvation.F
+</code></pre></div></div>]]></content><author><name>Nam Tran</name></author><category term="Tutorial"/><summary type="html"><![CDATA[Instruction for compiling vasp cpu with grand-canonical approach on with Intel OneAPI]]></summary></entry><entry><title type="html">Step-by-Step Compilation of VASP (CPU) Incorporating Grand-Canonical Methods on NSCC</title><link href="https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-nscc/" rel="alternate" type="text/html" title="Step-by-Step Compilation of VASP (CPU) Incorporating Grand-Canonical Methods on NSCC"/><published>2025-05-04T00:00:00+00:00</published><updated>2025-05-04T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-nscc</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/compile-vasp-cp-cpu-nscc/"><![CDATA[<h2 id="download-packages">Download packages</h2> <p>Assume the vasp source code was downloaded in extracted in <code class="language-plaintext highlighter-rouge">$HOME/vasp.6.4.0_cp_cpu</code></p> <p>You need the patch <code class="language-plaintext highlighter-rouge">VASPSOL</code> for <code class="language-plaintext highlighter-rouge">VASP.6.3.0</code> and <code class="language-plaintext highlighter-rouge">VASP-CP</code>. Those patches can be found in the links below.</p> <ul> <li>VASPSol:<br/> <a href="https://github.com/henniggroup/VASPsol/issues/64">https://github.com/henniggroup/VASPsol/issues/64</a></li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>solvation.F
 VASPsol_VASP630.patch
-</code></pre></div></div>
-
-<ul>
-  <li>VASP-CP:<br />
-  <a href="https://github.com/yuanyue-liu-group/CP-VASP/">https://github.com/yuanyue-liu-group/CP-VASP/</a></li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cp-vaspsol.patch
-</code></pre></div></div>
-<hr />
-
-<h2 id="patch-vaspsol">Patch VASPSOL</h2>
-
-<p>Copy <code class="language-plaintext highlighter-rouge">solvation.F and VASPsol_VASP630.patch</code> to <code class="language-plaintext highlighter-rouge">src</code> folder of vasp source code</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>solvation.F <span class="nv">$HOME</span>/vasp.6.4.0_cp_cpu/src
+</code></pre></div></div> <ul> <li>VASP-CP:<br/> <a href="https://github.com/yuanyue-liu-group/CP-VASP/">https://github.com/yuanyue-liu-group/CP-VASP/</a></li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cp-vaspsol.patch
+</code></pre></div></div> <hr/> <h2 id="patch-vaspsol">Patch VASPSOL</h2> <p>Copy <code class="language-plaintext highlighter-rouge">solvation.F and VASPsol_VASP630.patch</code> to <code class="language-plaintext highlighter-rouge">src</code> folder of vasp source code</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>solvation.F <span class="nv">$HOME</span>/vasp.6.4.0_cp_cpu/src
 <span class="nb">cp </span>VASPsol_VASP630.patch <span class="nv">$HOME</span>/vasp.6.4.0_cp_cpu/src
-</code></pre></div></div>
-<p>Then execute the patch.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>patch <span class="nt">-p0</span> &lt; VASPsol_VASP630.patch
-</code></pre></div></div>
-<hr />
-
-<h2 id="patch-vasp-cp">Patch VASP-CP</h2>
-
-<p>Copy <code class="language-plaintext highlighter-rouge">cp-vaspsol.patch</code> to <code class="language-plaintext highlighter-rouge">src</code> folder of vasp source code</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>cp-vaspsol.patch <span class="nv">$HOME</span>/vasp.6.4.0_cp_cpu/src
-</code></pre></div></div>
-
-<p>Then execute the patch.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>patch <span class="nt">-p0</span> &lt; cp-vaspsol++.patch
-</code></pre></div></div>
-<hr />
-
-<h2 id="load-libs">Load libs</h2>
-
-<p>Clean all loaded modules and swap PrgEnv from cray to intel. Default the <strong>MKL</strong> environment variable <strong>MKLROOT</strong> will be setup by module file “mkl”. The module “mkl” has several version. You can switch it and find the best one for you. Here choose the default version of mkl, which is 2024.0.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module swap PrgEnv-cray PrgEnv-intel
+</code></pre></div></div> <p>Then execute the patch.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>patch <span class="nt">-p0</span> &lt; VASPsol_VASP630.patch
+</code></pre></div></div> <hr/> <h2 id="patch-vasp-cp">Patch VASP-CP</h2> <p>Copy <code class="language-plaintext highlighter-rouge">cp-vaspsol.patch</code> to <code class="language-plaintext highlighter-rouge">src</code> folder of vasp source code</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>cp-vaspsol.patch <span class="nv">$HOME</span>/vasp.6.4.0_cp_cpu/src
+</code></pre></div></div> <p>Then execute the patch.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>patch <span class="nt">-p0</span> &lt; cp-vaspsol++.patch
+</code></pre></div></div> <hr/> <h2 id="load-libs">Load libs</h2> <p>Clean all loaded modules and swap PrgEnv from cray to intel. Default the <strong>MKL</strong> environment variable <strong>MKLROOT</strong> will be setup by module file “mkl”. The module “mkl” has several version. You can switch it and find the best one for you. Here choose the default version of mkl, which is 2024.0.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module swap PrgEnv-cray PrgEnv-intel
 module swap intel intel/2022.1.0
 module load mkl
 module load cray-hdf5
-</code></pre></div></div>
-<hr />
-
-<h2 id="modify-the-makefile">Modify the makefile</h2>
-
-<p>Modify the makefile.include as follow.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Default precompiler options</span>
+</code></pre></div></div> <hr/> <h2 id="modify-the-makefile">Modify the makefile</h2> <p>Modify the makefile.include as follow.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Default precompiler options</span>
 CPP_OPTIONS <span class="o">=</span> <span class="nt">-DHOST</span><span class="o">=</span><span class="se">\"</span>LinuxIFC<span class="se">\"</span> <span class="se">\</span>
               <span class="nt">-DMPI</span> <span class="nt">-DMPI_BLOCK</span><span class="o">=</span>8000 <span class="nt">-Duse_collective</span> <span class="se">\</span>
               <span class="nt">-DscaLAPACK</span> <span class="se">\</span>
@@ -567,22 +309,8 @@ INCS       +<span class="o">=</span> <span class="nt">-I</span><span class="si">
 <span class="c">#CXX_FFTLIB  = icpc -qopenmp -std=c++11 -DFFTLIB_USE_MKL -DFFTLIB_THREADSAFE</span>
 <span class="c">#INCS_FFTLIB = -I./include -I$(MKLROOT)/include/fftw</span>
 <span class="c">#LIBS       += fftlib</span>
-</code></pre></div></div>
-<hr />
-
-<h2 id="installtion">Installtion</h2>
-
-<p>Then install the vasp package with the command below. Remember to change <code class="language-plaintext highlighter-rouge">N</code> in the command.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make <span class="nv">DEPS</span><span class="o">=</span>1 <span class="nt">-jN</span> all
-</code></pre></div></div>
-<hr />
-
-<h2 id="vasp-script">Vasp script</h2>
-
-<p>The bash script to run vasp can be set as follow.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+</code></pre></div></div> <hr/> <h2 id="installtion">Installtion</h2> <p>Then install the vasp package with the command below. Remember to change <code class="language-plaintext highlighter-rouge">N</code> in the command.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make <span class="nv">DEPS</span><span class="o">=</span>1 <span class="nt">-jN</span> all
+</code></pre></div></div> <hr/> <h2 id="vasp-script">Vasp script</h2> <p>The bash script to run vasp can be set as follow.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
 
 <span class="c">#PBS -P &lt;project_id&gt;</span>
 <span class="c">#PBS -q normal</span>
@@ -601,27 +329,9 @@ module load cray-hdf5
 <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/path/to/my/vasp/bin:<span class="nv">$PATH</span>
 
 mpirun <span class="nt">-np</span> 128 <span class="nt">--cpu-bind</span> depth <span class="nt">-d</span> 1 vasp_std <span class="o">&gt;</span> print-out
-</code></pre></div></div>]]></content><author><name>Nam Tran</name></author><category term="Tutorial" /><summary type="html"><![CDATA[Instruction for compiling vasp cpu with grand-canonical approach on NSCC]]></summary></entry><entry><title type="html">Instructions for Compiling VASP 6.4.0 with GPU Support on NSCC</title><link href="https://namtranlab.github.io/blog/2025/compile-vasp-gpu-nscc/" rel="alternate" type="text/html" title="Instructions for Compiling VASP 6.4.0 with GPU Support on NSCC" /><published>2025-05-04T00:00:00+00:00</published><updated>2025-05-04T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/compile-vasp-gpu-nscc</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/compile-vasp-gpu-nscc/"><![CDATA[<h2 id="load-libs">Load libs</h2>
-
-<p>Assume the vasp source code was downloaded in extracted in <code class="language-plaintext highlighter-rouge">$HOME/vasp.6.4.0_gpu</code></p>
-
-<p>Clean all loaded modules.</p>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module purge
-</code></pre></div></div>
-
-<p>We need to load the intel mkl lib which can be found in intel oneapi package at <code class="language-plaintext highlighter-rouge">/app/apps/oneapi/</code></p>
-
-<p>In this tutorial we will use version 2022.1.2</p>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> /app/apps/oneapi/2022.1.2/mkl/2022.0.2/env/vars.sh
-</code></pre></div></div>
-
-<p>Next we need to load the compiler and libs from nvidia hpc skl (nvhpc).</p>
-
-<p>Create a module file named <code class="language-plaintext highlighter-rouge">vasp_nv</code> and put it under the vasp source code folder. Different version of nvhpc can be found at <code class="language-plaintext highlighter-rouge">/app/apps/nvhpc/</code>. In this tutorial we will use version 22.5 with cuda version of 11.7. Add the following to <code class="language-plaintext highlighter-rouge">vasp_nv</code>.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#%Module1.0</span>
+</code></pre></div></div>]]></content><author><name>Nam Tran</name></author><category term="Tutorial"/><summary type="html"><![CDATA[Instruction for compiling vasp cpu with grand-canonical approach on NSCC]]></summary></entry><entry><title type="html">Instructions for Compiling VASP 6.4.0 with GPU Support on NSCC</title><link href="https://namtranlab.github.io/blog/2025/compile-vasp-gpu-nscc/" rel="alternate" type="text/html" title="Instructions for Compiling VASP 6.4.0 with GPU Support on NSCC"/><published>2025-05-04T00:00:00+00:00</published><updated>2025-05-04T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/compile-vasp-gpu-nscc</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/compile-vasp-gpu-nscc/"><![CDATA[<h2 id="load-libs">Load libs</h2> <p>Assume the vasp source code was downloaded in extracted in <code class="language-plaintext highlighter-rouge">$HOME/vasp.6.4.0_gpu</code></p> <p>Clean all loaded modules.</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module purge
+</code></pre></div></div> <p>We need to load the intel mkl lib which can be found in intel oneapi package at <code class="language-plaintext highlighter-rouge">/app/apps/oneapi/</code></p> <p>In this tutorial we will use version 2022.1.2</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> /app/apps/oneapi/2022.1.2/mkl/2022.0.2/env/vars.sh
+</code></pre></div></div> <p>Next we need to load the compiler and libs from nvidia hpc skl (nvhpc).</p> <p>Create a module file named <code class="language-plaintext highlighter-rouge">vasp_nv</code> and put it under the vasp source code folder. Different version of nvhpc can be found at <code class="language-plaintext highlighter-rouge">/app/apps/nvhpc/</code>. In this tutorial we will use version 22.5 with cuda version of 11.7. Add the following to <code class="language-plaintext highlighter-rouge">vasp_nv</code>.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#%Module1.0</span>
 
 <span class="c"># Copyright (c) 2021, NVIDIA CORPORATION.  All rights reserved.</span>
 <span class="c">#</span>
@@ -692,20 +402,8 @@ setenv OMP_PROC_BIND close
 
 
 module-whatis <span class="s2">"Nvidia HPC Compilers"</span>
-</code></pre></div></div>
-
-<p>Then load the packages by:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module load <span class="nv">$HOME</span>/vasp.6.4.0_gpu/vasp_nv
-</code></pre></div></div>
-
-<hr />
-
-<h2 id="modify-the-makefile">Modify the makefile</h2>
-
-<p>Modify the makefile.include as follow.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Default precompiler options</span>
+</code></pre></div></div> <p>Then load the packages by:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module load <span class="nv">$HOME</span>/vasp.6.4.0_gpu/vasp_nv
+</code></pre></div></div> <hr/> <h2 id="modify-the-makefile">Modify the makefile</h2> <p>Modify the makefile.include as follow.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Default precompiler options</span>
 CPP_OPTIONS <span class="o">=</span> <span class="nt">-DHOST</span><span class="o">=</span><span class="se">\"</span>LinuxNV<span class="se">\"</span> <span class="se">\</span>
               <span class="nt">-DMPI</span> <span class="nt">-DMPI_INPLACE</span> <span class="nt">-DMPI_BLOCK</span><span class="o">=</span>8000 <span class="nt">-Duse_collective</span> <span class="se">\</span>
               <span class="nt">-DscaLAPACK</span> <span class="se">\</span>
@@ -797,24 +495,8 @@ INCS       +<span class="o">=</span> <span class="nt">-I</span><span class="si">
 
 
 LLIBS      +<span class="o">=</span> <span class="si">$(</span>LLIBS_MKL<span class="si">)</span>
-</code></pre></div></div>
-
-<hr />
-
-<h2 id="installtion">Installtion</h2>
-
-<p>Then install the vasp package with the command below. Remember to change <code class="language-plaintext highlighter-rouge">N</code> in the command.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make <span class="nv">DEPS</span><span class="o">=</span>1 <span class="nt">-jN</span> all
-</code></pre></div></div>
-
-<hr />
-
-<h2 id="vasp-script">Vasp script</h2>
-
-<p>The bash script to run vasp can be set as follow.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+</code></pre></div></div> <hr/> <h2 id="installtion">Installtion</h2> <p>Then install the vasp package with the command below. Remember to change <code class="language-plaintext highlighter-rouge">N</code> in the command.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make <span class="nv">DEPS</span><span class="o">=</span>1 <span class="nt">-jN</span> all
+</code></pre></div></div> <hr/> <h2 id="vasp-script">Vasp script</h2> <p>The bash script to run vasp can be set as follow.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
 <span class="c">#PBS -N JOB_NAME</span>
 <span class="c">#PBS -q normal</span>
 <span class="c">#PBS -P PROJECT_ID</span>
@@ -836,52 +518,21 @@ module load <span class="nv">$HOME</span>/vasp.6.4.0_gpu/vasp_nv
 <span class="nv">vasp_exe</span><span class="o">=</span><span class="nv">$HOME</span>/vasp.6.4.0_gpu/bin/vasp_std
 
 <span class="nb">time </span>mpirun <span class="nt">-np</span> 4 <span class="nt">--mca</span> btl <span class="s1">'^openib'</span> <span class="nt">--map-by</span> ppr:4:node:PE<span class="o">=</span>16 <span class="nt">--bind-to</span> core <span class="nv">$vasp_exe</span> <span class="o">&gt;</span> print-out
-</code></pre></div></div>]]></content><author><name>Nam Tran</name></author><category term="Tutorial" /><summary type="html"><![CDATA[Instruction for compiling vasp gpu on NSCC]]></summary></entry><entry><title type="html">Configuration of a Small-Scale High-Performance Computing System – Part I</title><link href="https://namtranlab.github.io/blog/2025/small-hpc-part1/" rel="alternate" type="text/html" title="Configuration of a Small-Scale High-Performance Computing System – Part I" /><published>2025-05-02T00:00:00+00:00</published><updated>2025-05-02T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/small-hpc-part1</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/small-hpc-part1/"><![CDATA[<h2 id="config-nfs">Config NFS</h2>
-
-<p>Install <code class="language-plaintext highlighter-rouge">nfs-kernel-server</code> on your head node and <code class="language-plaintext highlighter-rouge">nfs-common</code> on your compute node.</p>
-
-<p>For head node</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt <span class="nb">install </span>nfs-kernel-server
-</code></pre></div></div>
-<p>For compute node</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt <span class="nb">install </span>nfs-common
-</code></pre></div></div>
-
-<p>Configure the shared dir from your head node by modifying <code class="language-plaintext highlighter-rouge">/etc/exports</code>.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/opt 192.168.1.0/24<span class="o">(</span>ro,sync,no_subtree_check<span class="o">)</span>
+</code></pre></div></div>]]></content><author><name>Nam Tran</name></author><category term="Tutorial"/><summary type="html"><![CDATA[Instruction for compiling vasp gpu on NSCC]]></summary></entry><entry><title type="html">Configuration of a Small-Scale High-Performance Computing System – Part I</title><link href="https://namtranlab.github.io/blog/2025/small-hpc-part1/" rel="alternate" type="text/html" title="Configuration of a Small-Scale High-Performance Computing System – Part I"/><published>2025-05-02T00:00:00+00:00</published><updated>2025-05-02T00:00:00+00:00</updated><id>https://namtranlab.github.io/blog/2025/small-hpc-part1</id><content type="html" xml:base="https://namtranlab.github.io/blog/2025/small-hpc-part1/"><![CDATA[<h2 id="config-nfs">Config NFS</h2> <p>Install <code class="language-plaintext highlighter-rouge">nfs-kernel-server</code> on your head node and <code class="language-plaintext highlighter-rouge">nfs-common</code> on your compute node.</p> <p>For head node</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt <span class="nb">install </span>nfs-kernel-server
+</code></pre></div></div> <p>For compute node</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt <span class="nb">install </span>nfs-common
+</code></pre></div></div> <p>Configure the shared dir from your head node by modifying <code class="language-plaintext highlighter-rouge">/etc/exports</code>.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/opt 192.168.1.0/24<span class="o">(</span>ro,sync,no_subtree_check<span class="o">)</span>
 /home 192.168.1.0/24<span class="o">(</span>rw,sync,no_subtree_check<span class="o">)</span>
 /scratch 192.168.1.0/24<span class="o">(</span>rw,sync,no_subtree_check<span class="o">)</span>
-</code></pre></div></div>
-<p>Run the following command to make the settings take effect.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/sbin/exportfs <span class="nt">-ra</span>
-</code></pre></div></div>
-
-<p>Mount the shared dir in compute nodes.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mount j35a:/opt /opt
+</code></pre></div></div> <p>Run the following command to make the settings take effect.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/sbin/exportfs <span class="nt">-ra</span>
+</code></pre></div></div> <p>Mount the shared dir in compute nodes.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mount j35a:/opt /opt
 mount j35a:/home /home 
 mount j35a:/scratch /scratch 
-</code></pre></div></div>
-
-<p>Setup auto mount by editing <code class="language-plaintext highlighter-rouge">/etc/fstab</code>.</p>
-
-<p>On head node we need to auto mount the external hard drive to <code class="language-plaintext highlighter-rouge">scratch</code> folders.
-UUID of the external hard drive can be found using <code class="language-plaintext highlighter-rouge">lsblk -f /dev/sda1</code>.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">UUID</span><span class="o">=</span>fd2391a4-72ca-4926-bd1c-8bd0d44a4448 /scratch ext4 defaults 0 2
+</code></pre></div></div> <p>Setup auto mount by editing <code class="language-plaintext highlighter-rouge">/etc/fstab</code>.</p> <p>On head node we need to auto mount the external hard drive to <code class="language-plaintext highlighter-rouge">scratch</code> folders. UUID of the external hard drive can be found using <code class="language-plaintext highlighter-rouge">lsblk -f /dev/sda1</code>.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">UUID</span><span class="o">=</span>fd2391a4-72ca-4926-bd1c-8bd0d44a4448 /scratch ext4 defaults 0 2
 <span class="nv">UUID</span><span class="o">=</span>2cf23a6c-2524-4fa1-963e-4d3465b99008 /scratch2 ext4 defaults 0 2
-</code></pre></div></div>
-
-<p>On compute nodes we need to auto mount the shared dirs (opt, home and scratch) from head node (ip:192.168.1.1)</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>192.168.1.1:/opt /opt nfs defaults,_netdev 0 0
+</code></pre></div></div> <p>On compute nodes we need to auto mount the shared dirs (opt, home and scratch) from head node (ip:192.168.1.1)</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>192.168.1.1:/opt /opt nfs defaults,_netdev 0 0
 192.168.1.1:/home /home nfs defaults,_netdev 0 0
 192.168.1.1:/scratch /scratch nfs defaults,_netdev 0 0
-</code></pre></div></div>
-
-<p>Add user with user id and the same group id. This has to be done on very node (head node an compute nodes)</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/sbin/adduser <span class="nt">-u</span> 1002 chenxi
+</code></pre></div></div> <p>Add user with user id and the same group id. This has to be done on very node (head node an compute nodes)</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/sbin/adduser <span class="nt">-u</span> 1002 chenxi
 /sbin/adduser <span class="nt">-u</span> 1003 nam
 /sbin/adduser <span class="nt">-u</span> 1004 jianghong
 
@@ -892,43 +543,18 @@ UUID of the external hard drive can be found using <code class="language-plainte
 /sbin/adduser <span class="nt">-u</span> 1008 junbo
 /sbin/adduser <span class="nt">-u</span> 1009 haoyang
 /sbin/adduser <span class="nt">-u</span> 1010 choi
-</code></pre></div></div>
-
-<p>Create a dir in shared /scratch links for every user and give them permision. This only need to be done on head node.</p>
-
-<p>Example.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /scratch
+</code></pre></div></div> <p>Create a dir in shared /scratch links for every user and give them permision. This only need to be done on head node.</p> <p>Example.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /scratch
 <span class="nb">mkdir </span>chenxi
 <span class="nb">chown </span>chenxi:chenxi ./chenxi
 <span class="nb">ln</span> <span class="nt">-s</span> /scratch/chenxi /home/chenxi/scratch
-</code></pre></div></div>
-
-<hr />
-
-<h2 id="config-slurm">Config SLURM</h2>
-
-<p>Install slurm using the following command on both head node and compute nodes.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sb">```</span><span class="nb">sudo </span>apt-get <span class="nb">install </span>slurm-wlm<span class="sb">```</span>
-</code></pre></div></div>
-
-<p>Check slurm status. On head node we need both <code class="language-plaintext highlighter-rouge">slurmctld</code> and <code class="language-plaintext highlighter-rouge">slurmd</code>. On compute node we only need <code class="language-plaintext highlighter-rouge">slurmd</code> to run</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl status slurmctld
+</code></pre></div></div> <hr/> <h2 id="config-slurm">Config SLURM</h2> <p>Install slurm using the following command on both head node and compute nodes.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sb">```</span><span class="nb">sudo </span>apt-get <span class="nb">install </span>slurm-wlm<span class="sb">```</span>
+</code></pre></div></div> <p>Check slurm status. On head node we need both <code class="language-plaintext highlighter-rouge">slurmctld</code> and <code class="language-plaintext highlighter-rouge">slurmd</code>. On compute node we only need <code class="language-plaintext highlighter-rouge">slurmd</code> to run</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl status slurmctld
 <span class="nb">sudo </span>systemctl status slurmd
-</code></pre></div></div>
-
-<p>If not running we can start using</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl start slurmctld
+</code></pre></div></div> <p>If not running we can start using</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl start slurmctld
 <span class="nb">sudo </span>systemctl start slurmd
-</code></pre></div></div>
-
-<p>You may want Slurm to auto-start after reboot</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl <span class="nb">enable </span>slurmctld
+</code></pre></div></div> <p>You may want Slurm to auto-start after reboot</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl <span class="nb">enable </span>slurmctld
 <span class="nb">sudo </span>systemctl <span class="nb">enable </span>slurmd
-</code></pre></div></div>
-
-<p>Edit <code class="language-plaintext highlighter-rouge">/etc/slurm/slurm.conf</code> as following</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">ClusterName</span><span class="o">=</span>LiCPU
+</code></pre></div></div> <p>Edit <code class="language-plaintext highlighter-rouge">/etc/slurm/slurm.conf</code> as following</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">ClusterName</span><span class="o">=</span>LiCPU
 <span class="nv">ControlMachine</span><span class="o">=</span>j35a
 
 <span class="nv">SlurmUser</span><span class="o">=</span>slurm
@@ -956,24 +582,12 @@ UUID of the external hard drive can be found using <code class="language-plainte
 <span class="nv">NodeName</span><span class="o">=</span>j35a  <span class="nv">NodeAddr</span><span class="o">=</span>192.168.1.1  <span class="nv">Sockets</span><span class="o">=</span>2 <span class="nv">CoresPerSocket</span><span class="o">=</span>42 <span class="nv">ThreadsPerCore</span><span class="o">=</span>2 <span class="nv">RealMemory</span><span class="o">=</span>500000 <span class="nv">State</span><span class="o">=</span>UNKNOWN
 <span class="nv">NodeName</span><span class="o">=</span>j35b  <span class="nv">NodeAddr</span><span class="o">=</span>192.168.1.2  <span class="nv">Sockets</span><span class="o">=</span>2 <span class="nv">CoresPerSocket</span><span class="o">=</span>48 <span class="nv">ThreadsPerCore</span><span class="o">=</span>2 <span class="nv">RealMemory</span><span class="o">=</span>500000 <span class="nv">State</span><span class="o">=</span>UNKNOWN
 <span class="nv">PartitionName</span><span class="o">=</span>Normal <span class="nv">Nodes</span><span class="o">=</span>ALL <span class="nv">Default</span><span class="o">=</span>YES <span class="nv">MaxTime</span><span class="o">=</span>INFINITE <span class="nv">State</span><span class="o">=</span>UP <span class="nv">OverSubscribe</span><span class="o">=</span>NO
-</code></pre></div></div>
-
-<p>Make sure all the files mentioned in slurm.conf editable by the user ‘slurm’. User slurm will be automatically created when install slurm.</p>
-
-<p>Create/edit the <code class="language-plaintext highlighter-rouge">/etc/slurm/cgroup.conf</code> as following.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">CgroupAutomount</span><span class="o">=</span>no
+</code></pre></div></div> <p>Make sure all the files mentioned in slurm.conf editable by the user ‘slurm’. User slurm will be automatically created when install slurm.</p> <p>Create/edit the <code class="language-plaintext highlighter-rouge">/etc/slurm/cgroup.conf</code> as following.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">CgroupAutomount</span><span class="o">=</span>no
 <span class="nv">ConstrainCores</span><span class="o">=</span><span class="nb">yes
 </span><span class="nv">ConstrainRAMSpace</span><span class="o">=</span><span class="nb">yes</span>
 <span class="c">##TaskAffinity=yes</span>
 <span class="nv">ConstrainDevices</span><span class="o">=</span>no
-</code></pre></div></div>
-<hr />
-
-<h2 id="module-system">Module system</h2>
-
-<p>Install environment-modules on your head node.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get <span class="nb">install </span>environment-modules
+</code></pre></div></div> <hr/> <h2 id="module-system">Module system</h2> <p>Install environment-modules on your head node.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get <span class="nb">install </span>environment-modules
 <span class="nb">source</span> /usr/share/modules/init/bash <span class="o">&gt;&gt;</span> /etc/profile
 <span class="nb">export </span><span class="nv">MODULEPATH</span><span class="o">=</span><span class="nv">$MODULEPATH</span>:/opt/module_file/
-</code></pre></div></div>]]></content><author><name>Nam Tran</name></author><category term="Tutorial" /><summary type="html"><![CDATA[High-Performance Computing Setup – Part I - Network File System and Module Management Configuration]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>Nam Tran</name></author><category term="Tutorial"/><summary type="html"><![CDATA[High-Performance Computing Setup – Part I - Network File System and Module Management Configuration]]></summary></entry></feed>

@@ -57,7 +57,7 @@ deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh
             <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">element</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">elements_order</span><span class="p">):</span>
                 <span class="n">mag</span> <span class="o">=</span> <span class="n">fp_incar_magmom</span><span class="p">[</span><span class="n">element</span><span class="p">]</span>
                 <span class="n">magmom</span> <span class="o">=</span> <span class="n">magmom</span> <span class="o">+</span> <span class="sh">"</span><span class="s"> </span><span class="sh">"</span> <span class="o">+</span> <span class="n">element_counts</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">+</span> <span class="sh">"</span><span class="s">*</span><span class="sh">"</span> <span class="o">+</span> <span class="nf">str</span><span class="p">(</span><span class="n">mag</span><span class="p">)</span>
-        <span class="n">incar</span> <span class="o">=</span> <span class="n">incar</span> <span class="o">+</span> <span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="n">magmom</span>
+            <span class="n">incar</span> <span class="o">=</span> <span class="n">incar</span> <span class="o">+</span> <span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="n">magmom</span>
 
         
         <span class="k">if</span> <span class="sh">"</span><span class="s">fp_incar_plus_u</span><span class="sh">"</span> <span class="ow">in</span> <span class="n">jdata</span><span class="p">:</span>
