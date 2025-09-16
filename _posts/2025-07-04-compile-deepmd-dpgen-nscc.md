@@ -128,7 +128,7 @@ def make_vasp_incar(jdata, filename):
             for idx, element in enumerate(elements_order):
                 mag = fp_incar_magmom[element]
                 magmom = magmom + " " + element_counts[idx] + "*" + str(mag)
-        incar = incar + "\n" + magmom
+            incar = incar + "\n" + magmom
 
         
         if "fp_incar_plus_u" in jdata:
