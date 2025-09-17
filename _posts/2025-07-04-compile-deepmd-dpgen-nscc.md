@@ -64,8 +64,8 @@ _styles: >
 ### 1. Download the installation package
 
 ``` shell
-wget [https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.0](https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.0)  
-wget [https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.1](https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.1)  
+wget https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.0  
+wget https://github.com/deepmodeling/deepmd-kit/releases/download/v3.0.1/deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh.1
 ```
 
 ### 2. Merge installation files
@@ -80,7 +80,7 @@ deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh
 ### 3. Execute installation script
 
 ```
-sh deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh  
+sh deepmd-kit-3.0.1-cuda126-Linux-x86_64.sh -b -p /path/to/deepmd-kit/bin/
 ```
 
 The software will as you where to install the binary.
@@ -88,7 +88,7 @@ The software will as you where to install the binary.
 ### 4. Environment variable configuration
 
 ```bash
-source /root/deepmd-kit/bin/activate /root/deepmd-kit
+source /path/to/deepmd-kit/bin/activate /path/to/deepmd-kit
 ```
 You have to put the above command to your bash script.
 
