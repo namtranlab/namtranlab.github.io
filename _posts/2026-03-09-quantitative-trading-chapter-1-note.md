@@ -467,9 +467,7 @@ A long-only strategy returning 10% per year is not impressive — an S&P 500 ind
 
 ## Term Glossary
 
-A reference glossary of all financial terms introduced in Chapter 2, grouped by category.
-
-### Data & Markets
+A reference glossary of all financial terms introduced in Chapter 2:
 
 <div class="glossary-entry">
 <div class="gterm">Backtest / Backtesting <span class="gcat cat-data">Data</span></div>
@@ -492,18 +490,6 @@ A documented market anomaly: stock prices continue drifting in the direction of 
 </div>
 
 <div class="glossary-entry">
-<div class="gterm">Small-cap stocks <span class="gcat cat-data">Data</span></div>
-Companies with market capitalisation typically $300M–$2B (Russell 2000 constituents). Low daily trading volume makes them prone to market impact — even modestly sized positions move prices against the trader. Academic strategies often test exclusively on small-caps, producing backtest results unachievable in live trading.
-</div>
-
-### Performance Metrics
-
-<div class="glossary-entry">
-<div class="gterm">Benchmark <span class="gcat cat-perf">Performance</span></div>
-The reference point against which a strategy's returns are compared. Long-only strategies use a market index (S&P 500, Russell 2000). Dollar-neutral strategies use the risk-free rate. Choosing the wrong benchmark distorts performance perception entirely.
-</div>
-
-<div class="glossary-entry">
 <div class="gterm">Drawdown <span class="gcat cat-perf">Performance</span></div>
 At time t, the difference between the portfolio's current value and its prior peak (the high watermark), expressed as a percentage. Drawdowns cause traders to abandon valid strategies at exactly the worst moment — at the trough.
 </div>
@@ -516,11 +502,6 @@ The longest continuous period the equity curve remained below a prior high water
 <div class="glossary-entry">
 <div class="gterm">Equity curve <span class="gcat cat-perf">Performance</span></div>
 A time-series chart of cumulative P&L assuming no cash deposits or withdrawals. Shape reveals the strategy's risk profile: steadily rising = high Sharpe; volatile with deep troughs = low Sharpe, high drawdown.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">High watermark <span class="gcat cat-perf">Performance</span></div>
-The global maximum of the equity curve up to any given point in time. The reference level from which all drawdowns are measured.
 </div>
 
 <div class="glossary-entry">
@@ -543,31 +524,10 @@ The theoretical return on a zero-risk investment. Approximated by the 3-month US
 The universal risk-adjusted return metric. Formula: (Avg Portfolio Return − Risk-Free Rate) ÷ Std Dev of Portfolio Returns. Annualise: daily × √252, monthly × √12. Benchmarks: &lt;1 = not viable; ≥1 = minimum; ≥2 = monthly profitability; ≥3 = daily profitability.
 </div>
 
-### Capital & Instruments
 
 <div class="glossary-entry">
 <div class="gterm">Dollar-neutral portfolio <span class="gcat cat-capital">Capital</span></div>
 Portfolio where total long market value equals total short market value. Net dollar exposure = $0. Requires twice the capital of a directional portfolio for the same gross exposure.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">ETF (exchange-traded fund) <span class="gcat cat-inst">Instrument</span></div>
-A pooled investment vehicle holding a basket of securities that trades on an exchange like a single stock. SPY (S&P 500), QQQ (Nasdaq 100), and GLD (gold) are canonical examples used in quant trading.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Futures contract <span class="gcat cat-inst">Instrument</span></div>
-A standardised agreement to buy or sell an asset at a set price on a future date. Requires only a small margin deposit to control full notional value. ES: ~$167K notional, ~$12K margin ≈ 14× leverage. MES: one-tenth the size. Sits outside Reg T; offers higher leverage and lower transaction costs than stocks.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Intraday vs. overnight (interday) <span class="gcat cat-capital">Capital</span></div>
-Intraday: positions opened and closed within one session; 4× Reg T leverage. Overnight/interday: positions held across sessions; only 2× Reg T leverage — requiring double the capital for the same position size.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Leverage <span class="gcat cat-capital">Capital</span></div>
-Using borrowed capital from a broker to control a position larger than account equity. Formula: Leverage = Total Position Value ÷ Account Equity. Amplifies both gains and losses proportionally.
 </div>
 
 <div class="glossary-entry">
@@ -600,34 +560,10 @@ A family of quant strategies exploiting short-term pricing discrepancies between
 The maximum capital a strategy can deploy before its own trading degrades returns through market impact. Low-capacity strategies are inaccessible to large hedge funds — creating a durable moat for independent traders.
 </div>
 
-### Transaction Costs
-
-<div class="glossary-entry">
-<div class="gterm">Basis points (bps) <span class="gcat cat-cost">Cost</span></div>
-1 bps = 0.01% = 0.0001. Standard unit for expressing small differences in rates, spreads, and transaction costs. S&P 500 stocks round-trip ≈ 10 bps. ES futures round-trip ≈ 2 bps.
-</div>
-
 <div class="glossary-entry">
 <div class="gterm">Bid-ask spread <span class="gcat cat-cost">Cost</span></div>
 Gap between the price buyers will pay (bid) and sellers will accept (ask). One-way cost ≈ half the spread. S&P 500 stocks: ~5 bps one way. ES futures: ~1 bp one way.
 </div>
-
-<div class="glossary-entry">
-<div class="gterm">Limit order vs. market order <span class="gcat cat-cost">Cost</span></div>
-Limit order: executes only at a specified price or better — saves the spread but creates opportunity cost if the price never reaches the limit. Market order: executes immediately — guarantees execution but pays the full spread.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Market impact <span class="gcat cat-cost">Cost</span></div>
-When a position is large relative to daily trading volume, buying pushes prices up and selling pushes them down before execution is complete. The dominant cost for large positions in illiquid securities.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Slippage <span class="gcat cat-cost">Cost</span></div>
-The difference between the signal price (what triggered the order) and the actual execution price, caused by transmission delays or fast-moving markets. On average a cost rather than a gain.
-</div>
-
-### Data Biases
 
 <div class="glossary-entry">
 <div class="gterm">Data-snooping bias (overfitting) <span class="gcat cat-bias">Bias</span></div>
@@ -642,11 +578,6 @@ A backtesting error where information not yet available at a historical moment i
 <div class="glossary-entry">
 <div class="gterm">Metalabeling <span class="gcat cat-bias">Bias</span></div>
 An ML technique where a model predicts whether a proprietary trading signal will be profitable on a specific trade — rather than predicting market direction directly. Sidesteps reflexivity by targeting private, proprietary outcomes instead of public market ones.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Regime shift / stationarity <span class="gcat cat-bias">Bias</span></div>
-A regime shift is a structural, often permanent change in market statistical properties. Financial time series is non-stationary — its mean, variance, and correlations change over time. Examples: US stock decimalization (2001), subprime meltdown (2007–08). More historical data is not always better.
 </div>
 
 <div class="glossary-entry">
