@@ -4,7 +4,7 @@ title: "Quantitative Trading — Chapter 2 Study Notes"
 description: Deep-dive notes on Chapter 2 of Ernest P. Chan's Quantitative Trading (2nd Ed.) — covering idea sources, strategy screening, performance metrics, transaction costs, data biases, and a full term glossary.
 tags: Finance Quant Trading Notes
 giscus_comments: true
-date: 2025-04-09
+date: 2026-03-09
 featured: true
 thumbnail: https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NYSE_floor.jpg/1280px-NYSE_floor.jpg
 
@@ -500,18 +500,8 @@ The longest continuous period the equity curve remained below a prior high water
 </div>
 
 <div class="glossary-entry">
-<div class="gterm">Equity curve <span class="gcat cat-perf">Performance</span></div>
-A time-series chart of cumulative P&L assuming no cash deposits or withdrawals. Shape reveals the strategy's risk profile: steadily rising = high Sharpe; volatile with deep troughs = low Sharpe, high drawdown.
-</div>
-
-<div class="glossary-entry">
 <div class="gterm">Information ratio (IR) <span class="gcat cat-perf">Performance</span></div>
 Risk-adjusted performance metric for long-only strategies. Average excess return over a market benchmark divided by the standard deviation of that excess return (tracking error). The Sharpe ratio is a special case where the benchmark is always the risk-free rate.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Maximum drawdown (MDD) <span class="gcat cat-perf">Performance</span></div>
-The single largest peak-to-trough decline in the equity curve. Time order is critical: the trough must follow the peak chronologically. From Figure 2.1: equity fell from ~$23K to ~$5K = MDD of ~$18K or ~78%.
 </div>
 
 <div class="glossary-entry">
@@ -523,7 +513,6 @@ The theoretical return on a zero-risk investment. Approximated by the 3-month US
 <div class="gterm">Sharpe ratio <span class="gcat cat-perf">Performance</span></div>
 The universal risk-adjusted return metric. Formula: (Avg Portfolio Return − Risk-Free Rate) ÷ Std Dev of Portfolio Returns. Annualise: daily × √252, monthly × √12. Benchmarks: &lt;1 = not viable; ≥1 = minimum; ≥2 = monthly profitability; ≥3 = daily profitability.
 </div>
-
 
 <div class="glossary-entry">
 <div class="gterm">Dollar-neutral portfolio <span class="gcat cat-capital">Capital</span></div>
@@ -537,17 +526,13 @@ A portfolio whose beta (sensitivity to the market index) is close to zero. Requi
 
 <div class="glossary-entry">
 <div class="gterm">NAV (net asset value) <span class="gcat cat-capital">Capital</span></div>
-True equity in a trading account: cash + market value of long positions − market value of short positions − margin debt. Portfolio margin accounts typically require minimum NAV of ~$100K.
+True equity in a trading account: cash + market value of long positions − market value of short positions − margin debt.
 </div>
 
-<div class="glossary-entry">
-<div class="gterm">Portfolio margin <span class="gcat cat-capital">Capital</span></div>
-A margin system where requirements are calculated from the estimated risk of the overall portfolio rather than fixed Reg T ratios. A balanced long-short large-cap portfolio may qualify for 5–10× leverage vs. standard 2× Reg T overnight. Requires ~$100K minimum NAV.
-</div>
 
 <div class="glossary-entry">
 <div class="gterm">Regulation T (Reg T) <span class="gcat cat-capital">Capital</span></div>
-The Federal Reserve rule governing broker credit for purchasing securities. Minimum margin: 50% overnight (2× leverage) and 25% intraday (4× leverage) for stocks. Futures and FX sit outside Reg T and offer substantially higher leverage.
+The Federal Reserve rule governing broker credit for purchasing securities.
 </div>
 
 <div class="glossary-entry">
@@ -557,12 +542,12 @@ A family of quant strategies exploiting short-term pricing discrepancies between
 
 <div class="glossary-entry">
 <div class="gterm">Strategy capacity <span class="gcat cat-capital">Capital</span></div>
-The maximum capital a strategy can deploy before its own trading degrades returns through market impact. Low-capacity strategies are inaccessible to large hedge funds — creating a durable moat for independent traders.
+The maximum capital a strategy can deploy before its own trading degrades returns through market impact.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Bid-ask spread <span class="gcat cat-cost">Cost</span></div>
-Gap between the price buyers will pay (bid) and sellers will accept (ask). One-way cost ≈ half the spread. S&P 500 stocks: ~5 bps one way. ES futures: ~1 bp one way.
+Gap between the price buyers will pay (bid) and sellers will accept (ask).
 </div>
 
 <div class="glossary-entry">
@@ -572,15 +557,15 @@ A modelling error where excessive parameter optimisation causes the strategy to 
 
 <div class="glossary-entry">
 <div class="gterm">Look-ahead bias <span class="gcat cat-bias">Bias</span></div>
-A backtesting error where information not yet available at a historical moment is inadvertently used in the trading decision. Common with restated financial data. Creates phantom alpha that disappears entirely in live trading.
+A backtesting error where information not yet available at a historical moment is inadvertently used in the trading decision.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Metalabeling <span class="gcat cat-bias">Bias</span></div>
-An ML technique where a model predicts whether a proprietary trading signal will be profitable on a specific trade — rather than predicting market direction directly. Sidesteps reflexivity by targeting private, proprietary outcomes instead of public market ones.
+An ML technique where a model predicts whether a proprietary trading signal will be profitable on a specific trade — rather than predicting market direction directly.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Survivorship bias <span class="gcat cat-bias">Bias</span></div>
-A distortion in historical databases that include only stocks surviving to the present, omitting those that went bankrupt, were delisted, or merged. Especially dangerous for value-oriented (buy-cheap) strategies. Remedy: point-in-time databases such as Sharadar. Intraday strategies are largely immune.
+A distortion in historical databases that include only stocks surviving to the present, omitting those that went bankrupt, were delisted, or merged. Especially dangerous for value-oriented (buy-cheap) strategies.
 </div>
