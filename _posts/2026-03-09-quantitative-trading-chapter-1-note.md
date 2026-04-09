@@ -144,6 +144,35 @@ The scarcity of good trading ideas is not the real problem — ideas are abundan
 
 <div class="key-idea"><strong>Academic strategies are often stale, complex, or small-cap constrained.</strong> By the time a strategy appears in a journal, it is frequently already arbitraged away, requires expensive data, or only works in illiquid stocks where execution erodes the theoretical gain entirely.</div>
 
+### Table 2.1 — Sources of trading ideas
+
+The following sources are recommended for finding quantitative trading strategy ideas. Most are free or low-cost. The key caveat: treat all of them as *starting points for modification*, not ready-made strategies.
+
+| Category | Source | URL |
+|---|---|---|
+| **Academic** | Business school finance professors' websites | [hbs.edu/research](https://www.hbs.edu/research/research.html) |
+| | Social Science Research Network (SSRN) | [ssrn.com](https://www.ssrn.com) |
+| | National Bureau of Economic Research (NBER) | [nber.org](https://www.nber.org) |
+| | Quantitative finance seminars | [ieor.columbia.edu](https://www.ieor.columbia.edu/seminars/financialengineering) |
+| | Quantpedia (aggregator of all academic quant papers) | [quantpedia.com](https://quantpedia.com) |
+| **Blogs & podcasts** | Flirting with Models | [thinknewfound.com](https://www.thinknewfound.com) |
+| | Mutiny Fund podcast | [mutinyfund.com/podcast](https://mutinyfund.com/podcast/) |
+| | Chat with Traders | [chatwithtraders.com](https://chatwithtraders.com) |
+| | Eran Raviv | [eranraviv.com](https://eranraviv.com) |
+| | Party at the Moontower | [moontowermeta.com](https://moontowermeta.com) |
+| | Ernest Chan's blog | [epchan.blogspot.com](https://epchan.blogspot.com) |
+| **Trader forums** | Elite Trader | [elitetrader.com](https://www.Elitetrader.com) |
+| | Wealth-Lab | [wealth-lab.com](https://www.wealth-lab.com) |
+| **Twitter / X** | Benn Eifert | [@bennpeifert](https://twitter.com/bennpeifert) |
+| | Corey Hoffstein | [@choffstein](https://twitter.com/choffstein) |
+| | Quantocracy (aggregator of new quant articles) | [@Quantocracy](https://twitter.com/Quantocracy) |
+| | Mike Harris | [@mikeharrisNY](https://twitter.com/mikeharrisNY) |
+| | Euan Sinclair | [@sinclaireuan](https://twitter.com/sinclaireuan) |
+| | Ernest Chan | [@chanep](https://twitter.com/chanep) |
+| **Newspapers & magazines** | Stocks, Futures and Options magazine | [sfomag.com](https://www.sfomag.com) |
+
+> **Note on academic sources:** Business school papers are theoretically rigorous but often stale (already arbitraged), overly complex, or small-cap constrained — requiring expensive data to replicate. Trader forums and blogs tend to offer simpler, more actionable ideas that, while rarely working as-is, provide better raw material for modification.
+
 ---
 
 ## Section 2 — Personal Fit
