@@ -311,28 +311,28 @@ The strategy's sign completely reverses with the addition of a single basis poin
 ## Section 6 — Data Biases
 
 <div class="note-abstract">
-The most dangerous backtesting errors are statistical biases that make a strategy appear profitable when it is not. Two distinct mechanisms are identified — survivorship bias (a data contamination problem) and data-snooping bias (a modelling problem) — both endemic and largely invisible to practitioners who do not actively look for them. Regime shifts extend the point further: even a well-constructed, bias-free backtest becomes unreliable when its historical window spans structurally different market conditions.
+The biggest risk in backtesting is statistical bias, which can make a bad strategy look good. Two major issues are survivorship bias, where the dataset itself is distorted, and data-snooping bias, where repeated testing leads to overfitting. These problems are widespread and often invisible without careful checks. On top of that, changing market regimes mean that even clean backtests may not hold up when conditions in the future differ from the past.
 </div>
 
 ### Core ideas
 
 <div class="key-idea"><strong>More data is not always better — regime-shifted data is actively misleading.</strong> Financial time series is non-stationary. Data from pre-decimalization or pre-crisis markets describes conditions that no longer apply.</div>
 
-<div class="key-idea"><strong>Simple models generalise; complex models memorise.</strong> Data-snooping bias scales directly with the number of free parameters. Fewer parameters almost always produces more durable out-of-sample performance.</div>
+<div class="key-idea"><strong>Simple models tend to generalize better, while complex models are more likely to memorize patterns in the data.</strong> Data-snooping bias increases with the number of free parameters. In practice, models with fewer parameters are usually more robust and deliver more stable out-of-sample performance.</div>
 
-<div class="key-idea"><strong>AI works in trading only on non-reflexive, private targets via metalabeling.</strong> Standard ML targets (market returns) change in response to being successfully predicted. Metalabeling predicts proprietary signal performance instead, avoiding that reflexivity problem.</div>
+<div class="key-idea"><strong>AI is effective in trading only when applied to non-reflexive, private targets through meta-labeling. </strong> Standard ML targets (market returns) change in response to being successfully predicted. Metalabeling predicts proprietary signal performance instead, avoiding that reflexivity problem.</div>
 
 ### Strategy examples
 
 <div class="example-block">
 <div class="ex-title">"Buy cheap" value strategy — survivorship bias inflates results <span class="ex-pill pill-warn">Cautionary</span></div>
-Any strategy that tends to buy cheap stocks is especially vulnerable to survivorship bias. Some stocks were cheap precisely because the company was approaching bankruptcy and delisting. A database that excludes delisted stocks shows only the cases where cheap stocks survived and recovered — the failed cases, which a live trader would have held, are entirely absent. This is the clearest illustration of why point-in-time data matters most for value strategies (see Example 3.3 in the book for a quantified illustration).
+Any strategy that tends to buy cheap stocks is especially vulnerable to survivorship bias. Some stocks were cheap precisely because the company was approaching bankruptcy and delisting. A database that excludes delisted stocks shows only the cases where cheap stocks survived and recovered — the failed cases, which a live trader would have held, are entirely absent.
 <div class="ex-lesson"><strong>Lesson:</strong> Always ask whether a "buy cheap" backtest used point-in-time data. If not, the results are fundamentally unreliable.</div>
 </div>
 
 <div class="example-block">
 <div class="ex-title">100-parameter model — data-snooping in practice <span class="ex-pill pill-warn">Cautionary</span></div>
-A trading strategy built with 100 free parameters can almost certainly be optimised to produce a spectacular historical backtest. It is equally certain that its live performance will look nothing like the backtest. The model has fitted to historical accidents — random noise that will not repeat — rather than genuine market structure. Even a strategy with just 1–2 parameters (entry and exit thresholds) is susceptible, though less severely.
+A trading strategy built with 100 free parameters can almost certainly be optimised to produce a spectacular historical backtest. It is equally certain that its live performance will look nothing like the backtest. The model has fitted to historical accidents — random noise that will not repeat — rather than genuine market structure.
 <div class="ex-lesson"><strong>Lesson:</strong> Treat every additional parameter as a cost paid in out-of-sample reliability. Simple models almost always generalise better.</div>
 </div>
 
@@ -345,14 +345,14 @@ A trading strategy built with 100 free parameters can almost certainly be optimi
 ## Section 7 — Pre-Backtest Screening Checklist
 
 <div class="note-abstract">
-The closing synthesis is a two-stage decision framework built on disciplined asymmetry: invest analytical effort only where the prior probability of success is already high. The checklist eliminates the majority of candidate strategies before any significant time is committed. Strategies that survive both stages are not guaranteed to be profitable, but they have cleared the conditions necessary to make full backtesting worthwhile rather than wasteful.
+The final framework is a two-stage decision process based on disciplined asymmetry: only invest analytical effort when the prior probability of success is already high. The checklist serves to eliminate most candidate strategies before any significant time is spent. Strategies that pass both stages are not guaranteed to be profitable, but they are sufficiently promising to justify full backtesting rather than wasteful exploration.
 </div>
 
 ### Core ideas
 
-<div class="key-idea"><strong>The independent trader's structural moat is low strategy capacity.</strong> Strategies too small, too frequent, or too illiquid for institutional capital are a durable competitive advantage — occupying niches that large funds cannot enter without destroying their own returns through market impact.</div>
+<div class="key-idea"><strong>The independent trader's structural moat is low strategy capacity.</strong> Strategies too small, too frequent, or too illiquid for institutional capital are a durable competitive advantage. These areas can become a lasting advantage for smaller players, because large funds cannot enter without pushing prices against themselves.</div>
 
-<div class="key-idea"><strong>Eight filters before one backtest.</strong> Pre-screening is the correct sequence. Running a full backtest on a strategy that fails these filters wastes time and distorts judgment through sunk-cost effects.</div>
+<div class="key-idea"><strong>You should apply a set of filters before doing any full backtest.</strong> This pre-screening step saves time and prevents you from getting emotionally attached to weak ideas. Without it, you risk wasting effort and being influenced by sunk-cost bias.</div>
 
 <div class="key-idea"><strong>Recent performance matters more than long-run average performance.</strong> A strategy with a stellar 15-year backtest dominated by its first 10 years is a decaying strategy, not a proven one.</div>
 
