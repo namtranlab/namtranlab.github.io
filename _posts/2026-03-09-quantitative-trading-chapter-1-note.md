@@ -268,7 +268,7 @@ $$\text{Daily Sharpe} \times \sqrt{252} \quad \text{or} \quad \text{Monthly Shar
 ## Section 5 — Transaction Costs
 
 <div class="note-abstract">
-Transaction costs do not merely reduce returns — they can completely invert a strategy's sign, turning an apparently exceptional strategy into a systematically losing one. The lesson is not a minor accounting adjustment; it is a structural warning that high-frequency strategies are fundamentally fragile. Costs must be modelled rigorously and upfront, not treated as an afterthought once the strategy looks attractive.
+Trading costs are not just a drag on performance—they can completely flip a strategy from profitable to unprofitable. A strategy that looks excellent on paper can fail once costs are included. This is a fundamental warning: high-frequency strategies are especially sensitive and fragile. Costs need to be built into the model from the beginning.
 </div>
 
 ### Core ideas
