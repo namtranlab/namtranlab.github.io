@@ -139,7 +139,7 @@ _styles: >
 Backtesting is simply running a trading strategy on historical data to see how it would have done in the past. Think of it like a practice exam before the real test. Even if someone hands you a strategy with all the details and historical results already written up, you should still run it yourself — because doing so forces you to truly understand it, catch any hidden mistakes, and spot ways to make it even better.
 </div>
 
-### The big ideas
+### Core ideas
 
 <div class="key-idea"><strong>Running it yourself is the proof that you understand it.</strong> If you cannot reproduce someone else's backtest results step by step, you do not really understand the strategy well enough to bet real money on it. The process of replication forces you to confront every assumption and decision.</div>
 
@@ -155,7 +155,7 @@ Backtesting is simply running a trading strategy on historical data to see how i
 Picking the right tool for backtesting matters more than most people think. It is not just about personal preference — the tool you choose determines what kinds of mistakes you are likely to make, how fast you can test ideas, and how complex a strategy you can realistically build. The best tool is the simplest one that can handle your strategy.
 </div>
 
-### The big ideas
+### Core ideas
 
 <div class="key-idea"><strong>Simpler tools force simpler strategies — and that is often a good thing.</strong> Excel shows you everything on screen at once, which makes it almost impossible to accidentally use tomorrow's data in today's trading decision. Its limitation to simpler models is actually a safety feature.</div>
 
@@ -174,42 +174,6 @@ Picking the right tool for backtesting matters more than most people think. It i
 | **QuantConnect** | Research all the way through to live trading | 400TB of data included; Python or C#; backtest and live trading use identical code | Requires programming knowledge |
 | **Blueshift** | Python users who want data and backtesting in one place | Free minute-by-minute data; also has a no-code visual builder | Fewer markets than QuantConnect |
 
-### Example from the book
-
-<div class="example-block">
-<div class="ex-title">Example 3.1 — Downloading stock data from Yahoo Finance in three languages <span class="ex-pill pill-code">Code example</span></div>
-
-The book shows the same task — downloading Apple's historical prices — in MATLAB, Python, and R side by side.
-
-**MATLAB** (about 5 lines, downloads and plots the data automatically):
-```matlab
-initDate = '1-Sep-2020';
-symbol = 'AAPL';
-aaplusd_yahoo_raw = getMarketDataViaYahoo(symbol, initDate);
-```
-
-**Python** (also about 5 lines, but took over an hour to get working due to package issues on one computer):
-```python
-from pandas_datareader import data as pdr
-data = pdr.get_data_yahoo('AAPL', start='2020-09-25', end='2020-10-02')
-```
-
-**R** (more lines, but great for statistical analysis afterwards):
-```r
-symbols <- c("SPY", "EFA", "IJS", "EEM", "AGG")
-prices <- getSymbols(symbols, src='yahoo', from="2012-12-31", to="2017-12-31",
-                     auto.assign=TRUE, warnings=FALSE)
-```
-
-All three files are free to download at [epchan.com/book](http://epchan.com/book) — use `sharperatio` as both the username and password.
-
-<div class="ex-lesson"><strong>Takeaway:</strong> The same job takes 5 clean lines in MATLAB, 5 lines in Python (but with painful setup), and around 20 lines in R. For quick research, MATLAB wins on productivity. Python wins when you need to share code with a team or plug in machine learning tools.</div>
-</div>
-
-<div class="ref-tags">
-<span class="ref-tag">MATLAB</span> <span class="ref-tag">Python</span> <span class="ref-tag">R</span> <span class="ref-tag">QuantConnect</span> <span class="ref-tag">Look-ahead bias</span>
-</div>
-
 ---
 
 ## Section 3 — Where Do You Get Historical Data?
@@ -218,11 +182,11 @@ All three files are free to download at [epchan.com/book](http://epchan.com/book
 Getting historical data is the easy part — the internet is full of free sources. The hard part is understanding what problems are hiding inside that data. Three issues silently ruin most backtests: prices that have not been corrected for stock splits or dividends, databases that are missing stocks that went bankrupt, and noisy daily high and low prices that are less reliable than they look.
 </div>
 
-### The big ideas
+### Core ideas
 
-<div class="key-idea"><strong>Always use prices that have been adjusted for stock splits and dividends.</strong> When a company splits its stock 2-for-1, the price drops by half overnight — but nothing actually changed for shareholders. If your data is not adjusted, your backtest sees a huge fake price drop and generates a false buy signal. Yahoo Finance does this adjustment automatically, which is one of its main practical advantages.</div>
+<div class="key-idea"><strong>Always use prices that have been adjusted for stock splits and dividends.</strong> When a company splits its stock 2-for-1, the price drops by half overnight — but nothing actually changed for shareholders. If your data is not adjusted, your backtest sees a huge fake price drop and generates a false buy signal.</div>
 
-<div class="key-idea"><strong>Databases that are missing bankrupt companies make strategies look much better than they really are.</strong> If your database only includes stocks that are still trading today, you are missing all the ones that went bust. A "buy cheap" strategy looks amazing in this kind of biased data — because you never see the cheap stocks that went to zero. This is called survivorship bias, and Example 3.3 shows it can create a 430 percentage-point illusion in a single year.</div>
+<div class="key-idea"><strong>Databases that are missing bankrupt companies make strategies look much better than they really are.</strong> If your database only includes stocks that are still trading today, you are missing all the ones that went bust. A "buy cheap" strategy looks amazing in this kind of biased data — because you never see the cheap stocks that went to zero. This is called survivorship bias.</div>
 
 <div class="key-idea"><strong>Daily high and low prices are unreliable — stick to open and close wherever possible.</strong> The day's high or low is often set by a single tiny trade, a data entry error, or a trade on a different exchange. Any strategy that assumes you can buy at exactly the daily low or sell at exactly the daily high will look better in backtest than it ever will in real trading.</div>
 
@@ -238,69 +202,6 @@ Getting historical data is the easy part — the internet is full of free source
 | [Tickdata.com](https://tickdata.com) | Tick-by-tick stocks and futures | Institutional-grade quality | Expensive |
 | Interactive Brokers | Forex data | Free if you already have an IB account | Need an IB account first |
 
-> **Money-saving tip:** If you cannot afford a survivorship-bias-free database like Sharadar, just save today's full list of stocks to a file every trading day. After a few months you will have built your own clean historical database at zero extra cost.
-
-### Examples from the book
-
-<div class="example-block">
-<div class="ex-title">Example 3.2 — How to adjust prices for a stock split and dividends <span class="ex-pill pill-num">Numbers walkthrough</span></div>
-
-The book uses IGE (a gold ETF) which had a 2-for-1 stock split on June 9, 2005. Here is what the raw unadjusted prices look like around that date:
-
-| Date | Closing price (raw) |
-|---|---|
-| June 10, 2005 | $74.00 |
-| June 9, 2005 | $73.74 |
-| **June 8, 2005** | **$144.48** ← looks like the price halved overnight! |
-| June 7, 2005 | $144.11 |
-
-Without adjustment, your backtest sees a 50% price crash on June 9 and fires off a massive false buy signal. The fix: multiply all prices before the split date by ½ (since it was a 2-for-1 split). Then apply extra multipliers for all the dividends paid between 2005 and 2007. The total combined multiplier works out to **0.488386**, giving us these clean adjusted prices:
-
-| Date | Adjusted closing price |
-|---|---|
-| June 10, 2005 | $72.28 |
-| June 9, 2005 | $72.03 |
-| June 8, 2005 | $70.56 |
-| June 7, 2005 | $70.38 |
-
-These match Yahoo Finance's adjusted close column exactly.
-
-<div class="ex-lesson"><strong>Takeaway:</strong> Always multiply — do not subtract — when adjusting for dividends. Multiplying keeps the correct daily percentage returns intact. Subtracting instead preserves daily dollar changes, which is less useful for most trading strategies.</div>
-</div>
-
-<div class="example-block">
-<div class="ex-title">Example 3.3 — How survivorship bias turns a −42% strategy into a fictitious +388% result <span class="ex-pill pill-warn">Warning example</span></div>
-
-**The strategy:** On January 2, 2001, pick the 10 lowest-priced stocks from the top 1,000 largest companies. Hold them for exactly one year.
-
-**What actually happened — using a complete database that includes bankruptcies:**
-
-| Stock | Price Jan 2001 | What happened by Jan 2002 |
-|---|---|---|
-| ETYS | $0.22 | Delisted — went bust |
-| INTW | $0.41 | Delisted — went bust |
-| FDHG | $0.50 | Delisted — went bust |
-| OGNC, MPLX, GTS, BUYX, PSIX, RTHM | various | All delisted |
-| MDM | $0.31 | Only survivor — ended at $0.49 |
-
-<div class="result-box"><strong>Real return: −42%</strong> (most stocks in the portfolio went to zero)</div>
-
-**What a biased database would have shown** — since it is missing all the bankrupt stocks, a completely different set of 10 stocks gets selected. All of them happen to still be alive on January 2, 2002:
-
-| Stock | Price Jan 2001 | Price Jan 2002 |
-|---|---|---|
-| NEOF | $0.875 | $27.90 — up 3,089%! |
-| MVL | $0.958 | $2.50 — up 161% |
-| URBN | $1.016 | $3.07 — up 202% |
-| FLIR | $1.281 | $9.48 — up 640% |
-| ... 6 more stocks that all survived | | |
-
-<div class="result-box"><strong>Fictitious return from biased database: +388%</strong></div>
-
-Same strategy. Same year. Same universe. A 430 percentage-point difference — entirely caused by the database being missing bankrupt stocks.
-
-<div class="ex-lesson"><strong>Takeaway:</strong> Cheap stocks are often cheap because the company is in trouble. A database that hides the ones that eventually went bust makes "buy cheap" strategies look like gold mines when they are actually very dangerous. Always ask whether the database includes delisted and bankrupt stocks.</div>
-</div>
 
 <div class="ref-tags">
 <span class="ref-tag">Survivorship bias</span> <span class="ref-tag">Split adjustment</span> <span class="ref-tag">Dividend adjustment</span> <span class="ref-tag">Point-in-time data</span>
@@ -318,35 +219,29 @@ Most people judge a trading strategy by how much money it made. But raw returns 
 
 <div class="key-idea"><strong>The Sharpe ratio tells you how much you are earning per unit of risk taken.</strong> Think of it as asking: "How smooth and consistent were your gains?" A high Sharpe ratio means you made money reliably without wild swings. A low Sharpe ratio means the returns were bumpy and unreliable. Anything below 1 generally means the strategy is not worth running on its own.</div>
 
-<div class="key-idea"><strong>For strategies where longs and shorts cancel each other out, skip subtracting the risk-free rate.</strong> When a strategy fully hedges itself — the money from selling short pays for the buying — there is no borrowing cost to account for. You just use the raw returns directly in the Sharpe formula.</div>
+<div class="key-idea"><strong>For a fully hedged long–short strategy, you don’t need to subtract the risk-free rate.</strong> The short side pays for the long side, so the portfolio is basically self-funded. In that case, you can compute Sharpe using the raw strategy returns.</div>
 
 <div class="key-idea"><strong>Scaling a Sharpe ratio to an annual number uses the square root, not a simple multiplication.</strong> You cannot just multiply a daily Sharpe by 252 trading days. You multiply by the square root of 252 (about 15.87). This is because risk does not grow in a straight line with time — it grows more slowly. Getting this wrong is a common mistake even among experienced traders.</div>
 
 ### The Sharpe ratio formula
 
-```
-Sharpe ratio = (Average return − Risk-free rate) ÷ Standard deviation of returns
+$$\text{Sharpe ratio} = \frac{\text{Average return} - \text{Risk-free rate}}{\text{Standard deviation of returns}}$$
 
-To make it annual:
-  — Daily returns:   multiply by √252  (≈ 15.87)
-  — Monthly returns: multiply by √12   (≈ 3.46)
-  — Hourly returns:  multiply by √1638 (252 trading days × 6.5 trading hours per day)
+**Annualization:**
+- Daily returns: multiply by $\sqrt{252}$ (≈ 15.87)
+- Monthly returns: multiply by $\sqrt{12}$ (≈ 3.46)
+- Hourly returns: multiply by $\sqrt{1638}$ (252 trading days × 6.5 trading hours per day)
 
-⚠️ Common mistake: using 252 × 24 = 6,048 for hourly data.
-   Only count actual trading hours (6.5 hours per NYSE day), not all 24 hours.
-```
+⚠️ **Common mistake:** using $252 \times 24 = 6,048$ for hourly data. Only count actual trading hours (6.5 hours per NYSE day), not all 24 hours.
 
 ### The MAR ratio — a quick gut-check
 
-```
-MAR ratio = Annual growth rate ÷ Maximum drawdown (as a positive number)
+$$\text{MAR ratio} = \frac{\text{Annual growth rate}}{\text{Maximum drawdown}}$$
 
-Example: Strategy grows 20% per year and the worst loss from peak was 40%
-→ MAR ratio = 20 ÷ 40 = 0.5
+**Example:** Strategy grows 20% per year and the worst loss from peak was 40%
+$$\text{MAR ratio} = \frac{20\%}{40\%} = 0.5$$
 
-Higher is better. Useful because it roughly cancels out leverage effects,
-making it easier to compare strategies with different risk levels.
-```
+Higher is better. Useful because it roughly cancels out leverage effects, making it easier to compare strategies with different risk levels.
 
 ### Examples from the book
 
