@@ -133,13 +133,6 @@ _styles: >
 
 ---
 
-> **Book:** *Quantitative Trading* (2nd Ed.) — Ernest P. Chan
-> **Chapter:** 3 — Backtesting
-
-These notes walk through Chapter 3 in plain English — covering all 8 worked examples, the historical database table, a platform comparison, and a friendly glossary at the end. No finance degree required.
-
----
-
 ## Section 1 — What Is Backtesting and Why Should You Do It Yourself?
 
 <div class="note-abstract">
