@@ -286,19 +286,19 @@ If the strategy works well on both halves, the result is much more credible. If 
 <div class="example-block">
 <div class="ex-title">Example 3.6 — GLD vs. GDX pair trading: does it hold up on unseen data? <span class="ex-pill pill-live">Real strategy test</span></div>
 
-<p>**The idea:** GLD tracks the price of gold. GDX holds a basket of gold-mining company stocks. Since gold miners' profits depend on gold prices, these two ETFs should generally move together. When their prices drift unusually far apart, we bet they will snap back — this is called pair trading.</p>
+<p><strong>The idea:</strong> GLD tracks the price of gold. GDX holds a basket of gold-mining company stocks. Since gold miners' profits depend on gold prices, these two ETFs should generally move together. When their prices drift unusually far apart, we bet they will snap back — this is called pair trading.</p>
 
-<p>**How it works:**</p>
+<strong>How it works:**</strong>
 <p>- Calculate the "spread" = GLD price − (1.637 × GDX price). The 1.637 is the hedge ratio — how many dollars of GDX to balance against each dollar of GLD, found by running a simple regression on the training data</p>
 <p>- When the spread drops more than 2 standard deviations below normal → **buy the spread** (buy GLD, short GDX)</p>
 <p>- When the spread rises more than 2 standard deviations above normal → **short the spread** (short GLD, buy GDX)</p>
 <p>- Exit when the spread returns to within 1 standard deviation of normal</p>
 
-<p>**Splitting the data:**</p>
+<strong>Splitting the data:</strong>
 <p>- Training set: first 252 trading days (about 1 year)</p>
 <p>- Test set: all remaining days — the strategy runs here without any changes</p>
 
-<p>**Results with default settings (entry at ±2 standard deviations, exit at ±1):**</p>
+<strong>Results with default settings (entry at ±2 standard deviations, exit at ±1):</strong>
 
 <div class="result-box">
 <strong>Sharpe on training data: 2.08</strong><br>
@@ -306,19 +306,6 @@ If the strategy works well on both halves, the result is much more credible. If 
 </div>
 
 Both are solid — the strategy holds up on data it was never trained on.
-
-**After tuning the settings (entry at ±1 standard deviation, exit at ±0.5):**
-
-<div class="result-box">
-<strong>Sharpe on training data: 2.9</strong><br>
-<strong>Sharpe on out-of-sample test data: 3.0</strong>
-</div>
-
-This is a rare and encouraging result — the improvement on the training data also improved the test data, which suggests the better settings reflect a real pattern, not just luck with historical noise.
-
-**Look-ahead bias check:** Remove the last 60 days of data and re-run. The positions for the remaining overlapping period were identical — the strategy is clean.
-
-Code files: [example3_6.m](http://epchan.com/book/example3_6.m) · [example3_6.ipynb](http://epchan.com/book/example3_6.ipynb) · [example3_6.R](http://epchan.com/book/example3_6.R)
 
 <div class="ex-lesson"><strong>Takeaway:</strong> When tuning your settings on training data also improves the test data, that is a genuine green flag. When it only improves the training data and hurts the test data, you have overfit — and the strategy probably will not survive real trading.</div>
 </div>
