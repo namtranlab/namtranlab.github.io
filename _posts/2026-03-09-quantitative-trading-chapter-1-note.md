@@ -378,36 +378,31 @@ The final framework is a two-stage decision process based on disciplined asymmet
 
 ## Term Glossary
 
-A reference glossary of all financial terms introduced in Chapter 2:
+A reference glossary of financial terms:
 
 <div class="glossary-entry">
 <div class="gterm">Backtest / Backtesting <span class="gcat cat-data">Data</span></div>
-Applying a trading strategy to historical data to simulate past performance. The primary validation tool before risking real capital. Reliability depends on data quality, realistic cost assumptions, and resistance to statistical biases. A backtest is an upper bound on future performance, not a prediction of it.
+Applying a trading strategy to historical data to simulate past performance. A backtest is an upper bound on future performance, not a prediction of it.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Bollinger bands <span class="gcat cat-data">Data</span></div>
-A technical indicator: a moving average flanked by bands at ±N standard deviations. Mean-reversion use: short when price exceeds +2σ, buy when below −2σ, exit at ±1σ. Illustrates how high-frequency strategies are destroyed by minimal transaction costs.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Mean reversion <span class="gcat cat-data">Data</span></div>
-The statistical tendency of a price, spread, or ratio to return toward its long-run average after deviating from it. Mean-reversion strategies profit by buying when something is cheap relative to history and selling when expensive. The conceptual opposite of momentum strategies.
+A technical indicator: a moving average flanked by bands at ±N standard deviations. Mean-reversion use: short when price exceeds +2σ, buy when below −2σ, exit at ±1σ.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">PEAD — Post-Earnings Announcement Drift <span class="gcat cat-data">Data</span></div>
-A documented market anomaly: stock prices continue drifting in the direction of an earnings surprise for weeks after announcement rather than adjusting immediately. Attributed to investor under-reaction. Contradicts the strong form of the Efficient Market Hypothesis.
+A documented market anomaly: stock prices continue drifting in the direction of an earnings surprise for weeks after announcement rather than adjusting immediately. Attributed to investor under-reaction.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Drawdown <span class="gcat cat-perf">Performance</span></div>
-At time t, the difference between the portfolio's current value and its prior peak (the high watermark), expressed as a percentage. Drawdowns cause traders to abandon valid strategies at exactly the worst moment — at the trough.
+At time t, the difference between the portfolio's current value and its prior peak (the high watermark), expressed as a percentage. Drawdowns cause traders to abandon valid strategies at exactly the worst moment.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Drawdown duration (maximum) <span class="gcat cat-perf">Performance</span></div>
-The longest continuous period the equity curve remained below a prior high watermark. Does not necessarily coincide with the deepest drawdown. From Figure 2.1: ~20 months (Feb 2001 to Oct 2002).
+The longest continuous period the equity curve remained below a prior high watermark.
 </div>
 
 <div class="glossary-entry">
@@ -427,7 +422,7 @@ The universal risk-adjusted return metric. Formula: (Avg Portfolio Return − Ri
 
 <div class="glossary-entry">
 <div class="gterm">Dollar-neutral portfolio <span class="gcat cat-capital">Capital</span></div>
-Portfolio where total long market value equals total short market value. Net dollar exposure = $0. Requires twice the capital of a directional portfolio for the same gross exposure.
+Portfolio where total long market value equals total short market value. Net dollar exposure = $0.
 </div>
 
 <div class="glossary-entry">
@@ -438,12 +433,6 @@ A portfolio whose beta (sensitivity to the market index) is close to zero. Requi
 <div class="glossary-entry">
 <div class="gterm">NAV (net asset value) <span class="gcat cat-capital">Capital</span></div>
 True equity in a trading account: cash + market value of long positions − market value of short positions − margin debt.
-</div>
-
-
-<div class="glossary-entry">
-<div class="gterm">Regulation T (Reg T) <span class="gcat cat-capital">Capital</span></div>
-The Federal Reserve rule governing broker credit for purchasing securities.
 </div>
 
 <div class="glossary-entry">
@@ -463,7 +452,7 @@ Gap between the price buyers will pay (bid) and sellers will accept (ask).
 
 <div class="glossary-entry">
 <div class="gterm">Data-snooping bias (overfitting) <span class="gcat cat-bias">Bias</span></div>
-A modelling error where excessive parameter optimisation causes the strategy to fit historical noise rather than genuine repeatable patterns. Severity scales with number of free parameters. Simple models generalise better; complex models memorise the past.
+A modelling error where excessive parameter optimisation causes the strategy to fit historical noise rather than genuine repeatable patterns.
 </div>
 
 <div class="glossary-entry">
@@ -478,5 +467,5 @@ An ML technique where a model predicts whether a proprietary trading signal will
 
 <div class="glossary-entry">
 <div class="gterm">Survivorship bias <span class="gcat cat-bias">Bias</span></div>
-A distortion in historical databases that include only stocks surviving to the present, omitting those that went bankrupt, were delisted, or merged. Especially dangerous for value-oriented (buy-cheap) strategies.
+A distortion in historical databases that include only stocks surviving to the present, omitting those that went bankrupt, were delisted, or merged.
 </div>
