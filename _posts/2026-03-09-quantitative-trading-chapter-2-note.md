@@ -123,13 +123,6 @@ _styles: >
 
 ---
 
-> **Book:** *Quantitative Trading* (2nd Ed.) — Ernest P. Chan
-> **Chapter:** 2 — Fishing for Ideas: Where Can We Find Good Strategies?
-
-These notes provide a section-by-section abstract of the author's core intellectual position, strategy examples drawn directly from the text, and a full term glossary at the end for reference.
-
----
-
 ## Section 1 — Core Thesis & Idea Sources
 
 <div class="note-abstract">
