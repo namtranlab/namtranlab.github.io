@@ -133,16 +133,14 @@ These notes provide a section-by-section abstract of the author's core intellect
 ## Section 1 — Core Thesis & Idea Sources
 
 <div class="note-abstract">
-The scarcity of good trading ideas is not the real problem — ideas are abundant, public, and free. The genuine intellectual work is developing a discriminating taste for viable strategies without wasting time on a full backtest. This reframes the trader's primary effort from discovery to curation: the ability to filter noise from signal before any analytical commitment is made.
+There’s no shortage of trading ideas—they are everywhere, open, and free. The real difficulty is not finding them, but knowing which ones are worth your time before you even start backtesting. In that sense, trading is less about discovery and more about curation: filtering out noise and recognizing signal early.
 </div>
 
 ### Core ideas
 
-<div class="key-idea"><strong>Modification is the real alpha source.</strong> Public strategies are raw material. The proprietary edge lives in the variations — holding period, universe, timing — not the base idea itself. What feels like a secret is usually widely known; the implementation is what is protected.</div>
+<div class="key-idea"><strong>Modification is the real alpha source.</strong> Public strategies are often just shared building blocks. The real edge comes from how they are adapted—through choices like holding period, asset selection, and timing. Most “secret” ideas are already widely known; what truly matters is the execution and how they are engineered.</div>
 
-<div class="key-idea"><strong>Openness generates more ideas than it costs.</strong> The paranoid secrecy of institutional culture is counterproductive for independents. Sharing an idea publicly invites correction of errors and surfaces better ideas in return.</div>
-
-<div class="key-idea"><strong>Academic strategies are often stale, complex, or small-cap constrained.</strong> By the time a strategy appears in a journal, it is frequently already arbitraged away, requires expensive data, or only works in illiquid stocks where execution erodes the theoretical gain entirely.</div>
+<div class="key-idea"><strong>Academic strategies are often outdated, overly complex, or constrained to small-cap universes.</strong> By the time a method is published in a journal, it may already be arbitraged away, require costly data to reproduce, or only work in illiquid markets where execution costs eliminate most of the theoretical edge.</div>
 
 ### Table 2.1 — Sources of trading ideas
 
@@ -171,23 +169,21 @@ The following sources are recommended for finding quantitative trading strategy 
 | | Ernest Chan | [@chanep](https://twitter.com/chanep) |
 | **Newspapers & magazines** | Stocks, Futures and Options magazine | [sfomag.com](https://www.sfomag.com) |
 
-> **Note on academic sources:** Business school papers are theoretically rigorous but often stale (already arbitraged), overly complex, or small-cap constrained — requiring expensive data to replicate. Trader forums and blogs tend to offer simpler, more actionable ideas that, while rarely working as-is, provide better raw material for modification.
-
 ---
 
 ## Section 2 — Personal Fit
 
 <div class="note-abstract">
-Strategy viability is inseparable from the trader's personal circumstances. The most technically superior strategy is worthless if it cannot be operated, funded, or psychologically sustained. Before evaluating any strategy on its merits, an honest audit of four personal dimensions — time, skill, capital, and goal — must define the feasible set. Fit precedes merit.
+A strategy is only as good as its fit with the trader’s personal constraints. Even the most theoretically strong strategy is useless if it cannot be executed, funded, or psychologically maintained. Before assessing any strategy on its merits, it is essential to first evaluate four dimensions—time, skill, capital, and objectives—to define what is actually feasible. Fit comes before merit.
 </div>
 
 ### Core ideas
 
 <div class="key-idea"><strong>Personal fit is assessed before analytical merit.</strong> A great strategy requiring full-time monitoring is not a great strategy for a part-time trader. Establish the feasible set first, then evaluate strategies within it.</div>
 
-<div class="key-idea"><strong>Buy-and-hold is mathematically suboptimal for long-term growth.</strong> Maximum long-term capital growth comes from finding the highest Sharpe ratio strategy and applying optimal leverage — not from holding indefinitely. The Kelly Criterion (Chapter 6) proves this formally.</div>
+<div class="key-idea"><strong>Buy-and-hold is not necessarily optimal for long-term capital growth.</strong> In theory, higher growth can be achieved by identifying strategies with strong risk-adjusted returns and applying optimal leverage.</div>
 
-<div class="key-idea"><strong>Trading frequency and income regularity are directly coupled.</strong> Consistent monthly income requires short holding periods. Longer holding periods produce higher P&L variance — fundamentally incompatible with predictable income needs regardless of average annual return.</div>
+<div class="key-idea"><strong>Trading frequency and income regularity are directly coupled.</strong> Generating consistent monthly income generally requires shorter holding periods. As holding periods increase, profit and loss become more volatile, making returns less predictable—even if the long-term average return is high.</div>
 
 ### Strategy examples
 
@@ -198,7 +194,7 @@ A short-term strategy with a small annual return but very high Sharpe ratio is p
 </div>
 
 <div class="ref-tags">
-<span class="ref-tag">ETF</span> <span class="ref-tag">Limit order</span> <span class="ref-tag">Intraday vs. overnight</span> <span class="ref-tag">Sharpe ratio</span>
+<span class="ref-tag">Sharpe ratio</span>
 </div>
 
 ---
@@ -206,7 +202,7 @@ A short-term strategy with a small annual return but very high Sharpe ratio is p
 ## Section 3 — Capital & Leverage
 
 <div class="note-abstract">
-Capital level is not merely a financial parameter — it is a master constraint that cascades into every subsequent decision. Available capital determines which instruments are tradeable, what leverage is accessible, what data quality can be afforded, and therefore which strategies are worth considering. This is a decision tree, not a set of soft preferences.
+Capital is more than just money—it sets the boundaries for everything else. It decides what markets you can trade, how much leverage you can use, what data you can realistically access, and which strategies are feasible in the first place. It’s less a preference and more a hard filter.
 </div>
 
 ### Core ideas
@@ -229,18 +225,20 @@ Capital level is not merely a financial parameter — it is a master constraint 
 | News access | Delayed/low-coverage | Real-time Bloomberg-tier |
 
 ---
-
+<div class="ref-tags">
+<span class="ref-tag">ETF</div> <span class="ref-tag">Limit order</div> <span class="ref-tag">Intraday vs. overnight</div>
+</div>
 ## Section 4 — Performance Measurement
 
 <div class="note-abstract">
-Raw return is the wrong primary metric for evaluating trading strategies — and most practitioners, including senior risk managers at billion-dollar funds, get this wrong. The Sharpe ratio is the correct master metric because it determines how much leverage can safely be applied, and it is leveraged return — not nominal return — that determines terminal wealth. This is the theoretical foundation on which every subsequent chapter builds.
+Raw returns are not the right primary metric for evaluating trading strategies. Even experienced practitioners sometimes focus on them incorrectly. The Sharpe ratio is more fundamental because it determines how much leverage can be applied safely. Ultimately, it is leveraged returns—not nominal returns—that drive long-term wealth.
 </div>
 
 ### Core ideas
 
-<div class="key-idea"><strong>Sharpe ratio, not return, is the master performance metric.</strong> Higher Sharpe permits more aggressive leverage, which multiplies terminal wealth. A strategy with Sharpe 3.0 and modest nominal return will outperform a Sharpe 0.8 strategy with high nominal return once both are optimally levered.</div>
+<div class="key-idea"><strong>Sharpe ratio, not return, is the master performance metric.</strong> A higher Sharpe means you can safely use more leverage, which ultimately drives wealth growth. With optimal leverage, a low-return but high-Sharpe strategy can easily beat a high-return but low-Sharpe one.</div>
 
-<div class="key-idea"><strong>Drawdown is the metric that determines psychological survivability.</strong> Drawdowns cause traders to abandon valid strategies at the worst possible moment — at the trough. Drawdown tolerance must be calibrated honestly before a strategy is selected, not after.</div>
+<div class="key-idea"><strong>Drawdown is the metric that determines psychological survivability.</strong> Drawdowns cause traders to abandon valid strategies at the worst possible moment. Drawdown tolerance must be calibrated honestly before a strategy is selected, not after.</div>
 
 <div class="key-idea"><strong>Trading frequency is a leading indicator of Sharpe ratio.</strong> Strategies trading only a few times per year almost certainly have low Sharpe. Deep drawdowns (>10%, >4 months) signal low Sharpe before any calculation is needed.</div>
 
@@ -255,11 +253,11 @@ Raw return is the wrong primary metric for evaluating trading strategies — and
 
 **Formula:**
 
-```
-Sharpe Ratio = (Avg Portfolio Return − Risk-Free Rate) ÷ Std Dev of Portfolio Returns
+$$\text{Sharpe Ratio} = \frac{\text{Avg Portfolio Return} - \text{Risk-Free Rate}}{\text{Std Dev of Portfolio Returns}}$$
 
-Annualise: daily Sharpe × √252   |   monthly Sharpe × √12
-```
+**Annualization:**
+
+$$\text{Daily Sharpe} \times \sqrt{252} \quad \text{or} \quad \text{Monthly Sharpe} \times \sqrt{12}$$
 
 <div class="ref-tags">
 <span class="ref-tag">Sharpe ratio</span> <span class="ref-tag">Information ratio</span> <span class="ref-tag">Risk-free rate</span> <span class="ref-tag">Equity curve</span> <span class="ref-tag">Drawdown</span> <span class="ref-tag">Maximum drawdown</span>
