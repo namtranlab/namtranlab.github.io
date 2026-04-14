@@ -6,7 +6,7 @@ tags: Finance Quant Trading Notes
 giscus_comments: true
 date: 2026-03-09
 featured: true
-thumbnail: https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NYSE_floor.jpg/1280px-NYSE_floor.jpg
+thumbnail: https://m.media-amazon.com/images/I/51s4givoDeL._SY445_SX342_ML2_.jpg
 
 authors:
   - name: Nam Tran
