@@ -243,56 +243,6 @@ $$\text{MAR ratio} = \frac{20\%}{40\%} = 0.5$$
 
 Higher is better. Useful because it roughly cancels out leverage effects, making it easier to compare strategies with different risk levels.
 
-### Examples from the book
-
-<div class="example-block">
-<div class="ex-title">Example 3.4 — Sharpe ratio: simple buy-and-hold IGE vs. IGE hedged with SPY <span class="ex-pill pill-num">Numbers walkthrough</span></div>
-
-**Strategy A — Simple buy-and-hold:** Buy IGE (an energy ETF) in November 2001 and sell it in November 2007. Assume the risk-free rate was 4% per year during this period.
-
-Step-by-step in Excel:
-1. Calculate the daily percentage return: `= (today's price − yesterday's price) / yesterday's price`
-2. Subtract the daily version of the risk-free rate: `= daily return − (4% ÷ 252)`
-3. Apply the Sharpe formula: `= SQRT(252) × AVERAGE(excess returns) / STDEV(excess returns)`
-
-<div class="result-box"><strong>Sharpe ratio for buying and holding IGE: 0.789</strong></div>
-
-**Strategy B — Hedged version:** Same IGE position, but simultaneously short an equal dollar amount of SPY (the S&P 500 ETF). This way if the whole market drops, the SPY short partially offsets IGE losses.
-
-Net daily return = (IGE return − SPY return) ÷ 2  *(divide by 2 because double the capital is now deployed)*
-
-No risk-free rate subtraction needed here — the long and short sides finance each other.
-
-<div class="result-box"><strong>Sharpe ratio for hedged IGE−SPY strategy: 0.784</strong></div>
-
-Both strategies end up with almost the same Sharpe ratio. The hedge cut the returns and the risk by similar proportions, so the ratio stayed about the same.
-
-Code files: [example3_4.xls](http://epchan.com/book/example3_4.xls) · [example3_4.m](http://epchan.com/book/example3_4.m) · [example3_4.ipynb](http://epchan.com/book/example3_4.ipynb) · [example3_4.R](http://epchan.com/book/example3_4.R)
-
-<div class="ex-lesson"><strong>Takeaway:</strong> For fully hedged strategies (where longs and shorts fund each other), do not subtract the risk-free rate in the Sharpe formula. The financing costs cancel out, so just use the raw daily net returns.</div>
-</div>
-
-<div class="example-block">
-<div class="ex-title">Example 3.5 — Maximum drawdown: how deep did it drop and how long did recovery take? <span class="ex-pill pill-num">Numbers walkthrough</span></div>
-
-Continuing with the IGE−SPY hedged strategy from Example 3.4, here is how to calculate the drawdown in Excel:
-
-1. **Running total return:** Compound the daily returns day by day
-2. **Best level ever:** Track the highest total return reached so far — updates whenever a new high is set: `= MAX(yesterday's best, today's total return)`
-3. **Today's drawdown:** How far below the best are we right now? `= (1 + today's total return) / (1 + best ever) − 1`
-4. **Worst single drop:** The most negative value in the drawdown column
-5. **Recovery time:** Count consecutive days below the best level — resets to zero when a new high is reached
-
-<div class="result-box">
-<strong>Worst loss from peak: −10.53%</strong><br>
-<strong>Longest stretch below the previous best: 497 trading days (roughly two years)</strong>
-</div>
-
-Notice that the worst loss and the longest dry spell do not overlap — the biggest single drop was quick, but the recovery to a new high took nearly two full years.
-
-<div class="ex-lesson"><strong>Takeaway:</strong> A 10% drawdown sounds manageable on paper. But spending two years below your previous best is psychologically exhausting — and can push traders to quit right before the rebound. Always look at both how deep and how long when judging a drawdown.</div>
-</div>
-
 <div class="ref-tags">
 <span class="ref-tag">Sharpe ratio</span> <span class="ref-tag">MAR ratio</span> <span class="ref-tag">Maximum drawdown</span> <span class="ref-tag">Drawdown duration</span> <span class="ref-tag">High watermark</span>
 </div>
@@ -302,7 +252,7 @@ Notice that the worst loss and the longest dry spell do not overlap — the bigg
 ## Section 5 — What Are the Most Common Mistakes?
 
 <div class="note-abstract">
-The frustrating thing about backtesting mistakes is that they almost always make a strategy look better than it really is — never worse. The two biggest culprits are accidentally using future information to make past trading decisions (look-ahead bias), and tuning a model so precisely to historical patterns that it stops working on new data (data-snooping bias). Both are sneaky, both are common, and both have practical tests that can catch them.
+The frustrating thing about backtesting mistakes is that they almost always make a strategy look better than it really is. The two biggest culprits are accidentally using future information to make past trading decisions (look-ahead bias), and tuning a model so precisely to historical patterns that it stops working on new data (data-snooping bias). Both are sneaky, both are common, and both have practical tests that can catch them.
 </div>
 
 ### The big ideas
@@ -321,7 +271,7 @@ The frustrating thing about backtesting mistakes is that they almost always make
 | 2.0 | Greater than 0 | 174 trading days — about 0.7 years of daily data |
 | 1.5 | Greater than 1.0 | 2,739 trading days — about 10.9 years of daily data |
 
-> These requirements apply to paper trading (running a live strategy with no real money) just as much as to the backtest itself. You need the same amount of clean out-of-sample testing to be confident your strategy is real.
+> These requirements apply to paper trading (running a live strategy with no real money) just as much as to the backtest itself. You need the same amount of clean out-of-sample testing (test set) to be confident your strategy is real. Meaning the minimum data is required for both training set and test set when split data for training
 
 ### How to protect yourself from data-snooping bias
 
@@ -336,19 +286,19 @@ If the strategy works well on both halves, the result is much more credible. If 
 <div class="example-block">
 <div class="ex-title">Example 3.6 — GLD vs. GDX pair trading: does it hold up on unseen data? <span class="ex-pill pill-live">Real strategy test</span></div>
 
-**The idea:** GLD tracks the price of gold. GDX holds a basket of gold-mining company stocks. Since gold miners' profits depend on gold prices, these two ETFs should generally move together. When their prices drift unusually far apart, we bet they will snap back — this is called pair trading.
+<p>**The idea:** GLD tracks the price of gold. GDX holds a basket of gold-mining company stocks. Since gold miners' profits depend on gold prices, these two ETFs should generally move together. When their prices drift unusually far apart, we bet they will snap back — this is called pair trading.</p>
 
-**How it works:**
-- Calculate the "spread" = GLD price − (1.637 × GDX price). The 1.637 is the hedge ratio — how many dollars of GDX to balance against each dollar of GLD, found by running a simple regression on the training data
-- When the spread drops more than 2 standard deviations below normal → **buy the spread** (buy GLD, short GDX)
-- When the spread rises more than 2 standard deviations above normal → **short the spread** (short GLD, buy GDX)
-- Exit when the spread returns to within 1 standard deviation of normal
+<p>**How it works:**</p>
+<p>- Calculate the "spread" = GLD price − (1.637 × GDX price). The 1.637 is the hedge ratio — how many dollars of GDX to balance against each dollar of GLD, found by running a simple regression on the training data</p>
+<p>- When the spread drops more than 2 standard deviations below normal → **buy the spread** (buy GLD, short GDX)</p>
+<p>- When the spread rises more than 2 standard deviations above normal → **short the spread** (short GLD, buy GDX)</p>
+<p>- Exit when the spread returns to within 1 standard deviation of normal</p>
 
-**Splitting the data:**
-- Training set: first 252 trading days (about 1 year)
-- Test set: all remaining days — the strategy runs here without any changes
+<p>**Splitting the data:**</p>
+<p>- Training set: first 252 trading days (about 1 year)</p>
+<p>- Test set: all remaining days — the strategy runs here without any changes</p>
 
-**Results with default settings (entry at ±2 standard deviations, exit at ±1):**
+<p>**Results with default settings (entry at ±2 standard deviations, exit at ±1):**</p>
 
 <div class="result-box">
 <strong>Sharpe on training data: 2.08</strong><br>
