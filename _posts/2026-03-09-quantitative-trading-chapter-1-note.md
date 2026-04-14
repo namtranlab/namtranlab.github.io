@@ -226,7 +226,7 @@ Capital is more than just money—it sets the boundaries for everything else. It
 
 ---
 <div class="ref-tags">
-<span class="ref-tag">ETF</div> <span class="ref-tag">Limit order</div> <span class="ref-tag">Intraday vs. overnight</div>
+<span class="ref-tag">ETF</span> <span class="ref-tag">Limit order</span> <span class="ref-tag">Intraday vs. overnight</span>
 </div>
 ## Section 4 — Performance Measurement
 
