@@ -319,14 +319,14 @@ Both are solid — the strategy holds up on data it was never trained on.
 ## Section 6 — How Do Transaction Costs Destroy Strategies?
 
 <div class="note-abstract">
-Trading costs are not just a small footnote — they can completely destroy a strategy that looks great on paper. The more often a strategy trades, the more costs pile up, and the damage is multiplicative. This section contains one of the most dramatic examples in the book: a strategy claiming a Sharpe ratio of 4.47 collapses to −3.19 after adding realistic trading costs. Learning to include costs properly is not optional detail — it is what separates a working strategy from an expensive illusion.
+Trading costs are not just a small footnote — they can completely destroy a strategy that looks great on paper. The more often a strategy trades, the more costs pile up, and the damage is multiplicative. A strategy claiming a Sharpe ratio of 4.47 could collaps to −3.19 after adding realistic trading costs. Learning to include costs properly is not optional detail — it is what separates a working strategy from an expensive illusion.
 </div>
 
-### The big ideas
+### Core ideas
 
 <div class="key-idea"><strong>The more often a strategy trades, the more costs eat into returns.</strong> A strategy that rebalances once per week and one that rebalances every day face vastly different cost burdens over the same period. Any strategy that trades very frequently and looks impressive before costs needs to be treated as unproven until the costs are applied properly.</div>
 
-<div class="key-idea"><strong>Which stocks you trade matters as much as how the strategy is designed.</strong> Example 3.7 is a perfect demonstration: the same mean-reversion strategy achieves a Sharpe of 4.47 on small and micro-cap stocks, but collapses to 0.25 on large S&P 500 stocks. The logic of the strategy is identical — the difference is that small stocks are less efficiently priced and snap back more reliably than large ones.</div>
+<div class="key-idea"><strong>Which stocks you trade matters as much as how the strategy is designed.</strong> The below example (example 3.7) is a perfect demonstration: the same mean-reversion strategy achieves a Sharpe of 4.47 on small and micro-cap stocks, but collapses to 0.25 on large S&P 500 stocks. The logic of the strategy is identical — the difference is that small stocks are less efficiently priced and snap back more reliably than large ones.</div>
 
 <div class="key-idea"><strong>Tiny execution changes — like trading at the open instead of the close — can flip a strategy from losing money to making money.</strong> Example 3.8 shows that one single code change (swap closing prices for opening prices) transforms a strategy losing money every day into one that profits. When and how you execute is just as important as the underlying trading idea.</div>
 
@@ -335,26 +335,15 @@ Trading costs are not just a small footnote — they can completely destroy a st
 <div class="example-block">
 <div class="ex-title">Example 3.7 — A Sharpe 4.47 strategy becomes Sharpe −3.19 after 5 basis points per trade <span class="ex-pill pill-warn">Warning example</span></div>
 
-**The strategy** (from MIT researchers Khandani and Lo): Every day, buy the S&P 500 stocks that fell the most yesterday and short the ones that rose the most. Bet that yesterday's big losers will bounce back and yesterday's big winners will pull back. Rebalance the whole portfolio every single trading day.
+<strong>The strategy (from MIT researchers Khandani and Lo):</strong> Every day, buy the S&P 500 stocks that fell the most yesterday and short the ones that rose the most. Bet that yesterday's big losers will bounce back and yesterday's big winners will pull back. Rebalance the whole portfolio every single trading day.
 
-**Without any transaction costs in 2006 (applied to the S&P 500):**
+<strong>Without any transaction costs in 2006 (applied to the S&P 500):</strong>
 
 <div class="result-box"><strong>Sharpe ratio: 0.25</strong> — already far below the paper's reported 4.47. The reason: the original paper used small and micro-cap stocks where this bounce-back effect is much stronger. Large-cap S&P 500 stocks are too efficiently priced for the strategy to work as well.</div>
 
-**After adding 5 basis points (0.05%) per trade:**
+<strong>After adding 5 basis points (0.05%) per trade:</strong>
 
 <div class="result-box"><strong>Sharpe ratio: −3.19</strong> — deeply and consistently unprofitable</div>
-
-Why does even a tiny cost cause such a big collapse? Because the strategy rebalances the entire S&P 500 every single day — hundreds of trades daily. Even a 0.05% cost per trade, multiplied across hundreds of stocks every day, snowballs into a massive daily loss. The MATLAB line that adds costs is just:
-
-```matlab
-onewaytcost = 0.0005;  % 5 basis points
-daily_pnl_after_costs = daily_pnl - sum(abs(weight_changes)) .* onewaytcost;
-```
-
-The key insight: calculate costs based on how much the portfolio actually changed each day, not as a flat fee. Bigger daily changes mean bigger costs.
-
-Code files: [example3_7.m](http://epchan.com/book/example3_7.m) · [example3_7.ipynb](http://epchan.com/book/example3_7.ipynb) · [example3_7.R](http://epchan.com/book/example3_7.R)
 
 <div class="ex-lesson"><strong>Takeaway:</strong> Never assume a strategy works just because a published paper says it does. Always apply it to the exact universe you plan to trade, and always include realistic transaction costs. Both of those checks can independently turn a winner into a loser.</div>
 </div>
@@ -362,21 +351,17 @@ Code files: [example3_7.m](http://epchan.com/book/example3_7.m) · [example3_7.i
 <div class="example-block">
 <div class="ex-title">Example 3.8 — One word changed in the code rescues the entire strategy <span class="ex-pill pill-live">Real improvement</span></div>
 
-**The fix:** Take the exact same strategy from Example 3.7. The only change: instead of using yesterday's closing prices to set positions at today's close, use them to set positions at today's market open.
+<strong>The fix:</strong> Take the exact same strategy from Example 3.7. The only change: instead of using yesterday's closing prices to set positions at today's close, use them to set positions at today's market open.
 
-In MATLAB, the entire change is replacing every instance of `cl` (closing prices) with `op` (opening prices). One word. Nothing else changes.
+<strong>Before the change — trade at the close:</strong>
+<p>- Sharpe before costs: 0.25</p>
+<p>- Sharpe after 5 bps per trade: −3.19</p>
 
-**Before the change — trade at the close:**
-- Sharpe before costs: 0.25
-- Sharpe after 5 bps per trade: −3.19
-
-**After the change — trade at the open:**
+<strong>After the change — trade at the open:</strong>
 
 <div class="result-box"><strong>Both before-cost and after-cost Sharpe ratios are positive — the strategy now works.</strong></div>
 
-Why? Trading at the open captures a genuine market phenomenon: stocks that dropped heavily yesterday tend to bounce back at the next morning's open. By the time the market closes that same day, the bounce has already largely played out and there is less edge left to capture — but the costs are just as real.
-
-Code files: [example3_8.ipynb](http://epchan.com/book/example3_8.ipynb) · [example3_8.R](http://epchan.com/book/example3_8.R)
+<p>Why? Trading at the open captures a genuine market phenomenon: stocks that dropped heavily yesterday tend to bounce back at the next morning's open. By the time the market closes that same day, the bounce has already largely played out and there is less edge left to capture — but the costs are just as real.</p>
 
 <div class="ex-lesson"><strong>Takeaway:</strong> Always test both open-of-day and close-of-day execution when you are developing a strategy. It is not a cosmetic detail — it changes the fundamental economics of the trade. The open and close capture different market effects, and one is often far more profitable than the other after costs.</div>
 </div>
@@ -529,17 +514,8 @@ Checking how your strategy's results change when you nudge the parameters slight
 A model where instead of the researcher fixing parameters upfront (like always using a 20-day moving average), the model recalculates its own optimal parameters continuously from recent data. This removes one major source of data-snooping bias. It does not mean there are literally no parameters — it means the model determines them dynamically rather than the researcher picking them once and locking them in.
 </div>
 
-<div class="glossary-entry">
-<div class="gterm">Paper trading <span class="gcat cat-method">Method</span></div>
-Running your strategy on live real-time market data without committing any actual money. The best possible out-of-sample test because the data is completely new and unseen — you cannot accidentally fit to it. Also catches practical problems like bad data feeds, order timing issues, and software bugs that would never appear in a historical backtest.
-</div>
 
 ### Strategy Concepts
-
-<div class="glossary-entry">
-<div class="gterm">Pair trading <span class="gcat cat-data">Data</span></div>
-A strategy that simultaneously buys one security and shorts a closely related one, betting that their price relationship will return to normal after an unusual divergence. For example, GLD (tracks gold prices) and GDX (basket of gold-mining stocks) normally move together. When GLD gets unusually cheap relative to GDX, you buy GLD and short GDX, then wait for the prices to realign.
-</div>
 
 <div class="glossary-entry">
 <div class="gterm">Hedge ratio <span class="gcat cat-data">Data</span></div>
