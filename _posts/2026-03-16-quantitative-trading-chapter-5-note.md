@@ -286,11 +286,11 @@ You have done everything right. You backtested carefully, paper traded for a mon
 <div class="example-block">
 <div class="ex-title">Regime shift 1 — Stock price decimalization in 2001 <span class="ex-pill pill-warn">Historical warning</span></div>
 
-Before April 9, 2001, US stock prices were quoted in fractions — sixteenths or eighths of a dollar (e.g., $10 and 3/16). This may sound quaint, but it had a big practical effect: those wide fractional price increments created friction in the market that statistical arbitrage traders could exploit.
+<p>Before April 9, 2001, US stock prices were quoted in fractions — sixteenths or eighths of a dollar (e.g., $10 and 3/16). This may sound quaint, but it had a big practical effect: those wide fractional price increments created friction in the market that statistical arbitrage traders could exploit.</p>
 
-When the US switched to fully decimal pricing on April 9, 2001, those fractions disappeared. Bid-ask spreads narrowed dramatically. The friction that stat arb traders relied on was reduced significantly, and many strategies that looked great in pre-2001 backtests stopped working in the decimal era.
+<p>When the US switched to fully decimal pricing on April 9, 2001, those fractions disappeared. Bid-ask spreads narrowed dramatically. The friction that stat arb traders relied on was reduced significantly, and many strategies that looked great in pre-2001 backtests stopped working in the decimal era.</p>
 
-**Practical implication:** If your backtest data extends before 2001, the pre-decimalization period will show much better performance than you should expect going forward. Be especially sceptical of any strategy that shows most of its historical edge in the pre-2001 period.
+<p><strong>Practical implication:</strong> If your backtest data extends before 2001, the pre-decimalization period will show much better performance than you should expect going forward. Be especially sceptical of any strategy that shows most of its historical edge in the pre-2001 period.</p>
 
 <div class="ex-lesson"><strong>Takeaway:</strong> Always check when most of your backtest returns were generated. If the strategy was unusually profitable before 2001 and the edge has clearly shrunk since, the decimalization regime shift may be the explanation — and the pre-2001 performance is not a reliable guide to future returns.</div>
 </div>
@@ -302,12 +302,12 @@ If your strategy involves shorting stocks, there is a specific regulatory trap i
 
 Before June 2007, the SEC's "uptick rule" stated that you could only short a stock on an "uptick" — meaning the last trade had to have been at a higher price than the one before it. This rule prevented short sellers from piling on during a price decline. In practice, it meant that many profitable short positions simply could not be entered during fast-moving markets.
 
-**Timeline:**
-- **Before June 2007:** Uptick rule in force. Shorting is constrained. Backtest performance for short strategies is artificially inflated because the backtest ignores the uptick constraint.
-- **June 2007 – February 2010:** No uptick rule at all. Shorting is unrestricted. This is the most realistic period for backtesting short strategies.
-- **After February 2010:** Alternative uptick rule (Rule 201) introduced. Shorting is restricted again when a stock drops more than 10% in a day.
+<strong>Timeline:</strong>
+<strong>Before June 2007:</strong> Uptick rule in force. Shorting is constrained. Backtest performance for short strategies is artificially inflated because the backtest ignores the uptick constraint.
+<strong>June 2007 – February 2010:</strong> No uptick rule at all. Shorting is unrestricted. This is the most realistic period for backtesting short strategies.
+<strong>After February 2010:</strong> Alternative uptick rule (Rule 201) introduced. Shorting is restricted again when a stock drops more than 10% in a day.
 
-**Additional complication — hard-to-borrow stocks:** Even when the uptick rule does not apply, many stocks — especially small-caps with low liquidity — are "hard to borrow." To short a stock, your broker has to borrow it from someone else (usually a mutual fund or another client). If no one will lend it, you simply cannot short it, regardless of what your backtest says. This can eliminate many of the best short opportunities in a strategy.
+<strong>Additional complication — hard-to-borrow stocks:</strong> Even when the uptick rule does not apply, many stocks — especially small-caps with low liquidity — are "hard to borrow." To short a stock, your broker has to borrow it from someone else (usually a mutual fund or another client). If no one will lend it, you simply cannot short it, regardless of what your backtest says. This can eliminate many of the best short opportunities in a strategy.
 
 <div class="ex-lesson"><strong>Takeaway:</strong> If your strategy involves shorting, the most realistic backtest period is June 2007 through February 2010 — the only window when neither the old uptick rule nor the new alternative rule was in force. For any other period, assume your backtest performance on the short side is somewhat optimistic.</div>
 </div>
