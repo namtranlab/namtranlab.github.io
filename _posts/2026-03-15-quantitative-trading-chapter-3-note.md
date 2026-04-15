@@ -378,7 +378,7 @@ When a strategy does not perform well in the first backtest, that does not mean 
 
 Plain-English definitions for every key term introduced in Chapter 3.
 
-### Backtesting & Platforms
+### Data Quality
 
 <div class="glossary-entry">
 <div class="gterm">Backtest <span class="gcat cat-data">Data</span></div>
@@ -386,30 +386,13 @@ Running a trading strategy on historical data to simulate how it would have perf
 </div>
 
 <div class="glossary-entry">
-<div class="gterm">WYSIWYG (What You See Is What You Get) <span class="gcat cat-platform">Platform</span></div>
-A term for Excel's layout where all data and formulas sit visible on one screen at once. Because everything is right in front of you, it is very hard to accidentally use future data in a past decision — you can literally see if a formula is referencing the wrong row. This is why Excel is considered safer than code-based tools when it comes to avoiding look-ahead bias.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">QuantConnect <span class="gcat cat-platform">Platform</span></div>
-A web-based trading platform where you write and test strategies in Python or C#, with 400TB of historical data already included. One of its standout features: the exact same code you write for backtesting runs directly in live trading — no translation or rewriting needed, which removes a big source of errors between research and real trading.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Blueshift <span class="gcat cat-platform">Platform</span></div>
-A platform by QuantInsti that bundles backtesting and live trading together in Python, with free minute-by-minute data for US, Indian, and forex markets. Also includes a visual drag-and-drop builder for people who prefer not to write code.
-</div>
-
-### Data Quality
-
-<div class="glossary-entry">
 <div class="gterm">Split adjustment <span class="gcat cat-data">Data</span></div>
-Correcting historical stock prices to account for stock splits. In a 2-for-1 split, the stock price drops by half but shareholders get twice as many shares — nothing really changed. Unadjusted data makes this look like a genuine price crash. The fix: multiply all prices before the split date by the inverse of the split ratio (e.g., ½ for a 2-for-1 split).
+Correcting historical stock prices to account for stock splits. In a 2-for-1 split, the stock price drops by half but shareholders get twice as many shares — nothing really changed. Unadjusted data makes this look like a genuine price crash.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Dividend adjustment <span class="gcat cat-data">Data</span></div>
-Correcting historical prices to remove the price drop that happens when a company pays a dividend. On the day a dividend is paid (the ex-date), the stock price drops by roughly the dividend amount — even though shareholders received that cash. Without adjustment, this looks like a genuine price decline and generates false trading signals. Yahoo Finance handles this automatically.
+Correcting historical prices to remove the price drop that happens when a company pays a dividend. On the day a dividend is paid (the ex-date), the stock price drops by roughly the dividend amount — even though shareholders received that cash. Without adjustment, this looks like a genuine price decline and generates false trading signals.
 </div>
 
 <div class="glossary-entry">
@@ -419,7 +402,7 @@ A database that records which stocks actually existed and were tradeable on each
 
 <div class="glossary-entry">
 <div class="gterm">Survivorship bias <span class="gcat cat-bias">Bias</span></div>
-The distortion that happens when a database is missing stocks that went bankrupt or were delisted. Only the "survivors" remain in the data. The problem hits hardest for strategies that buy cheap stocks — cheap stocks are often cheap because the company is struggling, but a biased database never shows the ones that eventually failed. Example 3.3 demonstrates a 430 percentage-point distortion (−42% real vs. +388% fictitious) from this one flaw alone.
+The distortion that happens when a database is missing stocks that went bankrupt or were delisted. Only the "survivors" remain in the data.
 </div>
 
 <div class="glossary-entry">
@@ -431,7 +414,7 @@ The problem that daily high and low prices are much less trustworthy than openin
 
 <div class="glossary-entry">
 <div class="gterm">Sharpe ratio <span class="gcat cat-perf">Performance</span></div>
-A score that measures how much return you earned per unit of risk. Formula: (Average return − Risk-free rate) ÷ Standard deviation of returns. To make it annual: multiply by √252 for daily returns or √12 for monthly returns. A Sharpe below 1 is generally not worth trading on its own. Above 2 is good. Above 3 is excellent. For fully hedged strategies, skip subtracting the risk-free rate — the two sides of the trade cancel it out.
+A score that measures how much return you earned per unit of risk. Formula: (Average return − Risk-free rate) ÷ Standard deviation of returns.
 </div>
 
 <div class="glossary-entry">
@@ -446,12 +429,12 @@ The annual rate at which your investment grows if profits are reinvested each ye
 
 <div class="glossary-entry">
 <div class="gterm">Maximum drawdown (MDD) <span class="gcat cat-perf">Performance</span></div>
-The biggest loss from any peak to a subsequent trough in your account value, expressed as a percentage. From Example 3.5, the IGE/SPY strategy had an MDD of −10.53%. This answers the question: "How bad could it get before I recover?" It must be a number you could survive — both financially and psychologically.
+The biggest loss from any peak to a subsequent trough in your account value, expressed as a percentage. This answers the question: "How bad could it get before I recover?" It must be a number you could survive — both financially and psychologically.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Maximum drawdown duration <span class="gcat cat-perf">Performance</span></div>
-The longest stretch of time a strategy spent below its previous peak. From Example 3.5: 497 trading days — roughly two years. Even if the loss was only −10%, spending two full years below your best result is exhausting. Many traders give up right before the recovery, locking in their losses permanently.
+The longest stretch of time a strategy spent below its previous peak.
 </div>
 
 <div class="glossary-entry">
@@ -461,14 +444,14 @@ The best result your strategy has ever achieved up to any given point in time. A
 
 <div class="glossary-entry">
 <div class="gterm">Deflated Sharpe ratio <span class="gcat cat-perf">Performance</span></div>
-A more honest version of the Sharpe ratio that shrinks it based on how many times you tweaked your strategy during development. The more different settings and variations you tried before landing on the "best" result, the more that result gets deflated — because some of the apparent performance was probably just getting lucky with historical noise rather than finding something real. Developed by Bailey et al.
+A more honest version of the Sharpe ratio that shrinks it based on how many times you tweaked your strategy during development. The more different settings and variations you tried before landing on the "best" result, the more that result gets deflated — because some of the apparent performance was probably just getting lucky with historical noise rather than finding something real.
 </div>
 
 ### Backtesting Pitfalls
 
 <div class="glossary-entry">
 <div class="gterm">Look-ahead bias <span class="gcat cat-bias">Bias</span></div>
-Using information in your backtest that you could not have known at the time of the trade. For example: basing today's trade on today's lowest price — but you do not know that until the market closes. Or fitting a statistical model to your full historical dataset and then using that model to generate signals throughout the same data — the model has effectively "seen the future." Caught by the truncation test: remove the last 60 days of data, re-run, and compare positions — any difference indicates look-ahead bias.
+Using information in your backtest that you could not have known at the time of the trade. For example: basing today's trade on today's lowest price — but you do not know that until the market closes. Or fitting a statistical model to your full historical dataset and then using that model to generate signals throughout the same data — the model has effectively "seen the future."
 </div>
 
 <div class="glossary-entry">
@@ -478,12 +461,12 @@ The mistake of tuning a strategy so precisely to historical data that it stops w
 
 <div class="glossary-entry">
 <div class="gterm">Out-of-sample testing <span class="gcat cat-method">Method</span></div>
-Testing your finished strategy on data it was never trained on. The right approach: build and tune the strategy using the older portion of your historical data (training set), then run it once — without any further changes — on the more recent portion (test set). Running it on live real-time data with no money at risk (paper trading) is the ultimate version of this.
+Testing your finished strategy on data it was never trained on. Running it on live real-time data with no money at risk (paper trading) is the ultimate version of this.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Training set / Test set <span class="gcat cat-method">Method</span></div>
-Two separate halves of your historical data. The training set (older data) is where you build and refine the strategy. The test set (more recent data) is where you validate it without making any further adjustments. If you start tweaking the strategy based on what you see in the test set results, you have effectively turned the test set into a second training set and lost your honest out-of-sample check.
+Two separate halves of your historical data. The training set (older data) is where you build and refine the strategy. The test set (more recent data) is where you validate it without making any further adjustments.
 </div>
 
 <div class="glossary-entry">
@@ -506,20 +489,20 @@ In pair trading, this is the number that tells you how many dollars of the secon
 
 <div class="glossary-entry">
 <div class="gterm">Z-score <span class="gcat cat-data">Data</span></div>
-A way of measuring how unusual the current value of something is compared to its recent history. Formula: (Current value − Average) ÷ Standard deviation. A z-score of +2 means the value is 2 standard deviations above average — quite unusual. A z-score of −2 means unusually low. In pair trading, you enter the trade when the spread's z-score reaches ±2 (unusual enough to bet on reversion) and exit when it returns to ±1 (back to near-normal).
+A way of measuring how unusual the current value of something is compared to its recent history. Formula: (Current value − Average) ÷ Standard deviation. A z-score of +2 means the value is 2 standard deviations above average. A z-score of −2 means unusually low. In pair trading, you enter the trade when the spread's z-score reaches ±2 (unusual enough to bet on reversion) and exit when it returns to ±1 (back to near-normal).
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Portfolio turnover <span class="gcat cat-cost">Cost</span></div>
-How much of your portfolio you buy or sell in each trading period, as a fraction of total portfolio size. High turnover means lots of trading activity and lots of transaction costs. When calculating costs for a strategy that trades many stocks, always base it on how much the portfolio actually changed each period — not on a flat per-period fee. Bigger changes mean bigger costs.
+How much of your portfolio you buy or sell in each trading period, as a fraction of total portfolio size. High turnover means lots of trading activity and lots of transaction costs.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Universe selection <span class="gcat cat-method">Method</span></div>
-Choosing which stocks (or other instruments) your strategy is allowed to trade. One of the most powerful decisions in strategy design. Example 3.7 showed the same mean-reversion strategy achieving a Sharpe of 4.47 on small-cap stocks but only 0.25 on large-cap S&P 500 stocks. Small stocks are less efficiently priced and tend to bounce back from unusual moves more reliably — but they also face higher trading costs and market impact.
+Choosing which stocks (or other instruments) your strategy is allowed to trade. One of the most powerful decisions in strategy design.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Execution timing (open vs. close) <span class="gcat cat-method">Method</span></div>
-Whether your strategy places trades at the start of the day (market open) or the end (market close). This is not a minor implementation detail — it can determine whether the strategy makes or loses money. Example 3.8 showed that switching from close-of-day to open-of-day execution turned a strategy losing money daily (Sharpe −3.19 after costs) into a profitable one. Always test both during strategy development.
+Whether your strategy places trades at the start of the day (market open) or the end (market close). This is not a minor implementation detail — it can determine whether the strategy makes or loses money.
 </div>
