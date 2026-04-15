@@ -215,7 +215,7 @@ Getting historical data is the easy part — the internet is full of free source
 Most people judge a trading strategy by how much money it made. But raw returns are misleading because they do not tell you how much risk was taken to earn them. A strategy that made 20% by putting everything on one risky bet is far worse than one that made 15% through smooth, consistent gains. The Sharpe ratio, maximum drawdown, and MAR ratio together give you a much more honest and complete picture.
 </div>
 
-### The big ideas
+### Core ideas
 
 <div class="key-idea"><strong>The Sharpe ratio tells you how much you are earning per unit of risk taken.</strong> Think of it as asking: "How smooth and consistent were your gains?" A high Sharpe ratio means you made money reliably without wild swings. A low Sharpe ratio means the returns were bumpy and unreliable. Anything below 1 generally means the strategy is not worth running on its own.</div>
 
@@ -255,7 +255,7 @@ Higher is better. Useful because it roughly cancels out leverage effects, making
 The frustrating thing about backtesting mistakes is that they almost always make a strategy look better than it really is. The two biggest culprits are accidentally using future information to make past trading decisions (look-ahead bias), and tuning a model so precisely to historical patterns that it stops working on new data (data-snooping bias). Both are sneaky, both are common, and both have practical tests that can catch them.
 </div>
 
-### The big ideas
+### Core ideas
 
 <div class="key-idea"><strong>Look-ahead bias means your backtest accidentally used information that was not yet available at the time of the trade.</strong> A simple example: your entry rule says "buy if today's price is within 1% of today's lowest price." But you cannot know what today's lowest price is until the market closes! Using that information to make a trade decision earlier in the day is cheating — and it makes the backtest look better than it ever could in real life.</div>
 
@@ -281,7 +281,7 @@ Split your historical data into two halves:
 
 If the strategy works well on both halves, the result is much more credible. If it only works on the training half, it was overfit to the past and is unlikely to hold up in real trading.
 
-### Example from the book
+### Example
 
 <div class="example-block">
 <div class="ex-title">Example 3.6 — GLD vs. GDX pair trading: does it hold up on unseen data? <span class="ex-pill pill-live">Real strategy test</span></div>
@@ -348,24 +348,6 @@ Trading costs are not just a small footnote — they can completely destroy a st
 <div class="ex-lesson"><strong>Takeaway:</strong> Never assume a strategy works just because a published paper says it does. Always apply it to the exact universe you plan to trade, and always include realistic transaction costs. Both of those checks can independently turn a winner into a loser.</div>
 </div>
 
-<div class="example-block">
-<div class="ex-title">Example 3.8 — One word changed in the code rescues the entire strategy <span class="ex-pill pill-live">Real improvement</span></div>
-
-<strong>The fix:</strong> Take the exact same strategy from Example 3.7. The only change: instead of using yesterday's closing prices to set positions at today's close, use them to set positions at today's market open.
-
-<strong>Before the change — trade at the close:</strong>
-<p>- Sharpe before costs: 0.25</p>
-<p>- Sharpe after 5 bps per trade: −3.19</p>
-
-<strong>After the change — trade at the open:</strong>
-
-<div class="result-box"><strong>Both before-cost and after-cost Sharpe ratios are positive — the strategy now works.</strong></div>
-
-<p>Why? Trading at the open captures a genuine market phenomenon: stocks that dropped heavily yesterday tend to bounce back at the next morning's open. By the time the market closes that same day, the bounce has already largely played out and there is less edge left to capture — but the costs are just as real.</p>
-
-<div class="ex-lesson"><strong>Takeaway:</strong> Always test both open-of-day and close-of-day execution when you are developing a strategy. It is not a cosmetic detail — it changes the fundamental economics of the trade. The open and close capture different market effects, and one is often far more profitable than the other after costs.</div>
-</div>
-
 <div class="ref-tags">
 <span class="ref-tag">Transaction costs</span> <span class="ref-tag">Basis points</span> <span class="ref-tag">Portfolio turnover</span> <span class="ref-tag">Universe selection</span> <span class="ref-tag">Mean reversion</span> <span class="ref-tag">Execution timing</span>
 </div>
@@ -378,7 +360,7 @@ Trading costs are not just a small footnote — they can completely destroy a st
 When a strategy does not perform well in the first backtest, that does not mean it is hopeless. Often a small, targeted tweak — trying a different universe of stocks, a different time to execute, or a slightly different signal threshold — can dramatically improve results. The key rule is that any change that helps on your training data must also help on your test data. If it only helps on the data you already used to develop the strategy, you have not found a real improvement — you have just found a cleverer way to fit to the past.
 </div>
 
-### The big ideas
+### Core ideas
 
 <div class="key-idea"><strong>Any improvement must hold up on data the strategy has never seen before.</strong> This is the non-negotiable rule. If you tweak the strategy to look better on your training data and it gets worse on your test data, you have not improved it — you have overfit it. The test set is your reality check and it must be kept sacred.</div>
 
