@@ -484,7 +484,7 @@ A model where instead of the researcher fixing parameters upfront (like always u
 
 <div class="glossary-entry">
 <div class="gterm">Hedge ratio <span class="gcat cat-data">Data</span></div>
-In pair trading, this is the number that tells you how many dollars of the second security to trade for each dollar of the first, so that the two sides of the trade are properly balanced. It is calculated using a simple linear regression. From Example 3.6: the hedge ratio between GLD and GDX is 1.637, meaning for every $1 of GLD you trade, you trade $1.637 of GDX on the opposite side.
+In pair trading, this is the number that tells you how many dollars of the second security to trade for each dollar of the first, so that the two sides of the trade are properly balanced. It is calculated using a simple linear regression. From Example 3.6: the hedge ratio between GLD and GDX is 1.637, meaning for every USD 1 of GLD you trade, you trade USD 1.637 of GDX on the opposite side.
 </div>
 
 <div class="glossary-entry">
