@@ -298,9 +298,9 @@ You have done everything right. You backtested carefully, paper traded for a mon
 <div class="example-block">
 <div class="ex-title">Regime shift 2 — The short-selling uptick rule (pre-2007 and post-2010) <span class="ex-pill pill-warn">Historical warning</span></div>
 
-If your strategy involves shorting stocks, there is a specific regulatory trap in the historical data.
+<p>If your strategy involves shorting stocks, there is a specific regulatory trap in the historical data.</p>
 
-Before June 2007, the SEC's "uptick rule" stated that you could only short a stock on an "uptick" — meaning the last trade had to have been at a higher price than the one before it. This rule prevented short sellers from piling on during a price decline. In practice, it meant that many profitable short positions simply could not be entered during fast-moving markets.
+<p>Before June 2007, the SEC's "uptick rule" stated that you could only short a stock on an "uptick" — meaning the last trade had to have been at a higher price than the one before it. This rule prevented short sellers from piling on during a price decline. In practice, it meant that many profitable short positions simply could not be entered during fast-moving markets.</p>
 
 <strong>Timeline:</strong>
 <strong>Before June 2007:</strong> Uptick rule in force. Shorting is constrained. Backtest performance for short strategies is artificially inflated because the backtest ignores the uptick constraint.
