@@ -16,11 +16,9 @@ authors:
 
 toc:
   - name: Section 1 — What Does an Automated Trading System Actually Do?
-  - name: Section 2 — Semi-Automated vs. Fully Automated — What Is the Difference?
-  - name: Section 3 — What If You Cannot Code? Hiring a Programmer
-  - name: Section 4 — How Do You Keep Trading Costs as Low as Possible?
-  - name: Section 5 — Paper Trading — The Essential Safety Net
-  - name: Section 6 — Why Does Live Trading Sometimes Disappoint?
+  - name: Section 2 — How Do You Keep Trading Costs as Low as Possible?
+  - name: Section 3 — Paper Trading — The Essential Safety Net
+  - name: Section 4 — Why Does Live Trading Sometimes Disappoint?
   - name: Term Glossary
 
 _styles: >
@@ -286,7 +284,7 @@ You have done everything right. You backtested carefully, paper traded for a mon
 <div class="example-block">
 <div class="ex-title">Regime shift 1 — Stock price decimalization in 2001 <span class="ex-pill pill-warn">Historical warning</span></div>
 
-<p>Before April 9, 2001, US stock prices were quoted in fractions — sixteenths or eighths of a dollar (e.g., $10 and 3/16). This may sound quaint, but it had a big practical effect: those wide fractional price increments created friction in the market that statistical arbitrage traders could exploit.</p>
+<p>Before April 9, 2001, US stock prices were quoted in fractions — sixteenths or eighths of a dollar (e.g., $10 and 3/16). Those wide fractional price increments created friction in the market that statistical arbitrage traders could exploit.</p>
 
 <p>When the US switched to fully decimal pricing on April 9, 2001, those fractions disappeared. Bid-ask spreads narrowed dramatically. The friction that stat arb traders relied on was reduced significantly, and many strategies that looked great in pre-2001 backtests stopped working in the decimal era.</p>
 
