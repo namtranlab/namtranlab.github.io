@@ -172,7 +172,7 @@ Every trading strategy — no matter how good — will sometimes lose money. The
 <p>- Minute 1: up 1% → your \$100 becomes \$101</p>
 <p>- Minute 2: down 1% → your \$101 becomes \$99.99</p>
 
-<p>You did not break even — you lost $0.01. The 1% gain and 1% loss are equal in percentage terms, but they are applied to different base amounts, so they do not cancel out.</p>
+<p>You did not break even — you lost \$0.01. The 1% gain and 1% loss are equal in percentage terms, but they are applied to different base amounts, so they do not cancel out.</p>
 
 <p>More precisely, the long-run compounded growth rate is:</p>
 
