@@ -580,38 +580,23 @@ The takeaway for traders: focusing purely on expected return while ignoring vari
 
 ## Term Glossary
 
-Plain-English definitions for every key term introduced in Chapter 6.
+Definitions for key terms.
 
 ### The Kelly Framework
 
 <div class="glossary-entry">
-<div class="gterm">Kelly formula <span class="gcat cat-kelly">Kelly</span></div>
-The mathematical formula that calculates the optimal leverage to use to maximise long-term compounded wealth growth. For a single strategy: Optimal leverage = Average excess return ÷ Variance of returns (m ÷ s²). Named after J.L. Kelly, a Bell Labs scientist, and famously applied to gambling and investing by mathematician Ed Thorp. Key property: the Kelly leverage is the same regardless of whether you use daily, monthly, or annual return figures — it is time-scale independent.
-</div>
-
-<div class="glossary-entry">
 <div class="gterm">Half-Kelly <span class="gcat cat-kelly">Kelly</span></div>
-Using half of the leverage recommended by the Kelly formula. The full Kelly formula is derived assuming perfectly accurate return estimates and normally-distributed returns. Since neither assumption holds in practice, using half-Kelly provides a safety buffer. Half-Kelly achieves roughly 75% of the maximum possible compounded growth rate while being far more tolerant of estimation errors and fat-tail events.
+Using half of the leverage recommended by the Kelly formula. The full Kelly formula is derived assuming perfectly accurate return estimates and normally-distributed returns. Since neither assumption holds in practice, using half-Kelly provides a safety buffer.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Compounded growth rate <span class="gcat cat-kelly">Kelly</span></div>
-The actual annual rate at which your wealth grows when you reinvest all profits — accounting for the drag caused by volatility. It is always less than the simple average return. Formula: g = average return − variance/2 (for no leverage). This is the number that matters for long-term wealth building, not the average return. A strategy with a 10% average return and 20% volatility has a compounded growth rate of only 10% − (20%)²/2 = 8%.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Leverage <span class="gcat cat-kelly">Kelly</span></div>
-The ratio of your total investment to your own capital. A leverage of 2× means for every $1 of your own money, you have borrowed $1 more and invested a total of $2. Leverage amplifies both gains and losses proportionally. The Kelly formula tells you the exact leverage level that maximises your long-term compounded wealth — above this level, additional leverage actually reduces long-term growth due to the cost of increased volatility.
+The actual annual rate at which your wealth grows when you reinvest all profits — accounting for the drag caused by volatility. It is always less than the simple average return.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Covariance matrix <span class="gcat cat-kelly">Kelly</span></div>
 A table showing how much different strategies' returns move together. The diagonal shows each strategy's own variance (how volatile it is on its own). The off-diagonal elements show the covariance between pairs of strategies (how much they tend to gain and lose at the same time). In the multi-strategy Kelly formula, the covariance matrix captures diversification benefits: strategies that tend to lose at different times can be combined at higher total leverage than strategies that all lose together.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Portfolio allocation <span class="gcat cat-kelly">Kelly</span></div>
-How much of your capital to allocate to each strategy in a multi-strategy portfolio. The Kelly formula's multi-strategy extension calculates the optimal allocation simultaneously across all strategies, taking into account their individual expected returns and how correlated they are with each other. Strategies with negative expected returns receive negative allocations — meaning you should short them or bet against them.
 </div>
 
 ### Risk Concepts
@@ -623,60 +608,39 @@ The property of real financial returns where extreme events (very large gains or
 
 <div class="glossary-entry">
 <div class="gterm">Black swan event <span class="gcat cat-risk">Risk</span></div>
-An extreme market event that was considered essentially impossible based on historical data — until it happened. Coined by Nassim Taleb in his book of the same name (2007). Examples: the 1987 Black Monday crash (−20% in one day), the 2008 global financial crisis, Covid-19 market crash. The Kelly formula does not protect against black swans — which is one of the main reasons to use half-Kelly or less as a starting leverage.
+An extreme market event that was considered essentially impossible based on historical data — until it happened.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Financial contagion <span class="gcat cat-risk">Risk</span></div>
-The cascade effect where one fund's losses force it to sell, causing prices to drop, which causes other funds holding the same positions to also suffer losses, which forces them to sell, and so on. The summer 2007 quant meltdown (Goldman's Global Alpha fund −22.5%, Renaissance −8.7%) is the most cited example. Contagion can spread losses from one market sector to completely unrelated ones — in 2007, mortgage losses spread to quant equity strategies that held zero mortgage exposure.
+The cascade effect where one fund's losses force it to sell, causing prices to drop, which causes other funds holding the same positions to also suffer losses, which forces them to sell, and so on.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Model risk <span class="gcat cat-risk">Risk</span></div>
-The risk that your trading model is wrong — either because of statistical biases in the backtest (data-snooping, survivorship bias, look-ahead bias) or because market conditions have changed (regime shifts) and the model's edge no longer exists. Unlike market risk (which is random and expected), model risk is a systematic error that means you are consistently getting the wrong answer. Best protection: have someone else independently replicate your backtest results.
+The risk that your trading model is wrong — either because of statistical biases in the backtest (data-snooping, survivorship bias, look-ahead bias) or because market conditions have changed (regime shifts) and the model's edge no longer exists.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Software risk <span class="gcat cat-risk">Risk</span></div>
-The risk that your automated trading system contains bugs that cause it to trade differently from what your backtest model specifies. Even small bugs can cause large losses if they result in wrong position sizes, wrong order directions, or trading at incorrect prices. The check: run both your live ATS and your backtest program on the same recent historical data and verify the trades they generate are identical.
+The risk that your automated trading system contains bugs that cause it to trade differently from what your backtest model specifies. Even small bugs can cause large losses if they result in wrong position sizes, wrong order directions, or trading at incorrect prices.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Operational risk <span class="gcat cat-risk">Risk</span></div>
-The risk of loss from physical or infrastructure failures — internet outages, power cuts, computer crashes, or other non-market events that disrupt your trading. Particularly dangerous if a failure occurs while you have a large open position that needs to be managed. Basic mitigations: backup internet connection (4G mobile hotspot as backup to broadband), uninterruptible power supply (UPS), clear procedures for what to do in each type of failure.
+The risk of loss from physical or infrastructure failures — internet outages, power cuts, computer crashes, or other non-market events that disrupt your trading.
 </div>
 
-<div class="glossary-entry">
-<div class="gterm">Stop loss <span class="gcat cat-method">Method</span></div>
-An automatic exit rule that closes a position once it has lost a specified percentage. Helpful in trending markets (where losses tend to continue) and harmful in mean-reverting markets (where losses tend to reverse). Cannot prevent losses during sudden market crashes — prices gap past the stop level and execute at far worse prices. Most effective for news-driven moves where a fundamental change justifies a sustained price trend; most harmful for liquidity-driven moves where prices snap back quickly.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Drawdown <span class="gcat cat-risk">Risk</span></div>
-The decline in your portfolio's value from a previous peak. In the context of risk management, drawdown triggers the Kelly formula requirement to reduce position size — you must shrink your portfolio in proportion to how much you have lost. The maximum drawdown you can tolerate without being forced to quit is a key constraint that should be used alongside the Kelly formula to determine your actual leverage.
-</div>
 
 ### Psychology
 
 <div class="glossary-entry">
 <div class="gterm">Loss aversion <span class="gcat cat-psych">Psychology</span></div>
-The human tendency to feel the pain of a loss more intensely than the pleasure of an equivalent gain. Often called an irrational bias, but Box 6.1 demonstrates it is mathematically rational for traders playing repeated games with finite capital: the compounding mathematics means that high-variance strategies lose compounded wealth even when the expected return is positive. Your instinct to avoid large losses protects you from the volatility drag that erodes long-term growth.
+The human tendency to feel the pain of a loss more intensely than the pleasure of an equivalent gain. Often called an irrational bias. Your instinct to avoid large losses protects you from the volatility drag that erodes long-term growth.
 </div>
 
-<div class="glossary-entry">
-<div class="gterm">Despair (in trading) <span class="gcat cat-psych">Psychology</span></div>
-The emotional state during a prolonged drawdown that leads traders to either: (1) shut down the strategy entirely and lock in losses at the worst possible moment, or (2) double down on the losing strategy to try to recover faster. Both responses are irrational. The systematic response — gradually reducing leverage according to the Kelly formula as the lookback-period performance deteriorates — is correct but feels neither heroic nor satisfying, which is why it is rarely done instinctively.
-</div>
 
-<div class="glossary-entry">
-<div class="gterm">Greed (in trading) <span class="gcat cat-psych">Psychology</span></div>
-The emotional state during a winning run that tempts traders to increase leverage rapidly — "make hay while the sun shines." This is the most common cause of overleveraging disasters. Long-Term Capital Management and Amaranth Advisors are canonical examples: both had previously excellent strategies that were overleveraged on the basis of recent success, leading to catastrophic losses. The Kelly formula caps leverage at the level justified by long-run statistics, not recent run of luck.
-</div>
 
-<div class="glossary-entry">
-<div class="gterm">Overleveraging <span class="gcat cat-psych">Psychology</span></div>
-Using more leverage than the Kelly formula recommends — resulting in a portfolio that is too large relative to the strategy's actual edge. Can arise from both greed (adding capital during a winning run) and despair (adding capital to a losing strategy to try to recover). Overleveraging does not just increase risk proportionally — above the Kelly-optimal leverage, additional leverage actually reduces long-term compounded growth while dramatically increasing the probability of catastrophic loss.
-</div>
 
 <div class="glossary-entry">
 <div class="gterm">Representativeness bias <span class="gcat cat-psych">Psychology</span></div>
@@ -685,5 +649,5 @@ The human tendency to give too much weight to recent events and too little weigh
 
 <div class="glossary-entry">
 <div class="gterm">Ensemble average vs. time series average <span class="gcat cat-psych">Psychology</span></div>
-A key distinction introduced in Box 6.1, following the work of physicists Ole Peters and Murray Gell-Mann. The ensemble average asks: "What is the average outcome across many traders playing simultaneously?" The time series average asks: "What is the average outcome for one trader playing repeatedly over time?" For evaluating financial risk, the time series average is the relevant one — because if you go broke, you stop playing. A bet that looks attractive in ensemble terms can be losing in time series terms if variance is high enough, which is why loss aversion is rational.
+The ensemble average asks: "What is the average outcome across many traders playing simultaneously?" The time series average asks: "What is the average outcome for one trader playing repeatedly over time?" For evaluating financial risk, the time series average is the relevant one — because if you go broke, you stop playing. A bet that looks attractive in ensemble terms can be losing in time series terms if variance is high enough, which is why loss aversion is rational.
 </div>
