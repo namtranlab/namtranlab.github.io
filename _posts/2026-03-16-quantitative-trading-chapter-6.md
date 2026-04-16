@@ -141,13 +141,6 @@ _styles: >
 
 ---
 
-> **Book:** *Quantitative Trading* (2nd Ed.) — Ernest P. Chan
-> **Chapter:** 6 — Money and Risk Management
-
-You have a working strategy. Now the question is: how much of your money should you put at risk? Too little and you will never grow your wealth meaningfully. Too much and one bad run will wipe you out. This chapter gives you the mathematical answer — the Kelly formula — and then explains the very human reasons why even traders who know the formula sometimes ignore it at exactly the wrong moment.
-
----
-
 ## Section 1 — The Core Question — How Much Should You Bet?
 
 <div class="note-abstract">
@@ -162,36 +155,36 @@ Every trading strategy — no matter how good — will sometimes lose money. The
 
 <div class="key-idea"><strong>The Sharpe ratio determines the maximum possible growth rate of your wealth.</strong> There is a clean mathematical formula for this: maximum compounded growth rate = risk-free rate + (Sharpe ratio)² ÷ 2. This is the mathematical proof, finally spelled out, for the claim made back in Chapter 2 — that a higher Sharpe ratio is more important than a higher nominal return. A high-Sharpe strategy with modest nominal returns will always grow your wealth faster, once properly levered, than a low-Sharpe strategy with high nominal returns.</div>
 
-### Example from the book
+### Example
 
 <div class="example-block">
 <div class="ex-title">Example 6.1 — The coin flip puzzle: why volatility costs you money even with zero expected return <span class="ex-pill pill-puzzle">Puzzle</span></div>
 
-Here is the puzzle:
+<strong>Here is the puzzle:</strong>
 
-> A stock goes up exactly 1% or down exactly 1% each minute, with equal 50/50 probability. If you buy this stock, will you — in the long run — make money, lose money, or break even?
+<p>> A stock goes up exactly 1% or down exactly 1% each minute, with equal 50/50 probability. If you buy this stock, will you — in the long run — make money, lose money, or break even?</p>
 
-Most experienced traders answer: **break even**. The answer is wrong.
+<p>Most experienced traders answer: <strong>break even</strong>. The answer is wrong.</p>
 
-**You will slowly lose money** — at a rate of about 0.005% per minute (0.5 basis points per minute).
+<p><strong>You will slowly lose money</strong> — at a rate of about 0.005% per minute (0.5 basis points per minute).</p>
 
-**Why?** Because the mathematics of compounding is not symmetric. Consider two minutes:
-- Minute 1: up 1% → your $100 becomes $101
-- Minute 2: down 1% → your $101 becomes $99.99
+<p><strong>Why?</strong> Because the mathematics of compounding is not symmetric. Consider two minutes:</p>
+<p>- Minute 1: up 1% → your $100 becomes $101</p>
+<p>- Minute 2: down 1% → your $101 becomes $99.99</p>
 
-You did not break even — you lost $0.01. The 1% gain and 1% loss are equal in percentage terms, but they are applied to different base amounts, so they do not cancel out.
+<p>You did not break even — you lost $0.01. The 1% gain and 1% loss are equal in percentage terms, but they are applied to different base amounts, so they do not cancel out.</p>
 
-More precisely, the long-run compounded growth rate is:
+<p>More precisely, the long-run compounded growth rate is:</p>
 
-```
-g = m − s² / 2
+$$g = m - \frac{s^2}{2}$$
 
-Where: m = average return per period (0% here)
-       s = standard deviation per period (1% here)
-       s²/2 = 0.01²/2 = 0.00005 = 0.005%
+<p><strong>Where:</strong></p>
+- $m$ = average return per period (0% here)
+- $s$ = standard deviation per period (1% here)  
+- $\frac{s^2}{2} = \frac{0.01^2}{2} = 0.00005 = 0.005\%$
 
-So g = 0% − 0.005% = −0.005% per minute — slowly losing money
-```
+**So:**
+$$g = 0\% - 0.005\% = -0.005\% \text{ per minute — slowly losing money}$$
 
 <div class="ex-lesson"><strong>Takeaway:</strong> Volatility is not free. Even when your strategy has a zero average return, if it has any risk at all, compounding mathematics means you will gradually lose money over time. This is why risk management — controlling volatility — is as important as finding a strategy with positive expected returns. Risk always reduces long-term growth.</div>
 </div>
