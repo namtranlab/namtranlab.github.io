@@ -179,9 +179,9 @@ Every trading strategy — no matter how good — will sometimes lose money. The
 $$g = m - \frac{s^2}{2}$$
 
 <p>Where:</p>
-- $m$ = average return per period (0% here)
-- $s$ = standard deviation per period (1% here)  
-- $\frac{s^2}{2} = \frac{0.01^2}{2} = 0.00005 = 0.005\%$
+<p>- $m$ = average return per period (0% here)</p>
+<p>- $s$ = standard deviation per period (1% here)</p>
+<p>- $\frac{s^2}{2} = \frac{0.01^2}{2} = 0.00005 = 0.005\%$</p>
 
 <p>So:</p>
 $$g = -0.005\% \text{ per minute — slowly losing money}$$
