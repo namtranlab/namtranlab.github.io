@@ -183,7 +183,7 @@ $$g = m - \frac{s^2}{2}$$
 - $s$ = standard deviation per period (1% here)  
 - $\frac{s^2}{2} = \frac{0.01^2}{2} = 0.00005 = 0.005\%$
 
-**So:**
+<p><strong>So:</strong></p>
 $$g = 0\% - 0.005\% = -0.005\% \text{ per minute — slowly losing money}$$
 
 <div class="ex-lesson"><strong>Takeaway:</strong> Volatility is not free. Even when your strategy has a zero average return, if it has any risk at all, compounding mathematics means you will gradually lose money over time. This is why risk management — controlling volatility — is as important as finding a strategy with positive expected returns. Risk always reduces long-term growth.</div>
