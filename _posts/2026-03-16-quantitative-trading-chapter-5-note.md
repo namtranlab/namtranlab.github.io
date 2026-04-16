@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: "Quantitative Trading — Chapter 5 Study Notes"
-description: Friendly notes on Chapter 5 of Quantitative Trading (2nd Ed.) — how to build a trading system that actually executes your strategy, cut costs, test safely, and understand why live results sometimes disappoint.
+description: Notes on Chapter 5 of Quantitative Trading (2nd Ed.) — how to build a trading system that actually executes your strategy, cut costs, test safely, and understand why live results sometimes disappoint.
 tags: Finance Quant Trading Execution Notes
 giscus_comments: true
 date: 2026-03-16

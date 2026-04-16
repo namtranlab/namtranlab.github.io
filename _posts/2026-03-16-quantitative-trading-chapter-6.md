@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: "Quantitative Trading — Chapter 6 Study Notes"
-description: Friendly notes on Chapter 6 of Quantitative Trading (2nd Ed.) — how much to bet, how to size positions across multiple strategies, what risks to manage beyond market moves, and why your own psychology may be the biggest threat to your trading.
+description: Notes on Chapter 6 of Quantitative Trading (2nd Ed.) — how much to bet, how to size positions across multiple strategies, what risks to manage beyond market moves, and why your own psychology may be the biggest threat to your trading.
 tags: Finance Quant Trading Risk Management Kelly Notes
 giscus_comments: true
 date: 2025-04-09

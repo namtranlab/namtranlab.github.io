@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: "Quantitative Trading — Chapter 3 Study Notes"
-description: Friendly notes on Chapter 3 of Quantitative Trading (2nd Ed.) — what backtesting is, which tools to use, where to get data, how to measure results, what mistakes to avoid, and a plain-English glossary.
+description: Notes on Chapter 3 of Quantitative Trading (2nd Ed.) — what backtesting is, which tools to use, where to get data, how to measure results, what mistakes to avoid, and a plain-English glossary.
 tags: Finance Quant Trading Backtesting Notes
 giscus_comments: true
 date: 2026-03-15
