@@ -192,13 +192,13 @@ $$g = -0.005\% \text{ per minute — slowly losing money}$$
 
 $$g(f) = r + f \cdot m - \frac{f^2 \cdot s^2}{2}$$
 
-**Where:**
-- $g(f)$ = compounded growth rate when using leverage $f$
-- $r$ = risk-free rate (what your cash earns if not invested)
-- $f$ = leverage (1 = no leverage, 2 = 2× leverage, etc.)
-- $m$ = average one-period excess return (return minus risk-free rate)
-- $s$ = standard deviation of one-period returns
-- $s^2$ = variance of returns
+<p>Where:</p>
+<p>$g(f)$ = compounded growth rate when using leverage $f$</p>
+<p>$r$ = risk-free rate (what your cash earns if not invested)</p>
+<p>$f$ = leverage (1 = no leverage, 2 = 2× leverage, etc.)</p>
+<p>$m$ = average one-period excess return (return minus risk-free rate)</p>
+<p>$s$ = standard deviation of one-period returns</p>
+<p>$s^2$ = variance of returns</p>
 
 <div class="ex-lesson"><strong>Takeaway:</strong> Volatility is not free. Even when your strategy has a zero average return, if it has any risk at all, compounding mathematics means you will gradually lose money over time. This is why risk management — controlling volatility — is as important as finding a strategy with positive expected returns. Risk always reduces long-term growth.</div>
 </div>
