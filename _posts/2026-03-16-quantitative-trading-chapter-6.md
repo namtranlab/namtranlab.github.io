@@ -186,6 +186,20 @@ $$g = m - \frac{s^2}{2}$$
 <p>So:</p>
 $$g = -0.005\% \text{ per minute — slowly losing money}$$
 
+<strong>The general equation — compounded levered growth rate</strong>
+
+<p>The coin-flip example used leverage of exactly 1× (you simply bought the stock). The full general formula extends this to any leverage level:</p>
+
+$$g(f) = r + f \cdot m - \frac{f^2 \cdot s^2}{2}$$
+
+**Where:**
+- $g(f)$ = compounded growth rate when using leverage $f$
+- $r$ = risk-free rate (what your cash earns if not invested)
+- $f$ = leverage (1 = no leverage, 2 = 2× leverage, etc.)
+- $m$ = average one-period excess return (return minus risk-free rate)
+- $s$ = standard deviation of one-period returns
+- $s^2$ = variance of returns
+
 <div class="ex-lesson"><strong>Takeaway:</strong> Volatility is not free. Even when your strategy has a zero average return, if it has any risk at all, compounding mathematics means you will gradually lose money over time. This is why risk management — controlling volatility — is as important as finding a strategy with positive expected returns. Risk always reduces long-term growth.</div>
 </div>
 
