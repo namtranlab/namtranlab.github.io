@@ -186,9 +186,7 @@ $$g = m - \frac{s^2}{2}$$
 <p>So:</p>
 $$g = -0.005\% \text{ per minute — slowly losing money}$$
 
-<strong>The general equation — compounded levered growth rate</strong>
-
-<p>The coin-flip example used leverage of exactly 1× (you simply bought the stock). The full general formula extends this to any leverage level:</p>
+<p>The full general formula extends this to any leverage level:</p>
 
 $$g(f) = r + f \cdot m - \frac{f^2 \cdot s^2}{2}$$
 
