@@ -153,7 +153,7 @@ Every trading strategy — no matter how good — will sometimes lose money. The
 
 <div class="key-idea"><strong>Risk always costs you something, even when the expected return is zero.</strong> This is one of the most counterintuitive results in finance. If a strategy has a 50/50 chance of going up 1% or down 1%, most people assume you will break even over time. You will not — you will slowly lose money. The mathematics of compounding means that volatility itself erodes your wealth, even when the expected return is exactly zero.</div>
 
-<div class="key-idea"><strong>The Sharpe ratio determines the maximum possible growth rate of your wealth.</strong> There is a clean mathematical formula for this: maximum compounded growth rate = risk-free rate + (Sharpe ratio)² ÷ 2. This is the mathematical proof, finally spelled out, for the claim made back in Chapter 2 — that a higher Sharpe ratio is more important than a higher nominal return. A high-Sharpe strategy with modest nominal returns will always grow your wealth faster, once properly levered, than a low-Sharpe strategy with high nominal returns.</div>
+<div class="key-idea"><strong>The Sharpe ratio determines the maximum possible growth rate of your wealth.</strong> There is a clean mathematical formula for this: maximum compounded growth rate = risk-free rate + (Sharpe ratio)² ÷ 2. A high-Sharpe strategy with modest nominal returns will always grow your wealth faster, once properly levered, than a low-Sharpe strategy with high nominal returns.</div>
 
 ### Example
 
@@ -179,9 +179,9 @@ Every trading strategy — no matter how good — will sometimes lose money. The
 $$g = m - \frac{s^2}{2}$$
 
 <p>Where:</p>
-<p>- $m$ = average return per period (0% here)</p>
-<p>- $s$ = standard deviation per period (1% here)</p>
-<p>- $\frac{s^2}{2} = \frac{0.01^2}{2} = 0.00005 = 0.005\%$</p>
+<p>$m$ = average return per period (0% here)</p>
+<p>$s$ = standard deviation per period (1% here)</p>
+<p>$\frac{s^2}{2} = \frac{0.01^2}{2} = 0.00005 = 0.005\%$</p>
 
 <p>So:</p>
 $$g = -0.005\% \text{ per minute — slowly losing money}$$
