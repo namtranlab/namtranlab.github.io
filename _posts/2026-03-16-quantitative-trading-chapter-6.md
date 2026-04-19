@@ -157,7 +157,7 @@ Every trading strategy — no matter how good — will sometimes lose money. The
 
 ### Example
 
-<div class="example-block">
+<div class="example-block" markdown="1">
 <div class="ex-title">Example 6.1 — The coin flip puzzle: why volatility costs you money even with zero expected return <span class="ex-pill pill-puzzle">Puzzle</span></div>
 
 <strong>Here is the puzzle:</strong>
@@ -242,7 +242,7 @@ $$f = \frac{0.07}{(0.15)^2} = \frac{0.07}{0.0225} = 3.11$$
 
 ### Examples
 
-<div class="example-block">
+<div class="example-block" markdown="1">
 <div class="ex-title">Example 6.2 — Kelly leverage for buying and holding SPY (the S&P 500 ETF) <span class="ex-pill pill-num">Worked numbers</span></div>
 
 <p><strong>The strategy:</strong> Simply buy and hold SPY — the ETF that tracks the S&P 500 index.</p>
@@ -383,7 +383,7 @@ This shows that even half-Kelly can sometimes be too aggressive once you factor 
 
 ### The 2007 quant meltdown — financial contagion in action
 
-<div class="example-block">
+<div class="example-block" markdown="1">
 <div class="ex-title">August 2007 — How one fund's problem became everyone's crisis <span class="ex-pill pill-warn">Historical case study</span></div>
 
 In August 2007, at the start of the subprime mortgage crisis, a series of large hedge funds experienced shocking losses — even funds that held zero mortgage-backed securities.
@@ -434,7 +434,7 @@ Many traders use stop losses — automatic rules to exit a position once it has 
 | **Liquidity-driven:** forced selling with no fundamental cause | Mean-reverting — prices eventually snap back | ❌ Avoid stop losses — patience is rewarded | Quant fund forced to liquidate, short squeeze |
 | **Sudden market crash** | Gap down — stop loss executes far below trigger | ❌ Stop losses execute at crisis prices, not your target | Black Monday, pandemic announcement |
 
-<div class="example-block">
+<div class="example-block" markdown="1">
 <div class="ex-title">The mistake — entering a position by error and waiting for mean reversion <span class="ex-pill pill-warn">Personal cautionary tale</span></div>
 
 The book describes a specific psychological trap related to stop losses:
@@ -502,7 +502,7 @@ Quantitative trading is supposed to remove emotion from the equation — the com
 
 ### The representativeness trap — changing your strategy after a loss
 
-<div class="example-block">
+<div class="example-block" markdown="1">
 <div class="ex-title">The temptation to "fix" your strategy after a big loss <span class="ex-pill pill-warn">Psychological pitfall</span></div>
 
 After a large unexpected loss, the almost universal human response is to look at the historical data and ask: "What rule would have avoided this specific loss?" You then add that rule to your strategy.
@@ -519,7 +519,7 @@ After a large unexpected loss, the almost universal human response is to look at
 
 ### Real personal examples from the book
 
-<div class="example-block">
+<div class="example-block" markdown="1">
 <div class="ex-title">Two personal disasters from overleveraging — and what was learned <span class="ex-pill pill-warn">Personal cautionary tales</span></div>
 
 **Disaster 1 — Greed at an institutional fund:**
@@ -538,7 +538,7 @@ The solution is not more discipline in the abstract — it is more concrete: sta
 
 ### Box 6.1 — Why loss aversion is rational (not a bias)
 
-<div class="example-block">
+<div class="example-block" markdown="1">
 <div class="ex-title">Box 6.1 — The coin flip gamble: why refusing a positive expected value bet is smart <span class="ex-pill pill-puzzle">Puzzle</span></div>
 
 Nobel laureate Daniel Kahneman famously used this gamble to illustrate what he called "loss aversion bias":
