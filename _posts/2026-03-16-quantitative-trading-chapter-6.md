@@ -245,7 +245,7 @@ $$f = \frac{0.07}{(0.15)^2} = \frac{0.07}{0.0225} = 3.11$$
 <div class="example-block">
 <div class="ex-title">Example 6.2 — Kelly leverage for buying and holding SPY (the S&P 500 ETF) <span class="ex-pill pill-num">Worked numbers</span></div>
 
-<p><strong>The strategy:</strong> Simply buy and hold SPY — the ETF that tracks the S&P 500 index.<p>
+<p><strong>The strategy:</strong> Simply buy and hold SPY — the ETF that tracks the S&P 500 index.</p>
 
 <p><strong>Historical numbers (at the time of calculation):</strong></p>
 <p>- Average annual return: 11.23%</p>
