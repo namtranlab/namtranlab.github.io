@@ -153,7 +153,7 @@ Every trading strategy — no matter how good — will sometimes lose money. The
 
 <div class="key-idea"><strong>Risk always costs you something, even when the expected return is zero.</strong> This is one of the most counterintuitive results in finance. If a strategy has a 50/50 chance of going up 1% or down 1%, most people assume you will break even over time. You will not — you will slowly lose money. The mathematics of compounding means that volatility itself erodes your wealth, even when the expected return is exactly zero.</div>
 
-<div class="key-idea"><strong>The Sharpe ratio determines the maximum possible growth rate of your wealth.</strong> There is a clean mathematical formula for this: maximum compounded growth rate = risk-free rate + (Sharpe ratio)² ÷ 2. A high-Sharpe strategy with modest nominal returns will always grow your wealth faster, once properly levered, than a low-Sharpe strategy with high nominal returns.</div>
+<div class="key-idea"><strong>The Sharpe ratio determines the maximum possible growth rate of your wealth.</strong> There is a clean mathematical formula for this: $$g_{\max} = r_f + \frac{\text{Sharpe}^2}{2}$$ A high-Sharpe strategy with modest nominal returns will always grow your wealth faster, once properly levered, than a low-Sharpe strategy with high nominal returns.</div>
 
 ### Example
 
@@ -162,7 +162,7 @@ Every trading strategy — no matter how good — will sometimes lose money. The
 
 <strong>Here is the puzzle:</strong>
 
-<p>> A stock goes up exactly 1% or down exactly 1% each minute, with equal 50/50 probability. If you buy this stock, will you — in the long run — make money, lose money, or break even?</p>
+<p>A stock goes up exactly 1% or down exactly 1% each minute, with equal 50/50 probability. If you buy this stock, will you — in the long run — make money, lose money, or break even?</p>
 
 <p>Most experienced traders answer: <strong>break even</strong>. The answer is wrong.</p>
 
@@ -186,7 +186,7 @@ $$g = m - \frac{s^2}{2}$$
 <p>So:</p>
 $$g = -0.005\% \text{ per minute — slowly losing money}$$
 
-<p>The full general formula extends this to any leverage level:</p>
+<p><strong>The full general formula extends this to any leverage:</strong></p>
 
 $$g(f) = r + f \cdot m - \frac{f^2 \cdot s^2}{2}$$
 
@@ -215,91 +215,70 @@ The Kelly formula is the mathematical answer to the question "how much should I 
 
 ### The big ideas
 
-<div class="key-idea"><strong>The Kelly formula for a single strategy is simple: divide the average excess return by the variance of returns.</strong> If your strategy averages 7% annual excess return and has a standard deviation of 15%, the formula says to use 7% ÷ (15%)² = 3.1× leverage. That is how much you should borrow to maximise your long-term wealth growth.</div>
+<div class="key-idea"><strong>Divide the average excess return by the variance of returns.</strong> If your strategy averages 7% annual excess return and has a standard deviation of 15%, the formula says to use $$f = \frac{7\%}{(15\%)^2} = 3.1\times$$ leverage. That is how much you should borrow to maximise your long-term wealth growth.</div>
 
-<div class="key-idea"><strong>In practice, most traders use half-Kelly — half the recommended leverage.</strong> The Kelly formula assumes your return estimates are perfectly accurate, which they never are. Real return distributions also have "fat tails" — extreme events happen more often than the formula assumes. Using half of the Kelly-recommended leverage builds in a safety buffer for these inaccuracies and still achieves close to optimal long-term growth.</div>
+<div class="key-idea"><strong>In practice, most traders use half-Kelly — half the recommended leverage.</strong> The Kelly formula assumes your return estimates are perfectly accurate, which they never are. Real return distributions also have "fat tails" — extreme events happen more often than the formula assumes. Using half of the Kelly-recommended leverage builds in a safety buffer for these inaccuracies.</div>
 
 <div class="key-idea"><strong>You must update your leverage continuously as your equity changes.</strong> Kelly is not a one-time calculation. If you suffer a loss, your equity shrinks and Kelly says reduce your position size immediately. If you profit, your equity grows and Kelly says you can increase your position size. Doing this update at least once per day keeps your leverage close to optimal at all times.</div>
 
 ### The Kelly formula
 
-```
-For a single strategy:
+<p>For a single strategy:</p>
 
-  Optimal leverage (f) = Average excess return (m) ÷ Variance of returns (s²)
+$$f = \frac{m}{s^2}$$
 
-  Where:
-    m = average one-period return minus the risk-free rate
-    s = standard deviation of one-period returns
-    s² = variance = s × s
+Where:
+- $m$ = average one-period return minus the risk-free rate
+- $s$ = standard deviation of one-period returns
+- $s^2$ = variance of returns
 
-Example: m = 7%, s = 15%
-  f = 0.07 ÷ (0.15)² = 0.07 ÷ 0.0225 = 3.11×
+<p>Example:<p> 
 
-This means: for every $1 of your own capital,
-borrow an additional $2.11 to invest a total of $3.11.
-```
+$m = 7\%$, $s = 15\%$
+
+$$f = \frac{0.07}{(0.15)^2} = \frac{0.07}{0.0225} = 3.11\times$$
+
+This means: for every $1 of your own capital, borrow an additional $2.11 to invest a total of $3.11.
 
 ### Examples from the book
 
 <div class="example-block">
 <div class="ex-title">Example 6.2 — Kelly leverage for buying and holding SPY (the S&P 500 ETF) <span class="ex-pill pill-num">Worked numbers</span></div>
 
-**The strategy:** Simply buy and hold SPY — the ETF that tracks the S&P 500 index.
+<p><strong>The strategy:</strong> Simply buy and hold SPY — the ETF that tracks the S&P 500 index.<p>
 
-**Historical numbers (at the time of calculation):**
-- Average annual return: 11.23%
-- Standard deviation of annual returns: 16.91%
-- Risk-free rate: 4% per year
-- Average excess return: 11.23% − 4% = **7.23%**
+<p><strong>Historical numbers (at the time of calculation):</strong><p>
+<p>- Average annual return: 11.23%</p>
+<p>- Standard deviation of annual returns: 16.91%</p>
+<p>- Risk-free rate: 4% per year</p>
+<p>- Average excess return: 11.23% − 4% = 7.23%</p>
 
-**Step 1 — Calculate the Sharpe ratio:**
-```
-Sharpe ratio = 7.23% ÷ 16.91% = 0.428
-```
+<p><strong>Step 1 — Calculate the Sharpe ratio:</strong></p>
 
-**Step 2 — Calculate the Kelly leverage:**
-```
-f = 7.23% ÷ (16.91%)² = 0.0723 ÷ 0.02860 = 2.53×
-```
+$$\text{Sharpe ratio} = \frac{7.23\%}{16.91\%} = 0.428$$
 
-So Kelly says: if you have $100,000, borrow money to invest a total of $253,000 in SPY.
+<p><strong>Step 2 — Calculate the Kelly leverage:</strong></p>
 
-**Step 3 — Calculate the optimal compounded growth rate:**
-```
-g = risk-free rate + Sharpe² ÷ 2
-  = 4% + (0.428)² ÷ 2
-  = 4% + 9.14% ÷ 2
-  = 4% + 4.57%
-  = 13.1% per year (compounded, after financing costs)
-```
+$$f = \frac{7.23\%}{(16.91\%)^2} = \frac{0.0723}{0.02860} = 2.53\times$$
 
-For comparison, if you just buy SPY with cash and no leverage:
-```
-g = 11.23% − (16.91%)²/2 = 11.23% − 1.43% = 9.8% per year
-```
+So Kelly says: if you have \$100,000, borrow money to invest a total of \$253,000 in SPY.
+
+<p><strong>Step 3 — Calculate the optimal compounded growth rate:</strong></p>
+
+$$g = r_f + \frac{\text{Sharpe}^2}{2} = 4\% + \frac{(0.428)^2}{2} = 4\% + \frac{9.14\%}{2} = 4\% + 4.57\% = 13.1\%$$
+
+(per year, compounded after financing costs)
+
+<p>For comparison, if you just buy SPY with cash and no leverage:</p>
+
+$$g = 11.23\% - \frac{(16.91\%)^2}{2} = 11.23\% - 1.43\% = 9.8\% \text{ per year}$$
 
 <div class="result-box">
 <strong>Unleveraged SPY: 9.8% compounded annual growth</strong><br>
 <strong>Kelly-leveraged SPY (2.53×): 13.1% compounded annual growth</strong>
 </div>
 
-Spreadsheet available at [epchan.com/book/example6_2.xls](http://epchan.com/book/example6_2.xls)
-
 <div class="ex-lesson"><strong>Takeaway:</strong> The Kelly-leveraged approach grows wealth significantly faster — 13.1% vs 9.8% per year. But notice that the Kelly-recommended leverage of 2.53× for just buying the S&P 500 is already quite aggressive. If you can only tolerate modest drawdowns, you should use a lower leverage — which brings us to the half-Kelly approach.</div>
-</div>
-
-<div class="example-block">
-<div class="ex-title">Adjusting Kelly when your broker limits your leverage <span class="ex-pill pill-num">Practical adjustment</span></div>
-
-Retail brokers impose legal limits on how much leverage you can use:
-- **Overnight positions in stocks:** Maximum 2× (Regulation T)
-- **Intraday positions in stocks:** Maximum 4×
-- **Futures and forex:** Higher leverage available (10× or more)
-
-If Kelly tells you to use 3.11× leverage but your broker only allows 2×, you cannot follow the formula exactly. The solution: scale down all your individual strategy positions proportionally until the total leverage fits within the broker's limit.
-
-<div class="ex-lesson"><strong>Takeaway:</strong> When broker leverage limits are binding, the Kelly formula still tells you the optimal *direction* — which strategies to allocate more to and which to allocate less to. You just apply a scaling factor to keep the total leverage within the allowed range.</div>
 </div>
 
 <div class="ref-tags">
