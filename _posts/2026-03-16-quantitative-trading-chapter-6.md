@@ -238,6 +238,6 @@ $m = 7\%$, $s = 15\%$
 
 $$f = \frac{0.07}{(0.15)^2} = \frac{0.07}{0.0225} = 3.11$$
 
-<p>This means: for every \$1 of your own capital, borrow an additional $2.11 to invest a total of \$3.11.</p>
+<p>This means: for every \$1 of your own capital, borrow an additional \$2.11 to invest a total of \$3.11.</p>
 
 ### Examples
