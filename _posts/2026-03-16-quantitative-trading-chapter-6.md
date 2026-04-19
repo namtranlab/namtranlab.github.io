@@ -236,11 +236,11 @@ Where:
 
 $m = 7\%$, $s = 15\%$
 
-$$f = \frac{0.07}{(0.15)^2} = \frac{0.07}{0.0225} = 3.11\times$$
+$$f = \frac{0.07}{(0.15)^2} = \frac{0.07}{0.0225} = 3.11$$
 
-This means: for every $1 of your own capital, borrow an additional $2.11 to invest a total of $3.11.
+<p>This means: for every $1 of your own capital, borrow an additional $2.11 to invest a total of $3.11.</p>
 
-### Examples from the book
+### Examples
 
 <div class="example-block">
 <div class="ex-title">Example 6.2 — Kelly leverage for buying and holding SPY (the S&P 500 ETF) <span class="ex-pill pill-num">Worked numbers</span></div>
@@ -335,8 +335,6 @@ Most serious traders run more than one strategy at a time — different strategi
 </div>
 
 For reference, the best individual ETF (OIH) achieves only 12.78% compounded annual growth on its own. The combined portfolio of three ETFs beats OIH's solo performance — even though RTH is being shorted and RKH barely contributes — because diversification across uncorrelated strategies reduces total volatility.
-
-Code files: [example6_3.m](http://epchan.com/book/example6_3.m) · [example6_3.ipynb](http://epchan.com/book/example6_3.ipynb) · [example6_3.R](http://epchan.com/book/example6_3.R)
 
 <div class="ex-lesson"><strong>Takeaway:</strong> Combining multiple strategies — even ones with weak individual performance — almost always beats any single strategy if they are not perfectly correlated. The Kelly formula handles all of this automatically by computing the optimal allocation across the full portfolio simultaneously.</div>
 </div>
