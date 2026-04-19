@@ -294,7 +294,7 @@ $$g = 11.23\% - \frac{(16.91\%)^2}{2} = 11.23\% - 1.43\% = 9.8\% \text{ per year
 Most serious traders run more than one strategy at a time — different strategies for different markets, timeframes, or instruments. The Kelly formula extends naturally to this multi-strategy case. The key insight is that strategies that are uncorrelated (or negatively correlated) with each other provide a diversification benefit: you can often run a higher total leverage when strategies do not all lose at the same time.
 </div>
 
-### The big ideas
+### Core ideas
 
 <div class="key-idea"><strong>The multi-strategy Kelly formula automatically recommends shorting strategies with negative expected returns.</strong> If you have three strategies and one of them has a negative expected return, the formula will literally tell you to short that strategy (bet against it). This makes intuitive sense — if you expect a strategy to lose money, the right position is the opposite of what the strategy says.</div>
 
@@ -350,10 +350,10 @@ For reference, the best individual ETF (OIH) achieves only 12.78% compounded ann
 ## Section 4 — Risk Management Beyond the Formula
 
 <div class="note-abstract">
-The Kelly formula gives you the mathematically optimal leverage — assuming your return estimates are correct and returns follow a normal bell-curve distribution. In the real world, neither of these assumptions holds perfectly. Returns can be more extreme than the formula predicts (fat tails), and your estimates of average returns are always uncertain. This section explains how to handle these realities, including one of the most dramatic examples in recent financial history: the August 2007 quant fund meltdown.
+The Kelly formula gives you the mathematically optimal leverage — assuming your return estimates are correct and returns follow a normal bell-curve distribution. In the real world, neither of these assumptions holds perfectly. Returns can be more extreme than the formula predicts (fat tails), and your estimates of average returns are always uncertain. This section explains how to handle these realities.
 </div>
 
-### The big ideas
+### Core ideas
 
 <div class="key-idea"><strong>Real financial markets have "fat tails" — extreme events happen far more often than the formula assumes.</strong> The Kelly formula assumes that returns follow a neat bell curve. In reality, stock markets occasionally experience moves of 10%, 20%, or even more in a single day — events that a bell curve would say are essentially impossible but which happen regularly. These are called black swan events. The formula does not protect you from them, which is why you should use half-Kelly or even less as your starting point.</div>
 
@@ -415,16 +415,16 @@ In August 2007, at the start of the subprime mortgage crisis, a series of large 
 ## Section 5 — Stop Losses — Are They Actually Helpful?
 
 <div class="note-abstract">
-Many traders use stop losses — automatic rules to exit a position once it has lost a certain percentage. The intuition is that stop losses cap your downside and prevent catastrophic losses. The reality is more nuanced: stop losses are genuinely helpful for some types of strategies and actively harmful for others. Using them in the wrong context can turn a winning strategy into a losing one.
+Many traders use stop losses, which are automatic rules that sell a position once it drops by a certain amount. The idea is simple: stop losses are supposed to limit losses and protect you from a major crash. But in practice, it’s not that straightforward. Stop losses can be very useful for some strategies, but they can also hurt performance in others.
 </div>
 
-### The big ideas
+### Core ideas
 
-<div class="key-idea"><strong>Stop losses only help when the market is trending — and hurt when the market is mean-reverting.</strong> If prices tend to keep going in the same direction after a move (momentum or trending regime), then exiting a losing position quickly makes sense — the losses are likely to continue. But if prices tend to snap back (mean-reverting regime), then exiting a losing position locks in a loss right before the recovery. Most quantitative strategies are mean-reverting, which means most quant strategies should be cautious about stop losses.</div>
+<div class="key-idea"><strong>Stop losses only help when the market is trending — and hurt when the market is mean-reverting.</strong> If prices usually keep moving in the same direction after a drop (a momentum or trending market), then cutting losses quickly makes sense, because the decline may continue. But if prices usually bounce back after falling (a mean-reverting market), then a stop loss can force you to sell at the worst moment—right before the price recovers—so you end up locking in a loss unnecessarily. Since many quantitative strategies are designed around mean reversion, most quant traders need to be careful about using stop losses blindly.</div>
 
-<div class="key-idea"><strong>Stop losses cannot prevent catastrophic losses during sudden market crashes.</strong> This is a common misconception. When a genuine market crash happens (a company announces fraud, a country defaults overnight, a pandemic is declared), prices do not fall gradually past your stop-loss price — they gap down instantly. Your stop loss order executes at whatever price is available, which may be far worse than your intended exit. Stop losses give you a false sense of protection against the very events they are supposed to guard against.</div>
+<div class="key-idea"><strong>Stop losses cannot prevent catastrophic losses during sudden market crashes.</strong> In a real shock event—such as fraud news, a sovereign default, or a major crisis—prices usually don’t slide smoothly past your stop level. Instead, they can gap down instantly, skipping over your stop price entirely. When that happens, your stop-loss order will fill at the next available market price, which may be much worse than what you expected.</div>
 
-<div class="key-idea"><strong>The right question to ask before using a stop loss: is this a trending or a mean-reverting situation?</strong> News-driven moves (real fundamental changes to a company's value) tend to be permanent — prices move to a new level and stay there. These are trending situations where stop losses make sense. Liquidity-driven moves (a large fund being forced to sell, a short squeeze, a temporary panic) tend to reverse — these are mean-reverting situations where stop losses are harmful and patience is rewarded.</div>
+<div class="key-idea"><strong>The right question to ask before using a stop loss: is this a trending or a mean-reverting situation?</strong> When a move is news-driven—meaning it reflects a real change in a company’s true value—the price often shifts to a new level and stays there. That’s a trending situation, where stop losses can be helpful. But when a move is liquidity-driven—caused by forced selling, short squeezes, or temporary panic—the price distortion is often temporary and tends to reverse. That’s a mean-reverting situation, where stop losses can do more harm than good, and staying patient is usually the better choice.</div>
 
 ### When to use stop losses and when to avoid them
 
@@ -437,7 +437,7 @@ Many traders use stop losses — automatic rules to exit a position once it has 
 <div class="example-block" markdown="1">
 <div class="ex-title">The mistake — entering a position by error and waiting for mean reversion <span class="ex-pill pill-warn">Personal cautionary tale</span></div>
 
-The book describes a specific psychological trap related to stop losses:
+Psychological trap related to stop losses:
 
 **Scenario:** Your automated system has a bug and enters a large position by mistake. You discover it quickly and have a big unrealised loss.
 
@@ -466,9 +466,9 @@ Market risk — the possibility that prices move against you — is what most tr
 
 ### The three hidden risks
 
-<div class="key-idea"><strong>Model risk — your strategy may have never had a real edge.</strong> The strategy worked beautifully in backtesting but fails in live trading. The causes are all the ones from Chapter 3: data-snooping bias, survivorship bias, look-ahead bias, or regime shifts. The best protection is having a collaborator independently reproduce your backtest results — the same "peer review" process that real scientific research requires. If someone else cannot replicate your results from scratch, that is a serious warning sign.</div>
+<div class="key-idea"><strong>Model risk — your strategy may have never had a real edge.</strong> The strategy worked beautifully in backtesting but fails in live trading. The best protection is having a collaborator independently reproduce your backtest results — the same "peer review" process that real scientific research requires. If someone else cannot replicate your results from scratch, that is a serious warning sign.</div>
 
-<div class="key-idea"><strong>Software risk — your trading system may not faithfully implement your strategy.</strong> Bugs exist in all software. A bug in your automated trading system can cause it to trade differently from what your backtest model specifies — placing wrong orders, using stale prices, or trading at incorrect sizes. The check: run your live system and your backtest system on the same recent data and verify that the trades they generate are identical. Any discrepancy is a bug that needs fixing before real money is at stake.</div>
+<div class="key-idea"><strong>Software risk — your trading system may not faithfully implement your strategy.</strong> A bug in your automated trading system can cause it to trade differently from what your backtest model specifies — placing wrong orders, using stale prices, or trading at incorrect sizes. The check: run your live system and your backtest system on the same recent data and verify that the trades they generate are identical. Any discrepancy is a bug that needs fixing before real money is at stake.</div>
 
 <div class="key-idea"><strong>Operational risk — physical and infrastructure failures are more common than you think.</strong> Your internet connection goes down at 9:31am. Your power fails mid-order. Your computer crashes during a volatile market session. None of these is exotic — all of them have happened to real traders. Having a backup internet connection, an uninterruptible power supply, and a plan for what to do in each failure scenario is not paranoia — it is basic operational hygiene.</div>
 
@@ -496,9 +496,10 @@ Quantitative trading is supposed to remove emotion from the equation — the com
 
 <div class="key-idea"><strong>Despair during a drawdown causes two opposite mistakes — and both are wrong.</strong> One type of trader in a drawdown panics and shuts the strategy down completely, even when it still has a valid edge and just needs more time. The other type doubles down on the losing strategy, betting more to recover losses faster. Both are irrational. The correct response — systematically reducing leverage according to the Kelly formula — feels neither heroic nor dramatic, which is precisely why it is so hard to actually do.</div>
 
-<div class="key-idea"><strong>Greed during a winning run is just as dangerous as despair during a losing run.</strong> When a strategy is performing brilliantly, the temptation is to lever it up quickly to "make money while it's hot." This is how overleveraging happens — not during obvious danger, but during apparent success. The historical examples of this are enormous: Long-Term Capital Management (2000), Amaranth Advisors (2006, $6 billion loss), and numerous hedge fund collapses. The pattern is always the same: a previously excellent strategy, overlevered on the basis of past success.</div>
+<div class="key-idea"><strong>Greed during a winning run is just as dangerous as despair during a losing run.</strong> When a strategy is performing brilliantly, the temptation is to lever it up quickly to "make money while it's hot." This is how overleveraging happens — not during obvious danger, but during apparent success. The historical examples of this are enormous: Long-Term Capital Management (2000), Amaranth Advisors (2006, \$6 billion loss), and numerous hedge fund collapses. The pattern is always the same: a previously excellent strategy, overlevered on the basis of past success.</div>
 
-<div class="key-idea"><strong>Loss aversion — your instinct to avoid losses more than you seek equivalent gains — is actually rational for traders, not a psychological flaw.</strong> Economists often treat loss aversion as an irrational bias. Box 6.1 in the chapter (and Example 6.1) show why this view is mathematically wrong. The coin-flip puzzle demonstrates that refusing a fair bet (expected gain $5, equal chance of winning $110 or losing $100) is the correct rational decision when you are playing with finite capital in sequence — because the compounding mathematics erode your wealth even in positive expected value games with high variance. Your instinct to avoid losses is correct. It is the economists who have the wrong model.</div>
+<div class="key-idea"><strong>Loss aversion — your instinct to avoid losses more than you seek equivalent gains — is actually rational for traders, not a psychological flaw.</strong> Economists often treat loss aversion as an irrational bias. The coin-flip puzzle demonstrates that refusing a fair bet is the correct rational decision when you are playing with finite capital in sequence. The reason is compounding. In sequential investing, large losses hurt disproportionately, and high volatility can destroy long-term growth even when the average payoff looks favorable. 
+</div>
 
 ### The representativeness trap — changing your strategy after a loss
 
@@ -523,10 +524,10 @@ After a large unexpected loss, the almost universal human response is to look at
 <div class="ex-title">Two personal disasters from overleveraging — and what was learned <span class="ex-pill pill-warn">Personal cautionary tales</span></div>
 
 **Disaster 1 — Greed at an institutional fund:**
-While working at a money management firm, a strategy had been running successfully for about six months. In a fit of enthusiasm (greed), over $100 million was added to that portfolio. The strategy had not been running long enough to validate whether the six months of performance was genuine or lucky. The result: over $1 million in losses for the fund's investors.
+While working at a money management firm, a strategy had been running successfully for about six months. In a fit of enthusiasm (greed), over \$100 million was added to that portfolio. The strategy had not been running long enough to validate whether the six months of performance was genuine or lucky. The result: over \$1 million in losses for the fund's investors.
 
 **Disaster 2 — Despair while trading independently:**
-A mean-reverting spread strategy between XLE (energy ETF) and crude oil futures (CL) was not reverting as expected. Instead of reducing the position according to Kelly principles, the position was stubbornly increased to almost $500,000, hoping the reversion would come. Eventually despair set in, the position was exited with close to a six-figure loss. Shortly after — as is always the case in such stories — the spread reverted exactly as the strategy predicted. The strategy was right. The position management was catastrophically wrong.
+A mean-reverting spread strategy between XLE (energy ETF) and crude oil futures (CL) was not reverting as expected. Instead of reducing the position according to Kelly principles, the position was stubbornly increased to almost \$500,000, hoping the reversion would come. Eventually despair set in, the position was exited with close to a six-figure loss. Shortly after — as is always the case in such stories — the spread reverted exactly as the strategy predicted. The strategy was right. The position management was catastrophically wrong.
 
 **The lesson the book draws from both:**
 Both disasters shared the same root cause: letting emotion override a systematic process. In the first case, greed — adding capital too quickly. In the second, the combination of overconfidence and then despair — increasing a losing position and then exiting at the worst possible moment.
@@ -549,9 +550,9 @@ Most people refuse. Kahneman called this irrational — the expected gain is $5.
 
 **The book argues that the person refusing is actually correct.**
 
-Here is why. Suppose you start with $1,000 and keep playing this game repeatedly, adjusting stakes proportionally to your current wealth:
-- Average return per round: +0.5% (the $5 gain on $1,000)
-- Standard deviation per round: 10.5% ($105 range on $1,000)
+Here is why. Suppose you start with \$1,000 and keep playing this game repeatedly, adjusting stakes proportionally to your current wealth:
+- Average return per round: +0.5% (the \$5 gain on \$1,000)
+- Standard deviation per round: 10.5% (\$105 range on \$1,000)
 - Compounded growth rate per round: 0.5% − (10.5%)²/2 = 0.5% − 0.55% = **−0.05%**
 
 You are **losing money** on average, even though the expected gain is positive. The variance is large enough that the compounding math works against you.
