@@ -302,7 +302,7 @@ Most serious traders run more than one strategy at a time — different strategi
 
 <div class="key-idea"><strong>Update the leverage inputs regularly — at least monthly, ideally daily.</strong> The Kelly formula uses your strategy's recent mean return and standard deviation. These change over time as market conditions evolve. Using a lookback period of about six months is a practical balance between being responsive to recent performance and not overreacting to short-term noise.</div>
 
-### Example from the book
+### Examples
 
 <div class="example-block">
 <div class="ex-title">Example 6.3 — Optimal allocation across three sector ETFs: OIH, RKH, and RTH <span class="ex-pill pill-num">Worked numbers</span></div>
@@ -314,19 +314,27 @@ Most serious traders run more than one strategy at a time — different strategi
 
 **Historical performance (annualised excess returns above 4% risk-free rate):**
 
+<p></p>
+
 | ETF | Annual excess return | What this means |
 |---|---|---|
 | OIH | +13.96% | Oil services — positive edge, should go long |
 | RKH | +2.94% | Regional banks — small positive edge, should go long |
 | RTH | −0.73% | Retail — slightly negative, Kelly says short it |
 
+<p></p>
+
 **Kelly-recommended leverage for each ETF:**
+
+<p></p>
 
 | ETF | Kelly leverage | Meaning |
 |---|---|---|
 | OIH | +1.29× | Long — invest 1.29× your equity in oil services |
 | RKH | +1.17× | Long — invest 1.17× your equity in regional banks |
 | RTH | −1.49× | Short — short 1.49× your equity in retail |
+
+<p></p>
 
 **Combined portfolio result:**
 
