@@ -238,7 +238,7 @@ $m = 7\%$, $s = 15\%$
 
 $$f = \frac{0.07}{(0.15)^2} = \frac{0.07}{0.0225} = 3.11$$
 
-<p>This means: for every $1 of your own capital, borrow an additional $2.11 to invest a total of $3.11.</p>
+<p>This means: for every \$1 of your own capital, borrow an additional $2.11 to invest a total of \$3.11.</p>
 
 ### Examples
 
@@ -299,7 +299,7 @@ Most serious traders run more than one strategy at a time — different strategi
 
 <div class="key-idea"><strong>Combining strategies can grow wealth faster than any individual strategy alone.</strong> Even when two strategies have the same expected return, if they lose money at different times (low correlation), combining them reduces total volatility.</div>
 
-<div class="key-idea"><strong>Update the leverage inputs regularly (ideally daily).</strong> The Kelly formula uses your strategy's recent mean return and standard deviation. These change over time as market conditions evolve. Using a lookback period of about six months is a practical balance between being responsive to recent performance and not overreacting to short-term noise.</div>
+<div class="key-idea"><strong>Update the leverage inputs regularly — at least monthly, ideally daily.</strong> The Kelly formula uses your strategy's recent mean return and standard deviation. These change over time as market conditions evolve. Using a lookback period of about six months is a practical balance between being responsive to recent performance and not overreacting to short-term noise.</div>
 
 ### Example from the book
 
@@ -307,9 +307,8 @@ Most serious traders run more than one strategy at a time — different strategi
 <div class="ex-title">Example 6.3 — Optimal allocation across three sector ETFs: OIH, RKH, and RTH <span class="ex-pill pill-num">Worked numbers</span></div>
 
 **The three strategies (actually just three ETFs held simultaneously):**
-
 - **OIH** — Oil services ETF
-- **RKH** — Regional bank ETF  
+- **RKH** — Regional bank ETF
 - **RTH** — Retail ETF
 
 **Historical performance (annualised excess returns above 4% risk-free rate):**
