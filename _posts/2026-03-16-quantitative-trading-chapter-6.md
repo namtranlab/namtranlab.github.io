@@ -307,7 +307,10 @@ Most serious traders run more than one strategy at a time — different strategi
 <div class="example-block">
 <div class="ex-title">Example 6.3 — Optimal allocation across three sector ETFs: OIH, RKH, and RTH <span class="ex-pill pill-num">Worked numbers</span></div>
 
+<p></p>
+
 **The three strategies (actually just three ETFs held simultaneously):**
+
 - **OIH** — Oil services ETF
 - **RKH** — Regional bank ETF
 - **RTH** — Retail ETF
@@ -333,8 +336,6 @@ Most serious traders run more than one strategy at a time — different strategi
 | OIH | +1.29× | Long — invest 1.29× your equity in oil services |
 | RKH | +1.17× | Long — invest 1.17× your equity in regional banks |
 | RTH | −1.49× | Short — short 1.49× your equity in retail |
-
-<p></p>
 
 **Combined portfolio result:**
 
