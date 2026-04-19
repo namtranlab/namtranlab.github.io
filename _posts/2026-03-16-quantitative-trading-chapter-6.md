@@ -169,7 +169,7 @@ Every trading strategy — no matter how good — will sometimes lose money. The
 <p><strong>You will slowly lose money</strong> — at a rate of about 0.005% per minute (0.5 basis points per minute).</p>
 
 <p><strong>Why?</strong> Because the mathematics of compounding is not symmetric. Consider two minutes:</p>
-<p>- Minute 1: up 1% → your \$100 becomes \$101</p>
+- Minute 1: up 1% → your `$100` becomes `$101`
 <p>- Minute 2: down 1% → your \$101 becomes \$99.99</p>
 
 <p>You did not break even — you lost \$0.01. The 1% gain and 1% loss are equal in percentage terms, but they are applied to different base amounts, so they do not cancel out.</p>
@@ -524,7 +524,7 @@ After a large unexpected loss, the almost universal human response is to look at
 <div class="ex-title">Two personal disasters from overleveraging — and what was learned <span class="ex-pill pill-warn">Personal cautionary tales</span></div>
 
 **Disaster 1 — Greed at an institutional fund:**
-While working at a money management firm, a strategy had been running successfully for about six months. In a fit of enthusiasm (greed), over \$100 million was added to that portfolio. The strategy had not been running long enough to validate whether the six months of performance was genuine or lucky. The result: over \$1 million in losses for the fund's investors.
+While working at a money management firm, a strategy had been running successfully for about six months. In a fit of enthusiasm (greed), over `$100` million was added to that portfolio. The strategy had not been running long enough to validate whether the six months of performance was genuine or lucky. The result: over `$1` million in losses for the fund's investors.
 
 **Disaster 2 — Despair while trading independently:**
 A mean-reverting spread strategy between XLE (energy ETF) and crude oil futures (CL) was not reverting as expected. Instead of reducing the position according to Kelly principles, the position was stubbornly increased to almost \$500,000, hoping the reversion would come. Eventually despair set in, the position was exited with close to a six-figure loss. Shortly after — as is always the case in such stories — the spread reverted exactly as the strategy predicted. The strategy was right. The position management was catastrophically wrong.
@@ -544,7 +544,7 @@ The solution is not more discipline in the abstract — it is more concrete: sta
 
 Nobel laureate Daniel Kahneman famously used this gamble to illustrate what he called "loss aversion bias":
 
-You are offered a fair coin flip. Tails: you lose \$100. Heads: you win \$110. Would you take it?
+You are offered a fair coin flip. Tails: you lose `$100`. Heads: you win `$110`. Would you take it?
 
 Most people refuse. Kahneman called this irrational — the expected gain is $5.
 
