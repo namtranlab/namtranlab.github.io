@@ -245,31 +245,31 @@ $$f = \frac{0.07}{(0.15)^2} = \frac{0.07}{0.0225} = 3.11$$
 <div class="example-block" markdown="1">
 <div class="ex-title">Example 6.2 — Kelly leverage for buying and holding SPY (the S&P 500 ETF) <span class="ex-pill pill-num">Worked numbers</span></div>
 
-<p><strong>The strategy:</strong> Simply buy and hold SPY — the ETF that tracks the S&P 500 index.</p>
+**The strategy:** Simply buy and hold SPY — the ETF that tracks the S&P 500 index.
 
-<p><strong>Historical numbers (at the time of calculation):</strong></p>
-<p>- Average annual return: 11.23%</p>
-<p>- Standard deviation of annual returns: 16.91%</p>
-<p>- Risk-free rate: 4% per year</p>
-<p>- Average excess return: 11.23% − 4% = 7.23%</p>
+**Historical numbers (at the time of calculation):**
+- Average annual return: 11.23%
+- Standard deviation of annual returns: 16.91%
+- Risk-free rate: 4% per year
+- Average excess return: 11.23% − 4% = 7.23%
 
-<p><strong>Step 1 — Calculate the Sharpe ratio:</strong></p>
+**Step 1 — Calculate the Sharpe ratio:**
 
 $$\text{Sharpe ratio} = \frac{7.23\%}{16.91\%} = 0.428$$
 
-<p><strong>Step 2 — Calculate the Kelly leverage:</strong></p>
+**Step 2 — Calculate the Kelly leverage:**
 
 $$f = \frac{7.23\%}{(16.91\%)^2} = \frac{0.0723}{0.02860} = 2.53$$
 
-So Kelly says: if you have \$100,000, borrow money to invest a total of \$253,000 in SPY.
+So Kelly says: if you have $100,000, borrow money to invest a total of $253,000 in SPY.
 
-<p><strong>Step 3 — Calculate the optimal compounded growth rate:</strong></p>
+**Step 3 — Calculate the optimal compounded growth rate:**
 
 $$g_{\max} = r_f + \frac{\text{Sharpe}^2}{2} = 4\% + \frac{(0.428)^2}{2} = 13.1\%$$
 
 (per year, compounded after financing costs)
 
-<p>For comparison, if you just buy SPY with cash and no leverage:</p>
+For comparison, if you just buy SPY with cash and no leverage:
 
 $$g = 11.23\% - \frac{(16.91\%)^2}{2} = 11.23\% - 1.43\% = 9.8\% \text{ per year}$$
 
