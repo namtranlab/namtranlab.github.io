@@ -147,7 +147,7 @@ _styles: >
 Every trading strategy — no matter how good — will sometimes lose money. The question is not whether you will have losing periods, but whether those losing periods will destroy you or just inconvenience you. The answer depends almost entirely on how much leverage you are using. Too little leverage and your strategy grows painfully slowly. Too much and a single bad month can cause losses from which you never recover. Finding the sweet spot between these two extremes is what this chapter is about.
 </div>
 
-### The big ideas
+### Core ideas
 
 <div class="key-idea"><strong>The goal is not to maximise returns — it is to maximise long-term compounded wealth.</strong> These sound like the same thing but they are not. Maximising returns often means taking on so much risk that eventual ruin becomes almost certain. Maximising long-term compounded wealth means finding the leverage level where your account grows the fastest without ever being wiped out.</div>
 
@@ -213,7 +213,7 @@ $$g(f) = r + f \cdot m - \frac{f^2 \cdot s^2}{2}$$
 The Kelly formula is the mathematical answer to the question "how much should I bet?" It was originally developed by a Bell Labs scientist named J.L. Kelly in 1956 for telephone signal problems, then famously applied to gambling by Ed Thorp (the mathematician who beat the casinos at blackjack). Applied to trading, it tells you exactly how much leverage to use to make your wealth grow as fast as possible — without risking ruin.
 </div>
 
-### The big ideas
+### Core ideas
 
 <div class="key-idea"><strong>Divide the average excess return by the variance of returns.</strong> If your strategy averages 7% annual excess return and has a standard deviation of 15%, the formula says to use $$f = \frac{7\%}{(15\%)^2} = 3.1\times$$ leverage. That is how much you should borrow to maximise your long-term wealth growth.</div>
 
@@ -275,10 +275,10 @@ $$g = 11.23\% - \frac{(16.91\%)^2}{2} = 11.23\% - 1.43\% = 9.8\% \text{ per year
 
 <div class="result-box">
 <strong>Unleveraged SPY: 9.8% compounded annual growth</strong><br>
-<strong>Kelly-leveraged SPY (2.53×): 13.1% compounded annual growth</strong>
+<strong>Kelly-leveraged SPY (2.53): 13.1% compounded annual growth</strong>
 </div>
 
-<div class="ex-lesson"><strong>Takeaway:</strong> The Kelly-leveraged approach grows wealth significantly faster — 13.1% vs 9.8% per year. But notice that the Kelly-recommended leverage of 2.53× for just buying the S&P 500 is already quite aggressive. If you can only tolerate modest drawdowns, you should use a lower leverage — which brings us to the half-Kelly approach.</div>
+<div class="ex-lesson"><strong>Takeaway:</strong> The Kelly-leveraged approach grows wealth significantly faster — 13.1% vs 9.8% per year. But notice that the Kelly-recommended leverage of 2.53 for just buying the S&P 500 is already quite aggressive. If you can only tolerate modest drawdowns, you should use a lower leverage — which brings us to the half-Kelly approach.</div>
 </div>
 
 <div class="ref-tags">
