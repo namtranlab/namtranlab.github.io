@@ -261,7 +261,7 @@ $$\text{Sharpe ratio} = \frac{7.23\%}{16.91\%} = 0.428$$
 
 $$f = \frac{7.23\%}{(16.91\%)^2} = \frac{0.0723}{0.02860} = 2.53$$
 
-So Kelly says: if you have `$100,000`, borrow money to invest a total of `$253,000` in SPY.
+<p>So Kelly says: if you have \$100,000, borrow money to invest a total of \$253,000 in SPY.</p>
 
 **Step 3 — Calculate the optimal compounded growth rate:**
 
