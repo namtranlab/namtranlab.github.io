@@ -551,8 +551,8 @@ Most people refuse. Kahneman called this irrational — the expected gain is $5.
 **The book argues that the person refusing is actually correct.**
 
 Here is why. Suppose you start with \$1,000 and keep playing this game repeatedly, adjusting stakes proportionally to your current wealth:
-- Average return per round: +0.5% (the \$5 gain on \$1,000)
-- Standard deviation per round: 10.5% (\$105 range on \$1,000)
+- Average return per round: +0.5% (the `$5` gain on `$1,000`)
+- Standard deviation per round: 10.5% (`$105` range on `$1,000`)
 - Compounded growth rate per round: 0.5% − (10.5%)²/2 = 0.5% − 0.55% = **−0.05%**
 
 You are **losing money** on average, even though the expected gain is positive. The variance is large enough that the compounding math works against you.
