@@ -317,19 +317,13 @@ Most serious traders run more than one strategy at a time — different strategi
 
 **Historical performance (annualised excess returns above 4% risk-free rate):**
 
-<p></p>
-
 | ETF | Annual excess return | What this means |
 |---|---|---|
 | OIH | +13.96% | Oil services — positive edge, should go long |
 | RKH | +2.94% | Regional banks — small positive edge, should go long |
 | RTH | −0.73% | Retail — slightly negative, Kelly says short it |
 
-<p></p>
-
 **Kelly-recommended leverage for each ETF:**
-
-<p></p>
 
 | ETF | Kelly leverage | Meaning |
 |---|---|---|
