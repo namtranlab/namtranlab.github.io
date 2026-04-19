@@ -259,7 +259,7 @@ $$\text{Sharpe ratio} = \frac{7.23\%}{16.91\%} = 0.428$$
 
 <p><strong>Step 2 — Calculate the Kelly leverage:</strong></p>
 
-$$f = \frac{7.23\%}{(16.91\%)^2} = \frac{0.0723}{0.02860} = 2.53\times$$
+$$f = \frac{7.23\%}{(16.91\%)^2} = \frac{0.0723}{0.02860} = 2.53$$
 
 So Kelly says: if you have \$100,000, borrow money to invest a total of \$253,000 in SPY.
 
@@ -297,9 +297,9 @@ Most serious traders run more than one strategy at a time — different strategi
 
 <div class="key-idea"><strong>The multi-strategy Kelly formula automatically recommends shorting strategies with negative expected returns.</strong> If you have three strategies and one of them has a negative expected return, the formula will literally tell you to short that strategy (bet against it). This makes intuitive sense — if you expect a strategy to lose money, the right position is the opposite of what the strategy says.</div>
 
-<div class="key-idea"><strong>Combining strategies can grow wealth faster than any individual strategy alone.</strong> Even when two strategies have the same expected return, if they lose money at different times (low correlation), combining them reduces total volatility. Lower volatility means compounding works better for you — and the formula proves that the combined portfolio can beat either strategy's solo performance.</div>
+<div class="key-idea"><strong>Combining strategies can grow wealth faster than any individual strategy alone.</strong> Even when two strategies have the same expected return, if they lose money at different times (low correlation), combining them reduces total volatility.</div>
 
-<div class="key-idea"><strong>Update the leverage inputs regularly — at least monthly, ideally daily.</strong> The Kelly formula uses your strategy's recent mean return and standard deviation. These change over time as market conditions evolve. Using a lookback period of about six months is a practical balance between being responsive to recent performance and not overreacting to short-term noise. As a strategy's performance fades, the formula naturally reduces its recommended leverage toward zero.</div>
+<div class="key-idea"><strong>Update the leverage inputs regularly (ideally daily).</strong> The Kelly formula uses your strategy's recent mean return and standard deviation. These change over time as market conditions evolve. Using a lookback period of about six months is a practical balance between being responsive to recent performance and not overreacting to short-term noise.</div>
 
 ### Example from the book
 
@@ -307,8 +307,9 @@ Most serious traders run more than one strategy at a time — different strategi
 <div class="ex-title">Example 6.3 — Optimal allocation across three sector ETFs: OIH, RKH, and RTH <span class="ex-pill pill-num">Worked numbers</span></div>
 
 **The three strategies (actually just three ETFs held simultaneously):**
+
 - **OIH** — Oil services ETF
-- **RKH** — Regional bank ETF
+- **RKH** — Regional bank ETF  
 - **RTH** — Retail ETF
 
 **Historical performance (annualised excess returns above 4% risk-free rate):**
