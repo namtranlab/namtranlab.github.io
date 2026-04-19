@@ -306,8 +306,7 @@ Most serious traders run more than one strategy at a time — different strategi
 
 <div class="example-block">
 <div class="ex-title">Example 6.3 — Optimal allocation across three sector ETFs: OIH, RKH, and RTH <span class="ex-pill pill-num">Worked numbers</span></div>
-
-<p></p>
+</div>
 
 **The three strategies (actually just three ETFs held simultaneously):**
 
@@ -340,6 +339,7 @@ Most serious traders run more than one strategy at a time — different strategi
 
 For reference, the best individual ETF (OIH) achieves only 12.78% compounded annual growth on its own. The combined portfolio of three ETFs beats OIH's solo performance — even though RTH is being shorted and RKH barely contributes — because diversification across uncorrelated strategies reduces total volatility.
 
+<div class="example-block">
 <div class="ex-lesson"><strong>Takeaway:</strong> Combining multiple strategies — even ones with weak individual performance — almost always beats any single strategy if they are not perfectly correlated. The Kelly formula handles all of this automatically by computing the optimal allocation across the full portfolio simultaneously.</div>
 </div>
 
