@@ -265,7 +265,7 @@ So Kelly says: if you have \$100,000, borrow money to invest a total of \$253,00
 
 <p><strong>Step 3 — Calculate the optimal compounded growth rate:</strong></p>
 
-$$g = r_f + \frac{\text{Sharpe}^2}{2} = 4\% + \frac{(0.428)^2}{2} = 13.1\%$$
+$$g_{\max} = r_f + \frac{\text{Sharpe}^2}{2} = 4\% + \frac{(0.428)^2}{2} = 13.1\%$$
 
 (per year, compounded after financing costs)
 
