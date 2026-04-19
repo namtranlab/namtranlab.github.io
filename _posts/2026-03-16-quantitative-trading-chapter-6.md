@@ -247,7 +247,7 @@ $$f = \frac{0.07}{(0.15)^2} = \frac{0.07}{0.0225} = 3.11$$
 
 <p><strong>The strategy:</strong> Simply buy and hold SPY — the ETF that tracks the S&P 500 index.<p>
 
-<p><strong>Historical numbers (at the time of calculation):</strong><p>
+<p><strong>Historical numbers (at the time of calculation):</strong></p>
 <p>- Average annual return: 11.23%</p>
 <p>- Standard deviation of annual returns: 16.91%</p>
 <p>- Risk-free rate: 4% per year</p>
