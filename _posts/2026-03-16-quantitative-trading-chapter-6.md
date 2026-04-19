@@ -544,7 +544,7 @@ The solution is not more discipline in the abstract — it is more concrete: sta
 
 Nobel laureate Daniel Kahneman famously used this gamble to illustrate what he called "loss aversion bias":
 
-> "You are offered a fair coin flip. Tails: you lose \$100. Heads: you win \$110. Would you take it?"
+"You are offered a fair coin flip. Tails: you lose \$100. Heads: you win \$110. Would you take it?"
 
 Most people refuse. Kahneman called this irrational — the expected gain is $5.
 
