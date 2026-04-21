@@ -443,8 +443,6 @@ halflife = -log(2) / theta
 
 This means: after entering a spread trade, you should expect to hold it for roughly 7–10 trading days before the spread has reverted about halfway back to its mean. This is your natural holding period estimate — derived mathematically from the data, not guessed from a backtest of individual trades.
 
-Code files: [example7_5.m](http://epchan.com/book/example7_5.m) · [example7_5.ipynb](http://epchan.com/book/example7_5.ipynb) · [example7_5.R](http://epchan.com/book/example7_5.R)
-
 <div class="ex-lesson"><strong>Takeaway:</strong> The half-life calculated from the Ornstein-Uhlenbeck formula is far more statistically robust than trying to infer holding period from the limited number of actual trades in your backtest. It uses all the historical data, not just the subset of days when a trade was triggered.</div>
 </div>
 
@@ -597,34 +595,7 @@ If you want more return, you could either apply more leverage to a low-risk port
 
 ## Term Glossary
 
-Plain-English definitions for every key term introduced in Chapter 7.
-
-### Strategy Types
-
-<div class="glossary-entry">
-<div class="gterm">Mean reversion <span class="gcat cat-strategy">Strategy</span></div>
-The tendency of a price or spread to bounce back toward its historical average after moving unusually far away. Mean-reversion strategies buy when something is unusually cheap relative to its norm and sell when it is unusually expensive, betting on the snap-back. Works best for spreads between cointegrated pairs. Does NOT work well with stop losses — stop losses exit at exactly the wrong moment (when the price is furthest from mean, right before reversion).
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Momentum <span class="gcat cat-strategy">Strategy</span></div>
-The tendency of prices to keep moving in the same direction once they have started. Momentum strategies buy what is rising and short what is falling. Driven by slow information diffusion, large institutional order execution, or herd behaviour. The optimal holding period for momentum strategies tends to shorten over time as information spreads faster and more traders exploit the pattern.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Regime <span class="gcat cat-strategy">Strategy</span></div>
-A period during which the market exhibits a consistent behavioural pattern — such as trending, mean-reverting, high-volatility, or low-volatility. A bull market is a regime. The August 2007 quant meltdown was a brief liquidity regime. Strategy parameters that work well in one regime often work poorly in another, which is the core problem that CPO tries to solve.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Pair trading <span class="gcat cat-strategy">Strategy</span></div>
-A market-neutral strategy that buys one security and shorts a related one when their price spread diverges from its historical norm, expecting the spread to revert. Requires the pair to be cointegrated (not just correlated) for the mean reversion to be mathematically guaranteed. GLD/GDX is a cointegrated pair. KO/PEP is not.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">PEAD (Post-Earnings Announcement Drift) <span class="gcat cat-strategy">Strategy</span></div>
-A momentum strategy that buys stocks after earnings beat expectations and shorts them after earnings miss — based on the observation that prices continue drifting in the direction of the surprise for weeks after the announcement, as information gradually reaches more investors.
-</div>
+Definitions for every key terms.
 
 ### Statistical Concepts
 
@@ -686,25 +657,15 @@ How sensitive a particular stock is to each factor in a factor model. Found by r
 </div>
 
 <div class="glossary-entry">
-<div class="gterm">PCA (Principal Component Analysis) <span class="gcat cat-model">Model</span></div>
-A mathematical technique that finds the most important patterns in historical data without requiring the analyst to define factors in advance. Applied to stock returns, PCA automatically identifies the directions of maximum variation — producing statistical factors that are uncorrelated by construction. The trade-off: statistical factors may not have obvious economic interpretations, unlike named factors like SMB or HML.
-</div>
-
-<div class="glossary-entry">
 <div class="gterm">CPO (Conditional Parameter Optimization) <span class="gcat cat-model">Model</span></div>
-A machine-learning approach to adapting a trading strategy's parameters to current market conditions. Instead of using fixed parameters or slowly updating them on expanding historical data, CPO predicts every day which combination of parameters will generate the best return tomorrow, given today's market conditions (captured by technical indicators). Uses random forest with boosting as the ML algorithm. Applied to GLD/GDX Bollinger Band strategy, CPO improved annual return from 17.3% to 19.8% and Sharpe from 1.95 to 2.33 out-of-sample. Available via predictnow.ai.
+A machine-learning approach to adapting a trading strategy's parameters to current market conditions. Instead of using fixed parameters or slowly updating them on expanding historical data, CPO predicts every day which combination of parameters will generate the best return tomorrow, given today's market conditions (captured by technical indicators). Uses random forest with boosting as the ML algorithm. Applied to GLD/GDX Bollinger Band strategy, CPO improved annual return from 17.3% to 19.8% and Sharpe from 1.95 to 2.33 out-of-sample.
 </div>
 
 ### Exit Strategies
 
 <div class="glossary-entry">
 <div class="gterm">Fixed holding period <span class="gcat cat-exit">Exit</span></div>
-The simplest exit strategy: hold every trade for a pre-set number of days (or hours, or minutes) and then close it regardless of profit or loss. For mean-reverting strategies, the optimal holding period is typically the half-life of mean reversion calculated from the OU formula. For momentum strategies, it is found by backtesting — but tends to shorten over time as the market becomes more efficient.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Target price <span class="gcat cat-exit">Exit</span></div>
-An exit signal that closes a position when the price reaches a pre-defined level. For mean-reverting strategies, the natural target price is the historical mean (μ in the OU formula). When the spread reverts to its mean, the trade has achieved its objective and should be closed. For momentum strategies, target prices require a fundamental valuation model and are therefore less reliable.
+The simplest exit strategy: hold every trade for a pre-set number of days (or hours, or minutes) and then close it regardless of profit or loss. For mean-reverting strategies, the optimal holding period is typically the half-life of mean reversion calculated from the OU formula.
 </div>
 
 <div class="glossary-entry">
@@ -721,7 +682,7 @@ A historically observed seasonal pattern where small-cap stocks that fell the mo
 
 <div class="glossary-entry">
 <div class="gterm">Commodity futures seasonal trade <span class="gcat cat-seasonal">Seasonal</span></div>
-A strategy that buys or sells a commodity futures contract at a specific time of year and closes the position at another specific time, based on recurring real-world demand patterns. Unlike equity seasonal strategies (which are driven by investor psychology and can be arbitraged away), commodity seasonal strategies are driven by genuine physical demand cycles that persist because the underlying demand is real. Examples: gasoline futures rising in spring (summer driving); natural gas futures rising before summer air conditioning season.
+A strategy that buys or sells a commodity futures contract at a specific time of year and closes the position at another specific time, based on recurring real-world demand patterns. 
 </div>
 
 <div class="glossary-entry">
