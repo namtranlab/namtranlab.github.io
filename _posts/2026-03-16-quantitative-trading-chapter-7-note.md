@@ -287,9 +287,7 @@ p-value: 0.005
 Hedge ratio: 1.631
 ```
 
-MATLAB and R agree: GLD and GDX are cointegrated. The stationary spread is shown in Figure 7.2 — it bounces around a stable mean without drifting away.
-
-Code files: [example7_2.m](http://epchan.com/book/example7_2.m) · [example7_2.ipynb](http://epchan.com/book/example7_2.ipynb) · [example7_2.R](http://epchan.com/book/example7_2.R)
+GLD and GDX are cointegrated. The stationary spread is shown in Figure 7.2 — it bounces around a stable mean without drifting away.
 
 <div class="ex-lesson"><strong>Takeaway:</strong> Always use a formal statistical test for cointegration — do not assume that stocks in the same industry are cointegrated just because they seem related. And when Python and MATLAB disagree on a statistical result, trust MATLAB (which has professionally verified statistical libraries) over Python's free, community-maintained packages.</div>
 </div>
@@ -364,8 +362,6 @@ Financial commentators often say things like "the market is favouring value stoc
 </div>
 
 The strategy generates positive returns but they are modest — and this is before transaction costs. The difference in results between MATLAB and Python/R are due to rounding differences in the PCA implementation, not a fundamental disagreement.
-
-Code files: [example7_4.m](http://epchan.com/book/example7_4.m) · [example7_4.py](http://epchan.com/book/example7_4.py) · [example7_4.R](http://epchan.com/book/example7_4.R)
 
 <div class="ex-lesson"><strong>Takeaway:</strong> PCA factor models work in the right conditions — when factor returns genuinely have momentum from one day to the next. But they cannot capture mean reversion (which requires factor exposures that change with recent price moves) and are sensitive to regime shifts where the factors' momentum breaks down.</div>
 </div>
