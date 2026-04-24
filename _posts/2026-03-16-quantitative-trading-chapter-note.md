@@ -1,6 +1,6 @@
 ---
 layout: distill
-title: "Quantitative Trading — Complete Study Notes (Ch. 2, 3, 5, 6, 7)"
+title: "Quantitative Trading — Complete Study Notes"
 description: Study notes for Chapters 2, 3, 5, 6, and 7 of Quantitative Trading (2nd Ed.) by Ernest P. Chan. Each chapter is collapsible — click any chapter title to expand or collapse it.
 tags: Finance Quant Trading Notes
 giscus_comments: true
@@ -116,7 +116,7 @@ function toggleChapter(id) {
     </div>
     <span class="chapter-arrow" id="ch2-arrow">▼</span>
   </button>
-  <div class="chapter-body" id="ch2-body">
+  <div class="chapter-body" id="ch2-body" markdown="1">
 
 ### Section 1 — Core Thesis & Idea Sources
 
@@ -475,7 +475,7 @@ A distortion in historical databases that include only stocks surviving to the p
     </div>
     <span class="chapter-arrow" id="ch3-arrow">▼</span>
   </button>
-  <div class="chapter-body" id="ch3-body">
+  <div class="chapter-body" id="ch3-body" markdown="1">
 
 ### Section 1 — What Is Backtesting and Why Should You Do It Yourself?
 
@@ -868,7 +868,7 @@ Whether your strategy places trades at the start of the day (market open) or the
     </div>
     <span class="chapter-arrow" id="ch5-arrow">▼</span>
   </button>
-  <div class="chapter-body" id="ch5-body">
+  <div class="chapter-body" id="ch5-body" markdown="1">
 
 ### Section 1 — What Does an Automated Trading System Actually Do?
 
@@ -1123,7 +1123,7 @@ A legal contract where the other party (e.g., a programming consultant) agrees n
     </div>
     <span class="chapter-arrow" id="ch6-arrow">▼</span>
   </button>
-  <div class="chapter-body" id="ch6-body">
+  <div class="chapter-body" id="ch6-body" markdown="1">
 
 ### Section 1 — The Core Question — How Much Should You Bet?
 
@@ -1645,7 +1645,7 @@ The ensemble average asks: "What is the average outcome across many traders play
     </div>
     <span class="chapter-arrow" id="ch7-arrow">▼</span>
   </button>
-  <div class="chapter-body" id="ch7-body">
+  <div class="chapter-body" id="ch7-body" markdown="1">
 
 ### Section 1 — Mean Reversion vs. Momentum — Which Way Will the Price Go?
 
