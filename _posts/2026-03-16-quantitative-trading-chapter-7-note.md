@@ -224,8 +224,6 @@ Markets shift between different "regimes" — periods when mean reversion works 
 
 Every performance metric improved with CPO. The machine learning step adds roughly 2-3% annual return and meaningfully improves the risk-adjusted profile.
 
-The PredictNow.ai API (predictnow.ai) provides the ML prediction service used in this example. Sample code is available in the book.
-
 <div class="ex-lesson"><strong>Takeaway:</strong> The key insight is that CPO is predicting the performance of your own strategy's parameters — not predicting gold's price directly. That is a much harder problem for competitors to arbitrage away, and it is why CPO tends to work when generic ML applied to price prediction does not.</div>
 </div>
 
@@ -257,8 +255,6 @@ Pair trading works because some pairs of stocks do not diverge forever — their
 | **Time horizon** | Short-term (day by day) | Long-term (months to years) |
 | **What it guarantees** | Nothing about where prices end up | That the weighted spread won't drift away forever |
 | **Useful for** | Risk management, beta hedging | Pair trading — finding mean-reverting spreads |
-| **KO vs. PEP** | Correlation = 0.48 (statistically significant) | Not cointegrated — prices drift apart |
-| **GLD vs. GDX** | Some correlation | Cointegrated — spread stays stationary |
 
 ### Examples from the book
 
