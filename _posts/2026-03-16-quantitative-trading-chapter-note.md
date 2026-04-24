@@ -1,6 +1,6 @@
 ---
 layout: distill
-title: "Quantitative Trading — Complete Study Notes"
+title: "Quantitative Trading — Study Notes"
 description: Study notes for Chapters 2, 3, 5, 6, and 7 of Quantitative Trading (2nd Ed.) by Ernest P. Chan. Click any chapter title to expand or collapse it.
 tags: Finance Quant Trading Notes
 giscus_comments: true
@@ -87,10 +87,6 @@ _styles: >
   td { padding: 7px 10px; border: 1px solid #ddd; vertical-align: top; }
 
 ---
-
-> **Book:** *Quantitative Trading* (2nd Ed.) — Ernest P. Chan
->
-> This page combines study notes for Chapters 2, 3, 5, 6, and 7. Each chapter is **collapsed by default** — click a chapter title to expand or collapse it.
 
 <script>
 function toggleChapter(id) {
