@@ -114,11 +114,8 @@ function toggleChapter(id) {
   </button>
   <div class="chapter-body" id="s11-body" markdown="1">
 
-<!-- ══════════════════════════════════════
-     CHANGE 1 — Notation-at-a-glance panel
-     ══════════════════════════════════════ -->
 
-<div class="notation-panel">
+
 <div class="np-title">§ 1.1 — Notation at a Glance</div>
 
 | Symbol | Reads as | Meaning |
@@ -138,7 +135,7 @@ function toggleChapter(id) {
 | μ ≪ P | "mu absolutely continuous w.r.t. P" | Every P-null set is also a μ-null set |
 | S_n | | Partial sum X₁ + X₂ + ⋯ + Xₙ |
 
-</div>
+
 
 ---
 
