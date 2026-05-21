@@ -178,7 +178,7 @@ iii. $A_1, A_2, \ldots \in \mathcal{F}$ implies $\bigcup_{n=1}^{\infty} A_n \in 
 This defines the three $\sigma$-algebra axioms. (i) The empty set — the impossible event — must be an event. (ii) If A is observable, so is its complement: "A did not happen" must also be observable. (iii) Countable unions of events are events: "at least one of $A_1, A_2, \ldots$ happened" is observable. These three rules make $\mathcal{F}$ a self-consistent collection of questions we can ask about the experiment.
 
 <div class="example-block" markdown="1">
-<div class="ex-title">Minimal example: two fair coin flips <span class="ex-pill pill-ex">Example</span></div>
+<div class="ex-title">Minimal example: two fair coin flips </div>
 
 **Sample space:** $\Omega = \{HH, HT, TH, TT\}$
 
@@ -205,21 +205,22 @@ $\mathcal{F}_1$ lets us distinguish "first flip = H" from "first flip = T" — n
 A filtration is a growing sequence of σ-algebras modelling information accumulating over time. At time n, F_n records everything observed up to time n — and once something is known it is never forgotten.
 </div>
 
-<div class="orig-quote">"Let $X_1, X_2, \ldots$ be random variables which we think of as a time series with the data arriving one at a time. At time n we have viewed the values $X_1, \ldots, X_n$. … We will write $\mathcal{F}_n$ for 'the information contained in $X_1, \ldots, X_n$'."</div>
-<div class="quote-explain">$\mathcal{F}_n$ is not a number or a random variable — it is a $\sigma$-algebra: a collection of events. "Information in $X_1,\ldots,X_n$" means all questions of the form "did the observations satisfy some condition?" that can be answered once $X_1,\ldots,X_n$ are known.</div>
+"Let $X_1, X_2, \ldots$ be random variables which we think of as a time series with the data arriving one at a time. At time n we have viewed the values $X_1, \ldots, X_n$. … We will write $\mathcal{F}_n$ for 'the information contained in $X_1, \ldots, X_n$'."<br>
 
-<div class="orig-quote">"The information $\mathcal{F}_n$ is the smallest sub $\sigma$-algebra G of $\mathcal{F}$ such that $X_1, \ldots, X_n$ are G-measurable. The latter statement means that for all $t \in \mathbb{R}$, the event $\{X_j \leq t\} \in \mathcal{F}_n$."</div>
-<div class="quote-explain">"$X_j$ is $\mathcal{F}_n$-measurable" means: for every threshold t, the set of outcomes where $X_j \leq t$ is an event in $\mathcal{F}_n$. Knowing $X_1,\ldots,X_n$ is enough to determine $X_j$. The word "smallest" is important — we take only events genuinely required to describe $X_1,\ldots,X_n$, not any extras.</div>
+$\mathcal{F}_n$ is not a number or a random variable — it is a $\sigma$-algebra: a collection of events. "Information in $X_1,\ldots,X_n$" means all questions of the form "did the observations satisfy some condition?" that can be answered once $X_1,\ldots,X_n$ are known.<br>
 
-<!-- CHANGE 3 — Misconception block for measurability -->
+"The information $\mathcal{F}_n$ is the smallest sub $\sigma$-algebra G of $\mathcal{F}$ such that $X_1, \ldots, X_n$ are G-measurable. The latter statement means that for all $t \in \mathbb{R}$, the event $\{X_j \leq t\} \in \mathcal{F}_n$."<br>
+
+"$X_j$ is $\mathcal{F}_n$-measurable" means: for every threshold t, the set of outcomes where $X_j \leq t$ is an event in $\mathcal{F}_n$. Knowing $X_1,\ldots,X_n$ is enough to determine $X_j$. The word "smallest" is important — we take only events genuinely required to describe $X_1,\ldots,X_n$, not any extras.
+
 <div class="misconception-block">
   <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label">Common Misconception</span></div>
   <div class="mc-wrong"><strong>Wrong:</strong> "$X$ is $\mathcal{F}_n$-measurable just means $X$ is one of the variables $X_1,\ldots,X_n$."</div>
   <div class="mc-correct"><strong>Correct:</strong> Any function of $X_1,\ldots,X_n$ is also $\mathcal{F}_n$-measurable — e.g., $X_1 + X_2$, $\max(X_1,\ldots,X_n)$, or $S_n^2$. The condition is that X's value is fully determined once $X_1,\ldots,X_n$ are known, not that X appears explicitly in the list.</div>
 </div>
 
-<div class="example-block">
-<div class="ex-title">Filtration on two coin flips <span class="ex-pill pill-ex">Example</span></div>
+<div class="example-block" markdown="1">
+<div class="ex-title">Filtration on two coin flips </div>
 
 $\Omega = \{HH, HT, TH, TT\}$. Let $X_1 =$ result of flip 1 (H=1, T=0), $X_2 =$ result of flip 2.
 
@@ -242,14 +243,14 @@ The chain: **$\mathcal{F}_0 \subseteq \mathcal{F}_1 \subseteq \mathcal{F}_2$** �
 Before giving the abstract definition, Lawler derives it in the familiar setting of joint densities. This motivates why the abstract definition takes the form it does.
 </div>
 
-<div class="orig-quote">"Suppose that (X, Y) have a joint density f(x, y), 0 &lt; x, y &lt; ∞, with marginal densities f(x) = ∫ f(x,y)dy, g(y) = ∫ f(x,y)dx. The conditional density f(y|x) is defined by f(y|x) = f(x,y)/f(x)."</div>
+"Suppose that (X, Y) have a joint density f(x, y), 0 &lt; x, y &lt; ∞, with marginal densities f(x) = ∫ f(x,y)dy, g(y) = ∫ f(x,y)dx. The conditional density f(y|x) is defined by f(y|x) = f(x,y)/f(x)."
 <div class="quote-explain">f(x,y) is the joint probability density near (x,y). f(x) is the marginal density of X — the probability near x regardless of Y, obtained by integrating out all y-values. f(y|x) is the relative weight on each y-value given X = x. Division by f(x) normalises so that f(y|x) integrates to 1 over y.</div>
 
 This gives the familiar undergraduate formula:
 
 $$E[Y \mid X = x] = \int_{-\infty}^{\infty} y\, f(y \mid x)\, dy = \frac{\int_{-\infty}^{\infty} y\, f(x,y)\, dy}{f(x)}$$
 
-<div class="orig-quote">"Note that E[Y | X] is a random variable which is determined by the value of the random variable X."</div>
+"Note that E[Y | X] is a random variable which is determined by the value of the random variable X."
 <div class="quote-explain">E[Y | X = x] for a fixed x is a number. But E[Y | X] — without fixing x — is a function of X. Since X is random, this function is itself random. This is the key conceptual leap the formal definition must capture.</div>
 
 **The tower property emerges naturally:**
@@ -265,7 +266,7 @@ Averaging the conditional best-guess over all possible observations recovers the
 <div class="example-block">
 <div class="ex-title">Definition — Conditional Expectation E[Y | F_n] <span class="ex-pill pill-defn">Definition</span></div>
 
-<div class="orig-quote">"The conditional expectation $E[Y \\mid \\mathcal{F}_n]$ is the unique random variable satisfying the following. (i) $E[Y \\mid \\mathcal{F}_n]$ is $\\mathcal{F}_n$-measurable. (ii) For every $\\mathcal{F}_n$-measurable event A, $E[E[Y \\mid \\mathcal{F}_n] \\cdot \\mathbf{1}_A] = E[Y \\cdot \\mathbf{1}_A]$."</div>
+"The conditional expectation $E[Y \mid \mathcal{F}_n]$ is the unique random variable satisfying the following. (i) $E[Y \mid \mathcal{F}_n]$ is $\mathcal{F}_n$-measurable. (ii) For every $\mathcal{F}_n$-measurable event A, $E[E[Y \mid \mathcal{F}_n] \cdot \mathbf{1}_A] = E[Y \cdot \mathbf{1}_A]$."
 <div class="quote-explain">Condition (i): the output is computable from $X_1,\ldots,X_n$ alone — it cannot use future information. Condition (ii): on every slice of $\Omega$ that can be identified from current information (any $A \in \\mathcal{F}_n$), the average of $E[Y|\\mathcal{F}_n]$ over that slice equals the average of Y over the same slice. These two conditions uniquely determine $E[Y|\\mathcal{F}_n]$ without requiring a closed-form formula.</div>
 
 **What is $\mathbf{1}_A$?**
@@ -291,7 +292,7 @@ So $E[Z \cdot \mathbf{1}_A]$ = probability-weighted average of Z over outcomes w
 <div class="example-block">
 <div class="ex-title">Proposition 1.1.1 — Five key properties <span class="ex-pill pill-prop">Proposition</span></div>
 
-<div class="orig-quote">"Proposition 1.1.1. Suppose X₁, X₂, … is a sequence of random variables and F_n denotes the information at time n. The conditional expectation E[Y | F_n] satisfies the following properties."</div>
+"Proposition 1.1.1. Suppose X₁, X₂, … is a sequence of random variables and F_n denotes the information at time n. The conditional expectation E[Y | F_n] satisfies the following properties."
 <div class="quote-explain">All five properties are consequences of the two defining conditions — not additional assumptions. Lawler proves linearity and the constants rule explicitly in the text; the others follow by analogous arguments using the definition.</div>
 
 ---
@@ -507,7 +508,7 @@ $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n
 <div class="example-block">
 <div class="ex-title">Definition — Discrete-time filtration <span class="ex-pill pill-defn">Definition</span></div>
 
-<div class="orig-quote">"Definition If $X_1, X_2, \\ldots$ is a sequence of random variables, then the associated (discrete time) filtration is the collection $\\{\\mathcal{F}_n\\}$ where $\\mathcal{F}_n$ denotes the information in $X_1, \\ldots, X_n$. One assumption in the definition of a filtration, which may sometimes not reflect reality, is that information is never lost. If m &lt; n, then everything known at time m is still known at time n."</div>
+"Definition If $X_1, X_2, \ldots$ is a sequence of random variables, then the associated (discrete time) filtration is the collection $\{\mathcal{F}_n\}$ where $\mathcal{F}_n$ denotes the information in $X_1, \ldots, X_n$. One assumption in the definition of a filtration, which may sometimes not reflect reality, is that information is never lost. If m &lt; n, then everything known at time m is still known at time n."
 <div class="quote-explain">The key mathematical consequence of "information is never lost" is the set inclusion $\\mathcal{F}_m \\subseteq \\mathcal{F}_n$ for all $m &lt; n$. Every event in $\\mathcal{F}_m$ is also in $\\mathcal{F}_n$. This is not a philosophical claim — it is a precise constraint that the sequence of $\\sigma$-algebras must satisfy to qualify as a filtration.</div>
 
 **Formally:** A filtration is an increasing sequence of $\\sigma$-algebras:
