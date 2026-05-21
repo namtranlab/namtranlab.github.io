@@ -246,6 +246,62 @@ Hence $X$ is $\mathcal{F}$-measurable.
 </div>
 </div>
 
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Example of a non-measurable function</div>
+
+Let $\Omega=\{\omega_1,\omega_2,\omega_3\}$ and consider the same $\sigma$-algebra
+$\mathcal{F}=\{\emptyset,\Omega,\{\omega_1,\omega_2\},\{\omega_3\}\}$.
+
+Define the function
+$Y(\omega_1)=0,\; Y(\omega_2)=1,\; Y(\omega_3)=0$.
+
+Now check measurability.
+
+Consider the event
+$\{Y\le 0\}=\{\omega_1,\omega_3\}$.
+
+But $\{\omega_1,\omega_3\}\notin\mathcal{F}$.
+
+Hence $Y$ is not $\mathcal{F}$-measurable.
+
+<div class="ex-lesson">
+<strong>Key point:</strong> The $\sigma$-algebra $\mathcal{F}$ cannot distinguish $\omega_1$ from $\omega_2$ in a way consistent with $Y$. Since $Y$ separates these outcomes differently while $\mathcal{F}$ does not, the function is “too fine” for the available information structure.
+</div>
+</div>
+
+
+<div class="example-block" markdown="1">
+<div class="ex-title">$F_n$-measurable random variable (information determines value)</div>
+
+Let $\Omega=\{\omega_1,\omega_2,\omega_3,\omega_4\}$.
+
+Define a filtration (information structure):
+$F_1=\{\emptyset,\Omega,\{\omega_1,\omega_2\},\{\omega_3,\omega_4\}\}$.
+
+Define the random variable $X_1$:
+$X_1(\omega_1)=0,\; X_1(\omega_2)=0,\; X_1(\omega_3)=1,\; X_1(\omega_4)=1$.
+
+Now check measurability with respect to $F_1$.
+
+For $t=0$,
+$\{X_1\le 0\}=\{\omega_1,\omega_2\}\in F_1$.
+
+For $t=0.5$,
+$\{X_1\le 0.5\}=\{\omega_1,\omega_2\}\in F_1$.
+
+For $t=2$,
+$\{X_1\le 2\}=\Omega\in F_1$.
+
+Hence $X_1$ is $F_1$-measurable.
+
+<div class="ex-lesson">
+<strong>Key point:</strong>
+Knowing $F_1$ means we know exactly whether the outcome lies in $\{\omega_1,\omega_2\}$ or $\{\omega_3,\omega_4\}$.
+Since $X_1$ takes a constant value on each of these blocks, the value of $X_1$ is completely determined by the information in $F_1$.
+</div>
+</div>
+
 ---
 
 ### Part 4 — Motivating the Definition (Density Case)
