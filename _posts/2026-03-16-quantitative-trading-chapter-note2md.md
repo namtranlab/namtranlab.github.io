@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: "Stochastic Calculus — Study Notes"
-description: Study notes for Lawler's Stochastic Calculus: An Introduction with Applications. Chapter 1 — Martingales in Discrete Time.
+description: Study notes for Lawler's Stochastic Calculus; An Introduction with Applications. Chapter 1 — Martingales in Discrete Time.
 tags: Stochastic Calculus
 giscus_comments: true
 date: 2026-03-24
