@@ -205,13 +205,13 @@ $\mathcal{F}_1$ lets us distinguish "first flip = H" from "first flip = T" — n
 A filtration is a growing sequence of σ-algebras modelling information accumulating over time. At time n, F_n records everything observed up to time n — and once something is known it is never forgotten.
 </div>
 
-"Let $X_1, X_2, \ldots$ be random variables which we think of as a time series with the data arriving one at a time. At time n we have viewed the values $X_1, \ldots, X_n$. … We will write $\mathcal{F}_n$ for 'the information contained in $X_1, \ldots, X_n$'."<br>
+"Let $X_1, X_2, \ldots$ be random variables which we think of as a time series with the data arriving one at a time. At time $n$ we have viewed the values $X_1, \ldots, X_n$. … We will write $\mathcal{F}_n$ for 'the information contained in $X_1, \ldots, X_n$."<br>
 
 $\mathcal{F}_n$ is not a number or a random variable — it is a $\sigma$-algebra: a collection of events. "Information in $X_1,\ldots,X_n$" means all questions of the form "did the observations satisfy some condition?" that can be answered once $X_1,\ldots,X_n$ are known.<br>
 
-"The information $\mathcal{F}_n$ is the smallest sub $\sigma$-algebra G of $\mathcal{F}$ such that $X_1, \ldots, X_n$ are G-measurable. The latter statement means that for all $t \in \mathbb{R}$, the event $\{X_j \leq t\} \in \mathcal{F}_n$."<br>
+"The information $\mathcal{F}_n$ is the smallest sub $\sigma$-algebra $G$ of $\mathcal{F}$ such that $X_1, \ldots, X_n$ are $G$-measurable. The latter statement means that for all $t \in \mathbb{R}$, the event $\{X_j \leq t\} \in \mathcal{F}_n$."<br>
 
-"$X_j$ is $\mathcal{F}_n$-measurable" means: for every threshold t, the set of outcomes where $X_j \leq t$ is an event in $\mathcal{F}_n$. Knowing $X_1,\ldots,X_n$ is enough to determine $X_j$. The word "smallest" is important — we take only events genuinely required to describe $X_1,\ldots,X_n$, not any extras.
+"$X_j$ is $\mathcal{F}_n$-measurable" means: for every threshold $t$, the set of outcomes where $X_j \leq t$ is an event in $\mathcal{F}_n$. Knowing $X_1,\ldots,X_n$ is enough to determine $X_j$. The word "smallest" is important — we take only events genuinely required to describe $X_1,\ldots,X_n$, not any extras.
 
 <div class="misconception-block">
   <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label">Common Misconception</span></div>
@@ -220,19 +220,30 @@ $\mathcal{F}_n$ is not a number or a random variable — it is a $\sigma$-algebr
 </div>
 
 <div class="example-block" markdown="1">
-<div class="ex-title">Filtration on two coin flips </div>
+<div class="ex-title">Measurable random variable on a finite space</div>
 
-$\Omega = \{HH, HT, TH, TT\}$. Let $X_1 =$ result of flip 1 (H=1, T=0), $X_2 =$ result of flip 2.
+Let $\Omega=\{\omega_1,\omega_2,\omega_3\}$ and define the $\sigma$-algebra
+$\mathcal{F}=\{\emptyset,\Omega,\{\omega_1,\omega_2\},\{\omega_3\}\}$.
 
-**$\mathcal{F}_0$** = $\{\emptyset, \Omega\}$ — no observation; we cannot distinguish any outcomes.
+Define the random variable
+$X(\omega_1)=0,\; X(\omega_2)=0,\; X(\omega_3)=1$.
 
-**$\mathcal{F}_1$** = $\sigma(X_1) = \{\emptyset, \{HH,HT\}, \{TH,TT\}, \Omega\}$ — we see flip 1 only.
+To check measurability, verify that
+$\{X\le t\}\in\mathcal{F}\quad \forall t\in\mathbb{R}$.
 
-**$\mathcal{F}_2$** = $\sigma(X_1, X_2) = 2^\Omega$ — we see both flips; every subset is distinguishable.
+For example:
 
-The chain: **$\mathcal{F}_0 \subseteq \mathcal{F}_1 \subseteq \mathcal{F}_2$** — information never shrinks.
+$\{X\le 0\}=\{\omega_1,\omega_2\}\in\mathcal{F}$,
 
-<div class="ex-lesson"><strong>Key point:</strong> $\mathcal{F}_n$ is the mathematical formalisation of "what we know at time n." The filtration $(\mathcal{F}_0, \mathcal{F}_1, \mathcal{F}_2, \ldots)$ models how knowledge accumulates step by step.</div>
+$\{X\le 0.5\}=\{\omega_1,\omega_2\}\in\mathcal{F}$,
+
+$\{X\le 2\}=\Omega\in\mathcal{F}$.
+
+Hence $X$ is $\mathcal{F}$-measurable.
+
+<div class="ex-lesson">
+<strong>Key point:</strong> A random variable is measurable if the information structure $\mathcal{F}$ can distinguish exactly the events needed to determine its value. Here, $\mathcal{F}$ separates $\omega_3$ from $\{\omega_1,\omega_2\}$, which is exactly what $X$ depends on.
+</div>
 </div>
 
 ---
