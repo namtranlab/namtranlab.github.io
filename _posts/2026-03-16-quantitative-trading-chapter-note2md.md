@@ -223,7 +223,11 @@ $\mathcal{F}_n$ is not a number or a random variable — it is a $\sigma$-algebr
 <div class="ex-title">Measurable random variable on a finite space</div>
 
 Let $\Omega=\{\omega_1,\omega_2,\omega_3\}$ and define the $\sigma$-algebra
-$\mathcal{F}=\{\emptyset,\Omega,\{\omega_1,\omega_2\},\{\omega_3\}\}$.
+$\mathcal{F}=\{\emptyset, \Omega, \{\omega_1,\omega_2\}, \{\omega_3\}\}$.
+
+
+<!-- $$\mathcal{F}_1 = \{ \emptyset, \quad \{HH, HT\}, \quad \{TH, TT\}, \quad \Omega \}$$ -->
+
 
 Define the random variable
 $X(\omega_1)=0,\; X(\omega_2)=0,\; X(\omega_3)=1$.
