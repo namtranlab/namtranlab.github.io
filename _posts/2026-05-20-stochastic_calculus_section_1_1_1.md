@@ -6,6 +6,7 @@ tags: Mathematics Probability Stochastic-Calculus Martingales Notes
 giscus_comments: true
 date: 2026-05-18
 featured: true
+thumbnail: https://m.media-amazon.com/images/I/51s4givoDeL._SY445_SX342_ML2_.jpg
 
 authors:
   - name: Nam Tran
