@@ -156,7 +156,7 @@ Conditional expectation is the central object of stochastic calculus. At its cor
 <div class="key-idea"><strong>The formal definition bypasses explicit computation via one key property.</strong> $E[Y \mid \mathcal{F}_n]$ is defined as the unique $\mathcal{F}_n$-measurable random variable satisfying $E[E[Y \mid \mathcal{F}_n] \cdot \mathbf{1}_A] = E[Y \cdot \mathbf{1}_A]$ for all $\mathcal{F}_n$-measurable events A.</div>
 
 <div class="misconception-block">
-  <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label">Common Misconception</span></div>
+  <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception</b></span></div>
   <div class="mc-wrong"><strong>Wrong:</strong> "$E[Y \mid \mathcal{F}_n]$ is just a number, like $E[Y]$ but computed with less data."</div>
   <div class="mc-correct"><strong>Correct:</strong> $E[Y \mid \mathcal{F}_n]$ is a <em>random variable</em>. Its value changes depending on which values $X_1, \ldots, X_n$ take. If you observe different data, you get a different conditional expectation. $E[Y]$ is the special case where zero data is observed — a single fixed number. $E[Y \mid \mathcal{F}_n]$ is a whole function of the observations.</div>
 </div>
@@ -186,7 +186,7 @@ This defines the three $\sigma$-algebra axioms. (i) The empty set — the imposs
 
 **A smaller valid $\sigma$-algebra** encoding only the first flip:
 
-$$\mathcal{F}_1 = \{ \emptyset, \quad \{HH, HT\}, \quad \{TH, TT\}, \quad \Omega \}$$
+$$\mathcal{F}_1 = \{ \emptyset, \{HH, HT\}, \{TH, TT\}, \Omega \}$$
 
 - $\emptyset \in \mathcal{F}_1$ ✓ &emsp;(axiom i)
 - $\{HH,HT\}^c = \{TH,TT\} \in \mathcal{F}_1$ ✓ &emsp;(axiom ii)
@@ -214,7 +214,7 @@ $\mathcal{F}_n$ is not a number or a random variable — it is a $\sigma$-algebr
 "$X_j$ is $\mathcal{F}_n$-measurable" means: for every threshold $t$, the set of outcomes where $X_j \leq t$ is an event in $\mathcal{F}_n$. Knowing $X_1,\ldots,X_n$ is enough to determine $X_j$. The word "smallest" is important — we take only events genuinely required to describe $X_1,\ldots,X_n$, not any extras.
 
 <div class="misconception-block">
-  <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label">Common Misconception</span></div>
+  <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception</b></span></div>
   <div class="mc-wrong"><strong>Wrong:</strong> "$X$ is $\mathcal{F}_n$-measurable just means $X$ is one of the variables $X_1,\ldots,X_n$."</div>
   <div class="mc-correct"><strong>Correct:</strong> Any function of $X_1,\ldots,X_n$ is also $\mathcal{F}_n$-measurable — e.g., $X_1 + X_2$, $\max(X_1,\ldots,X_n)$, or $S_n^2$. The condition is that X's value is fully determined once $X_1,\ldots,X_n$ are known, not that X appears explicitly in the list.</div>
 </div>
@@ -224,10 +224,6 @@ $\mathcal{F}_n$ is not a number or a random variable — it is a $\sigma$-algebr
 
 Let $\Omega=\{\omega_1,\omega_2,\omega_3\}$ and define the $\sigma$-algebra
 $$\mathcal{F}=\{\emptyset, \Omega, \{\omega_1,\omega_2\}, \{\omega_3\}\}$$.
-
-
-<!-- $$\mathcal{F}_1 = \{ \emptyset, \quad \{HH, HT\}, \quad \{TH, TT\}, \quad \Omega \}$$ -->
-
 
 Define the random variable
 $X(\omega_1)=0,\; X(\omega_2)=0,\; X(\omega_3)=1$.
