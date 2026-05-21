@@ -142,20 +142,19 @@ function toggleChapter(id) {
 ### Part 1 — The Core Intuition
 
 <div class="note-abstract">
-Conditional expectation is the central object of stochastic calculus. Every concept in this book — martingales, Itô integrals, Girsanov's theorem — is built on it. At its core it answers one question: <em>given that we have observed some (but not all) information, what is our best guess for a random variable Y?</em> The answer is not a single number but another random variable — one that changes as our information changes.
+Conditional expectation is the central object of stochastic calculus. At its core it answers one question: <em>given that we have observed some (but not all) information, what is our best guess for a random variable $Y$?</em> The answer is not a single number but another random variable — one that changes as our information changes.
 </div>
 
 #### Core ideas
 
-<div class="key-idea"><strong>E[X] is the best guess for X given no information at all.</strong> The unconditional expectation is the baseline: if you know nothing about the outcome of an experiment, your single best guess (in the mean-squared-error sense) is E[X].</div>
+<div class="key-idea"><strong>$E[Y]$ is the best guess for $Y$ given no information at all.</strong> The unconditional expectation is the baseline: if you know nothing about the outcome of an experiment, your single best guess (in the mean-squared-error sense) is $E[Y]$.</div>
 
 <div class="key-idea"><strong>$E[Y \mid \mathcal{F}_n]$ is the best guess for Y given the information $\mathcal{F}_n$.</strong> As data arrives one variable at a time — $X_1, X_2, \ldots, X_n$ — we collect more information. The conditional expectation updates our best guess for Y using whatever is currently known.</div>
 
-<div class="key-idea"><strong>$E[Y \mid \mathcal{F}_n]$ is itself a random variable, not a fixed number.</strong> Because it depends on the observed values of $X_1, \ldots, X_n$ — which are random — it is a function of those observations, hence random. This is the single most important conceptual shift from undergraduate probability.</div>
+<div class="key-idea"><strong>$E[Y \mid \mathcal{F}_n]$ is itself a random variable, not a fixed number.</strong> Because it depends on the observed values of $X_1, \ldots, X_n$ — which are random — it is a function of those observations, hence random.</div>
 
-<div class="key-idea"><strong>The formal definition bypasses explicit computation via one key property.</strong> Rather than defining $E[Y \mid \mathcal{F}_n]$ by a formula, Lawler defines it as the unique $\mathcal{F}_n$-measurable random variable satisfying $E[E[Y \mid \mathcal{F}_n] \cdot \mathbf{1}_A] = E[Y \cdot \mathbf{1}_A]$ for all $\mathcal{F}_n$-measurable events A. All other properties follow from this.</div>
+<div class="key-idea"><strong>The formal definition bypasses explicit computation via one key property.</strong> $E[Y \mid \mathcal{F}_n]$ is defined as the unique $\mathcal{F}_n$-measurable random variable satisfying $E[E[Y \mid \mathcal{F}_n] \cdot \mathbf{1}_A] = E[Y \cdot \mathbf{1}_A]$ for all $\mathcal{F}_n$-measurable events A.</div>
 
-<!-- CHANGE 3 — Misconception block immediately after the key idea it targets -->
 <div class="misconception-block">
   <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label">Common Misconception</span></div>
   <div class="mc-wrong"><strong>Wrong:</strong> "$E[Y \mid \mathcal{F}_n]$ is just a number, like $E[Y]$ but computed with less data."</div>
@@ -170,12 +169,17 @@ Conditional expectation is the central object of stochastic calculus. Every conc
 Before defining conditional expectation rigorously, we need the underlying mathematical arena: a probability space $(\Omega, \mathcal{F}, P)$. Everything — random variables, events, filtrations — lives inside this structure.
 </div>
 
-<div class="orig-quote">"We assume that the random variables Y, $X_1, X_2, \ldots$ are defined on a probability space $(\Omega, \mathcal{F}, P)$. Here $\mathcal{F}$ is a $\sigma$-algebra or $\sigma$-field of subsets of $\Omega$, that is, a collection of subsets satisfying: $\emptyset \in \mathcal{F}$; $A \in \mathcal{F}$ implies $\Omega \setminus A \in \mathcal{F}$; $A_1, A_2, \ldots \in \mathcal{F}$ implies $\bigcup_{n=1}^{\infty} A_n \in \mathcal{F}$."</div>
-<div class="quote-explain">This defines the three $\sigma$-algebra axioms. (i) The empty set — the impossible event — must be an event. (ii) If A is observable, so is its complement: "A did not happen" must also be observable. (iii) Countable unions of events are events: "at least one of $A_1, A_2, \ldots$ happened" is observable. These three rules make $\mathcal{F}$ a self-consistent collection of questions we can ask about the experiment.</div>
+<div class="orig-quote">"We assume that the random variables Y, $X_1, X_2, \ldots$ are defined on a probability space $(\Omega, \mathcal{F}, P)$. Here $\mathcal{F}$ is a $\sigma$-algebra or $\sigma$-field of subsets of $\Omega$, that is, a collection of subsets satisfying: <br>
 
-#### What is a σ-algebra? — Concrete example
+i. $\emptyset \in \mathcal{F}$
+ii. $A \in \mathcal{F}$ implies $\Omega \setminus A \in \mathcal{F}$ 
+iii. $A_1, A_2, \ldots \in \mathcal{F}$ implies $\bigcup_{n=1}^{\infty} A_n \in \mathcal{F}$."</div><br>
 
-<div class="example-block">
+<div class="quote-explain">This defines the three $\sigma$-algebra axioms. (i) The empty set — the impossible event — must be an event. (ii) If A is observable, so is its complement: "A did not happen" must also be observable. (iii) Countable unions of events are events: "at least one of $A_1, A_2, \ldots$ happened" is observable. These three rules make $\mathcal{F}$ a self-consistent collection of questions we can ask about the experiment.</div><br>
+
+#### What is a $\sigma$-algebra? — Concrete example
+
+<div class="example-block" markdown="1">
 <div class="ex-title">Minimal example: two fair coin flips <span class="ex-pill pill-ex">Example</span></div>
 
 **Sample space:** $\Omega = \{HH, HT, TH, TT\}$
