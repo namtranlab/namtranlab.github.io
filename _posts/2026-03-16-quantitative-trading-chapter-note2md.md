@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: "Stochastic Calculus — Study Notes"
-description: Study notes for Chapters 2, 3, 5, 6, and 7 of Quantitative Trading (2nd Ed.) by Ernest P. Chan. Click any chapter title to expand or collapse it.
+description: Study notes for Lawler Stochastic Calculus (Chapter 1).
 tags: Stochastic Calculus
 giscus_comments: true
 date: 2026-03-24
