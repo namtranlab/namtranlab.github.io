@@ -6,7 +6,7 @@ tags: Stochastic Calculus
 giscus_comments: true
 date: 2026-03-24
 featured: true
-thumbnail: https://m.media-amazon.com/images/I/51s4givoDeL._SY445_SX342_ML2_.jpg
+thumbnail: https://magica.com/_next/image?url=https%3A%2F%2Fimg.youtube.com%2Fvi%2FIBw5a8ByyzY%2Fmaxresdefault.jpg&w=3840&q=75
 
 authors:
   - name: Nam Tran
