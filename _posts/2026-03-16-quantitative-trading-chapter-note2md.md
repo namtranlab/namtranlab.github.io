@@ -169,13 +169,13 @@ Conditional expectation is the central object of stochastic calculus. At its cor
 Before defining conditional expectation rigorously, we need the underlying mathematical arena: a probability space $(\Omega, \mathcal{F}, P)$. Everything — random variables, events, filtrations — lives inside this structure.
 </div>
 
-<div class="orig-quote">"We assume that the random variables Y, $X_1, X_2, \ldots$ are defined on a probability space $(\Omega, \mathcal{F}, P)$. Here $\mathcal{F}$ is a $\sigma$-algebra or $\sigma$-field of subsets of $\Omega$, that is, a collection of subsets satisfying: <br><br>
+"We assume that the random variables Y, $X_1, X_2, \ldots$ are defined on a probability space $(\Omega, \mathcal{F}, P)$. Here $\mathcal{F}$ is a $\sigma$-algebra or $\sigma$-field of subsets of $\Omega$, that is, a collection of subsets satisfying:<br>
 
 i. $\emptyset \in \mathcal{F}$<br>
 ii. $A \in \mathcal{F}$ implies $\Omega \setminus A \in \mathcal{F}$ <br>
-iii. $A_1, A_2, \ldots \in \mathcal{F}$ implies $\bigcup_{n=1}^{\infty} A_n \in \mathcal{F}$."</div>
+iii. $A_1, A_2, \ldots \in \mathcal{F}$ implies $\bigcup_{n=1}^{\infty} A_n \in \mathcal{F}$."<br>
 
-<div class="quote-explain">This defines the three $\sigma$-algebra axioms. (i) The empty set — the impossible event — must be an event. (ii) If A is observable, so is its complement: "A did not happen" must also be observable. (iii) Countable unions of events are events: "at least one of $A_1, A_2, \ldots$ happened" is observable. These three rules make $\mathcal{F}$ a self-consistent collection of questions we can ask about the experiment.</div>
+This defines the three $\sigma$-algebra axioms. (i) The empty set — the impossible event — must be an event. (ii) If A is observable, so is its complement: "A did not happen" must also be observable. (iii) Countable unions of events are events: "at least one of $A_1, A_2, \ldots$ happened" is observable. These three rules make $\mathcal{F}$ a self-consistent collection of questions we can ask about the experiment.
 
 <div class="example-block" markdown="1">
 <div class="ex-title">Minimal example: two fair coin flips <span class="ex-pill pill-ex">Example</span></div>
