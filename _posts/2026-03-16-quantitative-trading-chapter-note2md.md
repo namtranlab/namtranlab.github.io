@@ -255,7 +255,7 @@ Hence $X$ is $\mathcal{F}$-measurable.
 <div class="ex-title">Example of a non-measurable function</div>
 
 Let $\Omega=\{\omega_1,\omega_2,\omega_3\}$ and consider the same $\sigma$-algebra
-$\mathcal{F}=\{\emptyset,\Omega,\{\omega_1,\omega_2\},\{\omega_3\}\}$.
+$$\mathcal{F}=\{\emptyset,\Omega,\{\omega_1,\omega_2\},\{\omega_3\}\}$$
 
 Define the function
 $Y(\omega_1)=0,\; Y(\omega_2)=1,\; Y(\omega_3)=0$.
