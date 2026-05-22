@@ -343,7 +343,7 @@ $$\text{If } Y \text{ is } \mathcal{F}_n\text{-measurable}, \quad E[Y \mid \math
 
 $$m < n \implies E\bigl[\,E[Y \mid \mathcal{F}_n]\;\big|\;\mathcal{F}_m\bigr] = E[Y \mid \mathcal{F}_m].$$
 
-<b>Why:</b> Compute the best guess for Y using information up to time n, then downgrade it to only use information up to time $m < n$. The result is identical to computing the best guess with time-$m$ information directly. The outer (coarser) conditioning always governs the answer.
+<b>Why:</b> Compute the best guess for $Y$ using information up to time $n$, then downgrade it to only use information up to time $m < n$. The result is identical to computing the best guess with time $m$ information directly.
 
 Special case $m = 0$: **$E[E[Y \mid \mathcal{F}_n]] = E[Y]$**.
 
@@ -352,7 +352,7 @@ Special case $m = 0$: **$E[E[Y \mid \mathcal{F}_n]] = E[Y]$**.
 
 $$X_1,\dots,X_n \perp Y \implies E[Y \mid \mathcal{F}_n] = E[Y].$$
 
-<b>Why:</b> If the observations carry zero information about Y, the best guess remains the unconditional mean.
+<b>Why:</b> If the observations carry zero information about $Y$, the best guess remains the unconditional mean.
 
 
 **Property 4 — Linearity**
@@ -366,7 +366,7 @@ $$E[aY + bZ \mid \mathcal{F}_n] = a\,E[Y \mid \mathcal{F}_n] + b\,E[Z \mid \math
 
 $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n] = Z\cdot E[Y \mid \mathcal{F}_n].$$
 
-<b>Why:</b> Z is already determined by current information — it plays the role of a known constant. Only Y carries residual randomness to average over.
+<b>Why:</b> Z is already determined by current information — it plays the role of a known constant. Only $Y$ carries residual randomness to average over.
 
 <div class="misconception-block">
   <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception — Tower Property</b></span></div>
