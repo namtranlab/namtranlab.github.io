@@ -318,18 +318,10 @@ So $E[Z \cdot \mathbf{1}_A]$ = probability-weighted average of Z over outcomes w
 
 **Why not give an explicit formula?** In general probability spaces (uncountable $\Omega$, continuous distributions), no single formula works universally. The two-condition characterisation is both sufficient and rigorous. Existence follows from the Radon-Nikodym theorem; uniqueness from: if $Z_1$ and $Z_2$ both satisfy the conditions then $E[(Z_1 - Z_2)^2] = 0$, so $Z_1 = Z_2$ almost surely.
 
-
-
-<div class="misconception-block">
-  <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception</b></span></div>
-  <div class="mc-wrong"><strong>Wrong:</strong> "$X$ is $\mathcal{F}_n$-measurable just means $X$ is one of the variables $X_1,\ldots,X_n$."</div>
-  <div class="mc-correct"><strong>Correct:</strong> Any function of $X_1,\ldots,X_n$ is also $\mathcal{F}_n$-measurable — e.g., $X_1 + X_2$, $\max(X_1,\ldots,X_n)$, or $S_n^2$. The condition is that X's value is fully determined once $X_1,\ldots,X_n$ are known, not that X appears explicitly in the list.</div>
-</div>
-
 <div class="misconception-block">
   <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception</b></span></div>
   <div class="mc-wrong"><strong>Wrong:</strong> Condition (ii) $E[E[Y \mid \mathcal{F}_n] \cdot \mathbf{1}_A] = E[Y \cdot \mathbf{1}_A]$ is just saying $E[Y \mid \mathcal{F}_n] = Y$ </div>
-  <div class="mc-correct"><strong>Correct:</strong> It says they agree <em>on average over every observable event A</em> — not pointwise. $E[Y \mid \mathcal{F}_n]$ is a smoothed version of $Y$: it preserves the same probability mass on every $\\mathcal{F}_n$-identifiable slice, but replaces $Y$'s within-slice variation with a single average value. The pointwise equality $E[Y \mid \mathcal{F}_n](\\omega) = Y(\\omega)$ only holds when $Y$ is itself $\\mathcal{F}_n$-measurable.</div>
+  <div class="mc-correct"><strong>Correct:</strong> It says they agree <em>on average over every observable event A</em> — not pointwise. $E[Y \mid \mathcal{F}_n]$ is a smoothed version of $Y$: it preserves the same probability mass on every $\mathcal{F}_n$-identifiable slice, but replaces $Y$'s within-slice variation with a single average value. The pointwise equality $E[Y \mid \mathcal{F}_n](\omega) = Y(\omega)$ only holds when $Y$ is itself $\mathcal{F}_n$-measurable.</div>
 </div>
 
 
