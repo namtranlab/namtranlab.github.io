@@ -278,15 +278,15 @@ Hence $Y$ is not $\mathcal{F}$-measurable.
 Before giving the abstract definition, Lawler derives it in the familiar setting of joint densities. This motivates why the abstract definition takes the form it does.
 </div>
 
-"Suppose that (X, Y) have a joint density f(x, y), 0 &lt; x, y &lt; ∞, with marginal densities f(x) = ∫ f(x,y)dy, g(y) = ∫ f(x,y)dx. The conditional density f(y|x) is defined by f(y|x) = f(x,y)/f(x)."
-<div class="quote-explain">f(x,y) is the joint probability density near (x,y). f(x) is the marginal density of X — the probability near x regardless of Y, obtained by integrating out all y-values. f(y|x) is the relative weight on each y-value given X = x. Division by f(x) normalises so that f(y|x) integrates to 1 over y.</div>
+"Suppose that $(X, Y)$ have a joint density $f(x, y)$, $0 < x, y < \infty$, with marginal densities $f(x) = \int f(x,y)\,dy$, $g(y) = \int f(x,y)\,dx$. The conditional density $f(y\mid x)$ is defined by $f(y\mid x) = \frac{f(x,y)}{f(x)}$."
+<div class="quote-explain">$f(x,y)$ is the joint probability density near $(x,y)$. $f(x)$ is the marginal density of $X$ — the probability near $x$ regardless of $Y$, obtained by integrating out all $y$-values. $f(y\mid x)$ is the relative weight on each $y$-value given $X = x$. Division by $f(x)$ normalises so that $f(y\mid x)$ integrates to 1 over $y$.</div>
 
 This gives the familiar undergraduate formula:
 
 $$E[Y \mid X = x] = \int_{-\infty}^{\infty} y\, f(y \mid x)\, dy = \frac{\int_{-\infty}^{\infty} y\, f(x,y)\, dy}{f(x)}$$
 
-"Note that E[Y | X] is a random variable which is determined by the value of the random variable X."
-<div class="quote-explain">E[Y | X = x] for a fixed x is a number. But E[Y | X] — without fixing x — is a function of X. Since X is random, this function is itself random. This is the key conceptual leap the formal definition must capture.</div>
+"Note that $E[Y \mid X]$ is a random variable which is determined by the value of the random variable $X$."
+<div class="quote-explain">$E[Y \mid X = x]$ for a fixed $x$ is a number. But $E[Y \mid X]$ — without fixing $x$ — is a function of $X$. Since $X$ is random, this function is itself random. This is the key conceptual leap the formal definition must capture.</div>
 
 **The tower property emerges naturally:**
 
