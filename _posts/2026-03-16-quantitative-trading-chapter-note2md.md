@@ -343,7 +343,7 @@ $$\text{If } Y \text{ is } \mathcal{F}_n\text{-measurable}, \quad E[Y \mid \math
 
 $$m < n \implies E\bigl[\,E[Y \mid \mathcal{F}_n]\;\big|\;\mathcal{F}_m\bigr] = E[Y \mid \mathcal{F}_m].$$
 
-<b>Why</b> Compute the best guess for Y using information up to time n, then downgrade it to only use information up to time m < n. The result is identical to computing the best guess with time-m information directly. The outer (coarser) conditioning always governs the answer.
+<b>Why</b> Compute the best guess for Y using information up to time n, then downgrade it to only use information up to time $m < n$. The result is identical to computing the best guess with time-m information directly. The outer (coarser) conditioning always governs the answer.
 
 Special case m = 0: **$E[E[Y \mid \mathcal{F}_n]] = E[Y]$**.
 
@@ -355,7 +355,6 @@ $$X_1,\dots,X_n \perp Y \implies E[Y \mid \mathcal{F}_n] = E[Y].$$
 <b>Why</b> If the observations carry zero information about Y, the best guess remains the unconditional mean.
 
 
-
 **Property 4 — Linearity**
 
 $$E[aY + bZ \mid \mathcal{F}_n] = a\,E[Y \mid \mathcal{F}_n] + b\,E[Z \mid \mathcal{F}_n].$$
@@ -363,19 +362,16 @@ $$E[aY + bZ \mid \mathcal{F}_n] = a\,E[Y \mid \mathcal{F}_n] + b\,E[Z \mid \math
 <b>Why</b> Conditional expectation is an integral, and integrals are linear.
 
 
-
 **Property 5 — Known factors pull out (constants rule)**
 
 $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n] = Z\cdot E[Y \mid \mathcal{F}_n].$$
 
-<b>Why</b> Z is already determined by current information — it plays the role of a known constant. Only Y carries residual randomness to average over. *Example:* $E[X_1 \cdot Y \mid \\mathcal{F}_1] = X_1 \cdot E[Y \mid \\mathcal{F}_1]$.
+<b>Why</b> Z is already determined by current information — it plays the role of a known constant. Only Y carries residual randomness to average over.
 
-
-<!-- CHANGE 3 — Misconception block for the tower property -->
 <div class="misconception-block">
-  <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label">Common Misconception — Tower Property</span></div>
-  <div class="mc-wrong"><strong>Wrong:</strong> "$E[E[Y \mid \\mathcal{F}_n] \mid \\mathcal{F}_m] = E[Y \mid \\mathcal{F}_n]$ — the inner conditioning dominates because it has more information."</div>
-  <div class="mc-correct"><strong>Correct:</strong> The <em>outer</em> conditioning dominates: the result is $E[Y \mid \\mathcal{F}_m]$. When you condition on less information ($\\mathcal{F}_m \\subseteq \\mathcal{F}_n$), you lose the fine detail provided by $\\mathcal{F}_n$. The coarser $\\sigma$-algebra always wins. Think of it as: the final answer can only use what the outermost conditioning permits.</div>
+  <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception — Tower Property</b></span></div>
+  <div class="mc-wrong"><strong>Wrong:</strong> "$E[E[Y \mid \mathcal{F}_n] \mid \mathcal{F}_m] = E[Y \mid \mathcal{F}_n]$ — the inner conditioning dominates because it has more information."</div>
+  <div class="mc-correct"><strong>Correct:</strong> The <em>outer</em> conditioning dominates: the result is $E[Y \mid \\mathcal{F}_m]$. When you condition on less information ($\mathcal{F}_m \subseteq \mathcal{F}_n$), you lose the fine detail provided by $\mathcal{F}_n$. The coarser $\sigma$-algebra always wins. Think of it as: the final answer can only use what the outermost conditioning permits.</div>
 </div>
 
 ---
