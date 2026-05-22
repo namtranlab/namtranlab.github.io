@@ -401,100 +401,26 @@ $E[S_n \mid \mathcal{F}_m] = S_m + (n-m)\mu$
 
 **Setup:** $\mu = 0$, $E[X_j^2] = \sigma^2 < \infty$. Same $S_n$, $\mathcal{F}_m$ as above.
 
-<div class="proof-steps">
-<div class="ps-title">Step-by-step derivation</div>
+Write $S_n = S_m + (S_n - S_m)$ and expand the square:
 
-<div class="proof-step">
-  <div class="ps-num">1</div>
-  <div class="ps-body">
-    Write $S_n = S_m + (S_n - S_m)$ and expand the square:
-    <span class="ps-eq">$E[S_n^2 \mid \mathcal{F}_m] = E[S_m^2 \mid \mathcal{F}_m] + 2 E[S_m(S_n-S_m) \mid \mathcal{F}_m] + E[(S_n-S_m)^2 \mid \mathcal{F}_m]$</span>
-  </div>
-  <div class="ps-why">Property 4 — Linearity</div>
-</div>
+$E[S_n^2 \mid \mathcal{F}_m] = E[S_m^2 \mid \mathcal{F}_m] + 2 E[S_m(S_n-S_m) \mid \mathcal{F}_m] + E[(S_n-S_m)^2 \mid \mathcal{F}_m]$
 
-<div class="proof-step">
-  <div class="ps-num">2</div>
-  <div class="ps-body">
-    Term 1: $S_m^2$ is $\\mathcal{F}_m$-measurable:
-    <span class="ps-eq">$E[S_m^2 \mid \mathcal{F}_m] = S_m^2$</span>
-  </div>
-  <div class="ps-why">Property 1</div>
-</div>
+Term 1: $S_m^2$ is $\\mathcal{F}_m$-measurable:
 
-<div class="proof-step">
-  <div class="ps-num">3</div>
-  <div class="ps-body">
-    Term 2: $S_m$ pulls out ($\\mathcal{F}_m$-measurable); $S_n-S_m$ is independent of $\\mathcal{F}_m$ with mean 0:
-    <span class="ps-eq">$2 E[S_m(S_n-S_m) \mid \mathcal{F}_m] = 2 S_m \cdot E[S_n-S_m] = 2 S_m \cdot 0 = 0$</span>
-  </div>
-  <div class="ps-why">Properties 5 + 3</div>
-</div>
+$E[S_m^2 \mid \mathcal{F}_m] = S_m^2$
 
-<div class="proof-step">
-  <div class="ps-num">4</div>
-  <div class="ps-body">
-    Term 3: $(S_n-S_m)^2$ is independent of $\\mathcal{F}_m$; its expectation is the variance of $(n-m)$ increments:
-    <span class="ps-eq">$E[(S_n-S_m)^2 \mid \mathcal{F}_m] = \text{Var}(S_n-S_m) = (n-m)\sigma^2$</span>
-  </div>
-  <div class="ps-why">Property 3</div>
-</div>
+Term 2: $S_m$ pulls out ($\\mathcal{F}_m$-measurable); $S_n-S_m$ is independent of $\\mathcal{F}_m$ with mean 0:
 
-<div class="proof-step">
-  <div class="ps-num">5</div>
-  <div class="ps-body">
-    Combine Terms 1, 2, 3:
-    <span class="ps-eq">$E[S_n^2 \mid \mathcal{F}_m] = S_m^2 + (n-m)\sigma^2$</span>
-  </div>
-  <div class="ps-why">Result</div>
-</div>
+$2 E[S_m(S_n-S_m) \mid \mathcal{F}_m] = 2 S_m \cdot E[S_n-S_m] = 2 S_m \cdot 0 = 0$
 
-</div>
+Term 3: $(S_n-S_m)^2$ is independent of $\\mathcal{F}_m$; its expectation is the variance of $(n-m)$ increments:
 
-<div class="ex-lesson"><strong>Why this matters:</strong> The process $M_n = S_n^2 - n\\sigma^2$ is a martingale — this computation is the exact verification. It also shows that $S_n^2$ grows on average by $\\sigma^2$ per step, connecting to the quadratic variation of random walk.</div>
-</div>
+$E[(S_n-S_m)^2 \mid \mathcal{F}_m] = \text{Var}(S_n-S_m) = (n-m)\sigma^2$
 
-<div class="example-block">
-<div class="ex-title">Example 1.1.3 — $E[X_1 \mid S_n]$: conditioning on a coarser statistic <span class="ex-pill pill-ex">Example</span></div>
+Combine Terms 1, 2, 3:
 
-**Setup:** $X_1,\\ldots,X_n$ i.i.d. We observe only $S_n = X_1+\\cdots+X_n$. Goal: compute $E[X_1 | S_n]$.
+$E[S_n^2 \mid \mathcal{F}_m] = S_m^2 + (n-m)\sigma^2$
 
-<div class="proof-steps">
-<div class="ps-title">Step-by-step derivation</div>
-
-<div class="proof-step">
-  <div class="ps-num">1</div>
-  <div class="ps-body">
-    Since $X_1,\\ldots,X_n$ are i.i.d., conditioning on $S_n$ treats every index symmetrically — no single component is favoured:
-    <span class="ps-eq">$E[X_1 \mid S_n] = E[X_2 \mid S_n] = \cdots = E[X_n \mid S_n]$</span>
-  </div>
-  <div class="ps-why">Symmetry of i.i.d.</div>
-</div>
-
-<div class="proof-step">
-  <div class="ps-num">2</div>
-  <div class="ps-body">
-    Sum both sides over $j = 1,\\ldots,n$ and apply linearity. Since $S_n$ is $\\sigma(S_n)$-measurable (already known), $E[S_n | S_n] = S_n$:
-    <span class="ps-eq">$n \cdot E[X_1 \mid S_n] = E[X_1+\cdots+X_n \mid S_n] = E[S_n \mid S_n] = S_n$</span>
-  </div>
-  <div class="ps-why">Properties 4 + 1</div>
-</div>
-
-<div class="proof-step">
-  <div class="ps-num">3</div>
-  <div class="ps-body">
-    Divide both sides by n:
-    <span class="ps-eq">$E[X_1 \mid S_n] = S_n / n$</span>
-    Given only the total sum, the best guess for any single component is an equal share.
-  </div>
-  <div class="ps-why">Result</div>
-</div>
-
-</div>
-
-*Interpretation:* The answer does not depend on $E[X_1]$ — counterintuitive but correct, because $S_n$ already encodes all aggregate information and symmetry forces equal attribution.
-
-<div class="warning-box"><strong>⚠️ Subtle point:</strong> Conditioning on $S_n$ is strictly coarser than conditioning on all of $X_1,\\ldots,X_n$. The $\\sigma$-algebra $\\sigma(S_n) \\subseteq \\mathcal{F}_n$. With less information our best guess for $X_1$ worsens: from knowing $X_1$ exactly (under $\\mathcal{F}_n$) to knowing only $S_n/n$ (under $\\sigma(S_n)$).</div>
 </div>
 
 ---
