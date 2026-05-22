@@ -371,7 +371,7 @@ $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n
 <div class="misconception-block">
   <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception — Tower Property</b></span></div>
   <div class="mc-wrong"><strong>Wrong:</strong> "$E[E[Y \mid \mathcal{F}_n] \mid \mathcal{F}_m] = E[Y \mid \mathcal{F}_n]$ — the inner conditioning dominates because it has more information."</div>
-  <div class="mc-correct"><strong>Correct:</strong> The <em>outer</em> conditioning dominates: the result is $E[Y \mid \\mathcal{F}_m]$. When you condition on less information ($\mathcal{F}_m \subseteq \mathcal{F}_n$), you lose the fine detail provided by $\mathcal{F}_n$. The coarser $\sigma$-algebra always wins. Think of it as: the final answer can only use what the outermost conditioning permits.</div>
+  <div class="mc-correct"><strong>Correct:</strong> The <em>outer</em> conditioning dominates: the result is $E[Y \mid \mathcal{F}_m]$. When you condition on less information ($\mathcal{F}_m \subseteq \mathcal{F}_n$), you lose the fine detail provided by $\mathcal{F}_n$. The coarser $\sigma$-algebra always wins. Think of it as: the final answer can only use what the outermost conditioning permits.</div>
 </div>
 
 ---
