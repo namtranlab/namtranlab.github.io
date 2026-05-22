@@ -425,18 +425,17 @@ $E[S_n^2 \mid \mathcal{F}_m] = S_m^2 + (n-m)\sigma^2$
 
 ### Part 8 — Filtration (Formal Definition)
 
-<div class="example-block">
-<div class="ex-title">Definition — Discrete-time filtration <span class="ex-pill pill-defn">Definition</span></div>
-
+<div class="note-abstract">
 "Definition If $X_1, X_2, \ldots$ is a sequence of random variables, then the associated (discrete time) filtration is the collection $\{\mathcal{F}_n\}$ where $\mathcal{F}_n$ denotes the information in $X_1, \ldots, X_n$. One assumption in the definition of a filtration, which may sometimes not reflect reality, is that information is never lost. If m &lt; n, then everything known at time m is still known at time n."
-<div class="quote-explain">The key mathematical consequence of "information is never lost" is the set inclusion $\mathcal{F}_m \subseteq \mathcal{F}_n$ for all $m &lt; n$. Every event in $\mathcal{F}_m$ is also in $\mathcal{F}_n$. This is not a philosophical claim — it is a precise constraint that the sequence of $\sigma$-algebras must satisfy to qualify as a filtration.</div>
+</div>
+
+The key mathematical consequence of "information is never lost" is the set inclusion $\mathcal{F}_m \subseteq \mathcal{F}_n$ for all $m &lt; n$. Every event in $\mathcal{F}_m$ is also in $\mathcal{F}_n$. This is not a philosophical claim — it is a precise constraint that the sequence of $\sigma$-algebras must satisfy to qualify as a filtration.
 
 **Formally:** A filtration is an increasing sequence of $\sigma$-algebras:
 
 $$\mathcal{F}_0 \subseteq \mathcal{F}_1 \subseteq \mathcal{F}_2 \subseteq \cdots \subseteq \mathcal{F}$$
 
 **$\mathcal{F}_0 = \{\emptyset, \Omega\}$** — the trivial $\sigma$-algebra, representing the state before any observation.
-</div>
 
 ---
 
