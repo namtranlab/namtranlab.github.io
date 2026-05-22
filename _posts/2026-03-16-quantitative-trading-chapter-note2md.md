@@ -274,7 +274,7 @@ Hence $Y$ is not $\mathcal{F}$-measurable.
 
 ### Part 4 — Motivating the Definition (Density Case)
 
-"Suppose that $(X, Y)$ have a joint density $f(x, y)$, $0 < x, y < \infty$, with marginal densities $f(x) = \int f(x,y)\,dy$, $g(y) = \int f(x,y)\,dx$. The conditional density $f(y\mid x)$ is defined by $f(y\mid x) = \frac{f(x,y)}{f(x)}$."
+<div class="note-abstract">"Suppose that $(X, Y)$ have a joint density $f(x, y)$, $0 < x, y < \infty$, with marginal densities $f(x) = \int f(x,y)\,dy$, $g(y) = \int f(x,y)\,dx$. The conditional density $f(y\mid x)$ is defined by $f(y\mid x) = \frac{f(x,y)}{f(x)}$."</div>
 
 $f(x,y)$ is the joint probability density near $(x,y)$. $f(x)$ is the marginal density of $X$ — the probability near $x$ regardless of $Y$, obtained by integrating out all $y$-values. $f(y\mid x)$ is the relative weight on each $y$-value given $X = x$. Division by $f(x)$ normalises so that $f(y\mid x)$ integrates to 1 over $y$.
 
@@ -330,22 +330,20 @@ So $E[Z \cdot \mathbf{1}_A]$ = probability-weighted average of Z over outcomes w
 
 ### Part 6 — Properties of Conditional Expectation
 
-"Proposition 1.1.1. Suppose $X_1, X_2, \ldots$ is a sequence of random variables and $\mathcal{F}_n$ denotes the information at time n. The conditional expectation $E[Y \mid \mathcal{F}_n]$ satisfies the following properties."
-
-All five properties are consequences of the two defining conditions — not additional assumptions. Lawler proves linearity and the constants rule explicitly in the text; the others follow by analogous arguments using the definition.
+<b>Proposition 1.1.1:</b> Suppose $X_1, X_2, \ldots$ is a sequence of random variables and $\mathcal{F}_n$ denotes the information at time n. The conditional expectation $E[Y \mid \mathcal{F}_n]$ satisfies the following properties.
 
 **Property 1 — If Y is already known, conditioning changes nothing**
 
 $$\text{If } Y \text{ is } \mathcal{F}_n\text{-measurable}, \quad E[Y \mid \mathcal{F}_n] = Y.$$
 
-*Why:* Y is determined by $X_1,\ldots,X_n$. No uncertainty remains — the best guess is the value itself.
+<b>Why</b> Y is determined by $X_1,\ldots,X_n$. No uncertainty remains — the best guess is the value itself.
 
 
 **Property 2 — Tower property (law of iterated expectations)**
 
 $$m < n \implies E\bigl[\,E[Y \mid \mathcal{F}_n]\;\big|\;\mathcal{F}_m\bigr] = E[Y \mid \mathcal{F}_m].$$
 
-*Plain English:* Compute the best guess for Y using information up to time n, then downgrade it to only use information up to time m < n. The result is identical to computing the best guess with time-m information directly. The outer (coarser) conditioning always governs the answer.
+<b>Why</b> Compute the best guess for Y using information up to time n, then downgrade it to only use information up to time m < n. The result is identical to computing the best guess with time-m information directly. The outer (coarser) conditioning always governs the answer.
 
 Special case m = 0: **$E[E[Y \mid \mathcal{F}_n]] = E[Y]$**.
 
@@ -354,7 +352,7 @@ Special case m = 0: **$E[E[Y \mid \mathcal{F}_n]] = E[Y]$**.
 
 $$X_1,\dots,X_n \perp Y \implies E[Y \mid \mathcal{F}_n] = E[Y].$$
 
-*Why:* If the observations carry zero information about Y, the best guess remains the unconditional mean.
+<b>Why</b> If the observations carry zero information about Y, the best guess remains the unconditional mean.
 
 
 
@@ -362,7 +360,7 @@ $$X_1,\dots,X_n \perp Y \implies E[Y \mid \mathcal{F}_n] = E[Y].$$
 
 $$E[aY + bZ \mid \mathcal{F}_n] = a\,E[Y \mid \mathcal{F}_n] + b\,E[Z \mid \mathcal{F}_n].$$
 
-*Why:* Conditional expectation is an integral, and integrals are linear.
+<b>Why</b> Conditional expectation is an integral, and integrals are linear.
 
 
 
@@ -370,7 +368,7 @@ $$E[aY + bZ \mid \mathcal{F}_n] = a\,E[Y \mid \mathcal{F}_n] + b\,E[Z \mid \math
 
 $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n] = Z\cdot E[Y \mid \mathcal{F}_n].$$
 
-*Why:* Z is already determined by current information — it plays the role of a known constant. Only Y carries residual randomness to average over. *Example:* $E[X_1 \cdot Y \mid \\mathcal{F}_1] = X_1 \cdot E[Y \mid \\mathcal{F}_1]$.
+<b>Why</b> Z is already determined by current information — it plays the role of a known constant. Only Y carries residual randomness to average over. *Example:* $E[X_1 \cdot Y \mid \\mathcal{F}_1] = X_1 \cdot E[Y \mid \\mathcal{F}_1]$.
 
 
 <!-- CHANGE 3 — Misconception block for the tower property -->
