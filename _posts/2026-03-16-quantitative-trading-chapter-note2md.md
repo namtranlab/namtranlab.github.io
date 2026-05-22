@@ -343,9 +343,9 @@ $$\text{If } Y \text{ is } \mathcal{F}_n\text{-measurable}, \quad E[Y \mid \math
 
 $$m < n \implies E\bigl[\,E[Y \mid \mathcal{F}_n]\;\big|\;\mathcal{F}_m\bigr] = E[Y \mid \mathcal{F}_m].$$
 
-<b>Why</b> Compute the best guess for Y using information up to time n, then downgrade it to only use information up to time $m < n$. The result is identical to computing the best guess with time-m information directly. The outer (coarser) conditioning always governs the answer.
+<b>Why</b> Compute the best guess for Y using information up to time n, then downgrade it to only use information up to time $m < n$. The result is identical to computing the best guess with time-$m$ information directly. The outer (coarser) conditioning always governs the answer.
 
-Special case m = 0: **$E[E[Y \mid \mathcal{F}_n]] = E[Y]$**.
+Special case $m = 0$: **$E[E[Y \mid \mathcal{F}_n]] = E[Y]$**.
 
 
 **Property 3 — Independence means conditioning is useless**
