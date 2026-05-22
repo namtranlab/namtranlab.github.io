@@ -405,15 +405,13 @@ Write $S_n = S_m + (S_n - S_m)$ and expand the square:
 
 $E[S_n^2 \mid \mathcal{F}_m] = E[S_m^2 \mid \mathcal{F}_m] + 2 E[S_m(S_n-S_m) \mid \mathcal{F}_m] + E[(S_n-S_m)^2 \mid \mathcal{F}_m]$
 
-Term 1: $S_m^2$ is $\\mathcal{F}_m$-measurable:
+<b>Term 1:</b> $S_m^2$ is $\\mathcal{F}_m$-measurable so $E[S_m^2 \mid \mathcal{F}_m] = S_m^2$
 
-$E[S_m^2 \mid \mathcal{F}_m] = S_m^2$
-
-Term 2: $S_m$ pulls out ($\\mathcal{F}_m$-measurable); $S_n-S_m$ is independent of $\\mathcal{F}_m$ with mean 0:
+<b>Term 2:</b> $S_m$ pulls out ($\mathcal{F}_m$-measurable); $S_n-S_m$ is independent of $\mathcal{F}_m$ with mean 0:
 
 $2 E[S_m(S_n-S_m) \mid \mathcal{F}_m] = 2 S_m \cdot E[S_n-S_m] = 2 S_m \cdot 0 = 0$
 
-Term 3: $(S_n-S_m)^2$ is independent of $\\mathcal{F}_m$; its expectation is the variance of $(n-m)$ increments:
+<b>Term 3:</b> $(S_n-S_m)^2$ is independent of $\mathcal{F}_m$; its expectation is the variance of $(n-m)$ increments:
 
 $E[(S_n-S_m)^2 \mid \mathcal{F}_m] = \text{Var}(S_n-S_m) = (n-m)\sigma^2$
 
