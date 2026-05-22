@@ -321,10 +321,13 @@ So $E[Z \cdot \mathbf{1}_A]$ = probability-weighted average of Z over outcomes w
 
 
 <div class="misconception-block">
-  <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label">Common Misconception</span></div>
-  <div class="mc-wrong"><strong>Wrong:</strong> "Condition (ii) $E[E[Y \mid \\mathcal{F}_n]\\cdot\\mathbf{1}_A] = E[Y\\cdot\\mathbf{1}_A]$ is just saying $E[Y \mid \\mathcal{F}_n] = Y$."</div>
-  <div class="mc-correct"><strong>Correct:</strong> It says they agree <em>on average over every observable event A</em> — not pointwise. $E[Y \mid \mathcal{F}_n]$ is a smoothed version of $Y$: it preserves the same probability mass on every $\\mathcal{F}_n$-identifiable slice, but replaces $Y$'s within-slice variation with a single average value. The pointwise equality $E[Y \mid \mathcal{F}_n](\\omega) = Y(\\omega)$ only holds when $Y$ is itself $\\mathcal{F}_n$-measurable (Property 1).</div>
+  <span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception</b></span>
+  <strong>Wrong:</strong> "Condition (ii) $E[E[Y \mid \\mathcal{F}_n]\\cdot\\mathbf{1}_A] = E[Y\\cdot\\mathbf{1}_A]$ is just saying $E[Y \mid \\mathcal{F}_n] = Y$."
+  <strong>Correct:</strong> It says they agree <em>on average over every observable event A</em> — not pointwise. $E[Y \mid \mathcal{F}_n]$ is a smoothed version of $Y$: it preserves the same probability mass on every $\\mathcal{F}_n$-identifiable slice, but replaces $Y$'s within-slice variation with a single average value. The pointwise equality $E[Y \mid \mathcal{F}_n](\\omega) = Y(\\omega)$ only holds when $Y$ is itself $\\mathcal{F}_n$-measurable (Property 1).
 </div>
+
+
+
 
 ---
 
