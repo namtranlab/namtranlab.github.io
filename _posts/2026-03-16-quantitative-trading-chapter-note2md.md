@@ -311,7 +311,7 @@ $$\mathbf{1}_A(\omega) = \begin{cases} 1 & \text{if } \omega \in A \\ 0 & \text{
 
 So $E[Z \cdot \mathbf{1}_A]$ = probability-weighted average of Z over outcomes where A occurs = $\int_A Z \, dP$.
 
-**Why not give an explicit formula?** In general probability spaces (uncountable Ω, continuous distributions), no single formula works universally. The two-condition characterisation is both sufficient and rigorous. Existence follows from the Radon-Nikodym theorem; uniqueness from: if Z₁ and Z₂ both satisfy the conditions then E[(Z₁ − Z₂)²] = 0, so Z₁ = Z₂ almost surely.
+**Why not give an explicit formula?** In general probability spaces (uncountable $\Omega$, continuous distributions), no single formula works universally. The two-condition characterisation is both sufficient and rigorous. Existence follows from the Radon-Nikodym theorem; uniqueness from: if $Z_1$ and $Z_2$ both satisfy the conditions then $Eigl[(Z_1 - Z_2)^2igr] = 0$, so $Z_1 = Z_2$ almost surely.
 
 
 
