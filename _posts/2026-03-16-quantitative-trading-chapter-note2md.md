@@ -298,11 +298,17 @@ Averaging the conditional best-guess over all possible observations recovers the
 
 <div class="note-abstract">
 <div class="ex-title">Definition — Conditional Expectation $E[Y \mid \mathcal{F}_n]$ </div>
-"The conditional expectation $E[Y \mid \mathcal{F}_n]$ is the unique random variable satisfying the following. (i) $E[Y \mid \mathcal{F}_n]$ is $\mathcal{F}_n$-measurable. (ii) For every $\mathcal{F}_n$-measurable event A, $E[E[Y \mid \mathcal{F}_n] \cdot \mathbf{1}_A] = E[Y \cdot \mathbf{1}_A]$."
+"The conditional expectation $E[Y \mid \mathcal{F}_n]$ is the unique random variable satisfying the following. 
+
+(i) $E[Y \mid \mathcal{F}_n]$ is $\mathcal{F}_n$-measurable. 
+
+(ii) For every $\mathcal{F}_n$-measurable event A, $E[E[Y \mid \mathcal{F}_n] \cdot \mathbf{1}_A] = E[Y \cdot \mathbf{1}_A]$."
 </div>
 
-Condition (i): the output is computable from $X_1,\ldots,X_n$ alone — it cannot use future information. 
-Condition (ii): on every slice of $\Omega$ that can be identified from current information (any $A \in \\mathcal{F}_n$), the average of $E[Y|\\mathcal{F}_n]$ over that slice equals the average of Y over the same slice. 
+Condition (i): The output is computable from $X_1,\ldots,X_n$ alone — it cannot use future information.
+
+Condition (ii): On every slice of $\Omega$ that can be identified from current information (any $A \in \\mathcal{F}_n$), the average of $E[Y|\\mathcal{F}_n]$ over that slice equals the average of Y over the same slice.
+
 These two conditions uniquely determine $E[Y \mid \mathcal{F}_n]$ without requiring a closed-form formula.
 
 **What is $\mathbf{1}_A$?**
