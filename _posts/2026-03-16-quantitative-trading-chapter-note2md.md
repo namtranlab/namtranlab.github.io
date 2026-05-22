@@ -306,7 +306,7 @@ Averaging the conditional best-guess over all possible observations recovers the
 
 Condition (i): The output is computable from $X_1,\ldots,X_n$ alone — it cannot use future information.
 
-Condition (ii): On every slice of $\Omega$ that can be identified from current information (any $A \in \\mathcal{F}_n$), the average of $E[Y|\\mathcal{F}_n]$ over that slice equals the average of Y over the same slice.
+Condition (ii): On every slice of $\Omega$ that can be identified from current information (any $A \in \\mathcal{F}_n$), the average of $E[Y \mid \mathcal{F}_n]$ over that slice equals the average of Y over the same slice.
 
 These two conditions uniquely determine $E[Y \mid \mathcal{F}_n]$ without requiring a closed-form formula.
 
@@ -322,8 +322,8 @@ So $E[Z \cdot \mathbf{1}_A]$ = probability-weighted average of Z over outcomes w
 
 <div class="misconception-block">
   <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label">Common Misconception</span></div>
-  <div class="mc-wrong"><strong>Wrong:</strong> "Condition (ii) $E[E[Y|\\mathcal{F}_n]\\cdot\\mathbf{1}_A] = E[Y\\cdot\\mathbf{1}_A]$ is just saying $E[Y|\\mathcal{F}_n] = Y$."</div>
-  <div class="mc-correct"><strong>Correct:</strong> It says they agree <em>on average over every observable event A</em> — not pointwise. $E[Y|\\mathcal{F}_n]$ is a smoothed version of Y: it preserves the same probability mass on every $\\mathcal{F}_n$-identifiable slice, but replaces Y's within-slice variation with a single average value. The pointwise equality $E[Y|\\mathcal{F}_n](\\omega) = Y(\\omega)$ only holds when Y is itself $\\mathcal{F}_n$-measurable (Property 1).</div>
+  <div class="mc-wrong"><strong>Wrong:</strong> "Condition (ii) $E[E[Y \mid \\mathcal{F}_n]\\cdot\\mathbf{1}_A] = E[Y\\cdot\\mathbf{1}_A]$ is just saying $E[Y \mid \\mathcal{F}_n] = Y$."</div>
+  <div class="mc-correct"><strong>Correct:</strong> It says they agree <em>on average over every observable event A</em> — not pointwise. $E[Y \mid \mathcal{F}_n]$ is a smoothed version of $Y$: it preserves the same probability mass on every $\\mathcal{F}_n$-identifiable slice, but replaces $Y$'s within-slice variation with a single average value. The pointwise equality $E[Y \mid \mathcal{F}_n](\\omega) = Y(\\omega)$ only holds when $Y$ is itself $\\mathcal{F}_n$-measurable (Property 1).</div>
 </div>
 
 ---
@@ -376,14 +376,14 @@ $$E[aY + bZ \mid \mathcal{F}_n] = a\,E[Y \mid \mathcal{F}_n] + b\,E[Z \mid \math
 
 $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n] = Z\cdot E[Y \mid \mathcal{F}_n].$$
 
-*Why:* Z is already determined by current information — it plays the role of a known constant. Only Y carries residual randomness to average over. *Example:* $E[X_1 \cdot Y | \\mathcal{F}_1] = X_1 \cdot E[Y | \\mathcal{F}_1]$.
+*Why:* Z is already determined by current information — it plays the role of a known constant. Only Y carries residual randomness to average over. *Example:* $E[X_1 \cdot Y \mid \\mathcal{F}_1] = X_1 \cdot E[Y \mid \\mathcal{F}_1]$.
 </div>
 
 <!-- CHANGE 3 — Misconception block for the tower property -->
 <div class="misconception-block">
   <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label">Common Misconception — Tower Property</span></div>
-  <div class="mc-wrong"><strong>Wrong:</strong> "$E[E[Y|\\mathcal{F}_n]|\\mathcal{F}_m] = E[Y|\\mathcal{F}_n]$ — the inner conditioning dominates because it has more information."</div>
-  <div class="mc-correct"><strong>Correct:</strong> The <em>outer</em> conditioning dominates: the result is $E[Y|\\mathcal{F}_m]$. When you condition on less information ($\\mathcal{F}_m \\subseteq \\mathcal{F}_n$), you lose the fine detail provided by $\\mathcal{F}_n$. The coarser $\\sigma$-algebra always wins. Think of it as: the final answer can only use what the outermost conditioning permits.</div>
+  <div class="mc-wrong"><strong>Wrong:</strong> "$E[E[Y \mid \\mathcal{F}_n] \mid \\mathcal{F}_m] = E[Y \mid \\mathcal{F}_n]$ — the inner conditioning dominates because it has more information."</div>
+  <div class="mc-correct"><strong>Correct:</strong> The <em>outer</em> conditioning dominates: the result is $E[Y \mid \\mathcal{F}_m]$. When you condition on less information ($\\mathcal{F}_m \\subseteq \\mathcal{F}_n$), you lose the fine detail provided by $\\mathcal{F}_n$. The coarser $\\sigma$-algebra always wins. Think of it as: the final answer can only use what the outermost conditioning permits.</div>
 </div>
 
 ---
@@ -391,7 +391,7 @@ $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n
 ### Part 7 — Worked Examples
 
 <div class="example-block">
-<div class="ex-title">Example 1.1.1 — $E[S_n | \\mathcal{F}_m]$ for independent increments <span class="ex-pill pill-ex">Example</span></div>
+<div class="ex-title">Example 1.1.1 — $E[S_n \mid \\mathcal{F}_m]$ for independent increments <span class="ex-pill pill-ex">Example</span></div>
 
 **Setup:** $X_1, X_2, \\ldots$ independent with $E[X_j] = \\mu$. Let $S_n = X_1 + \\cdots + X_n$, $\\mathcal{F}_m = \\sigma(X_1,\\ldots,X_m)$, $m < n$.
 
@@ -403,7 +403,7 @@ $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n
   <div class="ps-num">1</div>
   <div class="ps-body">
     Split $S_n$ at time m using linearity of conditional expectation:
-    <span class="ps-eq">$E[S_n | \\mathcal{F}_m] = E[S_m | \\mathcal{F}_m] + E[S_n - S_m | \\mathcal{F}_m]$</span>
+    <span class="ps-eq">$E[S_n \mid \\mathcal{F}_m] = E[S_m \mid \\mathcal{F}_m] + E[S_n - S_m \mid \\mathcal{F}_m]$</span>
   </div>
   <div class="ps-why">Property 4 — Linearity</div>
 </div>
@@ -412,7 +412,7 @@ $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n
   <div class="ps-num">2</div>
   <div class="ps-body">
     First term: $S_m = X_1+\\cdots+X_m$ is fully determined by $X_1,\\ldots,X_m$, so it is $\\mathcal{F}_m$-measurable:
-    <span class="ps-eq">$E[S_m | \\mathcal{F}_m] = S_m$</span>
+    <span class="ps-eq">$E[S_m \mid \\mathcal{F}_m] = S_m$</span>
   </div>
   <div class="ps-why">Property 1 — Known Y</div>
 </div>
@@ -421,7 +421,7 @@ $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n
   <div class="ps-num">3</div>
   <div class="ps-body">
     Second term: $S_n - S_m = X_{m+1}+\\cdots+X_n$ depends only on future variables, independent of $\\mathcal{F}_m$:
-    <span class="ps-eq">$E[S_n - S_m | \\mathcal{F}_m] = E[S_n - S_m] = (n-m)\\mu$</span>
+    <span class="ps-eq">$E[S_n - S_m \mid \\mathcal{F}_m] = E[S_n - S_m] = (n-m)\\mu$</span>
   </div>
   <div class="ps-why">Property 3 — Independence</div>
 </div>
@@ -430,7 +430,7 @@ $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n
   <div class="ps-num">4</div>
   <div class="ps-body">
     Combine Steps 2 and 3:
-    <span class="ps-eq">$E[S_n | \\mathcal{F}_m] = S_m + (n-m)\\mu$</span>
+    <span class="ps-eq">$E[S_n \mid \\mathcal{F}_m] = S_m + (n-m)\\mu$</span>
     Given observations up to time m, the best guess for $S_n$ is the current sum plus $(n-m)$ expected future increments.
   </div>
   <div class="ps-why">Result</div>
@@ -438,11 +438,11 @@ $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n
 
 </div>
 
-<div class="ex-lesson"><strong>Why this matters:</strong> When $\\mu = 0$ the result becomes $E[S_n | \\mathcal{F}_m] = S_m$ — the current sum is the best guess for all future sums. This is exactly the martingale property defined in §1.2.</div>
+<div class="ex-lesson"><strong>Why this matters:</strong> When $\\mu = 0$ the result becomes $E[S_n \mid \\mathcal{F}_m] = S_m$ — the current sum is the best guess for all future sums. This is exactly the martingale property defined in §1.2.</div>
 </div>
 
 <div class="example-block">
-<div class="ex-title">Example 1.1.2 — $E[S_n^2 | \\mathcal{F}_m]$ for zero-mean increments <span class="ex-pill pill-ex">Example</span></div>
+<div class="ex-title">Example 1.1.2 — $E[S_n^2 \mid \\mathcal{F}_m]$ for zero-mean increments <span class="ex-pill pill-ex">Example</span></div>
 
 **Setup:** $\\mu = 0$, $E[X_j^2] = \\sigma^2 < \\infty$. Same $S_n$, $\\mathcal{F}_m$ as above.
 
@@ -453,7 +453,7 @@ $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n
   <div class="ps-num">1</div>
   <div class="ps-body">
     Write $S_n = S_m + (S_n - S_m)$ and expand the square:
-    <span class="ps-eq">$E[S_n^2 | \\mathcal{F}_m] = E[S_m^2 | \\mathcal{F}_m] + 2 E[S_m(S_n-S_m) | \\mathcal{F}_m] + E[(S_n-S_m)^2 | \\mathcal{F}_m]$</span>
+    <span class="ps-eq">$E[S_n^2 \mid \\mathcal{F}_m] = E[S_m^2 \mid \\mathcal{F}_m] + 2 E[S_m(S_n-S_m) \mid \\mathcal{F}_m] + E[(S_n-S_m)^2 \mid \\mathcal{F}_m]$</span>
   </div>
   <div class="ps-why">Property 4 — Linearity</div>
 </div>
@@ -462,7 +462,7 @@ $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n
   <div class="ps-num">2</div>
   <div class="ps-body">
     Term 1: $S_m^2$ is $\\mathcal{F}_m$-measurable:
-    <span class="ps-eq">$E[S_m^2 | \\mathcal{F}_m] = S_m^2$</span>
+    <span class="ps-eq">$E[S_m^2 \mid \\mathcal{F}_m] = S_m^2$</span>
   </div>
   <div class="ps-why">Property 1</div>
 </div>
@@ -471,7 +471,7 @@ $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n
   <div class="ps-num">3</div>
   <div class="ps-body">
     Term 2: $S_m$ pulls out ($\\mathcal{F}_m$-measurable); $S_n-S_m$ is independent of $\\mathcal{F}_m$ with mean 0:
-    <span class="ps-eq">$2 E[S_m(S_n-S_m) | \\mathcal{F}_m] = 2 S_m \\cdot E[S_n-S_m] = 2 S_m \\cdot 0 = 0$</span>
+    <span class="ps-eq">$2 E[S_m(S_n-S_m) \mid \\mathcal{F}_m] = 2 S_m \\cdot E[S_n-S_m] = 2 S_m \\cdot 0 = 0$</span>
   </div>
   <div class="ps-why">Properties 5 + 3</div>
 </div>
@@ -480,7 +480,7 @@ $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n
   <div class="ps-num">4</div>
   <div class="ps-body">
     Term 3: $(S_n-S_m)^2$ is independent of $\\mathcal{F}_m$; its expectation is the variance of $(n-m)$ increments:
-    <span class="ps-eq">$E[(S_n-S_m)^2 | \\mathcal{F}_m] = \\text{Var}(S_n-S_m) = (n-m)\\sigma^2$</span>
+    <span class="ps-eq">$E[(S_n-S_m)^2 \mid \\mathcal{F}_m] = \\text{Var}(S_n-S_m) = (n-m)\\sigma^2$</span>
   </div>
   <div class="ps-why">Property 3</div>
 </div>
@@ -489,7 +489,7 @@ $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n
   <div class="ps-num">5</div>
   <div class="ps-body">
     Combine Terms 1, 2, 3:
-    <span class="ps-eq">$E[S_n^2 | \\mathcal{F}_m] = S_m^2 + (n-m)\\sigma^2$</span>
+    <span class="ps-eq">$E[S_n^2 \mid \\mathcal{F}_m] = S_m^2 + (n-m)\\sigma^2$</span>
   </div>
   <div class="ps-why">Result</div>
 </div>
@@ -500,7 +500,7 @@ $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n
 </div>
 
 <div class="example-block">
-<div class="ex-title">Example 1.1.3 — $E[X_1 | S_n]$: conditioning on a coarser statistic <span class="ex-pill pill-ex">Example</span></div>
+<div class="ex-title">Example 1.1.3 — $E[X_1 \mid S_n]$: conditioning on a coarser statistic <span class="ex-pill pill-ex">Example</span></div>
 
 **Setup:** $X_1,\\ldots,X_n$ i.i.d. We observe only $S_n = X_1+\\cdots+X_n$. Goal: compute $E[X_1 | S_n]$.
 
@@ -511,7 +511,7 @@ $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n
   <div class="ps-num">1</div>
   <div class="ps-body">
     Since $X_1,\\ldots,X_n$ are i.i.d., conditioning on $S_n$ treats every index symmetrically — no single component is favoured:
-    <span class="ps-eq">$E[X_1 | S_n] = E[X_2 | S_n] = \\cdots = E[X_n | S_n]$</span>
+    <span class="ps-eq">$E[X_1 \mid S_n] = E[X_2 \mid S_n] = \\cdots = E[X_n \mid S_n]$</span>
   </div>
   <div class="ps-why">Symmetry of i.i.d.</div>
 </div>
@@ -520,7 +520,7 @@ $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n
   <div class="ps-num">2</div>
   <div class="ps-body">
     Sum both sides over $j = 1,\\ldots,n$ and apply linearity. Since $S_n$ is $\\sigma(S_n)$-measurable (already known), $E[S_n | S_n] = S_n$:
-    <span class="ps-eq">$n \\cdot E[X_1 | S_n] = E[X_1+\\cdots+X_n | S_n] = E[S_n | S_n] = S_n$</span>
+    <span class="ps-eq">$n \\cdot E[X_1 \mid S_n] = E[X_1+\\cdots+X_n \mid S_n] = E[S_n \mid S_n] = S_n$</span>
   </div>
   <div class="ps-why">Properties 4 + 1</div>
 </div>
@@ -529,7 +529,7 @@ $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n
   <div class="ps-num">3</div>
   <div class="ps-body">
     Divide both sides by n:
-    <span class="ps-eq">$E[X_1 | S_n] = S_n / n$</span>
+    <span class="ps-eq">$E[X_1 \mid S_n] = S_n / n$</span>
     Given only the total sum, the best guess for any single component is an equal share.
   </div>
   <div class="ps-why">Result</div>
@@ -596,8 +596,8 @@ A random variable Z is $\mathcal{F}_n$-measurable if $\{Z \leq t\} \in \mathcal{
 </div>
 
 <div class="glossary-entry">
-<div class="gterm">Conditional expectation $E[Y | \mathcal{F}_n]$ <span class="gcat cat-defn">Definition</span></div>
-The unique $\mathcal{F}_n$-measurable random variable satisfying $E[E[Y|\\mathcal{F}_n]\\cdot\\mathbf{1}_A] = E[Y\\cdot\\mathbf{1}_A]$ for all $A \\in \\mathcal{F}_n$. The minimum-MSE predictor of Y given information $\\mathcal{F}_n$. A random variable — not a number — because its value depends on the observations $X_1,\\ldots,X_n$.
+<div class="gterm">Conditional expectation $E[Y \mid \\mathcal{F}_n]$ <span class="gcat cat-defn">Definition</span></div>
+The unique $\\mathcal{F}_n$-measurable random variable satisfying $E[E[Y \mid \\mathcal{F}_n]\\cdot\\mathbf{1}_A] = E[Y\\cdot\\mathbf{1}_A]$ for all $A \\in \\mathcal{F}_n$. The minimum-MSE predictor of Y given information $\\mathcal{F}_n$. A random variable — not a number — because its value depends on the observations $X_1,\\ldots,X_n$.
 </div>
 
 <div class="glossary-entry">
@@ -607,17 +607,17 @@ $\mathbf{1}_A(\omega) = 1$ if $\omega \in A$, else $0$. So $E[Z\cdot\mathbf{1}_A
 
 <div class="glossary-entry">
 <div class="gterm">Tower property <span class="gcat cat-prop">Property</span></div>
-$E[E[Y|\\mathcal{F}_n]|\\mathcal{F}_m] = E[Y|\\mathcal{F}_m]$ for $m < n$. The outer (coarser) conditioning always governs. Special case: $E[E[Y|\\mathcal{F}_n]] = E[Y]$. Proved using the defining property of conditional expectation and the inclusion $\\mathcal{F}_m \\subseteq \\mathcal{F}_n$.
+$E[E[Y \mid \\mathcal{F}_n] \mid \\mathcal{F}_m] = E[Y \mid \\mathcal{F}_m]$ for $m < n$. The outer (coarser) conditioning always governs. Special case: $E[E[Y \mid \\mathcal{F}_n]] = E[Y]$. Proved using the defining property of conditional expectation and the inclusion $\\mathcal{F}_m \\subseteq \\mathcal{F}_n$.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Constants rule (pull-out property) <span class="gcat cat-prop">Property</span></div>
-If Z is $\\mathcal{F}_n$-measurable then $E[YZ|\\mathcal{F}_n] = Z\\cdot E[Y|\\mathcal{F}_n]$. Z behaves as a known constant. Proved first for $Z = \\mathbf{1}_A$ ($A \\in \\mathcal{F}_n$) using the definition, extended to simple random variables by linearity, then to general Z by monotone convergence.
+If Z is $\\mathcal{F}_n$-measurable then $E[YZ \mid \\mathcal{F}_n] = Z\\cdot E[Y \mid \\mathcal{F}_n]$. Z behaves as a known constant. Proved first for $Z = \\mathbf{1}_A$ ($A \\in \\mathcal{F}_n$) using the definition, extended to simple random variables by linearity, then to general Z by monotone convergence.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Radon-Nikodym theorem <span class="gcat cat-thm">Theorem</span></div>
-Guarantees existence of conditional expectation. The function $\\mu(A) = E[Y\\cdot\\mathbf{1}_A]$ is a signed measure on $(\\Omega, \\mathcal{F}_n, P)$ with $\\mu \\ll P$. By Radon-Nikodym, there exists an $\\mathcal{F}_n$-measurable Z with $\\mu(A) = E[Z\\cdot\\mathbf{1}_A]$ for all $A \\in \\mathcal{F}_n$. This Z is $E[Y|\\mathcal{F}_n]$.
+Guarantees existence of conditional expectation. The function $\\mu(A) = E[Y\\cdot\\mathbf{1}_A]$ is a signed measure on $(\\Omega, \\mathcal{F}_n, P)$ with $\\mu \\ll P$. By Radon-Nikodym, there exists an $\\mathcal{F}_n$-measurable Z with $\\mu(A) = E[Z\\cdot\\mathbf{1}_A]$ for all $A \\in \\mathcal{F}_n$. This Z is $E[Y \mid \\mathcal{F}_n]$.
 </div>
 
 ---
@@ -627,10 +627,10 @@ Guarantees existence of conditional expectation. The function $\\mu(A) = E[Y\\cd
 - **$E[Y | \\mathcal{F}_n]$** is the minimum-MSE predictor of Y given information $\\mathcal{F}_n$. It is a *random variable* — its value changes with the observations $X_1,\\ldots,X_n$. $E[Y]$ is the zero-information special case (a fixed number).
 - **Probability space $(\\Omega, \\mathcal{F}, P)$:** $\\Omega$ = all outcomes; $\\mathcal{F}$ = $\\sigma$-algebra of observable events; $P$ = probability measure. The three $\\sigma$-algebra axioms (contains $\\emptyset$, closed under complements and countable unions) make $\\mathcal{F}$ self-consistent.
 - **Filtration $\\{\\mathcal{F}_n\\}$:** increasing chain $\\mathcal{F}_0 \\subseteq \\mathcal{F}_1 \\subseteq \\cdots$ encoding growing information. $\\mathcal{F}_n = \\sigma(X_1,\\ldots,X_n)$. Information never shrinks.
-- **Formal definition** uses two conditions — $\\mathcal{F}_n$-measurability + $E[E[Y|\\mathcal{F}_n]\\cdot\\mathbf{1}_A] = E[Y\\cdot\\mathbf{1}_A]$ for all $A \\in \\mathcal{F}_n$ — instead of a formula, because no single formula works in all probability spaces. Existence: Radon-Nikodym. Uniqueness: MSE argument.
+- **Formal definition** uses two conditions — $\\mathcal{F}_n$-measurability + $E[E[Y \mid \\mathcal{F}_n]\\cdot\\mathbf{1}_A] = E[Y\\cdot\\mathbf{1}_A]$ for all $A \\in \\mathcal{F}_n$ — instead of a formula, because no single formula works in all probability spaces. Existence: Radon-Nikodym. Uniqueness: MSE argument.
 - **Five properties:** (1) Known Y unchanged; (2) Tower — outer conditioning wins; (3) Independence → $E[Y]$; (4) Linearity; (5) Known factors pull out. All follow from the two defining conditions.
-- **Example 1.1.1:** $E[S_n | \\mathcal{F}_m] = S_m + (n-m)\\mu$. When $\\mu = 0$ this becomes the martingale property of §1.2.
-- **Example 1.1.3:** $E[X_1 | S_n] = S_n/n$. Conditioning on a coarser statistic gives an equal-share answer, independent of $E[X_1]$.
+- **Example 1.1.1:** $E[S_n \mid \\mathcal{F}_m] = S_m + (n-m)\\mu$. When $\\mu = 0$ this becomes the martingale property of §1.2.
+- **Example 1.1.3:** $E[X_1 \mid S_n] = S_n/n$. Conditioning on a coarser statistic gives an equal-share answer, independent of $E[X_1]$.
 
 <div class="ref-tags">
 <span class="ref-tag">Conditional expectation</span>
