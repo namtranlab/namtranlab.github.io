@@ -296,11 +296,13 @@ Averaging the conditional best-guess over all possible observations recovers the
 
 ### Part 5 — The Formal Definition
 
-<div class="example-block">
-<div class="ex-title">Definition — Conditional Expectation E[Y | F_n] <span class="ex-pill pill-defn">Definition</span></div>
+<div class="note-abstract">
+<div class="ex-title">Definition — Conditional Expectation $E[Y \mid \mathcal{F}_n]$ </div>
+</div>
 
 "The conditional expectation $E[Y \mid \mathcal{F}_n]$ is the unique random variable satisfying the following. (i) $E[Y \mid \mathcal{F}_n]$ is $\mathcal{F}_n$-measurable. (ii) For every $\mathcal{F}_n$-measurable event A, $E[E[Y \mid \mathcal{F}_n] \cdot \mathbf{1}_A] = E[Y \cdot \mathbf{1}_A]$."
-<div class="quote-explain">Condition (i): the output is computable from $X_1,\ldots,X_n$ alone — it cannot use future information. Condition (ii): on every slice of $\Omega$ that can be identified from current information (any $A \in \\mathcal{F}_n$), the average of $E[Y|\\mathcal{F}_n]$ over that slice equals the average of Y over the same slice. These two conditions uniquely determine $E[Y|\\mathcal{F}_n]$ without requiring a closed-form formula.</div>
+
+Condition (i): the output is computable from $X_1,\ldots,X_n$ alone — it cannot use future information. Condition (ii): on every slice of $\Omega$ that can be identified from current information (any $A \in \\mathcal{F}_n$), the average of $E[Y|\\mathcal{F}_n]$ over that slice equals the average of Y over the same slice. These two conditions uniquely determine $E[Y|\\mathcal{F}_n]$ without requiring a closed-form formula.
 
 **What is $\mathbf{1}_A$?**
 
@@ -309,9 +311,9 @@ $$\mathbf{1}_A(\omega) = \begin{cases} 1 & \text{if } \omega \in A \\ 0 & \text{
 So $E[Z \cdot \mathbf{1}_A]$ = probability-weighted average of Z over outcomes where A occurs = $\int_A Z \, dP$.
 
 **Why not give an explicit formula?** In general probability spaces (uncountable Ω, continuous distributions), no single formula works universally. The two-condition characterisation is both sufficient and rigorous. Existence follows from the Radon-Nikodym theorem; uniqueness from: if Z₁ and Z₂ both satisfy the conditions then E[(Z₁ − Z₂)²] = 0, so Z₁ = Z₂ almost surely.
-</div>
 
-<!-- CHANGE 3 — Misconception block for the definition -->
+
+
 <div class="misconception-block">
   <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label">Common Misconception</span></div>
   <div class="mc-wrong"><strong>Wrong:</strong> "Condition (ii) $E[E[Y|\\mathcal{F}_n]\\cdot\\mathbf{1}_A] = E[Y\\cdot\\mathbf{1}_A]$ is just saying $E[Y|\\mathcal{F}_n] = Y$."</div>
