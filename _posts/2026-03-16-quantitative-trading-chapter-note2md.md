@@ -383,7 +383,7 @@ $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n
 
 **Setup:** $X_1, X_2, \ldots$ independent with $E[X_j] = \mu$. Let $S_n = X_1 + \cdots + X_n$, $\mathcal{F}_m = \sigma(X_1,\ldots,X_m)$, $m < n$.
 
-$E[S_n \mid \mathcal{F}_m] = E[S_m \mid \mathcal{F}_m] + E[S_n - S_m \mid \mathcal{F}_m]
+$E[S_n \mid \mathcal{F}_m] = E[S_m \mid \mathcal{F}_m] + E[S_n - S_m \mid \mathcal{F}_m]$
 
 $S_m = X_1+\cdots+X_m$ is fully determined by $X_1,\ldots,X_m$, so it is $\mathcal{F}_m$-measurable:
 
@@ -394,9 +394,9 @@ $S_n - S_m = X_{m+1}+\cdots+X_n$
 $E[S_n - S_m \mid \mathcal{F}_m] = E[S_n - S_m] = (n-m)\mu$
 
 $E[S_n \mid \mathcal{F}_m] = S_m + (n-m)\mu$
+</div>
 
-
-<div class="example-block">
+<div class="example-block" markdown="1">
 <div class="ex-title">Example 1.1.2 — $E[S_n^2 \mid \mathcal{F}_m]$ for zero-mean increments <span class="ex-pill pill-ex">Example</span></div>
 
 **Setup:** $\mu = 0$, $E[X_j^2] = \sigma^2 < \infty$. Same $S_n$, $\mathcal{F}_m$ as above.
