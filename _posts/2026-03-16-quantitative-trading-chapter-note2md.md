@@ -297,7 +297,6 @@ Averaging the conditional best-guess over all possible observations recovers the
 ### Part 5 — The Formal Definition
 
 <div class="note-abstract">
-<div class="ex-title">Definition — Conditional Expectation $E[Y \mid \mathcal{F}_n]$ </div>
 "The conditional expectation $E[Y \mid \mathcal{F}_n]$ is the unique random variable satisfying the following. 
 
 (i) $E[Y \mid \mathcal{F}_n]$ is $\mathcal{F}_n$-measurable. 
