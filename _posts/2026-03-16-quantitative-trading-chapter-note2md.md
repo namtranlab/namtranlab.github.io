@@ -330,13 +330,9 @@ So $E[Z \cdot \mathbf{1}_A]$ = probability-weighted average of Z over outcomes w
 
 ### Part 6 — Properties of Conditional Expectation
 
-<div class="example-block">
-<div class="ex-title">Proposition 1.1.1 — Five key properties <span class="ex-pill pill-prop">Proposition</span></div>
+"Proposition 1.1.1. Suppose $X_1, X_2, \ldots$ is a sequence of random variables and $\mathcal{F}_n$ denotes the information at time n. The conditional expectation $E[Y \mid \mathcal{F}_n]$ satisfies the following properties."
 
-"Proposition 1.1.1. Suppose X₁, X₂, … is a sequence of random variables and F_n denotes the information at time n. The conditional expectation E[Y | F_n] satisfies the following properties."
-<div class="quote-explain">All five properties are consequences of the two defining conditions — not additional assumptions. Lawler proves linearity and the constants rule explicitly in the text; the others follow by analogous arguments using the definition.</div>
-
----
+All five properties are consequences of the two defining conditions — not additional assumptions. Lawler proves linearity and the constants rule explicitly in the text; the others follow by analogous arguments using the definition.
 
 **Property 1 — If Y is already known, conditioning changes nothing**
 
@@ -344,7 +340,6 @@ $$\text{If } Y \text{ is } \mathcal{F}_n\text{-measurable}, \quad E[Y \mid \math
 
 *Why:* Y is determined by $X_1,\ldots,X_n$. No uncertainty remains — the best guess is the value itself.
 
----
 
 **Property 2 — Tower property (law of iterated expectations)**
 
@@ -354,7 +349,6 @@ $$m < n \implies E\bigl[\,E[Y \mid \mathcal{F}_n]\;\big|\;\mathcal{F}_m\bigr] = 
 
 Special case m = 0: **$E[E[Y \mid \mathcal{F}_n]] = E[Y]$**.
 
----
 
 **Property 3 — Independence means conditioning is useless**
 
@@ -362,7 +356,7 @@ $$X_1,\dots,X_n \perp Y \implies E[Y \mid \mathcal{F}_n] = E[Y].$$
 
 *Why:* If the observations carry zero information about Y, the best guess remains the unconditional mean.
 
----
+
 
 **Property 4 — Linearity**
 
@@ -370,14 +364,14 @@ $$E[aY + bZ \mid \mathcal{F}_n] = a\,E[Y \mid \mathcal{F}_n] + b\,E[Z \mid \math
 
 *Why:* Conditional expectation is an integral, and integrals are linear.
 
----
+
 
 **Property 5 — Known factors pull out (constants rule)**
 
 $$Z \text{ is } \mathcal{F}_n\text{-measurable} \implies E[YZ \mid \mathcal{F}_n] = Z\cdot E[Y \mid \mathcal{F}_n].$$
 
 *Why:* Z is already determined by current information — it plays the role of a known constant. Only Y carries residual randomness to average over. *Example:* $E[X_1 \cdot Y \mid \\mathcal{F}_1] = X_1 \cdot E[Y \mid \\mathcal{F}_1]$.
-</div>
+
 
 <!-- CHANGE 3 — Misconception block for the tower property -->
 <div class="misconception-block">
