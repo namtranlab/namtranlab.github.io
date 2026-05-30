@@ -198,14 +198,14 @@ In other words, games that are always in one's favour are submartingales and gam
 <div class="note-abstract" markdown="1">
 Suppose that $M_0, M_1, \ldots$ is a martingale with respect to the filtration $$\mathcal{F}_n$$ . For $n \geq 1$, let $\Delta M_n = M_n - M_{n-1}$. Let $B_j$ denote the 'bet' on the $j$th game. We allow negative values of $B_j$ which indicate betting that the price will go down or the game will be lost. Let $W_n$ denote the winnings in this strategy: $W_0 = 0$ and for $n \geq 1$,
 
-$$W_n = \sum_{j=1}^n B_j [M_j - M_{j-1}] = \sum_{j=1}^n B_j \Delta M_j.$$"
+$$W_n = \sum_{j=1}^n B_j [M_j - M_{j-1}] = \sum_{j=1}^n B_j \Delta M_j.$$
 </div>
 
 
 **Three conditions on the betting strategy $B_n$:**
 
 1. **Boundedness:** $\lvert B_n \rvert \leq K_n < \infty$ for some finite constant $K_n$ — bets cannot be infinite.
-2. **Non-anticipating (predictability):** $B_n$ is $\mathcal{F}_{n-1}$-measurable — the bet at time $n$ can only use information from before time $n$. You cannot see the outcome before placing the bet.
+2. **Non-anticipating (predictability):** $B_n$ is $$\mathcal{F}_{n-1}$$-measurable — the bet at time $n$ can only use information from before time $n$. You cannot see the outcome before placing the bet.
 3. **Integrability:** The bound above ensures $E[\lvert W_n \rvert] < \infty$.
 
 **$W_n$ is a martingale — verification:**
@@ -213,7 +213,7 @@ $$W_n = \sum_{j=1}^n B_j [M_j - M_{j-1}] = \sum_{j=1}^n B_j \Delta M_j.$$"
 
 $$E[W_{n+1} \mid \mathcal{F}_n] = E[W_n + B_{n+1}(M_{n+1} - M_n) \mid \mathcal{F}_n].$$
 
-Since $W_n$ is $$\mathcal{F}_n$$-measurable, $E[W_n \mid \mathcal{F}_n] = W_n$. Also, since $B_{n+1}$ is $$\mathcal{F}_n$$-measurable and $M$ is a martingale,
+Since $W_n$ is $$\mathcal{F}_n$$-measurable, $$E[W_n \mid \mathcal{F}_n] = W_n$$. Also, since $B_{n+1}$ is $$\mathcal{F}_n$$-measurable and $M$ is a martingale,
 
 $$E[B_{n+1}(M_{n+1} - M_n) \mid \mathcal{F}_n] = B_{n+1} E[M_{n+1} - M_n \mid \mathcal{F}_n] = 0.$$
 
@@ -304,11 +304,11 @@ Every step in §1.2 relies directly on the five properties of conditional expect
 
 | Martingale argument | §1.1 property used |
 |---|---|
-| $E[S_n \mid \mathcal{F}_n] = S_n$ — current sum is known | Property 1 — Known $Y$ |
-| $$E[X_{n+1} \mid \mathcal{F}_n] = E[X_{n+1}] = 0$$ — future increment is independent | Property 3 — Independence |
-| $$E[S_n X_{n+1} \mid \mathcal{F}_n] = S_n E[X_{n+1} \mid \mathcal{F}_n]$$ — $S_n$ pulls out | Property 5 — Constants rule |
-| $$E[W_n \mid \mathcal{F}_n] = W_n$$ — current winnings are known | Property 1 — Known $Y$ |
-| $$E[B_{n+1}(M_{n+1} - M_n) \mid \mathcal{F}_n] = B_{n+1} \cdot 0$$ — $B_{n+1}$ pulls out | Property 5 — Constants rule |
+| $E[S_n \mid \mathcal{F}_n] = S_n$: Current sum is known | Property 1 — Known $Y$ |
+| $$E[X_{n+1} \mid \mathcal{F}_n] = E[X_{n+1}]$$: Future increment is independent | Property 3 — Independence |
+| $$E[S_n X_{n+1} \mid \mathcal{F}_n] = S_n E[X_{n+1} \mid \mathcal{F}_n]$$: $S_n$ pulls out | Property 5 — Constants rule |
+| $$E[W_n \mid \mathcal{F}_n] = W_n$$: Current winnings are known | Property 1 — Known $Y$ |
+| $$E[B_{n+1}(M_{n+1} - M_n) \mid \mathcal{F}_n] = B_{n+1} \cdot 0$$: $B_{n+1}$ pulls out | Property 5 — Constants rule |
 | One-step check implies all-future check | Property 2 — Tower property |
 
 ---
