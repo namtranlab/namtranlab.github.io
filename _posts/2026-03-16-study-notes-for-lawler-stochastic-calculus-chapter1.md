@@ -684,7 +684,7 @@ $$P\{X_j = 1\} = P\{X_j = -1\} = \tfrac{1}{2}$$
 
 **The bets are:**
 
-$$B_1 = 1, \qquad B_j = 2^{j-1} \text{ if } X_1 = X_2 = \cdots = X_{j-1} = -1, \quad \text{otherwise } B_j = 0.$$
+$$B_1 = 1$$, $$B_j = 2^{j-1} \text{ if } X_1 = X_2 = \cdots = X_{j-1} = -1$$, otherwise  $$B_j = 0$$.
 
 **The winnings $W_n$:** either $+1$ (if we won at some point), or $-(1 + 2 + 4 + \cdots + 2^{n-1}) = -(2^n - 1)$ (if we lost all $n$ rounds).
 
