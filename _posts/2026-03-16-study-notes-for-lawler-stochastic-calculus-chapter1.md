@@ -609,7 +609,7 @@ $$W_n = \sum_{j=1}^n B_j [M_j - M_{j-1}] = \sum_{j=1}^n B_j \Delta M_j.$$"
 
 $$E[W_{n+1} \mid \mathcal{F}_n] = E[W_n + B_{n+1}(M_{n+1} - M_n) \mid \mathcal{F}_n].$$
 
-Since $W_n$ is $$\mathcal{F}_n$$-measurable, $E[W_n \mid \mathcal{F}_n] = W_n$. Also, since $B_{n+1}$ is $$\mathcal{F}_n$$-measurable and $M$ is a martingale,
+Since $W_n$ is $$\mathcal{F}_n$$-measurable, $$E[W_n \mid \mathcal{F}_n] = W_n$$. Also, since $B_{n+1}$ is $$\mathcal{F}_n$$-measurable and $M$ is a martingale,
 
 $$E[B_{n+1}(M_{n+1} - M_n) \mid \mathcal{F}_n] = B_{n+1} E[M_{n+1} - M_n \mid \mathcal{F}_n] = 0.$$
 
