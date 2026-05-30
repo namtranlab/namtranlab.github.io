@@ -141,7 +141,7 @@ A martingale is the mathematical model of a <em>fair game</em>. At every moment,
 
 <div class="key-idea"><strong>To verify the martingale property it suffices to check one step at a time.</strong> Rather than checking $E[M_n \mid \mathcal{F}_m] = M_m$ for all pairs $m < n$, it is enough to verify $E[M_{n+1} \mid \mathcal{F}_n] = M_n$ for every $n$. The tower property of §1.1 propagates this to all future times.</div>
 
-<div class="key-idea"><strong>A martingale has constant expected value.</strong> Taking the full expectation: $\mathds{E} [M_n] = \mathds{E} [E[M_n \mid \mathcal{F}_0]] = \mathds{E} [M_0]$ for all $n$. The mean is time-invariant — a necessary (but not sufficient) condition for fairness.</div>
+<div class="key-idea"><strong>A martingale has constant expected value.</strong> Taking the full expectation: $\mathbb{E}[M_n] = \mathbb{E}[E[M_n \mid \mathcal{F}_0]] = \mathbb{E}[M_0]$ for all $n$. The mean is time-invariant — a necessary (but not sufficient) condition for fairness.</div>
 
 ---
 
