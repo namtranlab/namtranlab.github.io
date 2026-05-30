@@ -661,15 +661,12 @@ $$= E[S_n^2 \mid \mathcal{F}_n] + 2E[S_n X_{n+1} \mid \mathcal{F}_n] + E[X_{n+1}
 
 Therefore $$E[S_{n+1}^2 \mid \mathcal{F}_n] = S_n^2 + \sigma_{n+1}^2$$, and:
 
-$$E[M_{n+1} \mid \mathcal{F}_n] = E[S_{n+1}^2 - A_{n+1} \mid \mathcal{F}_n] \\
-&= S_n^2 + \sigma_{n+1}^2 - (A_n + \sigma_{n+1}^2) = S_n^2 - A_n = M_n. \checkmark$$
-
 $$
 \begin{aligned}
 E[M_{n+1} \mid \mathcal{F}_n]
 &= E[S_{n+1}^2 - A_{n+1} \mid \mathcal{F}_n] \\
 &= S_n^2 + \sigma_{n+1}^2 - (A_n + \sigma_{n+1}^2)
- = S_n^2 - A_n = M_n.
+ = S_n^2 - A_n = M_n. \checkmark
 \end{aligned}
 $$
 
