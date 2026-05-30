@@ -305,10 +305,10 @@ Every step in §1.2 relies directly on the five properties of conditional expect
 | Martingale argument | §1.1 property used |
 |---|---|
 | $E[S_n \mid \mathcal{F}_n] = S_n$ — current sum is known | Property 1 — Known $Y$ |
-| $E[X_{n+1} \mid \mathcal{F}_n] = E[X_{n+1}] = 0$ — future increment is independent | Property 3 — Independence |
-| $E[S_n X_{n+1} \mid \mathcal{F}_n] = S_n E[X_{n+1} \mid \mathcal{F}_n]$ — $S_n$ pulls out | Property 5 — Constants rule |
-| $E[W_n \mid \mathcal{F}_n] = W_n$ — current winnings are known | Property 1 — Known $Y$ |
-| $E[B_{n+1}(M_{n+1} - M_n) \mid \mathcal{F}_n] = B_{n+1} \cdot 0$ — $B_{n+1}$ pulls out | Property 5 — Constants rule |
+| $$E[X_{n+1} \mid \mathcal{F}_n] = E[X_{n+1}] = 0$$ — future increment is independent | Property 3 — Independence |
+| $$E[S_n X_{n+1} \mid \mathcal{F}_n] = S_n E[X_{n+1} \mid \mathcal{F}_n]$$ — $S_n$ pulls out | Property 5 — Constants rule |
+| $$E[W_n \mid \mathcal{F}_n] = W_n$$ — current winnings are known | Property 1 — Known $Y$ |
+| $$E[B_{n+1}(M_{n+1} - M_n) \mid \mathcal{F}_n] = B_{n+1} \cdot 0$$ — $B_{n+1}$ pulls out | Property 5 — Constants rule |
 | One-step check implies all-future check | Property 2 — Tower property |
 
 ---
