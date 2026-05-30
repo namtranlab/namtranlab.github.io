@@ -174,7 +174,7 @@ $$E[M_n \mid \mathcal{F}_m] = M_m. \tag{1.4}$$
 
 <div class="note-abstract" markdown="1">
 If the condition of martingale ($E[M_n \mid \mathcal{F}_m] = M_m$) is replaced with $E[M_n \mid \mathcal{F}_m] \geq M_m$, then the process is called a <b>submartingale</b>. If it is replaced with $E[M_n \mid \mathcal{F}_m] \leq M_m$, then it is called a <b>supermartingale</b>. 
-</div>as
+</div>
 
 | Process | Condition | Interpretation |
 |---|---|---|
@@ -230,7 +230,7 @@ The key steps use Properties 1 and 5 from §1.1 in sequence: $W_n$ is known at t
 
 ---
 
-### Part 6 — Worked Examples
+### Part 5 — Worked Examples
 
 <div class="example-block" markdown="1">
 <div class="ex-title">Example 1.2.1 — Simple random walk as a martingale <span class="ex-pill pill-ex">Example</span></div>
