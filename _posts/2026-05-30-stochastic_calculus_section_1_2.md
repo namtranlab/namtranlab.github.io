@@ -219,7 +219,7 @@ $$E[B_{n+1}(M_{n+1} - M_n) \mid \mathcal{F}_n] = B_{n+1} E[M_{n+1} - M_n \mid \m
 
 Therefore, $E[W_{n+1} \mid \mathcal{F}_n] = W_n$."
 
-The key steps use Properties 1 and 5 from §1.1 in sequence: $W_n$ is known at time $n$ (Property 1); $B_{n+1}$ is known at time $n$ and pulls out (Property 5); the remaining factor $E[M_{n+1} - M_n \mid \mathcal{F}_n] = 0$ by the martingale property of $M$.
+$W_n$ is known at time $n$. $B_{n+1}$ is known at time $n$ and pulls out. The remaining factor $E[M_{n+1} - M_n \mid \mathcal{F}_n] = 0$ by the martingale property of $M$.
 
 <div class="misconception-block">
   <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception — Predictability</b></span></div>
