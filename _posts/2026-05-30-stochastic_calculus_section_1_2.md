@@ -173,7 +173,7 @@ $$E[M_n \mid \mathcal{F}_m] = M_m. \tag{1.4}$$
 ### Part 3 — Sub- and Supermartingales
 
 <div class="note-abstract" markdown="1">
-If the condition of martingale ($E[M_n \mid \mathcal{F}_m] = M_m$) is replaced with $E[M_n \mid \mathcal{F}_m] \geq M_m$, then the process is called a <b>submartingale</b>. If it is replaced with $E[M_n \mid \mathcal{F}_m] \leq M_m$, then it is called a <b>supermartingale</b>. 
+If the condition of martingale $E[M_n \mid \mathcal{F}_m] = M_m$ is replaced with $E[M_n \mid \mathcal{F}_m] \geq M_m$, then the process is called a <b>submartingale</b>. If it is replaced with $E[M_n \mid \mathcal{F}_m] \leq M_m$, then it is called a <b>supermartingale</b>. 
 </div>
 
 | Process | Condition | Interpretation |
