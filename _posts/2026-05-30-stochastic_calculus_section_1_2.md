@@ -4,7 +4,7 @@ title: "Stochastic Calculus — Study Notes"
 description: Study notes for Lawler Stochastic Calculus (Chapter 1).
 tags: Stochastic Calculus
 giscus_comments: true
-date: 2026-05-30
+date: 2020-05-30
 featured: true
 thumbnail: https://magica.com/_next/image?url=https%3A%2F%2Fimg.youtube.com%2Fvi%2FIBw5a8ByyzY%2Fmaxresdefault.jpg&w=3840&q=75
 
