@@ -228,6 +228,30 @@ The key steps use Properties 1 and 5 from §1.1 in sequence: $W_n$ is known at t
   <div class="mc-correct"><strong>Correct:</strong> The $\mathcal{F}_{n-1}$-measurability of $B_n$ is the mathematical statement that you must commit your bet <em>before</em> observing $\Delta M_n$. If $B_n$ were allowed to depend on $M_n$ (i.e., be $\mathcal{F}_n$-measurable), then you could trivially "bet" after seeing the outcome and always win. The non-anticipating condition is what makes the game fair and is precisely the condition that forces $W_n$ to remain a martingale.</div>
 </div>
 
+---
+
+### Part 5 — Worked Examples
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Example 1.2.1 — Simple random walk as a martingale <span class="ex-pill pill-ex">Example</span></div>
+
+"Suppose $X_1, X_2, \ldots$ are independent random variables with $E[X_j] = 0$ for each $j$. Let $S_0 = 0$ and $S_n = X_1 + \cdots + X_n$. In the last section we showed that if $m < n$, then $E[S_n \mid \mathcal{F}_m] = S_m$. Hence, $S_n$ is a martingale with respect to $\mathcal{F}_n$, the information in $X_1, \ldots, X_n$."
+
+**Verification using the one-step criterion:**
+
+Check $E[S_{n+1} \mid \mathcal{F}_n] = S_n$:
+
+$$E[S_{n+1} \mid \mathcal{F}_n] = E[S_n + X_{n+1} \mid \mathcal{F}_n] = E[S_n \mid \mathcal{F}_n] + E[X_{n+1} \mid \mathcal{F}_n].$$
+
+- $S_n$ is $\mathcal{F}_n$-measurable $\Rightarrow$ $E[S_n \mid \mathcal{F}_n] = S_n$ (Property 1).
+- $X_{n+1}$ is independent of $\mathcal{F}_n$ and $E[X_{n+1}] = 0$ $\Rightarrow$ $E[X_{n+1} \mid \mathcal{F}_n] = 0$ (Property 3).
+
+$$E[S_{n+1} \mid \mathcal{F}_n] = S_n + 0 = S_n. \checkmark$$
+
+<div class="ex-lesson"><strong>Key point:</strong> Mean-zero independent increments are the prototype martingale. The increments $X_j$ play the role of "fair coin tosses" — no single step has a predictable direction, so the running sum has no predictable drift.</div>
+</div>
+
+
 
 ---
 
