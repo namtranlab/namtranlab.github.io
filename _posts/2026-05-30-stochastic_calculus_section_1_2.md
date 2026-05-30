@@ -267,14 +267,14 @@ Therefore $$E[S_{n+1}^2 \mid \mathcal{F}_n] = S_n^2 + \sigma_{n+1}^2$$, and:
 
 $$E[M_{n+1} \mid \mathcal{F}_n] = E[S_{n+1}^2 - A_{n+1} \mid \mathcal{F}_n] = S_n^2 + \sigma_{n+1}^2 - (A_n + \sigma_{n+1}^2) = S_n^2 - A_n = M_n. \checkmark$$
 
-$$\[
+\[
 \begin{aligned}
 E[M_{n+1} \mid \mathcal{F}_n]
 &= E[S_{n+1}^2 - A_{n+1} \mid \mathcal{F}_n] \\
 &= S_n^2 + \sigma_{n+1}^2 - (A_n + \sigma_{n+1}^2)
  = S_n^2 - A_n = M_n. \qquad \checkmark
 \end{aligned}
-\]$$
+\]
 
 
 <div class="ex-lesson"><strong>Key point:</strong> $S_n^2$ alone is a submartingale (it grows by $\sigma_{n+1}^2$ in expectation at each step). Subtracting the cumulative variance $A_n$ exactly compensates this drift and restores the martingale property. The sequence $A_n$ is called the <em>predictable compensator</em> of $S_n^2$. This is the discrete analogue of the quadratic variation.</div>
