@@ -254,11 +254,11 @@ $$E[S_{n+1} \mid \mathcal{F}_n] = S_n + 0 = S_n. \checkmark$$
 <div class="example-block" markdown="1">
 <div class="ex-title">Example 1.2.2 — $S_n^2 - A_n$ as a martingale <span class="ex-pill pill-ex">Example</span></div>
 
-"Suppose $X_n, S_n, \mathcal{F}_n$ are as in Example 1.2.1 and also assume $\text{Var}[X_j] = E[X_j^2] = \sigma_j^2 < \infty$. Let
+Suppose $X_n, S_n, \mathcal{F}_n$ are as in Example 1.2.1 and also assume $\text{Var}[X_j] = E[X_j^2] = \sigma_j^2 < \infty$. Let
 
 $$A_n = \sigma_1^2 + \cdots + \sigma_n^2, \qquad M_n = S_n^2 - A_n,$$
 
-where $M_0 = 0$. Then $M_n$ is a martingale with respect to $\mathcal{F}_n$."
+where $M_0 = 0$. Then $M_n$ is a martingale with respect to $\mathcal{F}_n$.
 
 **Verification — one-step check:**
 
@@ -280,11 +280,11 @@ $$E[M_{n+1} \mid \mathcal{F}_n] = E[S_{n+1}^2 - A_{n+1} \mid \mathcal{F}_n] = S_
 <div class="example-block" markdown="1">
 <div class="ex-title">Example 1.2.3 — Discrete stochastic integral as a martingale <span class="ex-pill pill-ex">Example</span></div>
 
-"Discrete stochastic integral. Suppose that $M_0, M_1, \ldots$ is a martingale with respect to the filtration $\mathcal{F}_n$. For $n \geq 1$, let $\Delta M_n = M_n - M_{n-1}$. Let $B_j$ denote the 'bet' on the $j$th game … Let $W_n$ denote the winnings: $W_0 = 0$ and for $n \geq 1$,
+Discrete stochastic integral. Suppose that $M_0, M_1, \ldots$ is a martingale with respect to the filtration $\mathcal{F}_n$. For $n \geq 1$, let $\Delta M_n = M_n - M_{n-1}$. Let $B_j$ denote the 'bet' on the $j$th game … Let $W_n$ denote the winnings: $W_0 = 0$ and for $n \geq 1$,
 
 $$W_n = \sum_{j=1}^n B_j \Delta M_j.$$
 
-… We claim that under these assumptions, $W_n$ is a martingale with respect to $\mathcal{F}_n$."
+… We claim that under these assumptions, $W_n$ is a martingale with respect to $\mathcal{F}_n$.
 
 This was verified in Part 5. The conclusion: **no allowable betting strategy on a martingale can create a predictable profit in finite time.** You can change how you bet, but you cannot change the fundamental fairness of the game.
 
@@ -294,11 +294,11 @@ This was verified in Part 5. The conclusion: **no allowable betting strategy on 
 <div class="example-block" markdown="1">
 <div class="ex-title">Example 1.2.4 — The martingale betting strategy: infinite time beats the game <span class="ex-pill pill-ex">Example</span></div>
 
-"Martingale betting strategy. Let $X_1, X_2, \ldots$ be independent random variables with
+Martingale betting strategy. Let $X_1, X_2, \ldots$ be independent random variables with
 
 $$P\{X_j = 1\} = P\{X_j = -1\} = \tfrac{1}{2}. \tag{1.6}$$
 
-… We will consider the following betting strategy. We start by betting \$1. If we win, we quit; otherwise, we bet \$2 on the next game. If we win the second game, we quit; otherwise we double our bet to \$4 and play. Each time we lose, we double our bet. At the time that we win, we will be ahead \$1."
+… We will consider the following betting strategy. We start by betting \$1. If we win, we quit; otherwise, we bet \$2 on the next game. If we win the second game, we quit; otherwise we double our bet to \$4 and play. Each time we lose, we double our bet. At the time that we win, we will be ahead \$1.
 
 **The bets are:**
 
