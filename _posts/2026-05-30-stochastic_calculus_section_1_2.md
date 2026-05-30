@@ -251,6 +251,46 @@ $$E[S_{n+1} \mid \mathcal{F}_n] = S_n + 0 = S_n. \checkmark$$
 <div class="ex-lesson"><strong>Key point:</strong> Mean-zero independent increments are the prototype martingale. The increments $X_j$ play the role of "fair coin tosses" — no single step has a predictable direction, so the running sum has no predictable drift.</div>
 </div>
 
+<div class="example-block" markdown="1">
+<div class="ex-title">Example 1.2.2 — $S_n^2 - A_n$ as a martingale <span class="ex-pill pill-ex">Example</span></div>
+
+"Suppose $X_n, S_n, \mathcal{F}_n$ are as in Example 1.2.1 and also assume $\text{Var}[X_j] = E[X_j^2] = \sigma_j^2 < \infty$. Let
+
+$$A_n = \sigma_1^2 + \cdots + \sigma_n^2, \qquad M_n = S_n^2 - A_n,$$
+
+where $M_0 = 0$. Then $M_n$ is a martingale with respect to $\mathcal{F}_n$."
+
+**Verification — one-step check:**
+
+$$E[S_{n+1}^2 \mid \mathcal{F}_n] = E[(S_n + X_{n+1})^2 \mid \mathcal{F}_n]$$
+
+$$= E[S_n^2 \mid \mathcal{F}_n] + 2E[S_n X_{n+1} \mid \mathcal{F}_n] + E[X_{n+1}^2 \mid \mathcal{F}_n].$$
+
+- **Term 1:** $S_n^2$ is $\mathcal{F}_n$-measurable $\Rightarrow$ $E[S_n^2 \mid \mathcal{F}_n] = S_n^2$.
+- **Term 2:** $S_n$ pulls out; $E[X_{n+1} \mid \mathcal{F}_n] = E[X_{n+1}] = 0$ $\Rightarrow$ $2S_n \cdot 0 = 0$.
+- **Term 3:** $X_{n+1}$ independent of $\mathcal{F}_n$ $\Rightarrow$ $E[X_{n+1}^2 \mid \mathcal{F}_n] = E[X_{n+1}^2] = \sigma_{n+1}^2$.
+
+Therefore $E[S_{n+1}^2 \mid \mathcal{F}_n] = S_n^2 + \sigma_{n+1}^2$, and:
+
+$$E[M_{n+1} \mid \mathcal{F}_n] = E[S_{n+1}^2 - A_{n+1} \mid \mathcal{F}_n] = S_n^2 + \sigma_{n+1}^2 - (A_n + \sigma_{n+1}^2) = S_n^2 - A_n = M_n. \checkmark$$
+
+<div class="ex-lesson"><strong>Key point:</strong> $S_n^2$ alone is a submartingale (it grows by $\sigma_{n+1}^2$ in expectation at each step). Subtracting the cumulative variance $A_n$ exactly compensates this drift and restores the martingale property. The sequence $A_n$ is called the <em>predictable compensator</em> of $S_n^2$. This is the discrete analogue of the quadratic variation.</div>
+</div>
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Example 1.2.3 — Discrete stochastic integral as a martingale <span class="ex-pill pill-ex">Example</span></div>
+
+"Discrete stochastic integral. Suppose that $M_0, M_1, \ldots$ is a martingale with respect to the filtration $\mathcal{F}_n$. For $n \geq 1$, let $\Delta M_n = M_n - M_{n-1}$. Let $B_j$ denote the 'bet' on the $j$th game … Let $W_n$ denote the winnings: $W_0 = 0$ and for $n \geq 1$,
+
+$$W_n = \sum_{j=1}^n B_j \Delta M_j.$$
+
+… We claim that under these assumptions, $W_n$ is a martingale with respect to $\mathcal{F}_n$."
+
+This was verified in Part 5. The conclusion: **no allowable betting strategy on a martingale can create a predictable profit in finite time.** You can change how you bet, but you cannot change the fundamental fairness of the game.
+
+<div class="ex-lesson"><strong>Key point:</strong> This result is the discrete version of the Itô integral's martingale property. In Chapter 3, the bet $B_j$ becomes a continuous adapted process $A_t$ and $\Delta M_j$ becomes $dB_t$. The martingale property of $\int_0^t A_s \, dB_s$ follows from exactly the same reasoning.</div>
+</div>
+
 
 
 ---
