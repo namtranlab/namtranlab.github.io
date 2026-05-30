@@ -148,19 +148,15 @@ A martingale is the mathematical model of a <em>fair game</em>. At every moment,
 ### Part 2 — The Formal Definition
 
 <div class="note-abstract">
-"A martingale is a model of a fair game. Suppose $X_1, X_2, \ldots$ is a sequence of random variables to which we associate the filtration $\{\mathcal{F}_n\}$ where $\mathcal{F}_n$ is the information contained in $X_1, \ldots, X_n$."
-</div>
-
-<div class="example-block" markdown="1">
-<div class="ex-title">Definition — Martingale <span class="ex-pill pill-defn">Definition</span></div>
-
-"A sequence of random variables $M_0, M_1, \ldots$ is called a <b>martingale</b> with respect to the filtration $\{\mathcal{F}_n\}$ if:
+Suppose $X_1, X_2, \ldots$ is a sequence of random variables to which we associate the filtration $\{\mathcal{F}_n\}$ where $\mathcal{F}_n$ is the information contained in $X_1, \ldots, X_n$. A sequence of random variables $M_0, M_1, \ldots$ is called a <b>martingale</b> with respect to the filtration $\{\mathcal{F}_n\}$ if:
 
 (i) For each $n$, $M_n$ is an $\mathcal{F}_n$-measurable random variable with $E[\lvert M_n \rvert] < \infty$.
 
 (ii) If $m < n$, then
 
-$$E[M_n \mid \mathcal{F}_m] = M_m. \tag{1.4}$$"
+$$E[M_n \mid \mathcal{F}_m] = M_m. \tag{1.4}$$
+</div>
+
 
 **Unpacking condition (i):**
 - *$\mathcal{F}_n$-measurable:* the value of $M_n$ is fully determined by the information available at time $n$. It does not look into the future.
@@ -169,7 +165,7 @@ $$E[M_n \mid \mathcal{F}_m] = M_m. \tag{1.4}$$"
 **Unpacking condition (ii):** Given everything observed up to time $m$, the best prediction of $M_n$ at any later time $n > m$ is simply the current value $M_m$. The process has no predictable drift in either direction.
 
 <div class="ex-lesson"><strong>Equivalent one-step form:</strong> It suffices to check $E[M_{n+1} \mid \mathcal{F}_n] = M_n$ for every $n \geq 0$. The tower property then gives $E[M_{n+2} \mid \mathcal{F}_n] = E[E[M_{n+2} \mid \mathcal{F}_{n+1}] \mid \mathcal{F}_n] = E[M_{n+1} \mid \mathcal{F}_n] = M_n$, and so on for all future times.</div>
-</div>
+
 
 <div class="misconception-block">
   <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception</b></span></div>
