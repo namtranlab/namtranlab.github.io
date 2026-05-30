@@ -237,7 +237,7 @@ Check $E[S_{n+1} \mid \mathcal{F}_n] = S_n$:
 $$E[S_{n+1} \mid \mathcal{F}_n] = E[S_n + X_{n+1} \mid \mathcal{F}_n] = E[S_n \mid \mathcal{F}_n] + E[X_{n+1} \mid \mathcal{F}_n].$$
 
 - $S_n$ is $\mathcal{F}_n$-measurable $\Rightarrow$ $E[S_n \mid \mathcal{F}_n] = S_n$.
-- $X_{n+1}$ is independent of $$\mathcal{F}_n$$ and $E[X_{n+1}] = 0$ $\Rightarrow$ $E[X_{n+1} \mid \mathcal{F}_n] = 0$ (Property 3).
+- $X_{n+1}$ is independent of $$\mathcal{F}_n$$ and $E[X_{n+1}] = 0$ $\Rightarrow$ $E[X_{n+1} \mid \mathcal{F}_n] = 0$.
 
 $$E[S_{n+1} \mid \mathcal{F}_n] = S_n + 0 = S_n. \checkmark$$
 
