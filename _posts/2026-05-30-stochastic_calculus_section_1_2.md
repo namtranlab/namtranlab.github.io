@@ -139,7 +139,7 @@ A martingale is the mathematical model of a <em>fair game</em>. At every moment,
 
 <div class="key-idea"><strong>The martingale condition is a statement about conditional expectations.</strong> The defining equation $E[M_n \mid \mathcal{F}_m] = M_m$ for $m < n$ is a direct application of §1.1: given everything observed up to time $m$, the best prediction of $M_n$ is simply $M_m$ itself.</div>
 
-<div class="key-idea"><strong>To verify the martingale property it suffices to check one step at a time.</strong> Rather than checking $E[M_n \mid \mathcal{F}_m] = M_m$ for all pairs $m < n$, it is enough to verify $E[M_{n+1} \mid \mathcal{F}_n] = M_n$ for every $n$. The tower property of §1.1 propagates this to all future times.</div>
+<div class="key-idea"><strong>To verify the martingale property it suffices to check one step at a time (The One-Step Criterion).</strong> Rather than checking $E[M_n \mid \mathcal{F}_m] = M_m$ for all pairs $m < n$, it is enough to verify $E[M_{n+1} \mid \mathcal{F}_n] = M_n$ for every $n$. The tower property of §1.1 propagates this to all future times.</div>
 
 <div class="key-idea"><strong>A martingale has constant expected value.</strong> Taking the full expectation: $\mathbb{E}[M_n] = \mathbb{E}[E[M_n \mid \mathcal{F}_0]] = \mathbb{E}[M_0]$ for all $n$. The mean is time-invariant — a necessary (but not sufficient) condition for fairness.</div>
 
@@ -165,34 +165,6 @@ $$E[M_n \mid \mathcal{F}_m] = M_m. \tag{1.4}$$
 **Unpacking condition (ii):** Given everything observed up to time $m$, the best prediction of $M_n$ at any later time $n > m$ is simply the current value $M_m$. The process has no predictable drift in either direction.
 
 <div class="ex-lesson"><strong>Equivalent one-step form:</strong> It suffices to check $E[M_{n+1} \mid \mathcal{F}_n] = M_n$ for every $n \geq 0$. The tower property then gives $E[M_{n+2} \mid \mathcal{F}_n] = E[E[M_{n+2} \mid \mathcal{F}_{n+1}] \mid \mathcal{F}_n] = E[M_{n+1} \mid \mathcal{F}_n] = M_n$, and so on for all future times.</div>
-
----
-
-### Part 3 — The One-Step Criterion
-
-"In order to establish (1.4) it suffices to show for all $n$,
-
-$$E[M_{n+1} \mid \mathcal{F}_n] = M_n. \tag{1.5}$$
-
-In order to see this, we can use the tower property (1.2) for conditional expectation to see that
-
-$$E[M_{n+2} \mid \mathcal{F}_n] = E\bigl[E[M_{n+2} \mid \mathcal{F}_{n+1}]\bigr \mid \mathcal{F}_n] = E[M_{n+1} \mid \mathcal{F}_n] = M_n,$$
-
-and so forth."
-
-**Why this works — step by step:**
-
-Starting from (1.5), apply the tower property repeatedly. For any $k \geq 1$:
-
-$$E[M_{n+k} \mid \mathcal{F}_n] = E\bigl[E[M_{n+k} \mid \mathcal{F}_{n+k-1}] \mid \mathcal{F}_n\bigr] = E[M_{n+k-1} \mid \mathcal{F}_n].$$
-
-Applying this $k$ times reduces to $E[M_n \mid \mathcal{F}_n] = M_n$. So the one-step check propagates forward to all future times by induction.
-
-**Constant expected value:** Taking $m = 0$ in the definition:
-
-$$E[M_n] = E\bigl[E[M_n \mid \mathcal{F}_0]\bigr] = E[M_0].$$
-
-The expectation of a martingale is constant across all times.
 
 ---
 
