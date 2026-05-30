@@ -173,7 +173,8 @@ $$E[M_n \mid \mathcal{F}_m] = M_m. \tag{1.4}$$
 ### Part 3 — Sub- and Supermartingales
 
 <div class="note-abstract" markdown="1">
-If the condition of martingale ($E[M_n \mid \mathcal{F}_m] = M_m$) is replaced with $E[M_n \mid \mathcal{F}_m] \geq M_m$, then the process is called a <b>submartingale</b>. If it is replaced with $E[M_n \mid \mathcal{F}_m] \leq M_m$, then it is called a <b>supermartingale</b>. </div>
+If the condition of martingale ($E[M_n \mid \mathcal{F}_m] = M_m$) is replaced with $E[M_n \mid \mathcal{F}_m] \geq M_m$, then the process is called a <b>submartingale</b>. If it is replaced with $E[M_n \mid \mathcal{F}_m] \leq M_m$, then it is called a <b>supermartingale</b>. 
+</div>as
 
 | Process | Condition | Interpretation |
 |---|---|---|
@@ -184,7 +185,8 @@ If the condition of martingale ($E[M_n \mid \mathcal{F}_m] = M_m$) is replaced w
 In other words, games that are always in one's favour are submartingales and games that are always against one are supermartingales. (At most games in Las Vegas, one's winnings give a supermartingale.)
 
 <div class="misconception-block">
-  <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception — Sub vs Super</b></span></div>
+  <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception — Sub vs Super</b></span>
+  </div>
   <div class="mc-wrong"><strong>Wrong:</strong> "A supermartingale is 'super' — it grows faster than a martingale."</div>
   <div class="mc-correct"><strong>Correct:</strong> The naming is counterintuitive. A supermartingale has $E[M_n \mid \mathcal{F}_m] \leq M_m$ — its expected value <em>decreases</em> over time (unfavourable game). A submartingale has $E[M_n \mid \mathcal{F}_m] \geq M_m$ — its expected value <em>increases</em> (favourable game). The terminology is inherited from the analogy with superharmonic and subharmonic functions, not from a comparison of growth rates. A martingale is simultaneously both a submartingale and a supermartingale.</div>
 </div>
