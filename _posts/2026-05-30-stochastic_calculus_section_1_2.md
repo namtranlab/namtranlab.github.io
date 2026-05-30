@@ -261,7 +261,7 @@ $$= E[S_n^2 \mid \mathcal{F}_n] + 2E[S_n X_{n+1} \mid \mathcal{F}_n] + E[X_{n+1}
 
 - **Term 1:** $S_n^2$ is $\mathcal{F}_n$-measurable $\Rightarrow$ $E[S_n^2 \mid \mathcal{F}_n] = S_n^2$.
 - **Term 2:** $S_n$ pulls out; $$E[X_{n+1} \mid \mathcal{F}_n] = E[X_{n+1}] = 0$$ $\Rightarrow$ $2S_n \cdot 0 = 0$.
-- **Term 3:** $X_{n+1}$ independent of $$\mathcal{F}_n$$ $\Rightarrow$ $E[X_{n+1}^2 \mid \mathcal{F}_n] = E[X_{n+1}^2] = \sigma_{n+1}^2$.
+- **Term 3:** $X_{n+1}$ independent of $$\mathcal{F}_n$$ $\Rightarrow$ $$E[X_{n+1}^2 \mid \mathcal{F}_n] = E[X_{n+1}^2] = \sigma_{n+1}^2$$.
 
 Therefore $$E[S_{n+1}^2 \mid \mathcal{F}_n] = S_n^2 + \sigma_{n+1}^2$$, and:
 
