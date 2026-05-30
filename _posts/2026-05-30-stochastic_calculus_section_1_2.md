@@ -217,15 +217,9 @@ Since $W_n$ is $$\mathcal{F}_n$$-measurable, $E[W_n \mid \mathcal{F}_n] = W_n$. 
 
 $$E[B_{n+1}(M_{n+1} - M_n) \mid \mathcal{F}_n] = B_{n+1} E[M_{n+1} - M_n \mid \mathcal{F}_n] = 0.$$
 
-Therefore, $E[W_{n+1} \mid \mathcal{F}_n] = W_n$."
+Therefore, $E[W_{n+1} \mid \mathcal{F}_n] = W_n$.
 
 $W_n$ is known at time $n$. $B_{n+1}$ is known at time $n$ and pulls out. The remaining factor $E[M_{n+1} - M_n \mid \mathcal{F}_n] = 0$ by the martingale property of $M$.
-
-<div class="misconception-block">
-  <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception — Predictability</b></span></div>
-  <div class="mc-wrong"><strong>Wrong:</strong> "$B_n$ being $\mathcal{F}_{n-1}$-measurable is just a technicality — any adapted strategy should work."</div>
-  <div class="mc-correct"><strong>Correct:</strong> The $\mathcal{F}_{n-1}$-measurability of $B_n$ is the mathematical statement that you must commit your bet <em>before</em> observing $\Delta M_n$. If $B_n$ were allowed to depend on $M_n$ (i.e., be $\mathcal{F}_n$-measurable), then you could trivially "bet" after seeing the outcome and always win. The non-anticipating condition is what makes the game fair and is precisely the condition that forces $W_n$ to remain a martingale.</div>
-</div>
 
 ---
 
@@ -234,7 +228,7 @@ $W_n$ is known at time $n$. $B_{n+1}$ is known at time $n$ and pulls out. The re
 <div class="example-block" markdown="1">
 <div class="ex-title">Example 1.2.1 — Simple random walk as a martingale <span class="ex-pill pill-ex">Example</span></div>
 
-"Suppose $X_1, X_2, \ldots$ are independent random variables with $E[X_j] = 0$ for each $j$. Let $S_0 = 0$ and $S_n = X_1 + \cdots + X_n$. In the last section we showed that if $m < n$, then $E[S_n \mid \mathcal{F}_m] = S_m$. Hence, $S_n$ is a martingale with respect to $\mathcal{F}_n$, the information in $X_1, \ldots, X_n$."
+Suppose $X_1, X_2, \ldots$ are independent random variables with $E[X_j] = 0$ for each $j$. Let $S_0 = 0$ and $S_n = X_1 + \cdots + X_n$. In the last section we showed that if $m < n$, then $E[S_n \mid \mathcal{F}_m] = S_m$. Hence, $S_n$ is a martingale with respect to $\mathcal{F}_n$, the information in $X_1, \ldots, X_n$.
 
 **Verification using the one-step criterion:**
 
@@ -242,8 +236,8 @@ Check $E[S_{n+1} \mid \mathcal{F}_n] = S_n$:
 
 $$E[S_{n+1} \mid \mathcal{F}_n] = E[S_n + X_{n+1} \mid \mathcal{F}_n] = E[S_n \mid \mathcal{F}_n] + E[X_{n+1} \mid \mathcal{F}_n].$$
 
-- $S_n$ is $\mathcal{F}_n$-measurable $\Rightarrow$ $E[S_n \mid \mathcal{F}_n] = S_n$ (Property 1).
-- $X_{n+1}$ is independent of $\mathcal{F}_n$ and $E[X_{n+1}] = 0$ $\Rightarrow$ $E[X_{n+1} \mid \mathcal{F}_n] = 0$ (Property 3).
+- $S_n$ is $\mathcal{F}_n$-measurable $\Rightarrow$ $E[S_n \mid \mathcal{F}_n] = S_n$.
+- $X_{n+1}$ is independent of $$\mathcal{F}_n$$ and $E[X_{n+1}] = 0$ $\Rightarrow$ $E[X_{n+1} \mid \mathcal{F}_n] = 0$ (Property 3).
 
 $$E[S_{n+1} \mid \mathcal{F}_n] = S_n + 0 = S_n. \checkmark$$
 
