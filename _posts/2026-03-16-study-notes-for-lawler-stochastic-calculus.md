@@ -1,6 +1,6 @@
 ---
 layout: distill
-title: "Stochastic Calculus — Study Notes"
+title: "Stochastic Calculus (Lawler) — Chapter 1"
 description: Study notes for Lawler Stochastic Calculus (Chapter 1).
 tags: Stochastic Calculus
 giscus_comments: true
