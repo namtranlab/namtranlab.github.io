@@ -277,7 +277,7 @@ Martingale betting strategy. Let $X_1, X_2, \ldots$ be independent random variab
 
 $$P\{X_j = 1\} = P\{X_j = -1\} = \tfrac{1}{2}$$
 
-… We will consider the following betting strategy. We start by betting <span>1</span>. If we win, we quit; otherwise, we bet <span>2</span> on the next game. If we win the second game, we quit; otherwise we double our bet to <span>4</span> and play. Each time we lose, we double our bet. At the time that we win, we will be ahead <span>1</span>d.
+… We will consider the following betting strategy. We start by betting <span>$1</span>. If we win, we quit; otherwise, we bet <span>$2</span> on the next game. If we win the second game, we quit; otherwise we double our bet to <span>$4</span> and play. Each time we lose, we double our bet. At the time that we win, we will be ahead <span>$1</span>d.
 
 **The bets are:**
 
