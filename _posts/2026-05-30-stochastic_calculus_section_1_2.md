@@ -196,7 +196,7 @@ In other words, games that are always in one's favour are submartingales and gam
 ### Part 4 — The Discrete Stochastic Integral
 
 <div class="note-abstract" markdown="1">
-"Suppose that $M_0, M_1, \ldots$ is a martingale with respect to the filtration $\mathcal{F}_n$. For $n \geq 1$, let $\Delta M_n = M_n - M_{n-1}$. Let $B_j$ denote the 'bet' on the $j$th game. We allow negative values of $B_j$ which indicate betting that the price will go down or the game will be lost. Let $W_n$ denote the winnings in this strategy: $W_0 = 0$ and for $n \geq 1$,
+Suppose that $M_0, M_1, \ldots$ is a martingale with respect to the filtration $\mathcal{F}_n$. For $n \geq 1$, let $\Delta M_n = M_n - M_{n-1}$. Let $B_j$ denote the 'bet' on the $j$th game. We allow negative values of $B_j$ which indicate betting that the price will go down or the game will be lost. Let $W_n$ denote the winnings in this strategy: $W_0 = 0$ and for $n \geq 1$,
 
 $$W_n = \sum_{j=1}^n B_j [M_j - M_{j-1}] = \sum_{j=1}^n B_j \Delta M_j.$$"
 </div>
@@ -291,7 +291,31 @@ This was verified in Part 5. The conclusion: **no allowable betting strategy on 
 <div class="ex-lesson"><strong>Key point:</strong> This result is the discrete version of the Itô integral's martingale property. In Chapter 3, the bet $B_j$ becomes a continuous adapted process $A_t$ and $\Delta M_j$ becomes $dB_t$. The martingale property of $\int_0^t A_s \, dB_s$ follows from exactly the same reasoning.</div>
 </div>
 
+<div class="example-block" markdown="1">
+<div class="ex-title">Example 1.2.4 — The martingale betting strategy: infinite time beats the game <span class="ex-pill pill-ex">Example</span></div>
 
+"Martingale betting strategy. Let $X_1, X_2, \ldots$ be independent random variables with
+
+$$P\{X_j = 1\} = P\{X_j = -1\} = \tfrac{1}{2}. \tag{1.6}$$
+
+… We will consider the following betting strategy. We start by betting \$1. If we win, we quit; otherwise, we bet \$2 on the next game. If we win the second game, we quit; otherwise we double our bet to \$4 and play. Each time we lose, we double our bet. At the time that we win, we will be ahead \$1."
+
+**The bets are:**
+
+$$B_1 = 1, \qquad B_j = 2^{j-1} \text{ if } X_1 = X_2 = \cdots = X_{j-1} = -1, \quad \text{otherwise } B_j = 0.$$
+
+**The winnings $W_n$:** either $+1$ (if we won at some point), or $-(1 + 2 + 4 + \cdots + 2^{n-1}) = -(2^n - 1)$ (if we lost all $n$ rounds).
+
+**Direct verification that $E[W_n] = 0$:**
+
+$$E[W_n] = 1 \cdot \Bigl(1 - \tfrac{1}{2^n}\Bigr) + \bigl(-(2^n - 1)\bigr) \cdot \tfrac{1}{2^n} = 1 - \tfrac{1}{2^n} - 1 + \tfrac{1}{2^n} = 0.$$
+
+**The paradox:** With probability one we eventually win, so $W_\infty = \lim_{n \to \infty} W_n = 1$, giving $E[W_\infty] = 1 \neq 0 = E[W_0]$.
+
+This does **not** contradict the martingale property of $W_n$. The issue is that the strategy requires potentially infinite bets ($B_n = 2^{n-1}$) — the boundedness condition $\lvert B_n \rvert \leq K_n$ is satisfied for each fixed $n$, but the constants $K_n$ grow without bound. In finite time $W_n$ is always a martingale; the "beating" of the game only emerges after infinitely many steps.
+
+<div class="ex-lesson"><strong>Key point:</strong> You can beat a fair game in infinite time by tolerating potentially unbounded bets and losses. The martingale property of $W_n$ — which holds for every finite $n$ — does not prevent $E[W_\infty] \neq E[W_0]$. This distinction motivates the Optional Sampling Theorem in §1.3, which gives conditions under which $E[W_T] = E[W_0]$ is preserved at stopping times $T$.</div>
+</div>
 
 ---
 
