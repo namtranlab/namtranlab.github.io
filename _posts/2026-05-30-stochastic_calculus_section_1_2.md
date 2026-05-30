@@ -148,7 +148,9 @@ A martingale is the mathematical model of a <em>fair game</em>. At every moment,
 ### Part 2 — The Formal Definition
 
 <div class="note-abstract" markdown="1">
-Suppose $X_1, X_2, \ldots$ is a sequence of random variables to which we associate the filtration $\{\mathcal{F}_n\}$ where $\mathcal{F}_n$ is the information contained in $X_1, \ldots, X_n$. A sequence of random variables $M_0, M_1, \ldots$ is called a <b>martingale</b> with respect to the filtration $\{\mathcal{F}_n\}$ if:
+Suppose $X_1, X_2, \ldots$ is a sequence of random variables to which we associate the filtration $\{\mathcal{F}_n\}$ where $\mathcal{F}_n$ is the information contained in $X_1, \ldots, X_n$. 
+
+A sequence of random variables $M_0, M_1, \ldots$ is called a <b>martingale</b> with respect to the filtration $\{\mathcal{F}_n\}$ if:
 
 (i) For each $n$, $M_n$ is an $\mathcal{F}_n$-measurable random variable with $E[\lvert M_n \rvert] < \infty$.
 
@@ -168,9 +170,10 @@ $$E[M_n \mid \mathcal{F}_m] = M_m. \tag{1.4}$$
 
 ---
 
-### Part 4 — Sub- and Supermartingales
+### Part 3 — Sub- and Supermartingales
 
-"If the condition (1.4) is replaced with $E[M_n \mid \mathcal{F}_m] \geq M_m$, then the process is called a <b>submartingale</b>. If it is replaced with $E[M_n \mid \mathcal{F}_m] \leq M_m$, then it is called a <b>supermartingale</b>."
+<div class="note-abstract" markdown="1">
+If the condition of martingale ($E[M_n \mid \mathcal{F}_m] = M_m$) is replaced with $E[M_n \mid \mathcal{F}_m] \geq M_m$, then the process is called a <b>submartingale</b>. If it is replaced with $E[M_n \mid \mathcal{F}_m] \leq M_m$, then it is called a <b>supermartingale</b>. </div>
 
 | Process | Condition | Interpretation |
 |---|---|---|
@@ -178,7 +181,7 @@ $$E[M_n \mid \mathcal{F}_m] = M_m. \tag{1.4}$$
 | **Submartingale** | $E[M_n \mid \mathcal{F}_m] \geq M_m$ | Favourable game — expected value grows over time |
 | **Supermartingale** | $E[M_n \mid \mathcal{F}_m] \leq M_m$ | Unfavourable game — expected value shrinks over time |
 
-"In other words, games that are always in one's favour are submartingales and games that are always against one are supermartingales. (At most games in Las Vegas, one's winnings give a supermartingale.)"
+In other words, games that are always in one's favour are submartingales and games that are always against one are supermartingales. (At most games in Las Vegas, one's winnings give a supermartingale.)
 
 <div class="misconception-block">
   <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception — Sub vs Super</b></span></div>
@@ -188,15 +191,14 @@ $$E[M_n \mid \mathcal{F}_m] = M_m. \tag{1.4}$$
 
 ---
 
-### Part 5 — The Discrete Stochastic Integral
+### Part 4 — The Discrete Stochastic Integral
 
-<div class="note-abstract">
-The discrete stochastic integral is the rigorous formulation of a betting strategy on a martingale. The central result — that you cannot systematically beat a fair game with an allowable betting strategy in finite time — is the discrete prototype of the continuous Itô integral developed in Chapter 3.
-</div>
-
+<div class="note-abstract" markdown="1">
 "Suppose that $M_0, M_1, \ldots$ is a martingale with respect to the filtration $\mathcal{F}_n$. For $n \geq 1$, let $\Delta M_n = M_n - M_{n-1}$. Let $B_j$ denote the 'bet' on the $j$th game. We allow negative values of $B_j$ which indicate betting that the price will go down or the game will be lost. Let $W_n$ denote the winnings in this strategy: $W_0 = 0$ and for $n \geq 1$,
 
 $$W_n = \sum_{j=1}^n B_j [M_j - M_{j-1}] = \sum_{j=1}^n B_j \Delta M_j.$$"
+</div>
+
 
 **Three conditions on the betting strategy $B_n$:**
 
