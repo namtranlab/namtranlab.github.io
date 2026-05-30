@@ -109,8 +109,6 @@ function toggleChapter(id) {
 
 ### Notation at a Glance
 
-<div class="notation-panel">
-<div class="np-title">§ 1.2 — Notation at a Glance</div>
 
 | Symbol | Meaning |
 |---|---|
@@ -126,7 +124,6 @@ function toggleChapter(id) {
 | $E[M_n \mid \mathcal{F}_m] \leq M_m$ | Supermartingale condition |
 | $\mathcal{F}_{n-1}$-measurable | $B_n$ is known before time $n$ — the "non-anticipating" condition |
 
-</div>
 
 ---
 
