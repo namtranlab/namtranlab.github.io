@@ -275,7 +275,7 @@ $$E[M_{n+1} \mid \mathcal{F}_n] = E[S_{n+1}^2 - A_{n+1} \mid \mathcal{F}_n] = S_
 
 Martingale betting strategy. Let $X_1, X_2, \ldots$ be independent random variables with
 
-$$P\{X_j = 1\} = P\{X_j = -1\} = \tfrac{1}{2}. \tag{1.6}$$
+$$P\{X_j = 1\} = P\{X_j = -1\} = \tfrac{1}{2}$$
 
 … We will consider the following betting strategy. We start by betting $1. If we win, we quit; otherwise, we bet $2 on the next game. If we win the second game, we quit; otherwise we double our bet to $4 and play. Each time we lose, we double our bet. At the time that we win, we will be ahead $1.
 
