@@ -315,20 +315,6 @@ Every step in §1.2 relies directly on the five properties of conditional expect
 
 ### Term Glossary
 
-<div class="glossary-entry">
-<div class="gterm">Martingale <span class="gcat cat-defn">Definition</span></div>
-A sequence $M_0, M_1, \ldots$ adapted to $\{\mathcal{F}_n\}$ with $E[\lvert M_n \rvert] < \infty$ and $E[M_n \mid \mathcal{F}_m] = M_m$ for all $m < n$. The mathematical model of a fair game: no predictable drift in either direction. Equivalent one-step form: $E[M_{n+1} \mid \mathcal{F}_n] = M_n$ for every $n$.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Submartingale <span class="gcat cat-defn">Definition</span></div>
-A process satisfying $E[M_n \mid \mathcal{F}_m] \geq M_m$ for $m < n$. Expected value is non-decreasing over time — models a game systematically in the player's favour. Every martingale is also a submartingale (and a supermartingale). The name follows the analogy with subharmonic functions, not from the size of the process.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Supermartingale <span class="gcat cat-defn">Definition</span></div>
-A process satisfying $E[M_n \mid \mathcal{F}_m] \leq M_m$ for $m < n$. Expected value is non-increasing over time — models a game systematically against the player. Casino games give supermartingales for the player's winnings.
-</div>
 
 <div class="glossary-entry">
 <div class="gterm">Adapted process <span class="gcat cat-defn">Definition</span></div>
@@ -353,16 +339,6 @@ A sequence $B_1, B_2, \ldots$ where $B_n$ is $\mathcal{F}_{n-1}$-measurable for 
 <div class="glossary-entry">
 <div class="gterm">Discrete stochastic integral $W_n = \sum_{j=1}^n B_j \Delta M_j$ <span class="gcat cat-defn">Definition</span></div>
 The cumulative winnings from applying a predictable betting strategy $\{B_j\}$ to a martingale $\{M_j\}$. When $B_j$ is predictable and bounded, $W_n$ is itself a martingale. This is the discrete-time prototype of the Itô integral $\int_0^t A_s \, dB_s$ in Chapter 3.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Predictable compensator $A_n$ <span class="gcat cat-defn">Definition</span></div>
-In Example 1.2.2, the sequence $A_n = \sigma_1^2 + \cdots + \sigma_n^2$ is subtracted from $S_n^2$ to form the martingale $M_n = S_n^2 - A_n$. $A_n$ is predictable (known at time $n-1$) and exactly cancels the expected growth of $S_n^2$ at each step. In continuous time this becomes the quadratic variation process $\langle B \rangle_t = t$ for standard Brownian motion.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Martingale betting strategy (doubling strategy) <span class="gcat cat-defn">Definition</span></div>
-The strategy in Example 1.2.4 that doubles the bet after each loss. It guarantees a net gain of \$1 with probability one — but only after a potentially infinite number of steps and by risking exponentially growing losses. Shows that the martingale property of $W_n$ (for finite $n$) is compatible with $E[W_\infty] \neq E[W_0]$, motivating the need for the Optional Sampling Theorem's additional conditions.
 </div>
 
   </div>
