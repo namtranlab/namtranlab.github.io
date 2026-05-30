@@ -196,7 +196,7 @@ In other words, games that are always in one's favour are submartingales and gam
 ### Part 4 — The Discrete Stochastic Integral
 
 <div class="note-abstract" markdown="1">
-Suppose that $M_0, M_1, \ldots$ is a martingale with respect to the filtration F . For $n \geq 1$, let $\Delta M_n = M_n - M_{n-1}$. Let $B_j$ denote the 'bet' on the $j$th game. We allow negative values of $B_j$ which indicate betting that the price will go down or the game will be lost. Let $W_n$ denote the winnings in this strategy: $W_0 = 0$ and for $n \geq 1$,
+Suppose that $M_0, M_1, \ldots$ is a martingale with respect to the filtration $$\mathcal{F}_n$$ . For $n \geq 1$, let $\Delta M_n = M_n - M_{n-1}$. Let $B_j$ denote the 'bet' on the $j$th game. We allow negative values of $B_j$ which indicate betting that the price will go down or the game will be lost. Let $W_n$ denote the winnings in this strategy: $W_0 = 0$ and for $n \geq 1$,
 
 $$W_n = \sum_{j=1}^n B_j [M_j - M_{j-1}] = \sum_{j=1}^n B_j \Delta M_j.$$"
 </div>
