@@ -227,11 +227,11 @@ As $$n \to \infty$$, the first term converges to $$E[M_T]$$. The second term van
 <div class="example-block" markdown="1">
 <div class="ex-title" >Theorem 1.3.3 — OST III ($L^2$ bounded stopped process) <span class="ex-pill pill-thm">Theorem</span></div>
 
-"Suppose $$T$$ is a stopping time and $$M_n$$ is a martingale with respect to $$\{\mathcal{F}_n\}$$. Suppose that $$P\{T < \infty\} = 1$$, $$E[\lvert M_T \rvert] < \infty$$, and that there exists $$C < \infty$$ such that for each $$n$$,
+Suppose $$T$$ is a stopping time and $$M_n$$ is a martingale with respect to $$\{\mathcal{F}_n\}$$. Suppose that $$P\{T < \infty\} = 1$$, $$E[\lvert M_T \rvert] < \infty$$, and that there exists $$C < \infty$$ such that for each $$n$$,
 
 $$E[M_{n \wedge T}^2] \leq C. \tag{1.9}$$
 
-Then, $$E[M_T] = E[M_0]$$."
+Then, $$E[M_T] = E[M_0]$$.
 
 **Why (1.9) implies (1.8) — the key argument:**
 
@@ -239,7 +239,7 @@ For any $$b > 0$$, split the expectation:
 
 $$E[\lvert M_n \rvert \mathbf{1}_{\{T > n\}}] = E[\lvert M_n \rvert \mathbf{1}_{\{T > n,\, \lvert M_n \rvert \geq b\}}] + E[\lvert M_n \rvert \mathbf{1}_{\{T > n,\, \lvert M_n \rvert < b\}}].$$
 
-- **First term:** By the Cauchy-Schwarz inequality and (1.9), $$E[\lvert M_n \rvert \mathbf{1}_{\{\lvert M_n \rvert \geq b,\, T > n\}}] \leq \frac{C}{b}$$.
+- **First term:** By the H ̈older inequality and (1.9), $$E[\lvert M_n \rvert \mathbf{1}_{\{\lvert M_n \rvert \geq b,\, T > n\}}] \leq \frac{C}{b}$$.
 - **Second term:** $$E[\lvert M_n \rvert \mathbf{1}_{\{T > n,\, \lvert M_n \rvert < b\}}] \leq b \cdot P\{T > n\} \to 0$$ since $$P\{T < \infty\} = 1$$.
 
 Therefore $$\limsup_{n \to \infty} E[\lvert M_n \rvert \mathbf{1}_{\{T > n\}}] \leq C/b$$ for every $$b > 0$$, so the limit is $$0$$.
@@ -247,19 +247,13 @@ Therefore $$\limsup_{n \to \infty} E[\lvert M_n \rvert \mathbf{1}_{\{T > n\}}] \
 **Practical value:** Condition (1.9) is often easier to verify than (1.8) directly — it suffices to bound the second moment of the stopped process uniformly in $$n$$.
 </div>
 
-<div class="misconception-block">
-  <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception — When OST Applies</b></span></div>
-  <div class="mc-wrong"><strong>Wrong:</strong> "If $P\{T < \infty\} = 1$, then $E[M_T] = E[M_0]$ automatically."</div>
-  <div class="mc-correct"><strong>Correct:</strong> $P\{T < \infty\} = 1$ is necessary but not sufficient. You additionally need either: (OST I) $T$ is bounded, or (OST II) condition (1.8) holds, or (OST III) condition (1.9) holds. The martingale doubling strategy provides an explicit counterexample where $P\{T < \infty\} = 1$ but $E[M_T] \neq E[M_0]$, because none of these three additional conditions hold.</div>
-</div>
-
 #### Summary — Three OST Versions
 
 | Version | Assumption on $T$ | Extra condition | Conclusion |
 |---|---|---|---|
-| **OST I** | $P\{T \leq k\} = 1$ (bounded) | None | $E[M_T] = E[M_0]$ |
-| **OST II** | $P\{T < \infty\} = 1$ | $E[M_{n}\mathbf{1}_{\{T>n\}}] \to 0$ | $E[M_T] = E[M_0]$ |
-| **OST III** | $P\{T < \infty\} = 1$ | $E[M_{n \wedge T}^2] \leq C < \infty$ | $E[M_T] = E[M_0]$ |
+| **OST I** | $$P\{T \leq k\} = 1$$ (bounded) | None | $$E[M_T] = E[M_0]$$ |
+| **OST II** | $$P\{T < \infty\} = 1$$ | $$E[M_{n}\mathbf{1}_{\{T>n\}}] \to 0$$ | $$E[M_T] = E[M_0]$$ |
+| **OST III** | $$P\{T < \infty\} = 1$$ | $$E[M_{n \wedge T}^2] \leq C < \infty$$ | $$E[M_T] = E[M_0]$$ |
 
 ---
 
