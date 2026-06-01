@@ -322,9 +322,8 @@ $$\boxed{E[T] = JK.}$$
 
 As in Example 1.3.2, let $$S_n = X_1 + \cdots + X_n$$ be simple random walk starting at 0. Let $$T = \min\{n : S_n = 1\}$$.
 
-**$$P\{T < \infty\} = 1$$:** From Example 1.3.1, $$P\{$random walk hits 1 before $-J\} = J/(J+1) \to 1$$ as $$J \to \infty$$. So with probability one the walk reaches 1.
+**$$P\{T < \infty\} = 1$$:** From Example 1.3.1, $$P\{random walk hits 1 before -J\} = J/(J+1) \to 1$$ as $$J \to \infty$$. So with probability one the walk reaches 1.
 
-**$P\{T < \infty\} = 1$:** From Example 1.3.1, $$P\{$random walk hits 1 before $-J\} = J/(J+1) \to 1$$ as $$J \to \infty$$. So with probability one the walk reaches 1.
 
 **But $$E[T] = \infty$$:** From Example 1.3.2, the expected time to exit $$(-J, 1)$$ starting at 0 is $$J \cdot 1 = J$$. Since this holds for all $$J$$ and $$T \geq T_J$$ (where $$T_J$$ is the exit time from $$(-J,1)$$), we have $$E[T] \geq J$$ for all $$J$$, so $$E[T] = \infty$$.
 
