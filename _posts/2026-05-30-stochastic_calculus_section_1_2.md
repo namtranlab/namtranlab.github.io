@@ -110,8 +110,6 @@ function toggleChapter(id) {
 
 ### Notation at a Glance
 
-<div class="notation-panel" markdown="1">
-
 | Symbol | Meaning |
 |---|---|
 | $$T$$ | A stopping time — a random time that depends only on past and present observations |
@@ -125,8 +123,6 @@ function toggleChapter(id) {
 | $$E[\lvert M_n \rvert \mathbf{1}_{\{T>n\}}] \to 0$$ | The uniform integrability condition in OST II |
 | $$E[M_{n \wedge T}^2] \leq C$$ | The $$L^2$$ boundedness condition in OST III |
 | $$S_n$$ | Simple symmetric random walk $$X_1 + \cdots + X_n$$ with $$P\{X_j = \pm 1\} = \tfrac{1}{2}$$ |
-
-</div>
 
 ---
 
@@ -164,20 +160,6 @@ and each event $$\{T = k\} \in \mathcal{F}_k \subseteq \mathcal{F}_n$$.
 **The betting interpretation:** $$T$$ is a stopping time if and only if the strategy "bet 1 on rounds $$1, 2, \ldots, T$$ and bet 0 afterwards" is an allowable (predictable) betting strategy in the sense of §1.2. The bet $$B_j = \mathbf{1}_{\{j \leq T\}}$$ is $$\mathcal{F}_{j-1}$$-measurable precisely because $$\{T \geq j\} = \{T \leq j-1\}^c \in \mathcal{F}_{j-1}$$.
 </div>
 
-<div class="example-block" markdown="1">
-<div class="ex-title">Examples of stopping times and non-stopping times <span class="ex-pill pill-ex">Example</span></div>
-
-**Valid stopping times:**
-- $$T = \min\{n : S_n = a\}$$ — the first time the random walk hits level $a$. At time $$n$$ we know whether $$S_n = a$$, so $$\{T = n\}$$ is determined by $$X_1,\ldots,X_n \in \mathcal{F}_n$$. ✓
-- $$T = \min\{n : S_n \geq a\}$$ — same reasoning. ✓
-- $$T = 5$$ — a deterministic constant is always a stopping time since $$\{T = 5\} = \Omega \in \mathcal{F}_5$$ and $$\{T = n\} = \emptyset \in \mathcal{F}_n$$ for $$n \neq 5$$. ✓
-
-**Not a stopping time:**
-- $$T = \max\{n \leq 10 : S_n = \max_{k \leq 10} S_k\}$$ — the time of the overall maximum up to time 10. To know whether $$T = n$$ you need to know all future values $$S_{n+1}, \ldots, S_{10}$$, which are not in $$\mathcal{F}_n$$. ✗
-
-<div class="ex-lesson"><strong>Key point:</strong> A stopping time is a decision rule that looks only backward and at the present — never forward. The "first time" something happens is always a stopping time; the "last time" something happens (over a fixed horizon) generally is not.</div>
-</div>
-
 <div class="misconception-block">
   <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception</b></span></div>
   <div class="mc-wrong"><strong>Wrong:</strong> "Any random time $T$ with $P\{T < \infty\} = 1$ is a stopping time."</div>
@@ -188,11 +170,11 @@ and each event $$\{T = k\} \in \mathcal{F}_k \subseteq \mathcal{F}_n$$.
 
 ### Part 3 — The Stopped Process
 
-"Let $T$ be the 'stopping time' for the strategy. Then the winnings at time $t$ is
+Let $T$ be the <b>stopping time</b> for the strategy. Then the winnings at time $t$ is
 
 $$M_0 + \sum_{j=1}^n B_j [M_j - M_{j-1}],$$
 
-where $B_j = 1$ if $j \leq T$ and $B_j = 0$ if $j > T$. We can write this as $M_{n \wedge T}$, where $n \wedge T$ is shorthand for $\min\{n, T\}$."
+where $B_j = 1$ if $j \leq T$ and $B_j = 0$ if $j > T$. We can write this as $M_{n \wedge T}$, where $n \wedge T$ is shorthand for $$\min\{n, T\}$$.
 
 **The stopped process $M_{n \wedge T}$:** at time $n$, the process equals:
 - $M_n$ if $T > n$ (we have not stopped yet),
