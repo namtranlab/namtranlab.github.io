@@ -170,7 +170,7 @@ and each event $\{T = k\} \in \mathcal{F}_k \subseteq \mathcal{F}_n$.
 **Valid stopping times:**
 - $$T = \min\{n : S_n = a\}$$ — the first time the random walk hits level $a$. At time $n$ we know whether $S_n = a$, so $$\{T = n\}$$ is determined by $X_1,\ldots,X_n \in \mathcal{F}_n$. ✓
 - $$T = \min\{n : S_n \geq a\}$$ — same reasoning. ✓
-- $T = 5$ — a deterministic constant is always a stopping time since $\{T = 5\} = \Omega \in \mathcal{F}_5$ and $$\{T = n\} = \emptyset \in \mathcal{F}_n$$ for $n \neq 5$. ✓
+- $T = 5$ — a deterministic constant is always a stopping time since $$\{T = 5\} = \Omega \in \mathcal{F}_5$$ and $$\{T = n\} = \emptyset \in \mathcal{F}_n$$ for $n \neq 5$. ✓
 
 **Not a stopping time:**
 - $$T = \max\{n \leq 10 : S_n = \max_{k \leq 10} S_k\}$$ — the time of the overall maximum up to time 10. To know whether $T = n$ you need to know all future values $S_{n+1}, \ldots, S_{10}$, which are not in $\mathcal{F}_n$. ✗
