@@ -189,7 +189,7 @@ Since $$B_j = \mathbf{1}_{\{j \leq T\}}$$ is predictable (it is $$\mathcal{F}_{j
 ### Part 4 — The Three Versions of the OST
 
 <div class="example-block" markdown="1">
-<div class="ex-title" markdown="1">Theorem 1.3.1 — OST I - Bounded Stopping Times<span class="ex-pill pill-thm">Theorem</span></div>
+<div class="ex-title">Theorem 1.3.1 — OST I - Bounded Stopping Times<span class="ex-pill pill-thm">Theorem</span></div>
 
 "Suppose $$T$$ is a stopping time and $$M_n$$ is a martingale with respect to $$\{\mathcal{F}_n\}$$. Then $$Y_n = M_{n \wedge T}$$ is a martingale. In particular, for each $$n$$,
 
@@ -205,7 +205,7 @@ $$E[M_T] = E[M_0]. \tag{1.7}$$"
 </div>
 
 <div class="example-block" markdown="1">
-<div class="ex-title" markdown="1">Theorem 1.3.2 — OST II (a.s. finite $$T$$ with UI condition) <span class="ex-pill pill-thm">Theorem</span></div>
+<div class="ex-title" >Theorem 1.3.2 — OST II (a.s. finite $$T$$ with UI condition) <span class="ex-pill pill-thm">Theorem</span></div>
 
 "Suppose $$T$$ is a stopping time and $$M_n$$ is a martingale with respect to $$\{\mathcal{F}_n\}$$. Suppose that $$P\{T < \infty\} = 1$$, $$E[\lvert M_T \rvert] < \infty$$, and for each $$n$$,
 
@@ -225,7 +225,7 @@ As $$n \to \infty$$, the first term converges to $$E[M_T]$$ by dominated converg
 </div>
 
 <div class="example-block" markdown="1">
-<div class="ex-title" markdown="1">Theorem 1.3.3 — OST III ($$L^2$$ bounded stopped process) <span class="ex-pill pill-thm">Theorem</span></div>
+<div class="ex-title" >Theorem 1.3.3 — OST III ($L^2$ bounded stopped process) <span class="ex-pill pill-thm">Theorem</span></div>
 
 "Suppose $$T$$ is a stopping time and $$M_n$$ is a martingale with respect to $$\{\mathcal{F}_n\}$$. Suppose that $$P\{T < \infty\} = 1$$, $$E[\lvert M_T \rvert] < \infty$$, and that there exists $$C < \infty$$ such that for each $$n$$,
 
