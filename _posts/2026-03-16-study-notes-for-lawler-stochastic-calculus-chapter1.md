@@ -200,7 +200,7 @@ $$\mathcal{F}_1$$ lets us distinguish "first flip = H" from "first flip = T" —
 <div class="note-abstract">
 A filtration is a growing sequence of σ-algebras modelling information accumulating over time. At time $n$, $F_n$ records everything observed up to time $n$ — and once something is known it is never forgotten.<br>
 
-Let $$X_1, X_2, \ldots$$ be random variables which we think of as a time series with the data arriving one at a time. At time $$n$$ we have viewed the values $$X_1, \ldots, X_n$$. … We will write $$\mathcal{F}_n$$ for 'the information contained in $$X_1, \ldots, X_n$$.
+Let $X_1, X_2, \ldots$ be random variables which we think of as a time series with the data arriving one at a time. At time $n$ we have viewed the values $X_1, \ldots, X_n$. … We will write $\mathcal{F}_n$ for 'the information contained in $X_1, \ldots, X_n$.
 </div>
 
 $$\mathcal{F}_n$$ is not a number or a random variable — it is a $$\sigma$$-algebra: a collection of events. "Information in $$X_1,\ldots,X_n$$" means all questions of the form "did the observations satisfy some condition?" that can be answered once $$X_1,\ldots,X_n$$ are known.<br>
