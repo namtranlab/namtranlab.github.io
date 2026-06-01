@@ -262,7 +262,7 @@ Therefore $$\limsup_{n \to \infty} E[\lvert M_n \rvert \mathbf{1}_{\{T > n\}}] \
 <div class="example-block" markdown="1">
 <div class="ex-title">Example 1.3.1 — Gambler's ruin: hitting probability for random walk <span class="ex-pill pill-ex">Example</span></div>
 
-"Gambler's ruin for random walk. Let $X_1, X_2, \ldots$ be independent, coin-tosses as in (1.6) and let $S_n = 1 + X_1 + \cdots + X_n$. $S_n$ is called simple (symmetric) random walk starting at 1. … Let $K > 1$ be a positive integer and let $T$ denote the first time $n$ such that $S_n = 0$ or $S_n = K$."
+Gambler's ruin for random walk. Let $$X_1, X_2, \ldots$$ be independent, coin-tosses as in (1.6) and let $$S_n = 1 + X_1 + \cdots + X_n$$. $S_n$ is called simple (symmetric) random walk starting at 1. … Let $$K > 1$$ be a positive integer and let $T$ denote the first time $n$ such that $$S_n = 0$$ or $$S_n = K$$.
 
 **Setup:**
 - $S_n$ is a martingale (zero-mean increments, §1.2 Example 1.2.1).
