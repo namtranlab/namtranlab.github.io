@@ -114,17 +114,17 @@ function toggleChapter(id) {
 
 | Symbol | Meaning |
 |---|---|
-| $T$ | A stopping time — a random time that depends only on past and present observations |
-| $\{T = n\} \in \mathcal{F}_n$ | The defining measurability condition for a stopping time |
-| $n \wedge T$ | $\min\{n, T\}$ — the process stopped at time $T$ |
-| $M_{n \wedge T}$ | The stopped process — equals $M_T$ once $T$ is reached, stays there afterwards |
-| $E[M_T] = E[M_0]$ | The optional sampling conclusion — martingale mean preserved at stopping time $T$ |
-| $P\{T \leq k\} = 1$ | $T$ is bounded — the strongest assumption guaranteeing $E[M_T] = E[M_0]$ |
-| $P\{T < \infty\} = 1$ | $T$ is almost surely finite — weaker condition, needs extra hypotheses |
-| $\mathbf{1}_{\{T > n\}}$ | Indicator that we have not yet stopped by time $n$ |
-| $E[\lvert M_n \rvert \mathbf{1}_{\{T>n\}}] \to 0$ | The uniform integrability condition in OST II |
-| $E[M_{n \wedge T}^2] \leq C$ | The $L^2$ boundedness condition in OST III |
-| $S_n$ | Simple symmetric random walk $X_1 + \cdots + X_n$ with $P\{X_j = \pm 1\} = \tfrac{1}{2}$ |
+| $$T$$ | A stopping time — a random time that depends only on past and present observations |
+| $$\{T = n\} \in \mathcal{F}_n$$ | The defining measurability condition for a stopping time |
+| $$n \wedge T$$ | $$\min\{n, T\}$$ — the process stopped at time $$T$$ |
+| $$M_{n \wedge T}$$ | The stopped process — equals $$M_T$$ once $$T$$ is reached, stays there afterwards |
+| $$E[M_T] = E[M_0]$$ | The optional sampling conclusion — martingale mean preserved at stopping time $$T$$ |
+| $$P\{T \leq k\} = 1$$ | $$T$$ is bounded — the strongest assumption guaranteeing $$E[M_T] = E[M_0]$$ |
+| $$P\{T < \infty\} = 1$$ | $$T$$ is almost surely finite — weaker condition, needs extra hypotheses |
+| $$\mathbf{1}_{\{T > n\}}$$ | Indicator that we have not yet stopped by time $$n$$ |
+| $$E[\lvert M_n \rvert \mathbf{1}_{\{T>n\}}] \to 0$$ | The uniform integrability condition in OST II |
+| $$E[M_{n \wedge T}^2] \leq C$$ | The $$L^2$$ boundedness condition in OST III |
+| $$S_n$$ | Simple symmetric random walk $$X_1 + \cdots + X_n$$ with $$P\{X_j = \pm 1\} = \tfrac{1}{2}$$ |
 
 </div>
 
@@ -209,7 +209,7 @@ Since $B_j = \mathbf{1}_{\{j \leq T\}}$ is predictable (it is $\mathcal{F}_{j-1}
 #### OST I — Bounded Stopping Times
 
 <div class="example-block" markdown="1">
-<div class="ex-title">Theorem 1.3.1 — OST I (Bounded $T$) <span class="ex-pill pill-thm">Theorem</span></div>
+<div class="ex-title">Theorem 1.3.1 — OST I (Bounded $$T$$) <span class="ex-pill pill-thm">Theorem</span></div>
 
 "Suppose $T$ is a stopping time and $M_n$ is a martingale with respect to $\{\mathcal{F}_n\}$. Then $Y_n = M_{n \wedge T}$ is a martingale. In particular, for each $n$,
 
@@ -227,7 +227,7 @@ $$E[M_T] = E[M_0]. \tag{1.7}$$"
 #### OST II — Almost Surely Finite $T$ with Uniform Integrability
 
 <div class="example-block" markdown="1">
-<div class="ex-title">Theorem 1.3.2 — OST II (a.s. finite $T$ with UI condition) <span class="ex-pill pill-thm">Theorem</span></div>
+<div class="ex-title">Theorem 1.3.2 — OST II (a.s. finite $$T$$ with UI condition) <span class="ex-pill pill-thm">Theorem</span></div>
 
 "Suppose $T$ is a stopping time and $M_n$ is a martingale with respect to $\{\mathcal{F}_n\}$. Suppose that $P\{T < \infty\} = 1$, $E[\lvert M_T \rvert] < \infty$, and for each $n$,
 
@@ -249,7 +249,7 @@ As $n \to \infty$, the first term converges to $E[M_T]$ by dominated convergence
 #### OST III — $L^2$ Boundedness
 
 <div class="example-block" markdown="1">
-<div class="ex-title">Theorem 1.3.3 — OST III ($L^2$ bounded stopped process) <span class="ex-pill pill-thm">Theorem</span></div>
+<div class="ex-title">Theorem 1.3.3 — OST III ($$L^2$$ bounded stopped process) <span class="ex-pill pill-thm">Theorem</span></div>
 
 "Suppose $T$ is a stopping time and $M_n$ is a martingale with respect to $\{\mathcal{F}_n\}$. Suppose that $P\{T < \infty\} = 1$, $E[\lvert M_T \rvert] < \infty$, and that there exists $C < \infty$ such that for each $n$,
 
@@ -314,7 +314,7 @@ $$\boxed{P\{S_T = K\} = \frac{1}{K}, \qquad P\{S_T = 0\} = \frac{K-1}{K}.}$$
 </div>
 
 <div class="example-block" markdown="1">
-<div class="ex-title">Example 1.3.2 — Expected hitting time via the $S_n^2 - n$ martingale <span class="ex-pill pill-ex">Example</span></div>
+<div class="ex-title">Example 1.3.2 — Expected hitting time via the $$S_n^2 - n$$ martingale <span class="ex-pill pill-ex">Example</span></div>
 
 "Let $S_n = X_1 + \cdots + X_n$ be simple random walk starting at 0. We have seen that $M_n = S_n^2 - n$ is a martingale. Let $J, K$ be positive integers and let $T = \min\{n : S_n = -J \text{ or } S_n = K\}$."
 
@@ -344,7 +344,7 @@ $$\boxed{E[T] = JK.}$$
 </div>
 
 <div class="example-block" markdown="1">
-<div class="ex-title">Example 1.3.3 — OST fails: $P\{T < \infty\} = 1$ but $E[S_0] \neq E[S_T]$ <span class="ex-pill pill-warn">Counterexample</span></div>
+<div class="ex-title">Example 1.3.3 — OST fails: $$P\{T < \infty\} = 1$$ but $$E[S_0] \neq E[S_T]$$ <span class="ex-pill pill-warn">Counterexample</span></div>
 
 "As in Example 1.3.2, let $S_n = X_1 + \cdots + X_n$ be simple random walk starting at 0. Let $T = \min\{n : S_n = 1\}$."
 
