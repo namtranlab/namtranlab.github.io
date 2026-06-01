@@ -134,7 +134,7 @@ The Optional Sampling Theorem (OST) answers the question: <em>if you are allowed
 
 <b>CORE IDEAS</b>
 
-<<strong>Stopping a martingale produces another martingale.</strong> The stopped process $$Y_n = M_{n \wedge T}$$ is always a martingale, regardless of what the stopping time $$T$$ is.
+<strong>Stopping a martingale produces another martingale.</strong> The stopped process $$Y_n = M_{n \wedge T}$$ is always a martingale, regardless of what the stopping time $$T$$ is.
 
 <strong>$E[M_T] = E[M_0]$ requires extra conditions beyond just $$P\{T < \infty\} = 1$$.</strong> The stopped process has constant mean $$E[M_{n \wedge T}] = E[M_0]$$ for all finite $$n$$. Passing this to the limit $$n \to \infty$$ — to get $$E[M_T] = E[M_0]$$ — requires uniform integrability or $$L^2$$ boundedness.
 
