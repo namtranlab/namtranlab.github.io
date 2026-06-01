@@ -165,11 +165,11 @@ Conditional expectation is the central object of stochastic calculus. At its cor
 Before defining conditional expectation rigorously, we need the underlying mathematical arena: a probability space $(\Omega, \mathcal{F}, P)$. Everything — random variables, events, filtrations — lives inside this structure.
 </div>
 
-"We assume that the random variables $$X_1, X_2, \ldots$$ are defined on a probability space $$(\Omega, \mathcal{F}, P)$$. Here $$\mathcal{F}$$ is a $$\sigma$$-algebra or $$\sigma$$-field of subsets of $$\Omega$$, that is, a collection of subsets satisfying:<br>
+We assume that the random variables $$X_1, X_2, \ldots$$ are defined on a probability space $$(\Omega, \mathcal{F}, P)$$. Here $$\mathcal{F}$$ is a $$\sigma$$-algebra or $$\sigma$$-field of subsets of $$\Omega$$, that is, a collection of subsets satisfying:<br>
 
 i. $$\emptyset \in \mathcal{F}$$<br>
 ii. $$A \in \mathcal{F}$$ implies $$\Omega \setminus A \in \mathcal{F}$$ <br>
-iii. $$A_1, A_2, \ldots \in \mathcal{F}$$ implies $$\bigcup_{n=1}^{\infty} A_n \in \mathcal{F}$$."<br>
+iii. $$A_1, A_2, \ldots \in \mathcal{F}$$ implies $$\bigcup_{n=1}^{\infty} A_n \in \mathcal{F}$$.<br>
 
 This defines the three $$\sigma$$-algebra axioms. (i) The empty set — the impossible event — must be an event. (ii) If A is observable, so is its complement: "A did not happen" must also be observable. (iii) Countable unions of events are events: "at least one of $$A_1, A_2, \ldots$$ happened" is observable. These three rules make $$\mathcal{F}$$ a self-consistent collection of questions we can ask about the experiment.
 
@@ -199,9 +199,9 @@ $$\mathcal{F}_1$$ lets us distinguish "first flip = H" from "first flip = T" —
 
 <div class="note-abstract">
 A filtration is a growing sequence of σ-algebras modelling information accumulating over time. At time $n$, $F_n$ records everything observed up to time $n$ — and once something is known it is never forgotten.
-</div>
 
-"Let $$X_1, X_2, \ldots$$ be random variables which we think of as a time series with the data arriving one at a time. At time $$n$$ we have viewed the values $$X_1, \ldots, X_n$$. … We will write $$\mathcal{F}_n$$ for 'the information contained in $$X_1, \ldots, X_n$$."<br>
+Let $$X_1, X_2, \ldots$$ be random variables which we think of as a time series with the data arriving one at a time. At time $$n$$ we have viewed the values $$X_1, \ldots, X_n$$. … We will write $$\mathcal{F}_n$$ for 'the information contained in $$X_1, \ldots, X_n$$.
+</div>
 
 $$\mathcal{F}_n$$ is not a number or a random variable — it is a $$\sigma$$-algebra: a collection of events. "Information in $$X_1,\ldots,X_n$$" means all questions of the form "did the observations satisfy some condition?" that can be answered once $$X_1,\ldots,X_n$$ are known.<br>
 
