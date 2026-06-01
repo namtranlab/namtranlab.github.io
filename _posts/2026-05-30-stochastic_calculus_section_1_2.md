@@ -306,8 +306,8 @@ Compute $$E[S_T^2]$$ directly:
 
 $$
 \begin{aligned}
-E[S_T^2] = J^2 P\{S_T = -J\} + K^2 P\{S_T = K\} = \\
-&= J^2 \cdot \frac{K}{J+K} + K^2 \cdot \frac{J}{J+K} = \\
+E[S_T^2] = J^2 P\{S_T = -J\} + K^2 P\{S_T = K\}
+&= J^2 \cdot \frac{K}{J+K} + K^2 \cdot \frac{J}{J+K} \\
 &= \frac{JK(J+K)}{J+K} = JK.
 \end{aligned}
 $$
