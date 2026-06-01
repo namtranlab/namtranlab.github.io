@@ -111,7 +111,6 @@ function toggleChapter(id) {
 ### Notation at a Glance
 
 <div class="notation-panel" markdown="1">
-<div class="np-title">§ 1.3 — Notation at a Glance</div>
 
 | Symbol | Meaning |
 |---|---|
