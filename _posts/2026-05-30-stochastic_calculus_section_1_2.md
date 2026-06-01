@@ -111,7 +111,6 @@ function toggleChapter(id) {
 ### Notation at a Glance
 
 <div class="notation-panel" markdown="1">
-<div class="np-title">§ 1.3 — Notation at a Glance</div>
 
 | Symbol | Meaning |
 |---|---|
@@ -149,7 +148,7 @@ The Optional Sampling Theorem (OST) answers the question: <em>if you are allowed
 
 ### Part 2 — Stopping Times
 
-<div class="example-block">
+<div class="example-block" markdown="1">
 <div class="ex-title">Definition — Stopping Time <span class="ex-pill pill-defn">Definition</span></div>
 
 A nonnegative integer-valued random variable $T$ is a <b>stopping time</b> with respect to the filtration $\{\mathcal{F}_n\}$ if for each $n$ the event $\{T = n\}$ is $\mathcal{F}_n$-measurable.
@@ -162,10 +161,10 @@ $$\{T \leq n\} = \{T = 0\} \cup \{T = 1\} \cup \cdots \cup \{T = n\},$$
 
 and each event $\{T = k\} \in \mathcal{F}_k \subseteq \mathcal{F}_n$.
 
-**The betting interpretation:** $T$ is a stopping time if and only if the strategy "bet 1 on rounds $1, 2, \ldots, T$ and bet 0 afterwards" is an allowable (predictable) betting strategy in the sense of §1.2. The bet $B_j = \mathbf{1}_{\{j \leq T\}}$ is $\mathcal{F}_{j-1}$-measurable precisely because $\{T \geq j\} = \{T \leq j-1\}^c \in \mathcal{F}_{j-1}$.
+**The betting interpretation:** $T$ is a stopping time if and only if the strategy "bet 1 on rounds $1, 2, \ldots, T$ and bet 0 afterwards" is an allowable (predictable) betting strategy in the sense of §1.2. The bet $$B_j = \mathbf{1}_{\{j \leq T\}}$ is $\mathcal{F}_{j-1}$-measurable precisely because $\{T \geq j\} = \{T \leq j-1\}^c \in \mathcal{F}_{j-1}$.
 </div>
 
-<div class="example-block">
+<div class="example-block" markdown="1">
 <div class="ex-title">Examples of stopping times and non-stopping times <span class="ex-pill pill-ex">Example</span></div>
 
 **Valid stopping times:**
@@ -209,7 +208,7 @@ Since $B_j = \mathbf{1}_{\{j \leq T\}}$ is predictable (it is $\mathcal{F}_{j-1}
 
 #### OST I — Bounded Stopping Times
 
-<div class="example-block">
+<div class="example-block" markdown="1">
 <div class="ex-title">Theorem 1.3.1 — OST I (Bounded $T$) <span class="ex-pill pill-thm">Theorem</span></div>
 
 "Suppose $T$ is a stopping time and $M_n$ is a martingale with respect to $\{\mathcal{F}_n\}$. Then $Y_n = M_{n \wedge T}$ is a martingale. In particular, for each $n$,
@@ -227,7 +226,7 @@ $$E[M_T] = E[M_0]. \tag{1.7}$$"
 
 #### OST II — Almost Surely Finite $T$ with Uniform Integrability
 
-<div class="example-block">
+<div class="example-block" markdown="1">
 <div class="ex-title">Theorem 1.3.2 — OST II (a.s. finite $T$ with UI condition) <span class="ex-pill pill-thm">Theorem</span></div>
 
 "Suppose $T$ is a stopping time and $M_n$ is a martingale with respect to $\{\mathcal{F}_n\}$. Suppose that $P\{T < \infty\} = 1$, $E[\lvert M_T \rvert] < \infty$, and for each $n$,
@@ -249,7 +248,7 @@ As $n \to \infty$, the first term converges to $E[M_T]$ by dominated convergence
 
 #### OST III — $L^2$ Boundedness
 
-<div class="example-block">
+<div class="example-block" markdown="1">
 <div class="ex-title">Theorem 1.3.3 — OST III ($L^2$ bounded stopped process) <span class="ex-pill pill-thm">Theorem</span></div>
 
 "Suppose $T$ is a stopping time and $M_n$ is a martingale with respect to $\{\mathcal{F}_n\}$. Suppose that $P\{T < \infty\} = 1$, $E[\lvert M_T \rvert] < \infty$, and that there exists $C < \infty$ such that for each $n$,
@@ -290,7 +289,7 @@ Therefore $\limsup_{n \to \infty} E[\lvert M_n \rvert \mathbf{1}_{\{T > n\}}] \l
 
 ### Part 5 — Worked Examples
 
-<div class="example-block">
+<div class="example-block" markdown="1">
 <div class="ex-title">Example 1.3.1 — Gambler's ruin: hitting probability for random walk <span class="ex-pill pill-ex">Example</span></div>
 
 "Gambler's ruin for random walk. Let $X_1, X_2, \ldots$ be independent, coin-tosses as in (1.6) and let $S_n = 1 + X_1 + \cdots + X_n$. $S_n$ is called simple (symmetric) random walk starting at 1. … Let $K > 1$ be a positive integer and let $T$ denote the first time $n$ such that $S_n = 0$ or $S_n = K$."
@@ -314,7 +313,7 @@ $$\boxed{P\{S_T = K\} = \frac{1}{K}, \qquad P\{S_T = 0\} = \frac{K-1}{K}.}$$
 <div class="ex-lesson"><strong>Key technique:</strong> The OST converts a martingale identity ($E[S_T] = E[S_0]$) into a linear equation in the unknown probability $P\{S_T = K\}$. The bounded stopping time (or $L^2$ bound) is what justifies passing the martingale identity through to time $T$.</div>
 </div>
 
-<div class="example-block">
+<div class="example-block" markdown="1">
 <div class="ex-title">Example 1.3.2 — Expected hitting time via the $S_n^2 - n$ martingale <span class="ex-pill pill-ex">Example</span></div>
 
 "Let $S_n = X_1 + \cdots + X_n$ be simple random walk starting at 0. We have seen that $M_n = S_n^2 - n$ is a martingale. Let $J, K$ be positive integers and let $T = \min\{n : S_n = -J \text{ or } S_n = K\}$."
@@ -344,7 +343,7 @@ $$\boxed{E[T] = JK.}$$
 <div class="ex-lesson"><strong>Key technique:</strong> Apply OST to <em>two different martingales simultaneously</em>: $S_n$ to get hitting probabilities, and $S_n^2 - n$ to get the expected hitting time. The two martingale identities together determine both unknowns ($P\{S_T = K\}$ and $E[T]$) exactly.</div>
 </div>
 
-<div class="example-block">
+<div class="example-block" markdown="1">
 <div class="ex-title">Example 1.3.3 — OST fails: $P\{T < \infty\} = 1$ but $E[S_0] \neq E[S_T]$ <span class="ex-pill pill-warn">Counterexample</span></div>
 
 "As in Example 1.3.2, let $S_n = X_1 + \cdots + X_n$ be simple random walk starting at 0. Let $T = \min\{n : S_n = 1\}$."
