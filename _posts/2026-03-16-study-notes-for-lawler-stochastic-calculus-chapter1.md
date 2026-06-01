@@ -1018,8 +1018,6 @@ $$E[\lvert W_n \rvert \mathbf{1}_{\{T > n\}}] = (2^n - 1) \cdot 2^{-n} \to 1 \ne
 
 so condition (1.8) is violated. Since $$E[W_{n \wedge T}^2] \to \infty$$ as well, condition (1.9) also fails. And $$T$$ is clearly unbounded. All three OST conditions fail, consistently with $$E[W_T] \neq E[W_0]$$.
 
-<div class="result-box"><strong>The OST is not violated by the doubling strategy — the doubling strategy simply does not satisfy any of the three OST conditions.</strong> It is an example constructed precisely to illustrate why these conditions are necessary.</div>
-
 ---
 
 ### Term Glossary
