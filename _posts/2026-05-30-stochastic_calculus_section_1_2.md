@@ -265,12 +265,12 @@ Therefore $$\limsup_{n \to \infty} E[\lvert M_n \rvert \mathbf{1}_{\{T > n\}}] \
 Gambler's ruin for random walk. Let $$X_1, X_2, \ldots$$ be independent, coin-tosses as in (1.6) and let $$S_n = 1 + X_1 + \cdots + X_n$$. $S_n$ is called simple (symmetric) random walk starting at 1. … Let $$K > 1$$ be a positive integer and let $T$ denote the first time $n$ such that $$S_n = 0$$ or $$S_n = K$$.
 
 **Setup:**
-- $S_n$ is a martingale (zero-mean increments, §1.2 Example 1.2.1).
-- $T = \min\{n : S_n = 0 \text{ or } S_n = K\}$ is a stopping time.
-- $S_n$ stays in $[0, K]$ for all $n \leq T$, so $0 \leq M_{n \wedge T} \leq K$ — the stopped process is bounded.
-- Therefore (1.9) holds with $C = K^2$, and OST III applies.
+- $$S_n$$ is a martingale (zero-mean increments, §1.2 Example 1.2.1).
+- $$T = \min\{n : S_n = 0 \text{ or } S_n = K\}$$ is a stopping time.
+- $$S_n$$ stays in $$[0, K]$$ for all $$n \leq T$$, so $$0 \leq M_{n \wedge T} \leq K$$ — the stopped process is bounded.
+- Therefore (1.9) holds with $$C = K^2$$, and OST III applies.
 
-**Apply OST to $S_n$:**
+**Apply OST to $$S_n$$:**
 
 $$1 = E[S_0] = E[S_T] = 0 \cdot P\{S_T = 0\} + K \cdot P\{S_T = K\}.$$
 
@@ -278,7 +278,7 @@ Solving:
 
 $$\boxed{P\{S_T = K\} = \frac{1}{K}, \qquad P\{S_T = 0\} = \frac{K-1}{K}.}$$
 
-**Interpretation:** Starting at 1, with a fair game, the probability of reaching $K$ before 0 is $1/K$. As $K \to \infty$, $P\{S_T = K\} \to 0$: a gambler with \$1 playing against a casino with \$K almost surely goes broke. This is the **gambler's ruin estimate**.
+**Interpretation:** Starting at 1, with a fair game, the probability of reaching $$K$$ before 0 is $$1/K$$. As $$K \to \infty$$, $$P\{S_T = K\} \to 0$$: a gambler with \$1 playing against a casino with \$K almost surely goes broke. This is the **gambler's ruin estimate**.
 
 <div class="ex-lesson"><strong>Key technique:</strong> The OST converts a martingale identity ($E[S_T] = E[S_0]$) into a linear equation in the unknown probability $P\{S_T = K\}$. The bounded stopping time (or $L^2$ bound) is what justifies passing the martingale identity through to time $T$.</div>
 </div>
