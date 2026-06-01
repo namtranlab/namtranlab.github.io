@@ -133,13 +133,12 @@ function toggleChapter(id) {
 | $$S_n$$ | Partial sum $$X_1 + X_2 + \cdots + X_n$$ |
 
 
-
 ---
 
 ### Part 1 — The Core Intuition
 
 <div class="note-abstract">
-Conditional expectation is the central object of stochastic calculus. At its core it answers one question: <em>given that we have observed some (but not all) information, what is our best guess for a random variable $$Y$$?</em> The answer is not a single number but another random variable — one that changes as our information changes.
+Conditional expectation is the central object of stochastic calculus. At its core it answers one question: <em>given that we have observed some (but not all) information, what is our best guess for a random variable $Y$?</em> The answer is not a single number but another random variable — one that changes as our information changes.
 </div>
 
 <b>CORE IDEAS</b>
@@ -148,7 +147,7 @@ Conditional expectation is the central object of stochastic calculus. At its cor
 
 <strong>$$E[Y \mid \mathcal{F}_n]$$ is the best guess for Y given the information $$\mathcal{F}_n$$.</strong> As data arrives one variable at a time — $$X_1, X_2, \ldots, X_n$$ — we collect more information. The conditional expectation updates our best guess for Y using whatever is currently known.
 
-<strong>$$E[Y \mid \mathcal{F}_n]$$ is itself a random variable, not a fixed number.</strong> Because it depends on the observed values of $$X_1, \ldots, X_n$$ — which are random — it is a function of those observations, hence random.</div>
+<strong>$$E[Y \mid \mathcal{F}_n]$$ is itself a random variable, not a fixed number.</strong> Because it depends on the observed values of $$X_1, \ldots, X_n$$ — which are random — it is a function of those observations, hence random.
 
 <strong>The formal definition bypasses explicit computation via one key property.</strong> $$E[Y \mid \mathcal{F}_n]$$ is defined as the unique $$\mathcal{F}_n$$-measurable random variable satisfying $$E[E[Y \mid \mathcal{F}_n] \cdot \mathbf{1}_A] = E[Y \cdot \mathbf{1}_A]$$ for all $$\mathcal{F}_n$$-measurable events A.
 
