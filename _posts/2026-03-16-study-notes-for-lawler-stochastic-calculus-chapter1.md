@@ -440,47 +440,47 @@ $$\mathcal{F}_0 \subseteq \mathcal{F}_1 \subseteq \mathcal{F}_2 \subseteq \cdots
 
 <div class="glossary-entry">
 <div class="gterm">Probability space $(\Omega, \mathcal{F}, P)$ <span class="gcat cat-defn">Definition</span></div>
-The triple: $\Omega$ = sample space (all outcomes); $\mathcal{F}$ = $\sigma$-algebra (observable events); $P : \mathcal{F} \to [0,1]$ probability measure with $$P(\Omega) = 1$$ and countable additivity. All random variables and stochastic processes in this book live on such a triple.
+The triple: $\Omega$ = sample space (all outcomes); $\mathcal{F}$ = $\sigma$-algebra (observable events); $P : \mathcal{F} \to [0,1]$ probability measure with $P(\Omega) = 1$ and countable additivity. All random variables and stochastic processes in this book live on such a triple.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">$\sigma$-algebra <span class="gcat cat-defn">Definition</span></div>
-A collection $$\mathcal{F}$$ of subsets of $$\Omega$$ closed under complementation and countable unions, containing $$\emptyset$$. Encodes "which events are distinguishable." The trivial $$\sigma$$-algebra $$\{\emptyset, \Omega\}$$ encodes no information; the power set $$2^\Omega$$ encodes complete information.
+A collection $\mathcal{F}$ of subsets of $\Omega$ closed under complementation and countable unions, containing $\emptyset$. Encodes "which events are distinguishable." The trivial $\sigma$-algebra $\{\emptyset, \Omega\}$ encodes no information; the power set $2^\Omega$ encodes complete information.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Filtration $\{\mathcal{F}_n\}$ <span class="gcat cat-defn">Definition</span></div>
-An increasing sequence $$\mathcal{F}_0 \subseteq \mathcal{F}_1 \subseteq \mathcal{F}_2 \subseteq \cdots$$ modelling accumulating information. $$\mathcal{F}_n = \sigma(X_1,\ldots,X_n)$$ — the smallest $$\sigma$$-algebra making $$X_1,\ldots,X_n$$ measurable. Information never shrinks: $$m < n$$ implies $$\mathcal{F}_m \subseteq \mathcal{F}_n$$.
+An increasing sequence $\mathcal{F}_0 \subseteq \mathcal{F}_1 \subseteq \mathcal{F}_2 \subseteq \cdots$ modelling accumulating information. $\mathcal{F}_n = \sigma(X_1,\ldots,X_n)$ — the smallest $\sigma$-algebra making $X_1,\ldots,X_n$ measurable. Information never shrinks: $m < n$ implies $\mathcal{F}_m \subseteq \mathcal{F}_n$.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">$\mathcal{F}_n$-measurable <span class="gcat cat-meas">Measurability</span></div>
-A random variable Z is $$\mathcal{F}_n$$-measurable if $$\{Z \leq t\} \in \mathcal{F}_n$$ for every $$t \in \mathbb{R}$$. Equivalently: $$Z = \varphi(X_1,\ldots,X_n)$$ for some measurable $$\varphi$$. Z's value is fully determined by the first n observations.
+A random variable Z is $\mathcal{F}_n$-measurable if $\{Z \leq t\} \in \mathcal{F}_n$ for every $t \in \mathbb{R}$. Equivalently: $Z = \varphi(X_1,\ldots,X_n)$ for some measurable $\varphi$. Z's value is fully determined by the first n observations.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Conditional expectation $E[Y \mid \mathcal{F}_n]$ <span class="gcat cat-defn">Definition</span></div>
-The unique $$\mathcal{F}_n$$-measurable random variable satisfying $$E[E[Y \mid \mathcal{F}_n]\cdot\mathbf{1}_A] = E[Y\cdot\mathbf{1}_A]$$ for all $$A \in \mathcal{F}_n$$. The minimum-MSE predictor of Y given information $$\mathcal{F}_n$$. A random variable — not a number — because its value depends on the observations $$X_1,\ldots,X_n$$.
+The unique $\mathcal{F}_n$-measurable random variable satisfying $E[E[Y \mid \mathcal{F}_n]\cdot\mathbf{1}_A] = E[Y\cdot\mathbf{1}_A]$ for all $A \in \mathcal{F}_n$. The minimum-MSE predictor of Y given information $\mathcal{F}_n$. A random variable — not a number — because its value depends on the observations $X_1,\ldots,X_n$.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Indicator function $\mathbf{1}_A$ <span class="gcat cat-notn">Notation</span></div>
-$$\mathbf{1}_A(\omega) = 1$$ if $$\omega \in A$$, else $$0$$. So $$E[Z\cdot\mathbf{1}_A] = \int_A Z \, dP$$ = the probability-weighted average of Z over outcomes where A occurs. Central to the formal two-condition definition of conditional expectation.
+$\mathbf{1}_A(\omega) = 1$ if $\omega \in A$, else $0$. So $E[Z\cdot\mathbf{1}_A] = \int_A Z \, dP$ = the probability-weighted average of Z over outcomes where A occurs. Central to the formal two-condition definition of conditional expectation.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Tower property <span class="gcat cat-prop">Property</span></div>
-$$E[E[Y \mid \mathcal{F}_n] \mid \mathcal{F}_m] = E[Y \mid \mathcal{F}_m]$$ for $$m < n$$. The outer (coarser) conditioning always governs. Special case: $$E[E[Y \mid \mathcal{F}_n]] = E[Y]$$. Proved using the defining property of conditional expectation and the inclusion $$\mathcal{F}_m \subseteq \mathcal{F}_n$$.
+$E[E[Y \mid \mathcal{F}_n] \mid \mathcal{F}_m] = E[Y \mid \mathcal{F}_m]$ for $m < n$. The outer (coarser) conditioning always governs. Special case: $E[E[Y \mid \mathcal{F}_n]] = E[Y]$. Proved using the defining property of conditional expectation and the inclusion $\mathcal{F}_m \subseteq \mathcal{F}_n$.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Constants rule (pull-out property) <span class="gcat cat-prop">Property</span></div>
-If Z is $$\mathcal{F}_n$$-measurable then $$E[YZ \mid \mathcal{F}_n] = Z\cdot E[Y \mid \mathcal{F}_n]$$. Z behaves as a known constant. Proved first for $$Z = \mathbf{1}_A$$ ($$A \in \mathcal{F}_n$$) using the definition, extended to simple random variables by linearity, then to general Z by monotone convergence.
+If Z is $\mathcal{F}_n$-measurable then $E[YZ \mid \mathcal{F}_n] = Z\cdot E[Y \mid \mathcal{F}_n]$. Z behaves as a known constant. Proved first for $Z = \mathbf{1}_A$ ($A \in \mathcal{F}_n$) using the definition, extended to simple random variables by linearity, then to general Z by monotone convergence.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Radon-Nikodym theorem <span class="gcat cat-thm">Theorem</span></div>
-Guarantees existence of conditional expectation. The function $$\mu(A) = E[Y\cdot\mathbf{1}_A]$$ is a signed measure on $$(\Omega, \mathcal{F}_n, P)$$ with $$\mu \ll P$$. By Radon-Nikodym, there exists an $$\mathcal{F}_n$$-measurable Z with $$\mu(A) = E[Z\cdot\mathbf{1}_A]$$ for all $$A \in \mathcal{F}_n$$. This Z is $$E[Y \mid \mathcal{F}_n]$$.
+Guarantees existence of conditional expectation. The function $\mu(A) = E[Y\cdot\mathbf{1}_A]$ is a signed measure on $(\Omega, \mathcal{F}_n, P)$ with $\mu \ll P$. By Radon-Nikodym, there exists an $\mathcal{F}_n$-measurable Z with $\mu(A) = E[Z\cdot\mathbf{1}_A]$ for all $A \in \mathcal{F}_n$. This Z is $E[Y \mid \mathcal{F}_n]$.
 </div>
 
 
@@ -721,27 +721,27 @@ Every step in §1.2 relies directly on the five properties of conditional expect
 
 <div class="glossary-entry">
 <div class="gterm">Adapted process <span class="gcat cat-defn">Definition</span></div>
-A sequence $$M_0, M_1, \ldots$$ is adapted to $$\{\mathcal{F}_n\}$$ if $$M_n$$ is $$\mathcal{F}_n$$-measurable for every $$n$$. Equivalently, the value of $$M_n$$ is fully determined by the information $$X_1, \ldots, X_n$$ available at time $$n$$. All martingales must be adapted — they cannot depend on future observations.
+A sequence $M_0, M_1, \ldots$ is adapted to $\{\mathcal{F}_n\}$ if $M_n$ is $\mathcal{F}_n$-measurable for every $n$. Equivalently, the value of $M_n$ is fully determined by the information $X_1, \ldots, X_n$ available at time $n$. All martingales must be adapted — they cannot depend on future observations.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Integrability condition $E[\lvert M_n \rvert] < \infty$ <span class="gcat cat-prop">Property</span></div>
-Required so that $$E[M_n \mid \mathcal{F}_m]$$ is well-defined. Without this, the conditional expectation may not exist. It is a weak condition — it rules out processes that take infinitely large values with positive probability but allows unbounded processes as long as their absolute mean is finite.
+Required so that $E[M_n \mid \mathcal{F}_m]$ is well-defined. Without this, the conditional expectation may not exist. It is a weak condition — it rules out processes that take infinitely large values with positive probability but allows unbounded processes as long as their absolute mean is finite.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Increment $\Delta M_n = M_n - M_{n-1}$ <span class="gcat cat-notn">Notation</span></div>
-The change in the martingale from step $$n-1$$ to step $$n$$. For a martingale, $$E[\Delta M_n \mid \mathcal{F}_{n-1}] = 0$$ — increments have conditional mean zero given all past information. This is the one-step restatement of the martingale condition.
+The change in the martingale from step $n-1$ to step $n$. For a martingale, $E[\Delta M_n \mid \mathcal{F}_{n-1}] = 0$ — increments have conditional mean zero given all past information. This is the one-step restatement of the martingale condition.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Predictable process (non-anticipating) <span class="gcat cat-defn">Definition</span></div>
-A sequence $$B_1, B_2, \ldots$$ where $$B_n$$ is $$\mathcal{F}_{n-1}$$-measurable for every $$n$$. The bet at time $$n$$ can only use information strictly before time $$n$$. This is the key condition that prevents "cheating" in the discrete stochastic integral and ensures $$W_n$$ remains a martingale.
+A sequence $B_1, B_2, \ldots$ where $B_n$ is $\mathcal{F}_{n-1}$-measurable for every $n$. The bet at time $n$ can only use information strictly before time $n$. This is the key condition that prevents "cheating" in the discrete stochastic integral and ensures $W_n$ remains a martingale.
 </div>
 
 <div class="glossary-entry">
 <div class="gterm">Discrete stochastic integral $W_n = \sum_{j=1}^n B_j \Delta M_j$ <span class="gcat cat-defn">Definition</span></div>
-The cumulative winnings from applying a predictable betting strategy $$\{B_j\}$$ to a martingale $$\{M_j\}$$. When $$B_j$$ is predictable and bounded, $$W_n$$ is itself a martingale. This is the discrete-time prototype of the Itô integral $$\int_0^t A_s \, dB_s$$ in Chapter 3.
+The cumulative winnings from applying a predictable betting strategy $\{B_j\}$ to a martingale $\{M_j\}$. When $B_j$ is predictable and bounded, $W_n$ is itself a martingale. This is the discrete-time prototype of the Itô integral $\int_0^t A_s \, dB_s$ in Chapter 3.
 </div>
 
   </div>
