@@ -169,7 +169,7 @@ and each event $\{T = k\} \in \mathcal{F}_k \subseteq \mathcal{F}_n$.
 <div class="ex-title">Examples of stopping times and non-stopping times <span class="ex-pill pill-ex">Example</span></div>
 
 **Valid stopping times:**
-- $$T = \min\{n : S_n = a\}$$ — the first time the random walk hits level $a$. At time $n$ we know whether $S_n = a$, so $\{T = n\}$ is determined by $X_1,\ldots,X_n \in \mathcal{F}_n$. ✓
+- $$T = \min\{n : S_n = a\}$$ — the first time the random walk hits level $a$. At time $n$ we know whether $S_n = a$, so $$\{T = n\}$$ is determined by $X_1,\ldots,X_n \in \mathcal{F}_n$. ✓
 - $T = \min\{n : S_n \geq a\}$ — same reasoning. ✓
 - $T = 5$ — a deterministic constant is always a stopping time since $\{T = 5\} = \Omega \in \mathcal{F}_5$ and $\{T = n\} = \emptyset \in \mathcal{F}_n$ for $n \neq 5$. ✓
 
