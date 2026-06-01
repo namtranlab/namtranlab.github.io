@@ -134,14 +134,14 @@ function toggleChapter(id) {
 ### Part 1 — The Core Intuition
 
 <div class="note-abstract">
-The Optional Sampling Theorem (OST) answers the question: <em>if you are allowed to stop a martingale at a random time of your choosing, can you change its expected value?</em> The answer is no — under appropriate conditions. This is the mathematical statement that you cannot beat a fair game even by choosing <em>when</em> to stop playing. The theorem comes in three versions of increasing generality, each requiring progressively weaker assumptions on the stopping time.
+The Optional Sampling Theorem (OST) answers the question: <em>if you are allowed to stop a martingale at a random time of your choosing, can you change its expected value?</em> The answer is no — under appropriate conditions. This is the mathematical statement that you cannot beat a fair game even by choosing <em>when</em> to stop playing.
 </div>
 
 #### Core ideas
 
-<div class="key-idea"><strong>Stopping a martingale produces another martingale.</strong> The stopped process $Y_n = M_{n \wedge T}$ is always a martingale, regardless of what the stopping time $T$ is. This is a direct consequence of the discrete stochastic integral from §1.2 with bets $B_j = \mathbf{1}_{\{j \leq T\}}$.</div>
+<div class="key-idea"><strong>Stopping a martingale produces another martingale.</strong> The stopped process $Y_n = M_{n \wedge T}$ is always a martingale, regardless of what the stopping time $T$ is.</div>
 
-<div class="key-idea"><strong>$E[M_T] = E[M_0]$ requires extra conditions beyond just $P\{T < \infty\} = 1$.</strong> The stopped process has constant mean $E[M_{n \wedge T}] = E[M_0]$ for all finite $n$. Passing this to the limit $n \to \infty$ — to get $E[M_T] = E[M_0]$ — requires uniform integrability or $L^2$ boundedness. The martingale doubling strategy of §1.2 (Example 1.2.4) is the canonical counterexample showing why these conditions are necessary.</div>
+<div class="key-idea"><strong>$E[M_T] = E[M_0]$ requires extra conditions beyond just $P\{T < \infty\} = 1$.</strong> The stopped process has constant mean $E[M_{n \wedge T}] = E[M_0]$ for all finite $n$. Passing this to the limit $n \to \infty$ — to get $E[M_T] = E[M_0]$ — requires uniform integrability or $L^2$ boundedness.</div>
 
 <div class="key-idea"><strong>The OST is a tool for computing probabilities and expectations.</strong> By choosing a clever stopping time $T$ and applying OST to two different martingales simultaneously — $S_n$ and $S_n^2 - n$ — one can extract exact formulas for hitting probabilities and expected hitting times. Examples 1.3.1 and 1.3.2 demonstrate this technique completely.</div>
 
