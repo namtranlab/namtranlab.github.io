@@ -151,17 +151,17 @@ The Optional Sampling Theorem (OST) answers the question: <em>if you are allowed
 <div class="example-block" markdown="1">
 <div class="ex-title">Definition — Stopping Time <span class="ex-pill pill-defn">Definition</span></div>
 
-A nonnegative integer-valued random variable $T$ is a <b>stopping time</b> with respect to the filtration $\{\mathcal{F}_n\}$ if for each $n$ the event $\{T = n\}$ is $\mathcal{F}_n$-measurable.
+A nonnegative integer-valued random variable $$T$$ is a <b>stopping time</b> with respect to the filtration $$\{\mathcal{F}_n\}$$ if for each $$n$$ the event $$\{T = n\}$$ is $$\mathcal{F}_n$$-measurable.
 
-**What this means:** The decision to stop at time $n$ can only use information available up to and including time $n$. You cannot decide to stop "because something will happen tomorrow."
+**What this means:** The decision to stop at time $$n$$ can only use information available up to and including time $$n$$. You cannot decide to stop "because something will happen tomorrow."
 
-**Equivalent condition:** $\{T \leq n\} \in \mathcal{F}_n$ for every $n$, since
+**Equivalent condition:** $$\{T \leq n\} \in \mathcal{F}_n$$ for every $$n$$, since
 
 $$\{T \leq n\} = \{T = 0\} \cup \{T = 1\} \cup \cdots \cup \{T = n\},$$
 
-and each event $\{T = k\} \in \mathcal{F}_k \subseteq \mathcal{F}_n$.
+and each event $$\{T = k\} \in \mathcal{F}_k \subseteq \mathcal{F}_n$$.
 
-**The betting interpretation:** $T$ is a stopping time if and only if the strategy "bet 1 on rounds $1, 2, \ldots, T$ and bet 0 afterwards" is an allowable (predictable) betting strategy in the sense of §1.2. The bet $$B_j = \mathbf{1}_{\{j \leq T\}}$ is $\mathcal{F}_{j-1}$-measurable precisely because $\{T \geq j\} = \{T \leq j-1\}^c \in \mathcal{F}_{j-1}$.
+**The betting interpretation:** $$T$$ is a stopping time if and only if the strategy "bet 1 on rounds $$1, 2, \ldots, T$$ and bet 0 afterwards" is an allowable (predictable) betting strategy in the sense of §1.2. The bet $$B_j = \mathbf{1}_{\{j \leq T\}}$$ is $$\mathcal{F}_{j-1}$$-measurable precisely because $$\{T \geq j\} = \{T \leq j-1\}^c \in \mathcal{F}_{j-1}$$.
 </div>
 
 <div class="example-block" markdown="1">
@@ -211,17 +211,17 @@ Since $B_j = \mathbf{1}_{\{j \leq T\}}$ is predictable (it is $\mathcal{F}_{j-1}
 <div class="example-block" markdown="1">
 <div class="ex-title">Theorem 1.3.1 — OST I (Bounded $$T$$) <span class="ex-pill pill-thm">Theorem</span></div>
 
-"Suppose $T$ is a stopping time and $M_n$ is a martingale with respect to $\{\mathcal{F}_n\}$. Then $Y_n = M_{n \wedge T}$ is a martingale. In particular, for each $n$,
+"Suppose $$T$$ is a stopping time and $$M_n$$ is a martingale with respect to $$\{\mathcal{F}_n\}$$. Then $$Y_n = M_{n \wedge T}$$ is a martingale. In particular, for each $$n$$,
 
 $$E[M_{n \wedge T}] = E[M_0].$$
 
-If $T$ is bounded, that is, if there exists $k < \infty$ such that $$P\{T \leq k\} = 1$$, then
+If $$T$$ is bounded, that is, if there exists $$k < \infty$$ such that $$P\{T \leq k\} = 1$$, then
 
 $$E[M_T] = E[M_0]. \tag{1.7}$$"
 
-**Why (1.7) follows from boundedness:** Since $P\{T \leq k\} = 1$, we have $n \wedge T = T$ for all $n \geq k$. Therefore $E[M_{n \wedge T}] = E[M_T]$ for $n \geq k$. Combined with $E[M_{n \wedge T}] = E[M_0]$ for all $n$, we get $E[M_T] = E[M_0]$.
+**Why (1.7) follows from boundedness:** Since $$P\{T \leq k\} = 1$$, we have $$n \wedge T = T$$ for all $$n \geq k$$. Therefore $$E[M_{n \wedge T}] = E[M_T]$$ for $$n \geq k$$. Combined with $$E[M_{n \wedge T}] = E[M_0]$$ for all $$n$$, we get $$E[M_T] = E[M_0]$$.
 
-**No extra conditions are needed** when $T$ is bounded — the martingale property of the stopped process is all that is required.
+**No extra conditions are needed** when $$T$$ is bounded — the martingale property of the stopped process is all that is required.
 </div>
 
 #### OST II — Almost Surely Finite $T$ with Uniform Integrability
@@ -229,21 +229,21 @@ $$E[M_T] = E[M_0]. \tag{1.7}$$"
 <div class="example-block" markdown="1">
 <div class="ex-title">Theorem 1.3.2 — OST II (a.s. finite $$T$$ with UI condition) <span class="ex-pill pill-thm">Theorem</span></div>
 
-"Suppose $T$ is a stopping time and $M_n$ is a martingale with respect to $\{\mathcal{F}_n\}$. Suppose that $P\{T < \infty\} = 1$, $E[\lvert M_T \rvert] < \infty$, and for each $n$,
+"Suppose $$T$$ is a stopping time and $$M_n$$ is a martingale with respect to $$\{\mathcal{F}_n\}$$. Suppose that $$P\{T < \infty\} = 1$$, $$E[\lvert M_T \rvert] < \infty$$, and for each $$n$$,
 
 $$\lim_{n \to \infty} E[\lvert M_n \rvert \mathbf{1}_{\{T > n\}}] = 0. \tag{1.8}$$
 
-Then, $E[M_T] = E[M_0]$."
+Then, $$E[M_T] = E[M_0]$$."
 
-**Where the condition comes from:** For every finite $n$,
+**Where the condition comes from:** For every finite $$n$$,
 
 $$E[M_0] = E[M_{n \wedge T}] = E[M_T \mathbf{1}_{\{T \leq n\}}] + E[M_n \mathbf{1}_{\{T > n\}}].$$
 
-As $n \to \infty$, the first term converges to $E[M_T]$ by dominated convergence (using $E[\lvert M_T \rvert] < \infty$). The second term vanishes by condition (1.8). Hence $E[M_0] = E[M_T]$.
+As $$n \to \infty$$, the first term converges to $$E[M_T]$$ by dominated convergence (using $$E[\lvert M_T \rvert] < \infty$$). The second term vanishes by condition (1.8). Hence $$E[M_0] = E[M_T]$$.
 
-**Condition (1.8) in plain English:** The contribution to the expected value from paths that have not yet stopped by time $n$ must vanish as $n \to \infty$. Paths that take very long to stop and reach very large values can violate this.
+**Condition (1.8) in plain English:** The contribution to the expected value from paths that have not yet stopped by time $$n$$ must vanish as $$n \to \infty$$. Paths that take very long to stop and reach very large values can violate this.
 
-**The doubling strategy fails here:** In Example 1.2.4, if $T = \min\{n : W_n = 1\}$, then $P\{T < \infty\} = 1$ but $E[\lvert W_n \rvert \mathbf{1}_{\{T > n\}}] = (2^n - 1) \cdot 2^{-n} \to 1 \neq 0$. Condition (1.8) is violated, consistently with $E[W_T] = 1 \neq 0 = E[W_0]$.
+**The doubling strategy fails here:** In Example 1.2.4, if $$T = \min\{n : W_n = 1\}$$, then $$P\{T < \infty\} = 1$$ but $$E[\lvert W_n \rvert \mathbf{1}_{\{T > n\}}] = (2^n - 1) \cdot 2^{-n} \to 1 \neq 0$$. Condition (1.8) is violated, consistently with $$E[W_T] = 1 \neq 0 = E[W_0]$$.
 </div>
 
 #### OST III — $L^2$ Boundedness
@@ -251,24 +251,24 @@ As $n \to \infty$, the first term converges to $E[M_T]$ by dominated convergence
 <div class="example-block" markdown="1">
 <div class="ex-title">Theorem 1.3.3 — OST III ($$L^2$$ bounded stopped process) <span class="ex-pill pill-thm">Theorem</span></div>
 
-"Suppose $T$ is a stopping time and $M_n$ is a martingale with respect to $\{\mathcal{F}_n\}$. Suppose that $P\{T < \infty\} = 1$, $E[\lvert M_T \rvert] < \infty$, and that there exists $C < \infty$ such that for each $n$,
+"Suppose $$T$$ is a stopping time and $$M_n$$ is a martingale with respect to $$\{\mathcal{F}_n\}$$. Suppose that $$P\{T < \infty\} = 1$$, $$E[\lvert M_T \rvert] < \infty$$, and that there exists $$C < \infty$$ such that for each $$n$$,
 
 $$E[M_{n \wedge T}^2] \leq C. \tag{1.9}$$
 
-Then, $E[M_T] = E[M_0]$."
+Then, $$E[M_T] = E[M_0]$$."
 
 **Why (1.9) implies (1.8) — the key argument:**
 
-For any $b > 0$, split the expectation:
+For any $$b > 0$$, split the expectation:
 
 $$E[\lvert M_n \rvert \mathbf{1}_{\{T > n\}}] = E[\lvert M_n \rvert \mathbf{1}_{\{T > n,\, \lvert M_n \rvert \geq b\}}] + E[\lvert M_n \rvert \mathbf{1}_{\{T > n,\, \lvert M_n \rvert < b\}}].$$
 
-- **First term:** By the Cauchy-Schwarz inequality and (1.9), $E[\lvert M_n \rvert \mathbf{1}_{\{\lvert M_n \rvert \geq b,\, T > n\}}] \leq \frac{C}{b}$.
-- **Second term:** $E[\lvert M_n \rvert \mathbf{1}_{\{T > n,\, \lvert M_n \rvert < b\}}] \leq b \cdot P\{T > n\} \to 0$ since $P\{T < \infty\} = 1$.
+- **First term:** By the Cauchy-Schwarz inequality and (1.9), $$E[\lvert M_n \rvert \mathbf{1}_{\{\lvert M_n \rvert \geq b,\, T > n\}}] \leq \frac{C}{b}$$.
+- **Second term:** $$E[\lvert M_n \rvert \mathbf{1}_{\{T > n,\, \lvert M_n \rvert < b\}}] \leq b \cdot P\{T > n\} \to 0$$ since $$P\{T < \infty\} = 1$$.
 
-Therefore $\limsup_{n \to \infty} E[\lvert M_n \rvert \mathbf{1}_{\{T > n\}}] \leq C/b$ for every $b > 0$, so the limit is $0$.
+Therefore $$\limsup_{n \to \infty} E[\lvert M_n \rvert \mathbf{1}_{\{T > n\}}] \leq C/b$$ for every $$b > 0$$, so the limit is $$0$$.
 
-**Practical value:** Condition (1.9) is often easier to verify than (1.8) directly — it suffices to bound the second moment of the stopped process uniformly in $n$.
+**Practical value:** Condition (1.9) is often easier to verify than (1.8) directly — it suffices to bound the second moment of the stopped process uniformly in $$n$$.
 </div>
 
 <div class="misconception-block">
