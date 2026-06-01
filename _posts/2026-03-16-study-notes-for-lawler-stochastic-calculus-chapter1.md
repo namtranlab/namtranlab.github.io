@@ -650,7 +650,7 @@ $$E[S_{n+1} \mid \mathcal{F}_n] = S_n + 0 = S_n. \checkmark$$
 </div>
 
 <div class="example-block" markdown="1">
-<div class="ex-title">Example 1.2.2 — $$S_n^2 - A_n$$ as a martingale <span class="ex-pill pill-ex">Example</span></div>
+<div class="ex-title">Example 1.2.2 — $S_n^2 - A_n$ as a martingale <span class="ex-pill pill-ex">Example</span></div>
 
 Suppose $$X_n, S_n, \mathcal{F}_n$$ are as in Example 1.2.1 and also assume $$\text{Var}[X_j] = E[X_j^2] = \sigma_j^2 < \infty$$. Let
 
@@ -689,7 +689,7 @@ Martingale betting strategy. Let $$X_1, X_2, \ldots$$ be independent random vari
 
 $$P\{X_j = 1\} = P\{X_j = -1\} = \tfrac{1}{2}$$
 
-… We will consider the following betting strategy. We start by betting <span>$$1</span>. If we win, we quit; otherwise, we bet <span>$$2</span> on the next game. If we win the second game, we quit; otherwise we double our bet to <span>$$4</span> and play. Each time we lose, we double our bet. At the time that we win, we will be ahead <span>$$1</span>d.
+… We will consider the following betting strategy. We start by betting <span>$1</span>. If we win, we quit; otherwise, we bet <span>$2</span> on the next game. If we win the second game, we quit; otherwise we double our bet to <span>$4</span> and play. Each time we lose, we double our bet. At the time that we win, we will be ahead <span>$1</span>d.
 
 **The bets are:**
 
