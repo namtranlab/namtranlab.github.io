@@ -152,7 +152,7 @@ The Optional Sampling Theorem (OST) answers the question: <em>if you are allowed
 <div class="example-block" markdown="1">
 <div class="ex-title">Definition — Stopping Time <span class="ex-pill pill-defn">Definition</span></div>
 
-"A nonnegative integer-valued random variable $T$ is a <b>stopping time</b> with respect to the filtration $\{\mathcal{F}_n\}$ if for each $n$ the event $\{T = n\}$ is $\mathcal{F}_n$-measurable."
+A nonnegative integer-valued random variable $T$ is a <b>stopping time</b> with respect to the filtration $\{\mathcal{F}_n\}$ if for each $n$ the event $\{T = n\}$ is $\mathcal{F}_n$-measurable.
 
 **What this means:** The decision to stop at time $n$ can only use information available up to and including time $n$. You cannot decide to stop "because something will happen tomorrow."
 
@@ -162,14 +162,14 @@ $$\{T \leq n\} = \{T = 0\} \cup \{T = 1\} \cup \cdots \cup \{T = n\},$$
 
 and each event $\{T = k\} \in \mathcal{F}_k \subseteq \mathcal{F}_n$.
 
-**The betting interpretation:** $T$ is a stopping time if and only if the strategy "bet 1 on rounds $1, 2, \ldots, T$ and bet 0 afterwards" is an allowable (predictable) betting strategy in the sense of §1.2. The bet $B_j = \mathbf{1}_{\{j \leq T\}}$ is $\mathcal{F}_{j-1}$-measurable precisely because $\{T \geq j\} = \{T \leq j-1\}^c \in \mathcal{F}_{j-1}$.
+**The betting interpretation:** $T$ is a stopping time if and only if the strategy "bet 1 on rounds $1, 2, \ldots, T$ and bet 0 afterwards" is an allowable (predictable) betting strategy in the sense of §1.2. The bet $$B_j = \mathbf{1}_{\{j \leq T\}}$$ is $$\mathcal{F}_{j-1}$$-measurable precisely because $$\{T \geq j\} = \{T \leq j-1\}^c \in \mathcal{F}_{j-1}$$.
 </div>
 
 <div class="example-block" markdown="1">
 <div class="ex-title">Examples of stopping times and non-stopping times <span class="ex-pill pill-ex">Example</span></div>
 
 **Valid stopping times:**
-- $T = \min\{n : S_n = a\}$ — the first time the random walk hits level $a$. At time $n$ we know whether $S_n = a$, so $\{T = n\}$ is determined by $X_1,\ldots,X_n \in \mathcal{F}_n$. ✓
+- $$T = \min\{n : S_n = a\}$$ — the first time the random walk hits level $a$. At time $n$ we know whether $S_n = a$, so $\{T = n\}$ is determined by $X_1,\ldots,X_n \in \mathcal{F}_n$. ✓
 - $T = \min\{n : S_n \geq a\}$ — same reasoning. ✓
 - $T = 5$ — a deterministic constant is always a stopping time since $\{T = 5\} = \Omega \in \mathcal{F}_5$ and $\{T = n\} = \emptyset \in \mathcal{F}_n$ for $n \neq 5$. ✓
 
