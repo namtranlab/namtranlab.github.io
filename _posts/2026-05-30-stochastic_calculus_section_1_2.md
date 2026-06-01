@@ -191,7 +191,7 @@ Since $$B_j = \mathbf{1}_{\{j \leq T\}}$$ is predictable (it is $$\mathcal{F}_{j
 #### OST I — Bounded Stopping Times
 
 <div class="example-block" markdown="1">
-<div class="ex-title">Theorem 1.3.1 — OST I (Bounded $$T$$) <span class="ex-pill pill-thm">Theorem</span></div>
+<div class="ex-title">Theorem 1.3.1 — OST I <span class="ex-pill pill-thm">Theorem</span></div>
 
 "Suppose $$T$$ is a stopping time and $$M_n$$ is a martingale with respect to $$\{\mathcal{F}_n\}$$. Then $$Y_n = M_{n \wedge T}$$ is a martingale. In particular, for each $$n$$,
 
