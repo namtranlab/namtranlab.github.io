@@ -215,7 +215,7 @@ Since $B_j = \mathbf{1}_{\{j \leq T\}}$ is predictable (it is $\mathcal{F}_{j-1}
 
 $$E[M_{n \wedge T}] = E[M_0].$$
 
-If $T$ is bounded, that is, if there exists $k < \infty$ such that $P\{T \leq k\} = 1$, then
+If $T$ is bounded, that is, if there exists $k < \infty$ such that $$P\{T \leq k\} = 1$$, then
 
 $$E[M_T] = E[M_0]. \tag{1.7}$$"
 
