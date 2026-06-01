@@ -170,7 +170,7 @@ and each event $$\{T = k\} \in \mathcal{F}_k \subseteq \mathcal{F}_n$$.
 
 ### Part 3 — The Stopped Process
 
-Let $T$ be the <b>stopping time</b> for the strategy. Then the winnings at time $t$ is
+Let $T$ be the <b>stopping time</b> for the betting strategy in §1.2. Then the winnings at time $t$ is
 
 $$M_0 + \sum_{j=1}^n B_j [M_j - M_{j-1}],$$
 
@@ -191,33 +191,33 @@ Since $$B_j = \mathbf{1}_{\{j \leq T\}}$$ is predictable (it is $$\mathcal{F}_{j
 <div class="example-block" markdown="1">
 <div class="ex-title">Theorem 1.3.1 — OST I - Bounded Stopping Times<span class="ex-pill pill-thm">Theorem</span></div>
 
-"Suppose $$T$$ is a stopping time and $$M_n$$ is a martingale with respect to $$\{\mathcal{F}_n\}$$. Then $$Y_n = M_{n \wedge T}$$ is a martingale. In particular, for each $$n$$,
+Suppose $$T$$ is a stopping time and $$M_n$$ is a martingale with respect to $$\{\mathcal{F}_n\}$$. Then $$Y_n = M_{n \wedge T}$$ is a martingale. In particular, for each $$n$$,
 
 $$E[M_{n \wedge T}] = E[M_0].$$
 
 If $$T$$ is bounded, that is, if there exists $$k < \infty$$ such that $$P\{T \leq k\} = 1$$, then
 
-$$E[M_T] = E[M_0]. \tag{1.7}$$"
+$$E[M_T] = E[M_0]. \tag{1.7}$$
 
-**Why (1.7) follows from boundedness:** Since $$P\{T \leq k\} = 1$$, we have $$n \wedge T = T$$ for all $$n \geq k$$. Therefore $$E[M_{n \wedge T}] = E[M_T]$$ for $$n \geq k$$. Combined with $$E[M_{n \wedge T}] = E[M_0]$$ for all $$n$$, we get $$E[M_T] = E[M_0]$$.
+**Why:** Since $$P\{T \leq k\} = 1$$, we have $$n \wedge T = T$$ for all $$n \geq k$$. Therefore $$E[M_{n \wedge T}] = E[M_T]$$ for $$n \geq k$$. Combined with $$E[M_{n \wedge T}] = E[M_0]$$ for all $$n$$, we get $$E[M_T] = E[M_0]$$.
 
 **No extra conditions are needed** when $$T$$ is bounded — the martingale property of the stopped process is all that is required.
 </div>
 
 <div class="example-block" markdown="1">
-<div class="ex-title" >Theorem 1.3.2 — OST II (a.s. finite $$T$$ with UI condition) <span class="ex-pill pill-thm">Theorem</span></div>
+<div class="ex-title" >Theorem 1.3.2 — OST II (a.s. finite $T$ with UI condition) <span class="ex-pill pill-thm">Theorem</span></div>
 
-"Suppose $$T$$ is a stopping time and $$M_n$$ is a martingale with respect to $$\{\mathcal{F}_n\}$$. Suppose that $$P\{T < \infty\} = 1$$, $$E[\lvert M_T \rvert] < \infty$$, and for each $$n$$,
+Suppose $$T$$ is a stopping time and $$M_n$$ is a martingale with respect to $$\{\mathcal{F}_n\}$$. Suppose that $$P\{T < \infty\} = 1$$, $$E[\lvert M_T \rvert] < \infty$$, and for each $$n$$,
 
 $$\lim_{n \to \infty} E[\lvert M_n \rvert \mathbf{1}_{\{T > n\}}] = 0. \tag{1.8}$$
 
-Then, $$E[M_T] = E[M_0]$$."
+Then, $$E[M_T] = E[M_0]$$.
 
 **Where the condition comes from:** For every finite $$n$$,
 
 $$E[M_0] = E[M_{n \wedge T}] = E[M_T \mathbf{1}_{\{T \leq n\}}] + E[M_n \mathbf{1}_{\{T > n\}}].$$
 
-As $$n \to \infty$$, the first term converges to $$E[M_T]$$ by dominated convergence (using $$E[\lvert M_T \rvert] < \infty$$). The second term vanishes by condition (1.8). Hence $$E[M_0] = E[M_T]$$.
+As $$n \to \infty$$, the first term converges to $$E[M_T]$$. The second term vanishes by condition (1.8). Hence $$E[M_0] = E[M_T]$$.
 
 **Condition (1.8) in plain English:** The contribution to the expected value from paths that have not yet stopped by time $$n$$ must vanish as $$n \to \infty$$. Paths that take very long to stop and reach very large values can violate this.
 
