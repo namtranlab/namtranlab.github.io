@@ -304,7 +304,13 @@ $$E[M_T] = E[M_0] \implies E[S_T^2] - E[T] = 0 \implies E[T] = E[S_T^2].$$
 
 Compute $$E[S_T^2]$$ directly:
 
-$$E[S_T^2] = J^2 P\{S_T = -J\} + K^2 P\{S_T = K\} = J^2 \cdot \frac{K}{J+K} + K^2 \cdot \frac{J}{J+K} = \frac{JK(J+K)}{J+K} = JK.$$
+$$
+\begin{aligned}
+E[S_T^2] = J^2 P\{S_T = -J\} + K^2 P\{S_T = K\} \\
+&= J^2 \cdot \frac{K}{J+K} + K^2 \cdot \frac{J}{J+K} \\
+&= \frac{JK(J+K)}{J+K} = JK.
+\end{aligned}
+$$
 
 $$\boxed{E[T] = JK.}$$
 
