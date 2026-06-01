@@ -284,33 +284,33 @@ $$\boxed{P\{S_T = K\} = \frac{1}{K}, \qquad P\{S_T = 0\} = \frac{K-1}{K}.}$$
 </div>
 
 <div class="example-block" markdown="1">
-<div class="ex-title">Example 1.3.2 — Expected hitting time via the $$S_n^2 - n$$ martingale <span class="ex-pill pill-ex">Example</span></div>
+<div class="ex-title">Example 1.3.2 — Expected hitting time via the $S_n^2 - n$ martingale <span class="ex-pill pill-ex">Example</span></div>
 
-"Let $S_n = X_1 + \cdots + X_n$ be simple random walk starting at 0. We have seen that $M_n = S_n^2 - n$ is a martingale. Let $J, K$ be positive integers and let $T = \min\{n : S_n = -J \text{ or } S_n = K\}$."
+Let $$S_n = X_1 + \cdots + X_n$$ be simple random walk starting at 0. We have seen that $$M_n = S_n^2 - n$$ is a martingale. Let $$J, K$$ be positive integers and let $$T = \min\{n : S_n = -J \text{ or } S_n = K\}$$.
 
-**Step 1 — Find $P\{S_T = K\}$ using $S_n$:**
+**Step 1 — Find $$P\{S_T = K\}$$ using $$S_n$$:**
 
-Apply OST to $S_n$ (same argument as Example 1.3.1, starting at 0):
+Apply OST to $$S_n$$ (same argument as Example 1.3.1, starting at 0):
 
 $$0 = E[S_T] = (-J) P\{S_T = -J\} + K \cdot P\{S_T = K\}.$$
 
 $$\boxed{P\{S_T = K\} = \frac{J}{J+K}, \qquad P\{S_T = -J\} = \frac{K}{J+K}.}$$
 
-**Step 2 — Find $E[T]$ using $M_n = S_n^2 - n$:**
+**Step 2 — Find $$E[T]$$ using $$M_n = S_n^2 - n$$:**
 
-Exercise 1.13 establishes that $E[M_{n \wedge T}^2] \leq C < \infty$, so OST III applies to $M_n$:
+Exercise 1.13 establishes that $$E[M_{n \wedge T}^2] \leq C < \infty$$, so OST III applies to $$M_n$$:
 
 $$E[M_T] = E[M_0] \implies E[S_T^2] - E[T] = 0 \implies E[T] = E[S_T^2].$$
 
-Compute $E[S_T^2]$ directly:
+Compute $$E[S_T^2]$$ directly:
 
 $$E[S_T^2] = J^2 P\{S_T = -J\} + K^2 P\{S_T = K\} = J^2 \cdot \frac{K}{J+K} + K^2 \cdot \frac{J}{J+K} = \frac{JK(J+K)}{J+K} = JK.$$
 
 $$\boxed{E[T] = JK.}$$
 
-**Interpretation:** The expected time for symmetric random walk to exit $(-J, K)$ starting from 0 is exactly $JK$. In particular, to travel distance $K$ from the origin in either direction, the expected time is $K^2$ (set $J = K$).
+**Interpretation:** The expected time for symmetric random walk to exit $(-J, K)$ starting from 0 is exactly $JK$. In particular, to travel distance $K$ from the origin in either direction, the expected time is $$K^2$$ (set $$J = K$$).
 
-<div class="ex-lesson"><strong>Key technique:</strong> Apply OST to <em>two different martingales simultaneously</em>: $S_n$ to get hitting probabilities, and $S_n^2 - n$ to get the expected hitting time. The two martingale identities together determine both unknowns ($P\{S_T = K\}$ and $E[T]$) exactly.</div>
+<div class="ex-lesson"><strong>Key technique:</strong> Apply OST to <em>two different martingales simultaneously</em>: $$S_n$$ to get hitting probabilities, and $$S_n^2 - n$$ to get the expected hitting time. The two martingale identities together determine both unknowns ($$P\{S_T = K\}$$ and $$E[T]$$) exactly.</div>
 </div>
 
 <div class="example-block" markdown="1">
