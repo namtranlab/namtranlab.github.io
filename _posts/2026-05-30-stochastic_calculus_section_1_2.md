@@ -188,10 +188,8 @@ Since $$B_j = \mathbf{1}_{\{j \leq T\}}$$ is predictable (it is $$\mathcal{F}_{j
 
 ### Part 4 — The Three Versions of the OST
 
-<b> OST I — Bounded Stopping Times </b>
-
 <div class="example-block" markdown="1">
-<div class="ex-title" markdown="1">Theorem 1.3.1 — OST I <span class="ex-pill pill-thm">Theorem</span></div>
+<div class="ex-title" markdown="1">Theorem 1.3.1 — OST I - Bounded Stopping Times<span class="ex-pill pill-thm">Theorem</span></div>
 
 "Suppose $$T$$ is a stopping time and $$M_n$$ is a martingale with respect to $$\{\mathcal{F}_n\}$$. Then $$Y_n = M_{n \wedge T}$$ is a martingale. In particular, for each $$n$$,
 
@@ -205,8 +203,6 @@ $$E[M_T] = E[M_0]. \tag{1.7}$$"
 
 **No extra conditions are needed** when $$T$$ is bounded — the martingale property of the stopped process is all that is required.
 </div>
-
-<b> OST II — Almost Surely Finite $T$ with Uniform Integrability </b>
 
 <div class="example-block" markdown="1">
 <div class="ex-title" markdown="1">Theorem 1.3.2 — OST II (a.s. finite $$T$$ with UI condition) <span class="ex-pill pill-thm">Theorem</span></div>
@@ -227,8 +223,6 @@ As $$n \to \infty$$, the first term converges to $$E[M_T]$$ by dominated converg
 
 **The doubling strategy fails here:** In Example 1.2.4, if $$T = \min\{n : W_n = 1\}$$, then $$P\{T < \infty\} = 1$$ but $$E[\lvert W_n \rvert \mathbf{1}_{\{T > n\}}] = (2^n - 1) \cdot 2^{-n} \to 1 \neq 0$$. Condition (1.8) is violated, consistently with $$E[W_T] = 1 \neq 0 = E[W_0]$$.
 </div>
-
-<b> OST III — $L^2$ Boundedness </b>
 
 <div class="example-block" markdown="1">
 <div class="ex-title" markdown="1">Theorem 1.3.3 — OST III ($$L^2$$ bounded stopped process) <span class="ex-pill pill-thm">Theorem</span></div>
