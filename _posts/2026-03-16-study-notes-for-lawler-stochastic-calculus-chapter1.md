@@ -142,15 +142,15 @@ function toggleChapter(id) {
 Conditional expectation is the central object of stochastic calculus. At its core it answers one question: <em>given that we have observed some (but not all) information, what is our best guess for a random variable $Y$?</em> The answer is not a single number but another random variable — one that changes as our information changes.
 </div>
 
-#### Core ideas
+<b>CORE IDEAS</b>
 
-<div class="key-idea"><strong>$E[Y]$ is the best guess for $Y$ given no information at all.</strong> The unconditional expectation is the baseline: if you know nothing about the outcome of an experiment, your single best guess (in the mean-squared-error sense) is $E[Y]$.</div>
+<strong>$E[Y]$ is the best guess for $Y$ given no information at all.</strong> The unconditional expectation is the baseline: if you know nothing about the outcome of an experiment, your single best guess (in the mean-squared-error sense) is $E[Y]$.
 
-<div class="key-idea"><strong>$E[Y \mid \mathcal{F}_n]$ is the best guess for Y given the information $\mathcal{F}_n$.</strong> As data arrives one variable at a time — $X_1, X_2, \ldots, X_n$ — we collect more information. The conditional expectation updates our best guess for Y using whatever is currently known.</div>
+<strong>$E[Y \mid \mathcal{F}_n]$ is the best guess for Y given the information $\mathcal{F}_n$.</strong> As data arrives one variable at a time — $X_1, X_2, \ldots, X_n$ — we collect more information. The conditional expectation updates our best guess for Y using whatever is currently known.
 
-<div class="key-idea"><strong>$E[Y \mid \mathcal{F}_n]$ is itself a random variable, not a fixed number.</strong> Because it depends on the observed values of $X_1, \ldots, X_n$ — which are random — it is a function of those observations, hence random.</div>
+<strong>$E[Y \mid \mathcal{F}_n]$ is itself a random variable, not a fixed number.</strong> Because it depends on the observed values of $X_1, \ldots, X_n$ — which are random — it is a function of those observations, hence random.
 
-<div class="key-idea"><strong>The formal definition bypasses explicit computation via one key property.</strong> $E[Y \mid \mathcal{F}_n]$ is defined as the unique $\mathcal{F}_n$-measurable random variable satisfying $E[E[Y \mid \mathcal{F}_n] \cdot \mathbf{1}_A] = E[Y \cdot \mathbf{1}_A]$ for all $\mathcal{F}_n$-measurable events A.</div>
+<strong>The formal definition bypasses explicit computation via one key property.</strong> $E[Y \mid \mathcal{F}_n]$ is defined as the unique $\mathcal{F}_n$-measurable random variable satisfying $E[E[Y \mid \mathcal{F}_n] \cdot \mathbf{1}_A] = E[Y \cdot \mathbf{1}_A]$ for all $\mathcal{F}_n$-measurable events A.
 
 <div class="misconception-block">
   <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception</b></span></div>
@@ -166,11 +166,11 @@ Conditional expectation is the central object of stochastic calculus. At its cor
 Before defining conditional expectation rigorously, we need the underlying mathematical arena: a probability space $(\Omega, \mathcal{F}, P)$. Everything — random variables, events, filtrations — lives inside this structure.
 </div>
 
-"We assume that the random variables $X_1, X_2, \ldots$ are defined on a probability space $(\Omega, \mathcal{F}, P)$. Here $\mathcal{F}$ is a $\sigma$-algebra or $\sigma$-field of subsets of $\Omega$, that is, a collection of subsets satisfying:<br>
+We assume that the random variables $X_1, X_2, \ldots$ are defined on a probability space $(\Omega, \mathcal{F}, P)$. Here $\mathcal{F}$ is a $\sigma$-algebra or $\sigma$-field of subsets of $\Omega$, that is, a collection of subsets satisfying:<br>
 
 i. $\emptyset \in \mathcal{F}$<br>
 ii. $A \in \mathcal{F}$ implies $\Omega \setminus A \in \mathcal{F}$ <br>
-iii. $A_1, A_2, \ldots \in \mathcal{F}$ implies $\bigcup_{n=1}^{\infty} A_n \in \mathcal{F}$."<br>
+iii. $A_1, A_2, \ldots \in \mathcal{F}$ implies $\bigcup_{n=1}^{\infty} A_n \in \mathcal{F}$.<br>
 
 This defines the three $\sigma$-algebra axioms. (i) The empty set — the impossible event — must be an event. (ii) If A is observable, so is its complement: "A did not happen" must also be observable. (iii) Countable unions of events are events: "at least one of $A_1, A_2, \ldots$ happened" is observable. These three rules make $\mathcal{F}$ a self-consistent collection of questions we can ask about the experiment.
 
@@ -529,15 +529,15 @@ Guarantees existence of conditional expectation. The function $\mu(A) = E[Y\cdot
 A martingale is the mathematical model of a <em>fair game</em>. At every moment, no matter what has happened so far, the expected future value of the process equals its current value.
 </div>
 
-#### Core ideas
+<b>CORE IDEAS</b>
 
-<div class="key-idea"><strong>A martingale models a fair game.</strong> If $M_n$ represents cumulative winnings, "fair" means: regardless of the history of play, the expected winnings at any future time equal the current winnings. No strategy can give you a systematic advantage over a martingale in finite time.</div>
+<strong>A martingale models a fair game.</strong> If $M_n$ represents cumulative winnings, "fair" means: regardless of the history of play, the expected winnings at any future time equal the current winnings. No strategy can give you a systematic advantage over a martingale in finite time.
 
-<div class="key-idea"><strong>The martingale condition is a statement about conditional expectations.</strong> The defining equation $E[M_n \mid \mathcal{F}_m] = M_m$ for $m < n$ is a direct application of §1.1: given everything observed up to time $m$, the best prediction of $M_n$ is simply $M_m$ itself.</div>
+<strong>The martingale condition is a statement about conditional expectations.</strong> The defining equation $E[M_n \mid \mathcal{F}_m] = M_m$ for $m < n$ is a direct application of §1.1: given everything observed up to time $m$, the best prediction of $M_n$ is simply $M_m$ itself.
 
-<div class="key-idea"><strong>To verify the martingale property it suffices to check one step at a time (The One-Step Criterion).</strong> Rather than checking $E[M_n \mid \mathcal{F}_m] = M_m$ for all pairs $m < n$, it is enough to verify $E[M_{n+1} \mid \mathcal{F}_n] = M_n$ for every $n$. The tower property of §1.1 propagates this to all future times.</div>
+<strong>To verify the martingale property it suffices to check one step at a time (The One-Step Criterion).</strong> Rather than checking $E[M_n \mid \mathcal{F}_m] = M_m$ for all pairs $m < n$, it is enough to verify $E[M_{n+1} \mid \mathcal{F}_n] = M_n$ for every $n$. The tower property of §1.1 propagates this to all future times.</div>
 
-<div class="key-idea"><strong>A martingale has constant expected value.</strong> Taking the full expectation: $\mathbb{E}[M_n] = \mathbb{E}[E[M_n \mid \mathcal{F}_0]] = \mathbb{E}[M_0]$ for all $n$. The mean is time-invariant — a necessary (but not sufficient) condition for fairness.</div>
+<div class="key-idea"><strong>A martingale has constant expected value.</strong> Taking the full expectation: $\mathbb{E}[M_n] = \mathbb{E}[E[M_n \mid \mathcal{F}_0]] = \mathbb{E}[M_0]$ for all $n$. The mean is time-invariant — a necessary (but not sufficient) condition for fairness.
 
 ---
 
