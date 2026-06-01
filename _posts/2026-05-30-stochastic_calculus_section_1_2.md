@@ -382,21 +382,6 @@ so condition (1.8) is violated. Since $E[W_{n \wedge T}^2] \to \infty$ as well, 
 ### Term Glossary
 
 <div class="glossary-entry">
-<div class="gterm">Stopping time $T$ <span class="gcat cat-defn">Definition</span></div>
-A nonnegative integer-valued random variable such that $\{T = n\} \in \mathcal{F}_n$ for every $n \geq 0$. The decision to stop at time $n$ uses only information available through time $n$. Equivalently: $\{T \leq n\} \in \mathcal{F}_n$ for all $n$. The prototype is the first hitting time $T = \min\{n : S_n \in A\}$ for some set $A$.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Stopped process $M_{n \wedge T}$ <span class="gcat cat-defn">Definition</span></div>
-The martingale $M_n$ run until time $T$ and then frozen: $M_{n \wedge T} = M_{\min\{n,T\}}$. Equals $M_n$ for $n < T$ and $M_T$ for $n \geq T$. Always a martingale whenever $M_n$ is a martingale and $T$ is a stopping time — a direct consequence of the §1.2 discrete stochastic integral result with bets $B_j = \mathbf{1}_{\{j \leq T\}}$.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Optional Sampling Theorem (OST) <span class="gcat cat-thm">Theorem</span></div>
-A family of results stating $E[M_T] = E[M_0]$ under appropriate conditions. Three versions: (I) bounded $T$; (II) a.s. finite $T$ with $E[\lvert M_n \rvert \mathbf{1}_{\{T>n\}}] \to 0$; (III) a.s. finite $T$ with $E[M_{n \wedge T}^2] \leq C$. Also called the Optional Stopping Theorem.
-</div>
-
-<div class="glossary-entry">
 <div class="gterm">Bounded stopping time <span class="gcat cat-defn">Definition</span></div>
 A stopping time $T$ with $P\{T \leq k\} = 1$ for some finite $k$. The strongest assumption — guarantees OST with no additional conditions. In Examples 1.3.1 and 1.3.2 the stopping time is not bounded (the walk may take arbitrarily long to exit the interval) but the stopped process is bounded in value, which gives $L^2$ boundedness.
 </div>
@@ -434,29 +419,6 @@ Derived by applying OST to the martingale $M_n = S_n^2 - n$ together with the hi
 Simple symmetric random walk returns to the origin with probability one: $P\{\tau < \infty\} = 1$ where $\tau = \min\{n \geq 1 : S_n = 0\}$. Follows from the gambler's ruin estimate by letting $K \to \infty$: $P\{S_T = 0\} = (K-1)/K \to 1$.
 </div>
 
----
-
-### Study-Note Summary
-
-- A **stopping time** $T$ satisfies $\{T = n\} \in \mathcal{F}_n$ for every $n$ — the stop decision uses only past and present information. Equivalent: $\{T \leq n\} \in \mathcal{F}_n$. First hitting times are always stopping times; last hitting times generally are not.
-- The **stopped process** $M_{n \wedge T}$ is always a martingale when $M_n$ is a martingale and $T$ is a stopping time. This gives $E[M_{n \wedge T}] = E[M_0]$ for every finite $n$ without any extra conditions.
-- **Passing to $E[M_T] = E[M_0]$** requires one of three additional conditions: (OST I) $T$ bounded; (OST II) $E[\lvert M_n \rvert \mathbf{1}_{\{T>n\}}] \to 0$; (OST III) $E[M_{n \wedge T}^2] \leq C$. Condition (1.9) implies (1.8) via Cauchy-Schwarz. The martingale doubling strategy is the canonical counterexample showing why these are necessary.
-- **Example 1.3.1 — Gambler's ruin:** Apply OST to $S_n$ (simple random walk starting at 1, $T = \min\{S_n = 0 \text{ or } K\}$). The identity $E[S_T] = E[S_0] = 1$ gives $P\{S_T = K\} = 1/K$. As $K \to \infty$ the player almost surely goes broke — recurrence of the random walk.
-- **Example 1.3.2 — Expected hitting time:** Apply OST to $S_n^2 - n$ simultaneously with $S_n$. The two identities together give $P\{S_T = K\} = J/(J+K)$ and $E[T] = JK$. The technique of applying OST to two martingales to extract two unknowns is central to §1.3.
-- **Example 1.3.3 — OST failure:** $T = \min\{n : S_n = 1\}$ has $P\{T < \infty\} = 1$ but $E[T] = \infty$ and $E[S_T] = 1 \neq 0$. Neither (1.8) nor (1.9) holds. This shows $P\{T < \infty\} = 1$ alone is never sufficient.
-- **Practical workflow:** to use OST, identify a martingale, define a stopping time, verify one of the three OST conditions (bounded, (1.8), or (1.9)), then solve the resulting equation $E[M_T] = E[M_0]$ for the desired probability or expectation.
-
-<div class="ref-tags">
-<span class="ref-tag">Optional Sampling Theorem</span>
-<span class="ref-tag">Stopping time</span>
-<span class="ref-tag">Stopped process</span>
-<span class="ref-tag">Gambler's ruin</span>
-<span class="ref-tag">Expected hitting time</span>
-<span class="ref-tag">$L^2$ boundedness</span>
-<span class="ref-tag">Uniform integrability</span>
-<span class="ref-tag">Recurrence</span>
-<span class="ref-tag">Martingale</span>
-</div>
 
   </div>
 </div>
