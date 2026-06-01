@@ -134,11 +134,11 @@ The Optional Sampling Theorem (OST) answers the question: <em>if you are allowed
 
 <b>CORE IDEAS</b>
 
-<div class="key-idea"><strong>Stopping a martingale produces another martingale.</strong> The stopped process $$Y_n = M_{n \wedge T}$$ is always a martingale, regardless of what the stopping time $$T$$ is.</div>
+<<strong>Stopping a martingale produces another martingale.</strong> The stopped process $$Y_n = M_{n \wedge T}$$ is always a martingale, regardless of what the stopping time $$T$$ is.
 
-<div class="key-idea"><strong>$E[M_T] = E[M_0]$ requires extra conditions beyond just $$P\{T < \infty\} = 1$$.</strong> The stopped process has constant mean $$E[M_{n \wedge T}] = E[M_0]$$ for all finite $$n$$. Passing this to the limit $$n \to \infty$$ — to get $$E[M_T] = E[M_0]$$ — requires uniform integrability or $$L^2$$ boundedness.</div>
+<strong>$E[M_T] = E[M_0]$ requires extra conditions beyond just $$P\{T < \infty\} = 1$$.</strong> The stopped process has constant mean $$E[M_{n \wedge T}] = E[M_0]$$ for all finite $$n$$. Passing this to the limit $$n \to \infty$$ — to get $$E[M_T] = E[M_0]$$ — requires uniform integrability or $$L^2$$ boundedness.
 
-<div class="key-idea"><strong>The OST is a tool for computing probabilities and expectations.</strong> By choosing a clever stopping time $T$ and applying OST to two different martingales simultaneously — $$S_n$$ and $$S_n^2 - n$$ — one can extract exact formulas for hitting probabilities and expected hitting times. Examples 1.3.1 and 1.3.2 demonstrate this technique completely.</div>
+<strong>The OST is a tool for computing probabilities and expectations.</strong> By choosing a clever stopping time $T$ and applying OST to two different martingales simultaneously — $$S_n$$ and $$S_n^2 - n$$ — one can extract exact formulas for hitting probabilities and expected hitting times. Examples 1.3.1 and 1.3.2 demonstrate this technique completely.
 
 ---
 
