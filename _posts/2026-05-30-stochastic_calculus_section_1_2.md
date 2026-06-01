@@ -316,21 +316,18 @@ $$\boxed{E[T] = JK.}$$
 
 **Interpretation:** The expected time for symmetric random walk to exit $(-J, K)$ starting from 0 is exactly $JK$. In particular, to travel distance $K$ from the origin in either direction, the expected time is $$K^2$$ (set $$J = K$$).
 
-<div class="ex-lesson"><strong>Key technique:</strong> Apply OST to <em>two different martingales simultaneously</em>: $$S_n$$ to get hitting probabilities, and $$S_n^2 - n$$ to get the expected hitting time. The two martingale identities together determine both unknowns ($$P\{S_T = K\}$$ and $$E[T]$$) exactly.</div>
-</div>
-
 <div class="example-block" markdown="1">
-<div class="ex-title">Example 1.3.3 — OST fails: $$P\{T < \infty\} = 1$$ but $$E[S_0] \neq E[S_T]$$ <span class="ex-pill pill-warn">Counterexample</span></div>
+<div class="ex-title">Example 1.3.3 — OST fails: $P\{T < \infty\} = 1$ but $E[S_0] \neq E[S_T]$ <span class="ex-pill pill-warn">Counterexample</span></div>
 
-"As in Example 1.3.2, let $S_n = X_1 + \cdots + X_n$ be simple random walk starting at 0. Let $T = \min\{n : S_n = 1\}$."
+As in Example 1.3.2, let $$S_n = X_1 + \cdots + X_n$$ be simple random walk starting at 0. Let $$T = \min\{n : S_n = 1\}$$.
 
-**$P\{T < \infty\} = 1$:** From Example 1.3.1, $P\{$random walk hits 1 before $-J\} = J/(J+1) \to 1$ as $J \to \infty$. So with probability one the walk reaches 1.
+**$$P\{T < \infty\} = 1$$:** From Example 1.3.1, $$P\{$random walk hits 1 before $-J\} = J/(J+1) \to 1$$ as $$J \to \infty$$. So with probability one the walk reaches 1.
 
-**But $E[T] = \infty$:** From Example 1.3.2, the expected time to exit $(-J, 1)$ starting at 0 is $J \cdot 1 = J$. Since this holds for all $J$ and $T \geq T_J$ (where $T_J$ is the exit time from $(-J,1)$), we have $E[T] \geq J$ for all $J$, so $E[T] = \infty$.
+**But $$E[T] = \infty$$:** From Example 1.3.2, the expected time to exit $$(-J, 1)$$ starting at 0 is $$J \cdot 1 = J$$. Since this holds for all $$J$$ and $$T \geq T_J$$ (where $$T_J$$ is the exit time from $$(-J,1)$$), we have $$E[T] \geq J$$ for all $$J$$, so $$E[T] = \infty$$.
 
-**OST fails:** $S_T = 1$ almost surely, so $E[S_T] = 1 \neq 0 = E[S_0]$.
+**OST fails:** $$S_T = 1$$ almost surely, so $$E[S_T] = 1 \neq 0 = E[S_0]$$.
 
-**Why:** Neither condition (1.8) nor (1.9) holds for this $T$. In particular, $E[M_{n \wedge T}^2] = E[S_{n \wedge T}^2] \to \infty$ as $n \to \infty$, violating (1.9).
+**Why:** Neither condition (1.8) nor (1.9) holds for this $$T$$. In particular, $$E[M_{n \wedge T}^2] = E[S_{n \wedge T}^2] \to \infty$$ as $$n \to \infty$$, violating (1.9).
 
 <div class="ex-lesson"><strong>Key lesson:</strong> $P\{T < \infty\} = 1$ is not sufficient on its own. An infinite expected stopping time ($E[T] = \infty$) is a warning sign that the extra conditions of OST II or III may fail. Always verify one of the three conditions before applying OST.</div>
 </div>
