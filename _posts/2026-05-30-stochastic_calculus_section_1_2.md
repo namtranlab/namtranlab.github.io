@@ -278,7 +278,7 @@ Solving:
 
 $$\boxed{P\{S_T = K\} = \frac{1}{K}, \qquad P\{S_T = 0\} = \frac{K-1}{K}.}$$
 
-**Interpretation:** Starting at 1, with a fair game, the probability of reaching $$K$$ before 0 is $$1/K$$. As $$K \to \infty$$, $$P\{S_T = K\} \to 0$$: a gambler with \$1 playing against a casino with \$K almost surely goes broke. This is the **gambler's ruin estimate**.
+**Interpretation:** Starting at 1, with a fair game, the probability of reaching $$K$$ before 0 is $$1/K$$. As $$K \to \infty$$, $$P\{S_T = K\} \to 0$$: a gambler with <span>$1</span> playing against a casino with <span>$K</span> almost surely goes broke. This is the **gambler's ruin estimate**.
 
 <div class="ex-lesson"><strong>Key technique:</strong> The OST converts a martingale identity ($E[S_T] = E[S_0]$) into a linear equation in the unknown probability $P\{S_T = K\}$. The bounded stopping time (or $L^2$ bound) is what justifies passing the martingale identity through to time $T$.</div>
 </div>
