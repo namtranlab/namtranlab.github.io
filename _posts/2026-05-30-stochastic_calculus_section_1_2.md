@@ -159,7 +159,7 @@ A nonnegative integer-valued random variable $T$ is a <b>stopping time</b> with 
 
 $$\{T \leq n\} = \{T = 0\} \cup \{T = 1\} \cup \cdots \cup \{T = n\},$$
 
-and each event $\{T = k\} \in \mathcal{F}_k \subseteq \mathcal{F}_n$.
+and each event $$\{T = k\} \in \mathcal{F}_k \subseteq \mathcal{F}_n$$.
 
 **The betting interpretation:** $T$ is a stopping time if and only if the strategy "bet 1 on rounds $1, 2, \ldots, T$ and bet 0 afterwards" is an allowable (predictable) betting strategy in the sense of §1.2. The bet $$B_j = \mathbf{1}_{\{j \leq T\}}$$ is $$\mathcal{F}_{j-1}$$-measurable precisely because $$\{T \geq j\} = \{T \leq j-1\}^c \in \mathcal{F}_{j-1}$$.
 </div>
