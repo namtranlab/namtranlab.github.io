@@ -174,15 +174,15 @@ Let $T$ be the <b>stopping time</b> for the strategy. Then the winnings at time 
 
 $$M_0 + \sum_{j=1}^n B_j [M_j - M_{j-1}],$$
 
-where $B_j = 1$ if $j \leq T$ and $B_j = 0$ if $j > T$. We can write this as $M_{n \wedge T}$, where $n \wedge T$ is shorthand for $$\min\{n, T\}$$.
+where $$B_j = 1$$ if $$j \leq T$$ and $$B_j = 0$$ if $$j > T$$. We can write this as $$M_{n \wedge T}$$, where $$n \wedge T$$ is shorthand for $$\min\{n, T\}$$.
 
-**The stopped process $M_{n \wedge T}$:** at time $n$, the process equals:
-- $M_n$ if $T > n$ (we have not stopped yet),
-- $M_T$ if $T \leq n$ (we have already stopped and the value is frozen at $M_T$).
+**The stopped process $$M_{n \wedge T}$$:** at time $n$, the process equals:
+- $$M_n$$ if $$T > n$$ (we have not stopped yet),
+- $$M_T$$ if $$T \leq n$$ (we have already stopped and the value is frozen at $$M_T$$).
 
 Since $$B_j = \mathbf{1}_{\{j \leq T\}}$$ is predictable (it is $$\mathcal{F}_{j-1}$$-measurable because $$\{T \geq j\} \in \mathcal{F}_{j-1}$$), the discrete stochastic integral result from §1.2 immediately gives:
 
-<div class="result-box"><strong>The stopped process $Y_n = M_{n \wedge T}$ is always a martingale with respect to $\{\mathcal{F}_n\}$.</strong> In particular, $E[M_{n \wedge T}] = E[M_0]$ for every finite $n$.</div>
+<div class="result-box"><strong>The stopped process $$Y_n = M_{n \wedge T}$$ is always a martingale with respect to $$\{\mathcal{F}_n\}$$.</strong> In particular, $$E[M_{n \wedge T}] = E[M_0]$$ for every finite $$n$$.</div>
 
 ---
 
