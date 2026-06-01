@@ -198,7 +198,7 @@ $$\mathcal{F}_1$$ lets us distinguish "first flip = H" from "first flip = T" —
 ### Part 3 — The Filtration
 
 <div class="note-abstract">
-A filtration is a growing sequence of σ-algebras modelling information accumulating over time. At time $n$, $F_n$ records everything observed up to time $n$ — and once something is known it is never forgotten.
+A filtration is a growing sequence of σ-algebras modelling information accumulating over time. At time $n$, $F_n$ records everything observed up to time $n$ — and once something is known it is never forgotten.<br>
 
 Let $$X_1, X_2, \ldots$$ be random variables which we think of as a time series with the data arriving one at a time. At time $$n$$ we have viewed the values $$X_1, \ldots, X_n$$. … We will write $$\mathcal{F}_n$$ for 'the information contained in $$X_1, \ldots, X_n$$.
 </div>
@@ -284,7 +284,7 @@ This gives the familiar undergraduate formula:
 
 $$E[Y \mid X = x] = \int_{-\infty}^{\infty} y\, f(y \mid x)\, dy = \frac{\int_{-\infty}^{\infty} y\, f(x,y)\, dy}{f(x)}$$
 
-"Note that $$E[Y \mid X]$$ is a random variable which is determined by the value of the random variable $$X$$."
+Note that $$E[Y \mid X]$$ is a random variable which is determined by the value of the random variable $$X$$.
 
 $$E[Y \mid X = x]$$ for a fixed $$x$$ is a number. But $$E[Y \mid X]$$ — without fixing $$x$$ — is a function of $$X$$. Since $$X$$ is random, this function is itself random. This is the key conceptual leap the formal definition must capture.
 
@@ -299,11 +299,11 @@ Averaging the conditional best-guess over all possible observations recovers the
 ### Part 5 — The Formal Definition
 
 <div class="note-abstract">
-"The conditional expectation $E[Y \mid \mathcal{F}_n]$ is the unique random variable satisfying the following. 
+The conditional expectation $E[Y \mid \mathcal{F}_n]$ is the unique random variable satisfying the following. <br>
 
-(i) $E[Y \mid \mathcal{F}_n]$ is $\mathcal{F}_n$-measurable. 
+(i) $E[Y \mid \mathcal{F}_n]$ is $\mathcal{F}_n$-measurable. <br>
 
-(ii) For every $\mathcal{F}_n$-measurable event A, $E[E[Y \mid \mathcal{F}_n] \cdot \mathbf{1}_A] = E[Y \cdot \mathbf{1}_A]$."
+(ii) For every $\mathcal{F}_n$-measurable event A, $E[E[Y \mid \mathcal{F}_n] \cdot \mathbf{1}_A] = E[Y \cdot \mathbf{1}_A]$.
 </div>
 
 Condition (i): The output is computable from $$X_1,\ldots,X_n$$ alone — it cannot use future information.
