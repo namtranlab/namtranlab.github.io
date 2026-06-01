@@ -119,7 +119,7 @@ function toggleChapter(id) {
 | $$E[M_T] = E[M_0]$$ | The optional sampling conclusion — martingale mean preserved at stopping time $$T$$ |
 | $$P\{T \leq k\} = 1$$ | $$T$$ is bounded — the strongest assumption guaranteeing $$E[M_T] = E[M_0]$$ |
 | $$P\{T < \infty\} = 1$$ | $$T$$ is almost surely finite — weaker condition, needs extra hypotheses |
-| $$\mathbf{1}_{\{T > n\}}$$ | Indicator that we have not yet stopped by time $$n$$ |
+| $$\mathbf{1}_{\{T > n\}}$$ | Indicator function equal 1 if $$T > n$$ and 0 if $$T < n$$|
 | $$E[\lvert M_n \rvert \mathbf{1}_{\{T>n\}}] \to 0$$ | The uniform integrability condition in OST II |
 | $$E[M_{n \wedge T}^2] \leq C$$ | The $$L^2$$ boundedness condition in OST III |
 | $$S_n$$ | Simple symmetric random walk $$X_1 + \cdots + X_n$$ with $$P\{X_j = \pm 1\} = \tfrac{1}{2}$$ |
