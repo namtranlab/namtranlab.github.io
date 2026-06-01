@@ -215,11 +215,6 @@ $$\mathcal{F}_n$$ is not a number or a random variable — it is a $$\sigma$$-al
   <div class="mc-correct"><strong>Correct:</strong> Any function of $X_1,\ldots,X_n$ is also $\mathcal{F}_n$-measurable — e.g., $X_1 + X_2$, $\max(X_1,\ldots,X_n)$, or $S_n^2$. The condition is that X's value is fully determined once $X_1,\ldots,X_n$ are known, not that X appears explicitly in the list.</div>
 </div>
 
-<div class="misconception-block">
-  <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception</b></span></div>
-  <div class="mc-wrong"><strong>Wrong:</strong> "$E[Y \mid \mathcal{F}_n]$ is just a number, like $E[Y]$ but computed with less data."</div>
-  <div class="mc-correct"><strong>Correct:</strong> $E[Y \mid \mathcal{F}_n]$ is a <em>random variable</em>. Its value changes depending on which values $X_1, \ldots, X_n$ take. If you observe different data, you get a different conditional expectation. $E[Y]$ is the special case where zero data is observed — a single fixed number. $E[Y \mid \mathcal{F}_n]$ is a whole function of the observations.</div>
-</div>
 
 <div class="example-block" markdown="1">
 <div class="ex-title">Example of a Measurable random variable on a finite space</div>
