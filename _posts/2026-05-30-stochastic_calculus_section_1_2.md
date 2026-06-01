@@ -173,7 +173,7 @@ and each event $\{T = k\} \in \mathcal{F}_k \subseteq \mathcal{F}_n$.
 - $T = 5$ — a deterministic constant is always a stopping time since $\{T = 5\} = \Omega \in \mathcal{F}_5$ and $$\{T = n\} = \emptyset \in \mathcal{F}_n$$ for $n \neq 5$. ✓
 
 **Not a stopping time:**
-- $T = \max\{n \leq 10 : S_n = \max_{k \leq 10} S_k\}$ — the time of the overall maximum up to time 10. To know whether $T = n$ you need to know all future values $S_{n+1}, \ldots, S_{10}$, which are not in $\mathcal{F}_n$. ✗
+- $$T = \max\{n \leq 10 : S_n = \max_{k \leq 10} S_k\}$$ — the time of the overall maximum up to time 10. To know whether $T = n$ you need to know all future values $S_{n+1}, \ldots, S_{10}$, which are not in $\mathcal{F}_n$. ✗
 
 <div class="ex-lesson"><strong>Key point:</strong> A stopping time is a decision rule that looks only backward and at the present — never forward. The "first time" something happens is always a stopping time; the "last time" something happens (over a fixed horizon) generally is not.</div>
 </div>
