@@ -497,6 +497,9 @@ Guarantees existence of conditional expectation. The function $\mu(A) = E[Y\cdot
 </div>
 
 
+
+
+
 ## Section 1.2 — Martingales
 
 <div class="chapter-block">
@@ -755,6 +758,9 @@ The cumulative winnings from applying a predictable betting strategy $\{B_j\}$ t
 
   </div>
 </div>
+
+
+
 
 
 ## Section 1.3 — Optional Sampling Theorem
