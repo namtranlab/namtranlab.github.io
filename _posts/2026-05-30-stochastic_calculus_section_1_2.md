@@ -315,6 +315,7 @@ $$
 $$\boxed{E[T] = JK.}$$
 
 **Interpretation:** The expected time for symmetric random walk to exit $$(-J, K)$$ starting from 0 is exactly $$JK$$. In particular, to travel distance $$$K$$ from the origin in either direction, the expected time is $$K^2$$ (set $$J = K$$).
+</div>
 
 <div class="example-block" markdown="1">
 <div class="ex-title">Example 1.3.3 — OST fails: $P\{T < \infty\} = 1$ but $E[S_0] \neq E[S_T]$ <span class="ex-pill pill-warn">Counterexample</span></div>
