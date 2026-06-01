@@ -322,8 +322,7 @@ $$\boxed{E[T] = JK.}$$
 
 As in Example 1.3.2, let $$S_n = X_1 + \cdots + X_n$$ be simple random walk starting at 0. Let $$T = \min\{n : S_n = 1\}$$.
 
-**$$P\{T < \infty\} = 1$$:** From Example 1.3.1, $$P\{random walk hits 1 before -J\} = J/(J+1) \to 1$$ as $$J \to \infty$$. So with probability one the walk reaches 1.
-
+**$$P\{T < \infty\} = 1$$:** From Example 1.3.2, Probility random walk hits 1 before $$-J$$ $$P\{S_T = 1\}= J/(J+1) \to 1$$ as $$J \to \infty$$. So with probability one the walk reaches 1.
 
 **But $$E[T] = \infty$$:** From Example 1.3.2, the expected time to exit $$(-J, 1)$$ starting at 0 is $$J \cdot 1 = J$$. Since this holds for all $$J$$ and $$T \geq T_J$$ (where $$T_J$$ is the exit time from $$(-J,1)$$), we have $$E[T] \geq J$$ for all $$J$$, so $$E[T] = \infty$$.
 
@@ -339,15 +338,15 @@ As in Example 1.3.2, let $$S_n = X_1 + \cdots + X_n$$ be simple random walk star
 ### Part 6 — Why the Doubling Strategy Does Not Contradict OST
 
 The martingale betting strategy from §1.2 Example 1.2.4 has:
-- $W_n$ is a martingale for every finite $n$, so $E[W_n] = 0$.
-- $T = \min\{n : W_n = 1\}$ satisfies $P\{T < \infty\} = 1$.
-- $W_T = 1$, so $E[W_T] = 1 \neq 0 = E[W_0]$.
+- $$W_n$$ is a martingale for every finite $$n$$, so $$E[W_n] = 0$$.
+- $$T = \min\{n : W_n = 1\}$$ satisfies $$P\{T < \infty\} = 1$$.
+- $$W_T = 1$$, so $$E[W_T] = 1 \neq 0 = E[W_0]$$.
 
 **Checking that OST conditions fail:**
 
 $$E[\lvert W_n \rvert \mathbf{1}_{\{T > n\}}] = (2^n - 1) \cdot 2^{-n} \to 1 \neq 0,$$
 
-so condition (1.8) is violated. Since $E[W_{n \wedge T}^2] \to \infty$ as well, condition (1.9) also fails. And $T$ is clearly unbounded. All three OST conditions fail, consistently with $E[W_T] \neq E[W_0]$.
+so condition (1.8) is violated. Since $$E[W_{n \wedge T}^2] \to \infty$$ as well, condition (1.9) also fails. And $$T$$ is clearly unbounded. All three OST conditions fail, consistently with $$E[W_T] \neq E[W_0]$$.
 
 <div class="result-box"><strong>The OST is not violated by the doubling strategy — the doubling strategy simply does not satisfy any of the three OST conditions.</strong> It is an example constructed precisely to illustrate why these conditions are necessary.</div>
 
