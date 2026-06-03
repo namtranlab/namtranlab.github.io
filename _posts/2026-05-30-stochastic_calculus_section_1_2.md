@@ -149,26 +149,20 @@ The Martingale Convergence Theorem (MCT) answers: <em>if a martingale is uniform
 <div class="example-block" markdown="1">
 <div class="ex-title">Theorem 1.4.1 — Martingale Convergence Theorem <span class="ex-pill pill-thm">Theorem</span></div>
 
-"Suppose $$M_n$$ is a martingale with respect to $$\{\mathcal{F}_n\}$$ and there exists $$C < \infty$$ such that $$E[\lvert M_n \rvert] \leq C$$ for all $$n$$. Then there exists a random variable $$M_\infty$$ such that with probability one
+Suppose $$M_n$$ is a martingale with respect to $$\{\mathcal{F}_n\}$$ and there exists $$C < \infty$$ such that $$E[\lvert M_n \rvert] \leq C$$ for all $$n$$. Then there exists a random variable $$M_\infty$$ such that with probability one
 
-$$\lim_{n \to \infty} M_n = M_\infty.$$"
+$$\lim_{n \to \infty} M_n = M_\infty.$$
+</div>
 
-**Unpacking the hypothesis** — $$E[\lvert M_n \rvert] \leq C$$ uniformly in $$n$$: the absolute mean of $$M_n$$ stays bounded no matter how far the process runs. Since $$E[\lvert M_n \rvert] \geq \lvert E[M_n] \rvert = \lvert E[M_0] \rvert$$, this implicitly requires $$E[M_0]$$ to be finite, but it is strictly stronger — it controls the size of fluctuations, not just the level.
+**Unpacking the hypothesis** — $$E[\lvert M_n \rvert] \leq C$$ uniformly in $$n$$: The absolute mean of $$M_n$$ stays bounded no matter how far the process runs. Since $$E[\lvert M_n \rvert] \geq \lvert E[M_n] \rvert = \lvert E[M_0] \rvert$$, this implicitly requires $$E[M_0]$$ to be finite, but it is strictly stronger — it controls the size of fluctuations, not just the level.
 
-**Unpacking the conclusion** — "with probability one": there exists a single event $$\Omega^* \subseteq \Omega$$ with $$P(\Omega^*) = 1$$ such that for every $$\omega \in \Omega^*$$, the real sequence $$(M_n(\omega))$$ converges to a finite number $$M_\infty(\omega)$$. On the null set $$\Omega \setminus \Omega^*$$ convergence may fail.
+**Unpacking the conclusion** — "with probability one": There exists a single event $$\Omega^* \subseteq \Omega$$ with $$P(\Omega^*) = 1$$ such that for every $$\omega \in \Omega^*$$, the real sequence $$(M_n(\omega))$$ converges to a finite number $$M_\infty(\omega)$$.
 
 **What the theorem does NOT say:**
 
 - It does not say $$E[M_\infty] = E[M_0]$$.
 - It does not say convergence is in $$L^1$$ or $$L^2$$.
 - It does say $$E[\lvert M_\infty \rvert] \leq C$$ — this follows from Fatou's lemma: $$E[\lvert M_\infty \rvert] = E[\liminf \lvert M_n \rvert] \leq \liminf E[\lvert M_n \rvert] \leq C$$.
-</div>
-
-<div class="misconception-block">
-  <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception</b></span></div>
-  <div class="mc-wrong"><strong>Wrong:</strong> "The MCT says $M_n \to M_\infty$ a.s. and $E[M_\infty] = E[M_0]$."</div>
-  <div class="mc-correct"><strong>Correct:</strong> The MCT guarantees only a.s. convergence. The mean identity $E[M_\infty] = E[M_0]$ requires uniform integrability — a strictly stronger condition than $\sup_n E[\lvert M_n \rvert] \leq C$. Without it, probability mass can "escape to infinity" in the limit and the mean changes, as in the doubling strategy where $E[W_\infty] = 1 \neq 0 = E[W_0]$.</div>
-</div>
 
 ---
 
@@ -198,17 +192,17 @@ Define bets $$B_k = \mathbf{1}_{\{S_j \leq k-1 < T_j \text{ for some } j\}}$$, i
 
 The winnings from this strategy satisfy:
 
-$$W_n \geq U_n(b - a) - (a - M_n)^+.$$
+$$W_n \geq U_n(b - a) - (a - M_n).$$
 
-Here $$U_n(b-a)$$ is the profit from completed upcrossings, and $$(a - M_n)^+$$ is the potential loss on a position still open at time $$n$$ (held below $$a$$).
+Here $$U_n(b-a)$$ is the profit from completed upcrossings, and $$(a - M_n)$$ is the potential loss on a position still open at time $$n$$ (held below $$a$$).
 
 #### Step 3 — Apply the martingale property of $$W_n$$
 
 Since $$B_k$$ is predictable and bounded, $$W_n$$ is a martingale (§1.2), so $$E[W_n] = 0$$:
 
-$$0 = E[W_n] \geq (b-a)\, E[U_n] - E[(a - M_n)^+].$$
+$$0 = E[W_n] \geq (b-a)\, E[U_n] - E[(a - M_n)].$$
 
-Using $$(a - M_n)^+ \leq \lvert a \rvert + \lvert M_n \rvert$$:
+Using $$(a - M_n) \leq \lvert a \rvert + \lvert M_n \rvert$$:
 
 $$\boxed{E[U_n(a,b)] \leq \frac{\lvert a \rvert + E[\lvert M_n \rvert]}{b - a} \leq \frac{\lvert a \rvert + C}{b - a} < \infty.}$$
 
@@ -228,21 +222,6 @@ On the complementary event (probability one), $$U_\infty(a,b) < \infty$$ for eve
 
 ---
 
-### Part 4 — The Doubling Strategy Does Not Contradict MCT
-
-The martingale betting strategy $$W_n$$ from §1.2 Example 1.2.4 satisfies:
-
-$$E[\lvert W_n \rvert] = \bigl(1 - 2^{-n}\bigr) \cdot 1 + (2^n - 1) \cdot 2^{-n} = 2(1 - 2^{-n}) \leq 2.$$
-
-So the MCT hypothesis holds with $$C = 2$$. The MCT correctly predicts $$W_\infty = \lim W_n$$ exists a.s., and indeed $$W_\infty = 1$$ a.s. But:
-
-$$E[W_\infty] = 1 \neq 0 = E[W_0].$$
-
-This is not a contradiction — the MCT never claims $$E[M_\infty] = E[M_0]$$. The mean shifts because on the rare event of losing all $$n$$ rounds (probability $$2^{-n}$$, loss $$2^n - 1$$), mass escapes to $$-\infty$$ in the limit even though convergence holds a.s.
-
-<div class="result-box"><strong>The doubling strategy satisfies the MCT hypothesis and confirms the MCT conclusion ($W_\infty$ exists a.s.). The failure of $E[W_\infty] = E[W_0]$ is fully expected — the MCT makes no such promise.</strong></div>
-
----
 
 ### Part 5 — Pólya's Urn
 
@@ -258,9 +237,17 @@ Start with one red and one green ball. At each step: draw a ball uniformly at ra
 - $$M_n = R_n/(n+2)$$: fraction of red balls.
 - Transition: $$P\{R_{n+1} = R_n + 1 \mid \mathcal{F}_n\} = M_n$$.
 
-#### $$M_n$$ is a martingale — verification
+#### <span>$$M_n$$</span> is a martingale — verification
 
-$$E[M_{n+1} \mid \mathcal{F}_n] = M_n \cdot \frac{R_n + 1}{n+3} + (1 - M_n) \cdot \frac{R_n}{n+3} = \frac{R_n(n+3)}{(n+2)(n+3)} = \frac{R_n}{n+2} = M_n. \checkmark$$
+$$
+\begin{aligned}
+$$E[M_{n+1} \mid \mathcal{F}_n] 
+&= M_n \cdot \frac{R_n + 1}{n+3} + (1 - M_n) \cdot \frac{R_n}{n+3} \\
+&= \frac{R_n(n+3)}{(n+2)(n+3)} \\
+&= \frac{R_n}{n+2} \\
+&= M_n. \checkmark$$
+\end{aligned}
+$$
 
 #### MCT applies
 
@@ -268,7 +255,7 @@ Since $$0 \leq M_n \leq 1$$, we have $$E[\lvert M_n \rvert] = E[M_n] = E[M_0] = 
 
 $$M_\infty = \lim_{n \to \infty} M_n \quad \text{exists a.s.}$$
 
-#### The limiting distribution is $$\mathrm{Uniform}[0,1]$$
+#### The limiting distribution is <span>$$\mathrm{Uniform}[0,1]$$</span>
 
 Exercise 1.11 establishes that for each $$n$$, $$M_n$$ is uniform on the finite set $$\bigl\{\tfrac{1}{n+2}, \tfrac{2}{n+2}, \ldots, \tfrac{n+1}{n+2}\bigr\}$$. As $$n \to \infty$$ this discrete uniform converges in distribution to $$\mathrm{Uniform}[0,1]$$, so $$M_\infty \sim \mathrm{Uniform}[0,1]$$.
 
