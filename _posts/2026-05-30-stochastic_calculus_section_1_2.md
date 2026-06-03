@@ -223,7 +223,7 @@ On the complementary event (probability one), $$U_\infty(a,b) < \infty$$ for eve
 ---
 
 
-### Part 5 — Pólya's Urn
+### Part 4 — Pólya's Urn
 
 <div class="note-abstract">
 Pólya's urn is the canonical application of the MCT. The fraction of red balls $M_n = R_n/(n+2)$ is a bounded nonneg martingale, so the MCT guarantees its a.s. convergence to a limit $M_\infty$. The remarkable fact: $M_\infty$ is uniformly distributed on $[0,1]$ — the urn settles to a random stable fraction that is completely unpredictable in advance.
@@ -263,7 +263,7 @@ Exercise 1.11 establishes that for each $$n$$, $$M_n$$ is uniform on the finite 
 
 ---
 
-### Part 6 — Connection to Bayesian Statistics
+### Part 5 — Connection to Bayesian Statistics
 
 <div class="note-abstract">
 Pólya's urn is not merely a toy model — it is exactly the Bayesian update rule for a Bernoulli parameter $\theta$ with a uniform prior. The MCT, reinterpreted, is a Bayesian consistency theorem: the posterior mean converges a.s. to the true $\theta$ as data accumulates.
@@ -281,25 +281,9 @@ This is **identical to the Pólya urn fraction** $$M_n = R_n/(n+2)$$ when $$R_n 
 
 **MCT as Bayesian law of large numbers:** By the strong law, $$S_n/n \to \theta$$ a.s. Combined with $$M_n \to M_\infty$$ a.s., we get $$M_\infty = \theta$$ a.s. — the posterior mean converges to the true parameter.
 
-<div class="result-box"><strong>Pólya's urn is the Bayesian update mechanism for a Bernoulli parameter with uniform prior. The MCT is the statement that Bayesian inference is consistent: the posterior mean converges a.s. to the true $\theta$.</strong></div>
-
 ---
 
-### Part 7 — When MCT Fails: Simple Random Walk
-
-"Let $$S_n = X_1 + \cdots + X_n$$ be simple symmetric random walk starting at the origin. Then one can easily see that $$E[\lvert S_n \rvert] \to \infty$$. For this example, with probability one $$\limsup_{n \to \infty} S_n = \infty$$ and $$\liminf_{n \to \infty} S_n = -\infty$$."
-
-**Why the hypothesis fails:** $$E[S_n^2] = n \to \infty$$, so by Jensen's inequality $$E[\lvert S_n \rvert] \geq \sqrt{E[S_n^2]/n} \cdot \sqrt{n} \to \infty$$. The uniform $$L^1$$ bound fails. The walk oscillates between $$+\infty$$ and $$-\infty$$, crossing every interval $$[a,b]$$ infinitely often — exactly what the upcrossing bound prevents when the bound holds.
-
-<div class="misconception-block">
-  <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception</b></span></div>
-  <div class="mc-wrong"><strong>Wrong:</strong> "Since $S_n$ is a martingale, the MCT says $S_n$ converges."</div>
-  <div class="mc-correct"><strong>Correct:</strong> The MCT requires $\sup_n E[\lvert M_n \rvert] \leq C$. For simple random walk $E[\lvert S_n \rvert] \sim \sqrt{2n/\pi} \to \infty$, so the hypothesis fails. Correspondingly, $\limsup S_n = +\infty$ and $\liminf S_n = -\infty$ a.s. — the walk does not converge. The MCT does not apply.</div>
-</div>
-
----
-
-### Part 8 — MCT vs OST: Complementary Tools
+### Part 6 — MCT vs OST: Complementary Tools
 
 | | **MCT** | **OST** |
 |---|---|---|
@@ -346,45 +330,6 @@ $M_n \to M_\infty$ a.s. means $P(\{\omega : M_n(\omega) \to M_\infty(\omega)\}) 
 <div class="glossary-entry">
 <div class="gterm">Uniform integrability <span class="gcat cat-prop">Property</span></div>
 A sequence $(M_n)$ is uniformly integrable if $\lim_{K\to\infty} \sup_n E[\lvert M_n \rvert \mathbf{1}_{\{\lvert M_n \rvert \geq K\}}] = 0$. Strictly stronger than $\sup_n E[\lvert M_n \rvert] \leq C$. Under UI, a.s. convergence implies $L^1$ convergence and $E[M_\infty] = E[M_0]$. The doubling strategy $W_n$ is not uniformly integrable.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Pólya's urn <span class="gcat cat-defn">Definition</span></div>
-A reinforcement model: start with one red and one green ball; at each step draw uniformly at random, observe the colour, return it with one extra ball of the same colour. The fraction of red balls $M_n = R_n/(n+2)$ is a nonneg martingale with $0 \leq M_n \leq 1$, converging a.s. to $M_\infty \sim \mathrm{Uniform}[0,1]$. Equivalent to Bayesian updating for a Bernoulli parameter $\theta$ with a uniform prior.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Beta distribution $\mathrm{Beta}(k+1,\, n-k+1)$ <span class="gcat cat-defn">Definition</span></div>
-The posterior distribution of a Bernoulli success probability $\theta$ after $n$ trials with $k$ successes, given a $\mathrm{Uniform}[0,1]$ prior. Density $\propto \theta^k(1-\theta)^{n-k}$. Posterior mean $(k+1)/(n+2)$, identical to the Pólya urn fraction $M_n = R_n/(n+2)$.
-</div>
-
-<div class="glossary-entry">
-<div class="gterm">Markov property (discrete time) <span class="gcat cat-prop">Property</span></div>
-A process $Y_n$ is Markov if the conditional distribution of $(Y_{n+1}, Y_{n+2}, \ldots)$ given $(Y_0, \ldots, Y_n)$ depends only on $Y_n$. Pólya's urn satisfies this: future evolution depends only on the current fraction $M_n$. Used in the martingale verification: $E[M_{n+1} \mid \mathcal{F}_n] = E[M_{n+1} \mid M_n]$.
-</div>
-
----
-
-### Study-Note Summary
-
-- The **Martingale Convergence Theorem**: if $$\sup_n E[\lvert M_n \rvert] \leq C < \infty$$, then $$M_n \to M_\infty$$ a.s. to a finite random variable. The MCT does **not** guarantee $$E[M_\infty] = E[M_0]$$ — that requires uniform integrability.
-- **Proof via upcrossings**: define buy/sell stopping times at levels $$a$$ and $$b$$; the resulting winnings are a martingale with $$E[W_n] = 0$$; this forces $$E[U_n(a,b)] \leq (\lvert a \rvert + C)/(b-a) < \infty$$ (Doob's inequality). Finite expected upcrossings over all rational pairs implies $$\liminf M_n = \limsup M_n$$ a.s., i.e., convergence.
-- **Nonneg martingales** automatically satisfy the hypothesis since $$E[\lvert M_n \rvert] = E[M_n] = E[M_0]$$.
-- **Doubling strategy $$W_n$$**: satisfies $$E[\lvert W_n \rvert] \leq 2$$, so MCT applies and $$W_\infty = 1$$ a.s. But $$E[W_\infty] = 1 \neq 0 = E[W_0]$$ — this is not a contradiction; the MCT never promises mean preservation.
-- **Pólya's urn**: the fraction $$M_n = R_n/(n+2)$$ is a bounded nonneg martingale converging a.s. to $$M_\infty \sim \mathrm{Uniform}[0,1]$$. The urn stabilises at a random fraction that is uniformly distributed.
-- **Bayesian connection**: the Pólya transition probabilities equal the posterior mean for a Bernoulli $$\theta$$ with a uniform prior. The MCT is the consistency theorem: posterior mean $$\to \theta$$ a.s.
-- **Simple random walk fails MCT**: $$E[\lvert S_n \rvert] \sim \sqrt{2n/\pi} \to \infty$$, the hypothesis fails, and $$\limsup S_n = +\infty$$, $$\liminf S_n = -\infty$$ a.s. — the walk never converges.
-
-<div class="ref-tags">
-<span class="ref-tag">Martingale Convergence Theorem</span>
-<span class="ref-tag">Upcrossing inequality</span>
-<span class="ref-tag">Almost-sure convergence</span>
-<span class="ref-tag">Uniform integrability</span>
-<span class="ref-tag">Pólya's urn</span>
-<span class="ref-tag">Beta distribution</span>
-<span class="ref-tag">Bayesian statistics</span>
-<span class="ref-tag">Nonneg martingale</span>
-<span class="ref-tag">Martingale</span>
 </div>
 
   </div>
