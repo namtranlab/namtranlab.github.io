@@ -282,7 +282,12 @@ Doob's maximal inequality bounds the probability that a submartingale's running 
 <div class="example-block" markdown="1">
 <div class="ex-title">Theorem 1.7.1 — Doob's Maximal Inequality for Submartingales <span class="ex-pill pill-thm">Theorem</span></div>
 
-ddddd
+"Suppose $$Y_n$$ is a nonneg submartingale with respect to $$\{\mathcal{F}_n\}$$, and $$\bar{Y}_n = \max\{Y_0, Y_1, \ldots, Y_n\}$$. Then for every $$a > 0$$,
+
+$$P\{\bar{Y}_n \geq a\} \leq \frac{1}{a}\, E[Y_n].$$"
+
+**Proof:**
+
 
 </div>
 
