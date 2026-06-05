@@ -325,8 +325,32 @@ Since $$\{\bar{Y}_n \geq a^2\} = \{\max_k M_k^2 \geq a^2\} = \{\overline{M}_n \g
   <div class="mc-correct"><strong>Correct:</strong> Theorem 1.7.1 applies to nonneg <em>submartingales</em>, not arbitrary martingales. For a general martingale $M_n$, we apply it to the submartingale $Y_n = \lvert M_n \rvert$ (since $|\cdot|$ is convex) to get $P\{\overline{M}_n \geq a\} \leq E[\lvert M_n \rvert]/a$. The $L^2$ version in Corollary 1.7.2 applies $Y_n = M_n^2$ and replaces $a$ by $a^2$, giving the sharper $1/a^2$ bound under the stronger $L^2$ hypothesis.</div>
 </div>
 
-
 </div>
+
+---
+
+### Part 4 — Worked Example: Verifying the Variance Rule
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Variance rule for coin-tossing random walk <span class="ex-pill pill-ex">Example</span></div>
+
+**Setup:** $$X_1, X_2, \ldots$$ i.i.d. with $$P\{X_j = \pm 1\} = \tfrac{1}{2}$$, so $$\sigma^2 = 1$$. Let $$S_n = X_1 + \cdots + X_n$$.
+
+**Integrand:** $$J_j = S_{j-1}$$ (the running sum just before step $$j$$, which is $$\mathcal{F}_{j-1}$$-measurable ✓).
+
+**Integral:** $$Z_n = \sum_{j=1}^n S_{j-1} X_j.$$
+
+**Apply the variance rule:**
+
+$$E[Z_n^2] = \sigma^2 \sum_{j=1}^n E[J_j^2] = \sum_{j=1}^n E[S_{j-1}^2] = \sum_{j=1}^n (j-1) = \frac{n(n-1)}{2}.$$
+
+Here we used $$E[S_{j-1}^2] = j - 1$$ (since $$\mathrm{Var}[S_{j-1}] = j-1$$ for zero-mean i.i.d. increments with $$\sigma^2 = 1$$).
+
+**Direct check with Itô's formula analogy:** The integral $$Z_n = \sum S_{j-1} X_j$$ is the discrete analogue of $$\int_0^t B_s\, dB_s$$, which by Itô's formula equals $$\tfrac{1}{2}(B_t^2 - t)$$. The variance of $$\tfrac{1}{2}(B_t^2 - t)$$ at time $$t$$ is $$\tfrac{t^2}{2}$$, consistent with $$n(n-1)/2 \approx n^2/2$$ for large $$n$$.
+
+<div class="ex-lesson"><strong>Key point:</strong> The variance rule allows computing $E[Z_n^2]$ without expanding the square and tracking all cross terms — orthogonality kills them all. The only computation needed is $E[J_j^2]$ for each $j$, which is a much simpler task.</div>
+</div>
+
 
 
 
