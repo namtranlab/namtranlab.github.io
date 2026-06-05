@@ -288,6 +288,12 @@ $$P\{\bar{Y}_n \geq a\} \leq \frac{1}{a}\, E[Y_n].$$"
 
 **Proof:**
 
+Let $$T = \min\{k \leq n : Y_k \geq a\}$$ (with $$T = n+1$$ if no such $$k$$ exists). Then:
+
+$$\{{\bar{Y}_n \geq a}\} = \bigsqcup_{k=0}^n A_k, \quad A_k = \{T = k\}.$$
+
+Each $$A_k \in \mathcal{F}_k$$. Since $$Y_n$$ is a submartingale, $$E[Y_n \mid \mathcal{F}_k] \geq Y_k$$ for $$k \leq n$$, so:
+
 
 </div>
 
