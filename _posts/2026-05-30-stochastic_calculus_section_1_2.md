@@ -127,6 +127,72 @@ function toggleChapter(id) {
 
 ---
 
+### Part 1 — Section 1.5: Square Integrable Martingales
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Definition — Square Integrable Martingale <span class="ex-pill pill-defn">Definition</span></div>
+
+"A martingale $$M_n$$ is called **square integrable** if for each $$n$$, $$E[M_n^2] < \infty$$."
+
+This is the condition that $$M_n \in L^2(\Omega, \mathcal{F}_n, P)$$ at every time $$n$$.
+
+**Why stronger than integrability:** Square integrability $$E[M_n^2] < \infty$$ implies integrability $$E[\lvert M_n \rvert] < \infty$$ by Jensen's inequality, but not vice versa.
+
+**Why weaker than uniform $$L^2$$ boundedness:** The definition requires $$E[M_n^2] < \infty$$ for each fixed $$n$$, but the bound may grow with $$n$$. The stronger condition $$\sup_n E[M_n^2] \leq C < \infty$$ (used in OST III and the MCT) is a separate, stricter requirement.
+</div>
+
+#### Orthogonality of increments
+
+"Random variables $$X, Y$$ are **orthogonal** if $$E[XY] = E[X]\, E[Y]$$."
+
+For zero-mean random variables, orthogonality reduces to $$E[XY] = 0$$, i.e., $$(X, Y) = 0$$ in the $$L^2$$ inner product. Independent random variables are always orthogonal, but the converse fails in general.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Proposition 1.5.1 — Orthogonality of Martingale Increments <span class="ex-pill pill-prop">Proposition</span></div>
+
+"Suppose that $$M_n$$ is a square integrable martingale with respect to $$\{\mathcal{F}_n\}$$. Then if $$m < n$$,
+
+$$E[(\Delta M_{n+1})(\Delta M_{m+1})] = 0,$$
+
+where $$\Delta M_k = M_k - M_{k-1}$$. Moreover, for all $$n$$,
+
+$$E[M_n^2] = E[M_0^2] + \sum_{j=1}^n E\bigl[(\Delta M_j)^2\bigr].$$"
+
+**Proof of orthogonality:**
+
+For $$m < n$$, the increment $$\Delta M_{m+1} = M_{m+1} - M_m$$ is $$\mathcal{F}_n$$-measurable (since $$m+1 \leq n$$). Therefore:
+
+$$E[(\Delta M_{n+1})(\Delta M_{m+1}) \mid \mathcal{F}_n] = (\Delta M_{m+1})\, E[\Delta M_{n+1} \mid \mathcal{F}_n] = (\Delta M_{m+1}) \cdot 0 = 0.$$
+
+The second equality uses the martingale property: $$E[\Delta M_{n+1} \mid \mathcal{F}_n] = E[M_{n+1} - M_n \mid \mathcal{F}_n] = 0$$. Taking full expectations gives $$E[(\Delta M_{n+1})(\Delta M_{m+1})] = 0$$.
+
+**Proof of the Pythagorean identity:**
+
+Write $$M_n = M_0 + \sum_{j=1}^n \Delta M_j$$ and expand the square:
+
+$$M_n^2 = M_0^2 + \sum_{j=1}^n (\Delta M_j)^2 + \sum_{j \neq k} (\Delta M_j)(\Delta M_k).$$
+
+Taking expectations and using orthogonality (all cross terms vanish):
+
+$$E[M_n^2] = E[M_0^2] + \sum_{j=1}^n E[(\Delta M_j)^2].$$
+
+<div class="ex-lesson"><strong>Interpretation:</strong> This is the Pythagorean theorem in $L^2$. The variance of $M_n$ equals the sum of variances of all its increments — because the increments are mutually orthogonal (uncorrelated), there are no cross-term contributions. This is the exact analogue of $\lvert a_1 e_1 + \cdots + a_n e_n \rvert^2 = a_1^2 + \cdots + a_n^2$ for orthonormal vectors.</div>
+</div>
+
+#### The $$L^2$$ Hilbert space interpretation
+
+The space $$L^2(\Omega, \mathcal{F}, P)$$ of square-integrable random variables is a Hilbert space under the inner product $$(X, Y) = E[XY]$$. The conditional expectation $$E[Y \mid \mathcal{F}_n]$$ is the orthogonal projection of $$Y$$ onto the closed subspace $$L^2(\Omega, \mathcal{F}_n, P)$$. This minimises the mean-squared error:
+
+$$E[Y \mid \mathcal{F}_n] = \arg\min_{Z\, \mathcal{F}_n\text{-measurable}} E[(Y - Z)^2].$$
+
+Proposition 1.5.1 says the increments $$\Delta M_1, \Delta M_2, \ldots$$ are mutually orthogonal in this Hilbert space — a discrete analogue of having orthogonal basis vectors.
+
+<div class="misconception-block">
+  <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception</b></span></div>
+  <div class="mc-wrong"><strong>Wrong:</strong> "Orthogonal martingale increments are independent."</div>
+  <div class="mc-correct"><strong>Correct:</strong> Orthogonality ($E[\Delta M_{n+1} \cdot \Delta M_{m+1}] = 0$ for $m \neq n$) is weaker than independence. It says the increments are uncorrelated, not that they have no dependence structure. Independence implies orthogonality (for zero-mean variables), but the converse fails. The proof only uses the martingale property — no independence assumption is needed.</div>
+</div>
+
 
 
   </div>
