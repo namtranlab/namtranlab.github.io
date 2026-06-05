@@ -273,7 +273,7 @@ Summing over $$j$$ gives $$E[Z_n^2] = \sigma^2 \sum_{j=1}^n E[J_j^2]$$.
 
 ---
 
-### Part 3 — Section 1.7: A Maximal Inequality
+### Part 3 — A Maximal Inequality
 
 <div class="note-abstract">
 Doob's maximal inequality bounds the probability that a submartingale's running maximum exceeds a level $a$. It is the discrete analogue of the continuous maximal inequality used throughout Chapter 4. The corollary for square integrable martingales follows immediately from the fact that $M_n^2$ is a submartingale.
@@ -291,6 +291,39 @@ $$P\{\bar{Y}_n \geq a\} \leq \frac{1}{a}\, E[Y_n].$$"
 Let $$T = \min\{k \leq n : Y_k \geq a\}$$ (with $$T = n+1$$ if no such $$k$$ exists). Then:
 
 $$\{\bar{Y}_n \geq a\} = \bigsqcup_{k=0}^n A_k, \quad A_k = \{T = k\}.$$
+
+Each $$A_k \in \mathcal{F}_k$$. Since $$Y_n$$ is a submartingale, $$E[Y_n \mid \mathcal{F}_k] \geq Y_k$$ for $$k \leq n$$, so:
+
+$$E[Y_n \mathbf{1}_{A_k}] = E\bigl[E[Y_n \mid \mathcal{F}_k]\, \mathbf{1}_{A_k}\bigr] \geq E[Y_k\, \mathbf{1}_{A_k}] \geq a\, P(A_k).$$
+
+Summing over $$k = 0, 1, \ldots, n$$:
+
+$$E[Y_n] \geq E\!\left[Y_n\, \mathbf{1}_{\{\bar{Y}_n \geq a\}}\right] = \sum_{k=0}^n E[Y_n\, \mathbf{1}_{A_k}] \geq a\, P\{\bar{Y}_n \geq a\}.$$
+
+Dividing by $$a$$ gives the result.
+</div>
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Corollary 1.7.2 — Doob's $$L^2$$ Maximal Inequality <span class="ex-pill pill-thm">Corollary</span></div>
+
+"If $$M_n$$ is a square integrable martingale with respect to $$\{\mathcal{F}_n\}$$ and $$\overline{M}_n = \max\{\lvert M_0 \rvert, \ldots, \lvert M_n \rvert\}$$, then for every $$a > 0$$,
+
+$$P\{\overline{M}_n \geq a\} \leq \frac{E[M_n^2]}{a^2}.$$"
+
+**Proof:** Exercise 1.15 shows that if $$M_n$$ is a martingale and $$\varphi$$ is a convex function, then $$\varphi(M_n)$$ is a submartingale. Taking $$\varphi(x) = x^2$$ gives that $$M_n^2$$ is a nonneg submartingale. Apply Theorem 1.7.1 to $$Y_n = M_n^2$$ with threshold $$a^2$$:
+
+$$P\{\bar{Y}_n \geq a^2\} \leq \frac{E[M_n^2]}{a^2}.$$
+
+Since $$\{\bar{Y}_n \geq a^2\} = \{\max_k M_k^2 \geq a^2\} = \{\overline{M}_n \geq a\}$$, the result follows.
+
+<div class="ex-lesson"><strong>Why this matters:</strong> The $L^2$ maximal inequality is used throughout Chapter 3 to show that stochastic integrals defined on dyadic times extend continuously to all times (the Kolmogorov continuity argument). It is also used in Chapter 4 to prove the OST under the $L^2$ boundedness condition (Theorem 1.3.3). Controlling the running maximum by the second moment at the final time is the key tool.</div>
+</div>
+
+<div class="misconception-block">
+  <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception</b></span></div>
+  <div class="mc-wrong"><strong>Wrong:</strong> "Doob's maximal inequality says $P\{\overline{M}_n \geq a\} \leq E[\lvert M_n \rvert]/a$ for any martingale."</div>
+  <div class="mc-correct"><strong>Correct:</strong> Theorem 1.7.1 applies to nonneg <em>submartingales</em>, not arbitrary martingales. For a general martingale $M_n$, we apply it to the submartingale $Y_n = \lvert M_n \rvert$ (since $|\cdot|$ is convex) to get $P\{\overline{M}_n \geq a\} \leq E[\lvert M_n \rvert]/a$. The $L^2$ version in Corollary 1.7.2 applies $Y_n = M_n^2$ and replaces $a$ by $a^2$, giving the sharper $1/a^2$ bound under the stronger $L^2$ hypothesis.</div>
+</div>
 
 
 </div>
