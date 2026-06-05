@@ -411,6 +411,5 @@ Follows from Theorem 1.7.1 applied to the submartingale $Y_n = M_n^2$ (convexity
 </div>
 
 
-
   </div>
 </div>
