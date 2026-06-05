@@ -92,7 +92,7 @@ function toggleChapter(id) {
 }
 </script>
 
-## Sections 1.5–1.7 — Square Integrable Martingales, Random Walk Integrals, and Maximal Inequality
+## Sections 1.5 – Square Integrable Martingales, Random Walk Integrals, and Maximal Inequality
 
 <div class="chapter-block">
   <button class="chapter-toggle" onclick="toggleChapter('s1567')">
@@ -127,12 +127,12 @@ function toggleChapter(id) {
 
 ---
 
-### Part 1 — Section 1.5: Square Integrable Martingales
+### Part 1 — Square Integrable Martingales
 
 <div class="example-block" markdown="1">
 <div class="ex-title">Definition — Square Integrable Martingale <span class="ex-pill pill-defn">Definition</span></div>
 
-"A martingale $$M_n$$ is called **square integrable** if for each $$n$$, $$E[M_n^2] < \infty$$."
+A martingale $$M_n$$ is called **square integrable** if for each $$n$$, $$E[M_n^2] < \infty$$.
 
 This is the condition that $$M_n \in L^2(\Omega, \mathcal{F}_n, P)$$ at every time $$n$$.
 
@@ -143,20 +143,20 @@ This is the condition that $$M_n \in L^2(\Omega, \mathcal{F}_n, P)$$ at every ti
 
 #### Orthogonality of increments
 
-"Random variables $$X, Y$$ are **orthogonal** if $$E[XY] = E[X]\, E[Y]$$."
+Random variables $$X, Y$$ are **orthogonal** if $$E[XY] = E[X]\, E[Y]$$.
 
-For zero-mean random variables, orthogonality reduces to $$E[XY] = 0$$, i.e., $$(X, Y) = 0$$ in the $$L^2$$ inner product. Independent random variables are always orthogonal, but the converse fails in general.
+For zero-mean random variables, orthogonality reduces to $$E[XY] = 0$$. Independent random variables are orthogonal, but orthogonal random variables need not be independent.
 
 <div class="example-block" markdown="1">
 <div class="ex-title">Proposition 1.5.1 — Orthogonality of Martingale Increments <span class="ex-pill pill-prop">Proposition</span></div>
 
-"Suppose that $$M_n$$ is a square integrable martingale with respect to $$\{\mathcal{F}_n\}$$. Then if $$m < n$$,
+Suppose that $$M_n$$ is a square integrable martingale with respect to $$\{\mathcal{F}_n\}$$. Then if $$m < n$$,
 
 $$E[(\Delta M_{n+1})(\Delta M_{m+1})] = 0,$$
 
 where $$\Delta M_k = M_k - M_{k-1}$$. Moreover, for all $$n$$,
 
-$$E[M_n^2] = E[M_0^2] + \sum_{j=1}^n E\bigl[(\Delta M_j)^2\bigr].$$"
+$$E[M_n^2] = E[M_0^2] + \sum_{j=1}^n E\bigl[(\Delta M_j)^2\bigr].$$
 
 **Proof of orthogonality:**
 
@@ -179,14 +179,6 @@ $$E[M_n^2] = E[M_0^2] + \sum_{j=1}^n E[(\Delta M_j)^2].$$
 <div class="ex-lesson"><strong>Interpretation:</strong> This is the Pythagorean theorem in $L^2$. The variance of $M_n$ equals the sum of variances of all its increments — because the increments are mutually orthogonal (uncorrelated), there are no cross-term contributions. This is the exact analogue of $\lvert a_1 e_1 + \cdots + a_n e_n \rvert^2 = a_1^2 + \cdots + a_n^2$ for orthonormal vectors.</div>
 </div>
 
-#### The $$L^2$$ Hilbert space interpretation
-
-The space $$L^2(\Omega, \mathcal{F}, P)$$ of square-integrable random variables is a Hilbert space under the inner product $$(X, Y) = E[XY]$$. The conditional expectation $$E[Y \mid \mathcal{F}_n]$$ is the orthogonal projection of $$Y$$ onto the closed subspace $$L^2(\Omega, \mathcal{F}_n, P)$$. This minimises the mean-squared error:
-
-$$E[Y \mid \mathcal{F}_n] = \arg\min_{Z\, \mathcal{F}_n\text{-measurable}} E[(Y - Z)^2].$$
-
-Proposition 1.5.1 says the increments $$\Delta M_1, \Delta M_2, \ldots$$ are mutually orthogonal in this Hilbert space — a discrete analogue of having orthogonal basis vectors.
-
 <div class="misconception-block">
   <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception</b></span></div>
   <div class="mc-wrong"><strong>Wrong:</strong> "Orthogonal martingale increments are independent."</div>
@@ -196,15 +188,15 @@ Proposition 1.5.1 says the increments $$\Delta M_1, \Delta M_2, \ldots$$ are mut
 
 ---
 
-### Part 2 — Section 1.6: Integrals with Respect to Random Walk
+### Part 2 — Integrals with Respect to Random Walk
 
 <div class="note-abstract">
-Section 1.6 defines the discrete stochastic integral and establishes its three fundamental properties. The setting is a predictable integrand $J_n$ and a random walk $S_n$ with i.i.d. mean-zero increments. The integral $Z_n = \sum_{j=1}^n J_j X_j$ is the discrete prototype of the Itô integral $\int_0^t A_s\, dB_s$.
+This section defines the discrete stochastic integral and establishes its three fundamental properties. The setting is a predictable integrand $J_n$ and a random walk $S_n$ with i.i.d. mean-zero increments. The integral $Z_n = \sum_{j=1}^n J_j X_j$ is the discrete prototype of the Itô integral $\int_0^t A_s\, dB_s$.
 </div>
 
 #### Setup
 
-"Suppose that $$X_1, X_2, \ldots$$ are independent, identically distributed random variables with mean zero and variance $$\sigma^2$$."
+Suppose that $$X_1, X_2, \ldots$$ are independent, identically distributed random variables with mean zero and variance $$\sigma^2$$.
 
 The two main examples are:
 - **Coin-tossing:** $$P\{X_j = 1\} = P\{X_j = -1\} = \tfrac{1}{2}$$, giving $$\sigma^2 = 1$$.
@@ -212,9 +204,9 @@ The two main examples are:
 
 Let $$S_n = X_1 + \cdots + X_n$$ and let $$\{\mathcal{F}_n\}$$ be the filtration generated by $$X_1, \ldots, X_n$$.
 
-"A sequence of random variables $$J_1, J_2, \ldots$$ is called **predictable** (with respect to $$\{\mathcal{F}_n\}$$) if for each $$n$$, $$J_n$$ is $$\mathcal{F}_{n-1}$$-measurable."
+A sequence of random variables $$J_1, J_2, \ldots$$ is called **predictable** (with respect to $$\{\mathcal{F}_n\}$$) if for each $$n$$, $$J_n$$ is $$\mathcal{F}_{n-1}$$-measurable.
 
-This is the non-anticipating condition from §1.2: the integrand $$J_n$$ is determined by observations strictly before time $$n$$.
+This is the non-anticipating condition from §1.2: The integrand $$J_n$$ is determined by observations strictly before time $$n$$.
 
 The **discrete stochastic integral** is defined by:
 
@@ -229,7 +221,9 @@ $$Z_n = \sum_{j=1}^n J_j X_j = \sum_{j=1}^n J_j \,\Delta S_j.$$
 
 $$Z_n \text{ is a martingale with respect to } \{\mathcal{F}_n\}.$$
 
-*Proof:* $$E[Z_{n+1} \mid \mathcal{F}_n] = E[Z_n + J_{n+1} X_{n+1} \mid \mathcal{F}_n] = Z_n + J_{n+1}\, E[X_{n+1} \mid \mathcal{F}_n] = Z_n + J_{n+1} \cdot 0 = Z_n.$$
+<b>Proof:</b> 
+
+$$E[Z_{n+1} \mid \mathcal{F}_n] = E[Z_n + J_{n+1} X_{n+1} \mid \mathcal{F}_n] = Z_n + J_{n+1}\, E[X_{n+1} \mid \mathcal{F}_n] = Z_n + J_{n+1} \cdot 0 = Z_n.$$
 
 Here: $$Z_n$$ is $$\mathcal{F}_n$$-measurable (Property 1 of §1.1); $$J_{n+1}$$ is $$\mathcal{F}_n$$-measurable and pulls out (Property 5); $$X_{n+1}$$ is independent of $$\mathcal{F}_n$$ with $$E[X_{n+1}] = 0$$ (Property 3).
 
@@ -241,15 +235,15 @@ If $$J_n, K_n$$ are predictable sequences and $$a, b$$ constants, then $$aJ_n + 
 
 $$\sum_{j=1}^n (aJ_j + bK_j) X_j = a \sum_{j=1}^n J_j X_j + b \sum_{j=1}^n K_j X_j.$$
 
-*Proof:* Immediate from linearity of summation.
-
 ---
 
 **Property 3 — Variance rule**
 
 $$\mathrm{Var}[Z_n] = E[Z_n^2] = \sigma^2 \sum_{j=1}^n E[J_j^2].$$
 
-*Proof:* Using orthogonality of martingale increments (§1.5), the cross terms $$E[J_j X_j \cdot J_k X_k]$$ vanish for $$j \neq k$$:
+<b>Proof:</b>
+
+Using orthogonality of martingale increments (§1.5), the cross terms $$E[J_j X_j \cdot J_k X_k]$$ vanish for $$j \neq k$$:
 
 $$E[Z_n^2] = \sum_{j=1}^n E[J_j^2 X_j^2].$$
 
@@ -275,16 +269,12 @@ Summing over $$j$$ gives $$E[Z_n^2] = \sigma^2 \sum_{j=1}^n E[J_j^2]$$.
 
 ### Part 3 — A Maximal Inequality
 
-<div class="note-abstract">
-Doob's maximal inequality bounds the probability that a submartingale's running maximum exceeds a level $a$. It is the discrete analogue of the continuous maximal inequality used throughout Chapter 4. The corollary for square integrable martingales follows immediately from the fact that $M_n^2$ is a submartingale.
-</div>
-
 <div class="example-block" markdown="1">
 <div class="ex-title">Theorem 1.7.1 — Doob's Maximal Inequality for Submartingales <span class="ex-pill pill-thm">Theorem</span></div>
 
-"Suppose $$Y_n$$ is a nonneg submartingale with respect to $$\{\mathcal{F}_n\}$$, and $$\bar{Y}_n = \max\{Y_0, Y_1, \ldots, Y_n\}$$. Then for every $$a > 0$$,
+Suppose $$Y_n$$ is a nonneg submartingale with respect to $$\{\mathcal{F}_n\}$$, and $$\bar{Y}_n = \max\{Y_0, Y_1, \ldots, Y_n\}$$. Then for every $$a > 0$$,
 
-$$P\{\bar{Y}_n \geq a\} \leq \frac{1}{a}\, E[Y_n].$$"
+$$P\{\bar{Y}_n \geq a\} \leq \frac{1}{a}\, E[Y_n].$$
 
 **Proof:**
 
@@ -304,11 +294,11 @@ Dividing by $$a$$ gives the result.
 </div>
 
 <div class="example-block" markdown="1">
-<div class="ex-title">Corollary 1.7.2 — Doob's $$L^2$$ Maximal Inequality <span class="ex-pill pill-thm">Corollary</span></div>
+<div class="ex-title">Corollary 1.7.2 — Doob's $L^2$ Maximal Inequality <span class="ex-pill pill-thm">Corollary</span></div>
 
-"If $$M_n$$ is a square integrable martingale with respect to $$\{\mathcal{F}_n\}$$ and $$\overline{M}_n = \max\{\lvert M_0 \rvert, \ldots, \lvert M_n \rvert\}$$, then for every $$a > 0$$,
+If $$M_n$$ is a square integrable martingale with respect to $$\{\mathcal{F}_n\}$$ and $$\overline{M}_n = \max\{\lvert M_0 \rvert, \ldots, \lvert M_n \rvert\}$$, then for every $$a > 0$$,
 
-$$P\{\overline{M}_n \geq a\} \leq \frac{E[M_n^2]}{a^2}.$$"
+$$P\{\overline{M}_n \geq a\} \leq \frac{E[M_n^2]}{a^2}.$$
 
 **Proof:** Exercise 1.15 shows that if $$M_n$$ is a martingale and $$\varphi$$ is a convex function, then $$\varphi(M_n)$$ is a submartingale. Taking $$\varphi(x) = x^2$$ gives that $$M_n^2$$ is a nonneg submartingale. Apply Theorem 1.7.1 to $$Y_n = M_n^2$$ with threshold $$a^2$$:
 
@@ -361,11 +351,6 @@ All three sections prepare the same three-property package that will recur throu
 | **Martingale** | $$Z_n = \sum J_j X_j$$ is a martingale | $$\int_0^t A_s\, dB_s$$ is a martingale |
 | **Linearity** | $$\sum (aJ_j + bK_j) X_j = a Z_n^J + b Z_n^K$$ | $$\int (aA + bC)\, dB = a\int A\, dB + b \int C\, dB$$ |
 | **Variance rule (Itô isometry)** | $$E[Z_n^2] = \sigma^2 \sum E[J_j^2]$$ | $$E\!\left[\left(\int_0^t A_s\, dB_s\right)^2\right] = \int_0^t E[A_s^2]\, ds$$ |
-
-And §1.7's maximal inequality:
-
-| Property | §1.7 Discrete version | Chapter 4 Continuous version |
-|---|---|---|
 | **Maximal inequality** | $$P\{\overline{M}_n \geq a\} \leq E[M_n^2]/a^2$$ | $$P\{\sup_{s \leq t} \lvert M_s \rvert \geq a\} \leq E[M_t^2]/a^2$$ |
 
 ---
