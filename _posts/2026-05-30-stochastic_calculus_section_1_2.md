@@ -271,37 +271,6 @@ Summing over $$j$$ gives $$E[Z_n^2] = \sigma^2 \sum_{j=1}^n E[J_j^2]$$.
 | **Variance rule** | $$E[Z_n^2] = \sigma^2 \sum E[J_j^2]$$ | $$E\!\left[\left(\int_0^t A_s\, dB_s\right)^2\right] = \int_0^t E[A_s^2]\, ds$$ |
 | **Linearity** | ✓ direct from summation | ✓ by construction |
 
----
-
-### Part 3 — Section 1.7: A Maximal Inequality
-
-<div class="note-abstract">
-Doob's maximal inequality bounds the probability that a submartingale's running maximum exceeds a level $a$. It is the discrete analogue of the continuous maximal inequality used throughout Chapter 4. The corollary for square integrable martingales follows immediately from the fact that $M_n^2$ is a submartingale.
-</div>
-
-<div class="example-block" markdown="1">
-<div class="ex-title">Theorem 1.7.1 — Doob's Maximal Inequality for Submartingales <span class="ex-pill pill-thm">Theorem</span></div>
-
-"Suppose $$Y_n$$ is a nonneg submartingale with respect to $$\{\mathcal{F}_n\}$$, and $$\bar{Y}_n = \max\{Y_0, Y_1, \ldots, Y_n\}$$. Then for every $$a > 0$$,
-
-$$P\{\bar{Y}_n \geq a\} \leq \frac{1}{a}\, E[Y_n].$$"
-
-**Proof:**
-
-Let $$T = \min\{k \leq n : Y_k \geq a\}$$ (with $$T = n+1$$ if no such $$k$$ exists). Then:
-
-$$\{{\bar{Y}_n \geq a}\} = \bigsqcup_{k=0}^n A_k, \quad A_k = \{T = k\}.$$
-
-Each $$A_k \in \mathcal{F}_k$$. Since $$Y_n$$ is a submartingale, $$E[Y_n \mid \mathcal{F}_k] \geq Y_k$$ for $$k \leq n$$, so:
-
-$$E[Y_n \mathbf{1}_{A_k}] = E\bigl[E[Y_n \mid \mathcal{F}_k]\, \mathbf{1}_{A_k}\bigr] \geq E[Y_k\, \mathbf{1}_{A_k}] \geq a\, P(A_k).$$
-
-Summing over $$k = 0, 1, \ldots, n$$:
-
-$$E[Y_n] \geq E\!\left[Y_n\, \mathbf{1}_{\{\bar{Y}_n \geq a\}}\right] = \sum_{k=0}^n E[Y_n\, \mathbf{1}_{A_k}] \geq a\, P\{\bar{Y}_n \geq a\}.$$
-
-Dividing by $$a$$ gives the result.
-</div>
 
 
 
