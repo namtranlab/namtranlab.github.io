@@ -93,243 +93,375 @@ function toggleChapter(id) {
 </script>
 
 
-## Section 1.4 — Martingale Convergence Theorem
+## Sections 1.5–1.7 — Square Integrable Martingales, Random Walk Integrals, and Maximal Inequality
 
 <div class="chapter-block">
-  <button class="chapter-toggle" onclick="toggleChapter('s14')">
+  <button class="chapter-toggle" onclick="toggleChapter('s1567')">
     <div class="chapter-toggle-left">
-      <span class="chapter-badge">§ 1.4</span>
+      <span class="chapter-badge">§ 1.5–1.7</span>
       <div>
-        <div class="chapter-title">Section 1.4 — Martingale Convergence Theorem</div>
-        <div class="chapter-subtitle">Upcrossing proof of a.s. convergence, Pólya's urn, and the Bayesian statistics connection</div>
+        <div class="chapter-title">Sections 1.5–1.7 — Square Integrable Martingales, Random Walk Integrals, and Maximal Inequality</div>
+        <div class="chapter-subtitle">Orthogonality of increments, the variance rule, the discrete stochastic integral, and Doob's maximal inequality</div>
       </div>
     </div>
-    <span class="chapter-arrow" id="s14-arrow">▼</span>
+    <span class="chapter-arrow" id="s1567-arrow">▼</span>
   </button>
-  <div class="chapter-body" id="s14-body" markdown="1">
+  <div class="chapter-body" id="s1567-body" markdown="1">
 
 ### Notation at a Glance
 
 | Symbol | Meaning |
 |---|---|
-| $$M_\infty$$ | The almost-sure limit of $$M_n$$ — guaranteed by the MCT when $$E[\lvert M_n \rvert] \leq C$$ |
-| $$\sup_n E[\lvert M_n \rvert] \leq C$$ | Uniform $$L^1$$ bound — the hypothesis of the MCT |
-| $$\liminf_{n\to\infty} M_n$$, $$\limsup_{n\to\infty} M_n$$ | Smallest and largest cluster points of the sequence $$(M_n)$$ |
-| $$U_n(a,b)$$ | Number of upcrossings of $$[a,b]$$ by time $$n$$ |
-| $$U_\infty(a,b)$$ | Total upcrossings of $$[a,b]$$; MCT proof shows $$E[U_\infty] < \infty$$ |
-| $$S_j,\, T_j$$ | Buy and sell stopping times in the upcrossing strategy |
-| $$W_n$$ | Winnings from the buy-low-sell-high strategy used in the proof |
-| $$R_n,\, G_n$$ | Number of red and green balls in Pólya's urn after $$n$$ draws |
-| $$M_n = R_n/(n+2)$$ | Fraction of red balls — a bounded nonneg martingale converging a.s. |
-| $$M_\infty \sim \mathrm{Uniform}[0,1]$$ | The limiting distribution of Pólya's urn |
-| $$f_{n,k}(\theta)$$ | Posterior Beta density for $$\theta$$ after $$n$$ Bernoulli trials with $$k$$ successes |
+| $$E[M_n^2] < \infty$$ | Square integrability — the hypothesis of §1.5 |
+| $$L^2(\Omega, \mathcal{F}, P)$$ | Hilbert space of square-integrable random variables with inner product $$(X,Y) = E[XY]$$ |
+| $$(X, Y) = E[XY]$$ | Inner product on $$L^2$$ — orthogonality means $$(X,Y) = 0$$ |
+| $$\Delta M_n = M_n - M_{n-1}$$ | Increment of $$M_n$$ at step $$n$$ |
+| $$E[\Delta M_{n+1} \cdot \Delta M_{m+1}] = 0,\; m \neq n$$ | Orthogonality of martingale increments |
+| $$J_n$$ | Predictable integrand — $$J_n$$ is $$\mathcal{F}_{n-1}$$-measurable |
+| $$Z_n = \sum_{j=1}^n J_j X_j$$ | Discrete stochastic integral of $$J$$ with respect to the random walk $$S_n$$ |
+| $$\sigma^2 = E[X_j^2]$$ | Variance of each i.i.d. increment |
+| $$\mathrm{Var}[Z_n] = \sigma^2 \sum_{j=1}^n E[J_j^2]$$ | Variance rule for the discrete stochastic integral |
+| $$\bar{Y}_n = \max\{Y_0, Y_1, \ldots, Y_n\}$$ | Running maximum of a nonneg submartingale $$Y_n$$ |
+| $$\overline{M}_n = \max\{\lvert M_0 \rvert, \ldots, \lvert M_n \rvert\}$$ | Running maximum of $$\lvert M_n \rvert$$ |
+| $$P\{\bar{Y}_n \geq a\} \leq a^{-1} E[Y_n]$$ | Doob's maximal inequality for submartingales |
+| $$P\{\overline{M}_n \geq a\} \leq a^{-2} E[M_n^2]$$ | Doob's $$L^2$$ maximal inequality for square integrable martingales |
 
 ---
 
-### Part 1 — The Core Intuition
+### Part 1 — How Sections 1.5–1.7 Fit Together
 
 <div class="note-abstract">
-The Martingale Convergence Theorem (MCT) answers: <em>if a martingale is uniformly bounded in $L^1$, must it converge?</em> The answer is yes — it converges almost surely to a finite limit. The proof uses a financial argument: if the sequence did not converge, it would oscillate infinitely between some values $a$ and $b$, and a "buy low, sell high" strategy would extract infinite expected profit from a fair game. Since that is impossible, convergence must hold. Crucially, the limit $M_\infty$ need not satisfy $E[M_\infty] = E[M_0]$ — the martingale property can fail in the limit even when it holds at every finite time.
+Sections 1.5–1.7 form a tightly connected unit. Section 1.5 introduces the $L^2$ structure of martingales: their increments are orthogonal, giving a Pythagorean identity for the variance. Section 1.6 applies this structure to define and analyse the discrete stochastic integral — the sum $Z_n = \sum J_j X_j$ when $J_j$ is predictable. Section 1.7 uses $L^2$ to prove Doob's maximal inequality, which controls the running maximum of a martingale. All three sections are prerequisites for the continuous-time theory in Chapters 3 and 4.
 </div>
 
-<b>CORE IDEAS</b>
+#### How they connect
 
-<strong>Uniform $$L^1$$ boundedness forces almost-sure convergence.</strong> The condition $$\sup_n E[\lvert M_n \rvert] \leq C < \infty$$ prevents the martingale from wandering to $$\pm\infty$$, and the upcrossing argument shows it cannot oscillate indefinitely between any two levels $$a < b$$. Together these force $$\lim_{n\to\infty} M_n$$ to exist with probability one.
+<div class="key-idea"><strong>§1.5 → §1.6:</strong> The orthogonality of martingale increments (§1.5) is exactly what justifies the variance rule $\mathrm{Var}[Z_n] = \sigma^2 \sum E[J_j^2]$ for the stochastic integral (§1.6). Without orthogonality, cross terms would not vanish.</div>
 
-<strong>The proof is a financial argument via upcrossings.</strong> If $$M_n$$ crossed between $a$ and $b$ infinitely often, buying every time $$M_n \leq a$$ and selling every time $$M_n \geq b$$ would produce infinite expected profit. Since $$M_n$$ is a fair game, that is impossible. The upcrossing inequality makes this precise and quantitative.
+<div class="key-idea"><strong>§1.5 → §1.7:</strong> The fact that $M_n^2$ is a submartingale (§1.5, Exercise 1.15) is what allows Theorem 1.7.1 to be applied to $M_n^2$ to yield the $L^2$ maximal inequality in Corollary 1.7.2.</div>
 
-<strong>$$E[M_\infty] = E[M_0]$$ does NOT follow from the MCT.</strong> The theorem guarantees a.s. convergence but not convergence of expectations. The martingale doubling strategy from §1.2 illustrates this: $$E[\lvert W_n \rvert] \leq 2$$ for all $$n$$, so the MCT applies and $$W_\infty = 1$$ a.s., yet $$E[W_\infty] = 1 \neq 0 = E[W_0]$$. Preserving the mean requires the extra conditions of the OST.
-
-<strong>Nonnegative martingales automatically satisfy the MCT hypothesis.</strong> If $$M_n \geq 0$$ for all $$n$$, then $$E[\lvert M_n \rvert] = E[M_n] = E[M_0]$$, so the $$L^1$$ bound holds with $$C = E[M_0]$$. Pólya's urn is the prime example.
+<div class="key-idea"><strong>§1.6 → Chapter 3:</strong> The three properties of $Z_n$ — martingale, linearity, variance rule — are exactly the three properties that define the Itô integral $\int_0^t A_s\, dB_s$ in continuous time. Section 1.6 is the discrete blueprint.</div>
 
 ---
 
-### Part 2 — The Theorem
+### Part 2 — Section 1.5: Square Integrable Martingales
 
 <div class="example-block" markdown="1">
-<div class="ex-title">Theorem 1.4.1 — Martingale Convergence Theorem <span class="ex-pill pill-thm">Theorem</span></div>
+<div class="ex-title">Definition — Square Integrable Martingale <span class="ex-pill pill-defn">Definition</span></div>
 
-Suppose $$M_n$$ is a martingale with respect to $$\{\mathcal{F}_n\}$$ and there exists $$C < \infty$$ such that $$E[\lvert M_n \rvert] \leq C$$ for all $$n$$. Then there exists a random variable $$M_\infty$$ such that with probability one
+"A martingale $$M_n$$ is called **square integrable** if for each $$n$$, $$E[M_n^2] < \infty$$."
 
-$$\lim_{n \to \infty} M_n = M_\infty.$$
+This is the condition that $$M_n \in L^2(\Omega, \mathcal{F}_n, P)$$ at every time $$n$$.
+
+**Why stronger than integrability:** Square integrability $$E[M_n^2] < \infty$$ implies integrability $$E[\lvert M_n \rvert] < \infty$$ by Jensen's inequality, but not vice versa.
+
+**Why weaker than uniform $$L^2$$ boundedness:** The definition requires $$E[M_n^2] < \infty$$ for each fixed $$n$$, but the bound may grow with $$n$$. The stronger condition $$\sup_n E[M_n^2] \leq C < \infty$$ (used in OST III and the MCT) is a separate, stricter requirement.
 </div>
 
-**Unpacking the hypothesis** — $$E[\lvert M_n \rvert] \leq C$$ uniformly in $$n$$: The absolute mean of $$M_n$$ stays bounded no matter how far the process runs. Since $$E[\lvert M_n \rvert] \geq \lvert E[M_n] \rvert = \lvert E[M_0] \rvert$$, this implicitly requires $$E[M_0]$$ to be finite, but it is strictly stronger — it controls the size of fluctuations, not just the level.
+#### Orthogonality of increments
 
-**Unpacking the conclusion** — "with probability one": There exists a single event $$\Omega^* \subseteq \Omega$$ with $$P(\Omega^*) = 1$$ such that for every $$\omega \in \Omega^*$$, the real sequence $$(M_n(\omega))$$ converges to a finite number $$M_\infty(\omega)$$.
+"Random variables $$X, Y$$ are **orthogonal** if $$E[XY] = E[X]\, E[Y]$$."
 
-**What the theorem does NOT say:**
+For zero-mean random variables, orthogonality reduces to $$E[XY] = 0$$, i.e., $$(X, Y) = 0$$ in the $$L^2$$ inner product. Independent random variables are always orthogonal, but the converse fails in general.
 
-- It does not say $$E[M_\infty] = E[M_0]$$.
-- It does not say convergence is in $$L^1$$ or $$L^2$$.
-- It does say $$E[\lvert M_\infty \rvert] \leq C$$ — this follows from Fatou's lemma: $$E[\lvert M_\infty \rvert] = E[\liminf \lvert M_n \rvert] \leq \liminf E[\lvert M_n \rvert] \leq C$$.
+<div class="example-block" markdown="1">
+<div class="ex-title">Proposition 1.5.1 — Orthogonality of Martingale Increments <span class="ex-pill pill-prop">Proposition</span></div>
+
+"Suppose that $$M_n$$ is a square integrable martingale with respect to $$\{\mathcal{F}_n\}$$. Then if $$m < n$$,
+
+$$E[(\Delta M_{n+1})(\Delta M_{m+1})] = 0,$$
+
+where $$\Delta M_k = M_k - M_{k-1}$$. Moreover, for all $$n$$,
+
+$$E[M_n^2] = E[M_0^2] + \sum_{j=1}^n E\bigl[(\Delta M_j)^2\bigr].$$"
+
+**Proof of orthogonality:**
+
+For $$m < n$$, the increment $$\Delta M_{m+1} = M_{m+1} - M_m$$ is $$\mathcal{F}_n$$-measurable (since $$m+1 \leq n$$). Therefore:
+
+$$E[(\Delta M_{n+1})(\Delta M_{m+1}) \mid \mathcal{F}_n] = (\Delta M_{m+1})\, E[\Delta M_{n+1} \mid \mathcal{F}_n] = (\Delta M_{m+1}) \cdot 0 = 0.$$
+
+The second equality uses the martingale property: $$E[\Delta M_{n+1} \mid \mathcal{F}_n] = E[M_{n+1} - M_n \mid \mathcal{F}_n] = 0$$. Taking full expectations gives $$E[(\Delta M_{n+1})(\Delta M_{m+1})] = 0$$.
+
+**Proof of the Pythagorean identity:**
+
+Write $$M_n = M_0 + \sum_{j=1}^n \Delta M_j$$ and expand the square:
+
+$$M_n^2 = M_0^2 + \sum_{j=1}^n (\Delta M_j)^2 + \sum_{j \neq k} (\Delta M_j)(\Delta M_k).$$
+
+Taking expectations and using orthogonality (all cross terms vanish):
+
+$$E[M_n^2] = E[M_0^2] + \sum_{j=1}^n E[(\Delta M_j)^2].$$
+
+<div class="ex-lesson"><strong>Interpretation:</strong> This is the Pythagorean theorem in $L^2$. The variance of $M_n$ equals the sum of variances of all its increments — because the increments are mutually orthogonal (uncorrelated), there are no cross-term contributions. This is the exact analogue of $\lvert a_1 e_1 + \cdots + a_n e_n \rvert^2 = a_1^2 + \cdots + a_n^2$ for orthonormal vectors.</div>
+</div>
+
+#### The $$L^2$$ Hilbert space interpretation
+
+The space $$L^2(\Omega, \mathcal{F}, P)$$ of square-integrable random variables is a Hilbert space under the inner product $$(X, Y) = E[XY]$$. The conditional expectation $$E[Y \mid \mathcal{F}_n]$$ is the orthogonal projection of $$Y$$ onto the closed subspace $$L^2(\Omega, \mathcal{F}_n, P)$$. This minimises the mean-squared error:
+
+$$E[Y \mid \mathcal{F}_n] = \arg\min_{Z\, \mathcal{F}_n\text{-measurable}} E[(Y - Z)^2].$$
+
+Proposition 1.5.1 says the increments $$\Delta M_1, \Delta M_2, \ldots$$ are mutually orthogonal in this Hilbert space — a discrete analogue of having orthogonal basis vectors.
+
+<div class="misconception-block">
+  <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception</b></span></div>
+  <div class="mc-wrong"><strong>Wrong:</strong> "Orthogonal martingale increments are independent."</div>
+  <div class="mc-correct"><strong>Correct:</strong> Orthogonality ($E[\Delta M_{n+1} \cdot \Delta M_{m+1}] = 0$ for $m \neq n$) is weaker than independence. It says the increments are uncorrelated, not that they have no dependence structure. Independence implies orthogonality (for zero-mean variables), but the converse fails. The proof only uses the martingale property — no independence assumption is needed.</div>
+</div>
 
 ---
 
-### Part 3 — The Upcrossing Proof
+### Part 3 — Section 1.6: Integrals with Respect to Random Walk
 
 <div class="note-abstract">
-The proof is built on the "buy low, sell high" strategy. The key object is the number of upcrossings — the number of times the sequence rises from below $a$ to above $b$. The Upcrossing Inequality bounds the expected number of such crossings by a quantity that is finite whenever $E[\lvert M_n \rvert] \leq C$. Finiteness of expected upcrossings then forces a.s. convergence.
-</div>
-
-#### Step 1 — Define the upcrossing stopping times
-
-Fix $$a < b$$. Define stopping times implementing "buy at $$a$$, sell at $$b$$":
-
-$$S_1 = \min\{n : M_n \leq a\}, \qquad T_1 = \min\{n > S_1 : M_n \geq b\},$$
-
-$$S_j = \min\{n > T_{j-1} : M_n \leq a\}, \qquad T_j = \min\{n > S_j : M_n \geq b\}.$$
-
-The number of completed upcrossings by time $$n$$ is:
-
-$$U_n = U_n(a,b) = \max\{j : T_j \leq n\}.$$
-
-Each completed upcrossing — going from $$\leq a$$ up to $$\geq b$$ — produces a profit of at least $$b - a$$.
-
-#### Step 2 — Construct the predictable betting strategy
-
-Define bets $$B_k = \mathbf{1}_{\{S_j \leq k-1 < T_j \text{ for some } j\}}$$, i.e., $$B_k = 1$$ when a position is held (bought but not yet sold), $$B_k = 0$$ otherwise. This is $$\mathcal{F}_{k-1}$$-measurable since whether we hold at step $$k$$ depends only on $$M_0, \ldots, M_{k-1}$$.
-
-The winnings from this strategy satisfy:
-
-$$W_n \geq U_n(b - a) - (a - M_n).$$
-
-Here $$U_n(b-a)$$ is the profit from completed upcrossings, and $$(a - M_n)$$ is the potential loss on a position still open at time $$n$$ (held below $$a$$).
-
-#### Step 3 — Apply the martingale property of $$W_n$$
-
-Since $$B_k$$ is predictable and bounded, $$W_n$$ is a martingale (§1.2), so $$E[W_n] = 0$$:
-
-$$0 = E[W_n] \geq (b-a)\, E[U_n] - E[(a - M_n)].$$
-
-Using $$(a - M_n) \leq \lvert a \rvert + \lvert M_n \rvert$$:
-
-$$\boxed{E[U_n(a,b)] \leq \frac{\lvert a \rvert + E[\lvert M_n \rvert]}{b - a} \leq \frac{\lvert a \rvert + C}{b - a} < \infty.}$$
-
-This is **Doob's Upcrossing Inequality**.
-
-#### Step 4 — Conclude almost-sure convergence
-
-Since $$E[U_n] \leq (\lvert a \rvert + C)/(b-a)$$ for every $$n$$, monotone convergence gives:
-
-$$E[U_\infty(a,b)] \leq \frac{\lvert a \rvert + C}{b - a} < \infty \implies U_\infty(a,b) < \infty \quad \text{a.s.}$$
-
-Now let $$a, b$$ range over all rational pairs $$a < b$$. There are only countably many such pairs, so:
-
-$$P\bigl(\exists\, a < b \text{ rational}: U_\infty(a,b) = \infty\bigr) = 0.$$
-
-On the complementary event (probability one), $$U_\infty(a,b) < \infty$$ for every rational pair, which forces $$\liminf_{n \to \infty} M_n = \limsup_{n \to \infty} M_n$$ a.s. Hence $$M_\infty = \lim_{n \to \infty} M_n$$ exists and is finite a.s.
-
----
-
-
-### Part 4 — Pólya's Urn
-
-<div class="note-abstract">
-Pólya's urn is the canonical application of the MCT. The fraction of red balls $M_n = R_n/(n+2)$ is a bounded nonneg martingale, so the MCT guarantees its a.s. convergence to a limit $M_\infty$. The remarkable fact: $M_\infty$ is uniformly distributed on $[0,1]$ — the urn settles to a random stable fraction that is completely unpredictable in advance.
+Section 1.6 defines the discrete stochastic integral and establishes its three fundamental properties. The setting is a predictable integrand $J_n$ and a random walk $S_n$ with i.i.d. mean-zero increments. The integral $Z_n = \sum_{j=1}^n J_j X_j$ is the discrete prototype of the Itô integral $\int_0^t A_s\, dB_s$.
 </div>
 
 #### Setup
 
-Start with one red and one green ball. At each step: draw a ball uniformly at random, observe its colour, return it plus one new ball of the same colour.
+"Suppose that $$X_1, X_2, \ldots$$ are independent, identically distributed random variables with mean zero and variance $$\sigma^2$$."
 
-- $$R_0 = G_0 = 1$$, and $$R_n + G_n = n + 2$$ after $$n$$ draws.
-- $$M_n = R_n/(n+2)$$: fraction of red balls.
-- Transition: $$P\{R_{n+1} = R_n + 1 \mid \mathcal{F}_n\} = M_n$$.
+The two main examples are:
+- **Coin-tossing:** $$P\{X_j = 1\} = P\{X_j = -1\} = \tfrac{1}{2}$$, giving $$\sigma^2 = 1$$.
+- **Normal increments:** $$X_j \sim N(0, \sigma^2)$$.
 
-#### <span>$$M_n$$</span> is a martingale — verification
+Let $$S_n = X_1 + \cdots + X_n$$ and let $$\{\mathcal{F}_n\}$$ be the filtration generated by $$X_1, \ldots, X_n$$.
 
-$$
-\begin{aligned}
-$$E[M_{n+1} \mid \mathcal{F}_n] 
-&= M_n \cdot \frac{R_n + 1}{n+3} + (1 - M_n) \cdot \frac{R_n}{n+3} \\
-&= \frac{R_n(n+3)}{(n+2)(n+3)} \\
-&= \frac{R_n}{n+2} \\
-&= M_n. \checkmark$$
-\end{aligned}
-$$
+"A sequence of random variables $$J_1, J_2, \ldots$$ is called **predictable** (with respect to $$\{\mathcal{F}_n\}$$) if for each $$n$$, $$J_n$$ is $$\mathcal{F}_{n-1}$$-measurable."
 
-#### MCT applies
+This is the non-anticipating condition from §1.2: the integrand $$J_n$$ is determined by observations strictly before time $$n$$.
 
-Since $$0 \leq M_n \leq 1$$, we have $$E[\lvert M_n \rvert] = E[M_n] = E[M_0] = \tfrac{1}{2}$$. The uniform $$L^1$$ bound holds with $$C = \tfrac{1}{2}$$, so the MCT gives:
+The **discrete stochastic integral** is defined by:
 
-$$M_\infty = \lim_{n \to \infty} M_n \quad \text{exists a.s.}$$
+$$Z_n = \sum_{j=1}^n J_j X_j = \sum_{j=1}^n J_j \,\Delta S_j.$$
 
-#### The limiting distribution is <span>$$\mathrm{Uniform}[0,1]$$</span>
+#### Three fundamental properties
 
-Exercise 1.11 establishes that for each $$n$$, $$M_n$$ is uniform on the finite set $$\bigl\{\tfrac{1}{n+2}, \tfrac{2}{n+2}, \ldots, \tfrac{n+1}{n+2}\bigr\}$$. As $$n \to \infty$$ this discrete uniform converges in distribution to $$\mathrm{Uniform}[0,1]$$, so $$M_\infty \sim \mathrm{Uniform}[0,1]$$.
+<div class="example-block" markdown="1">
+<div class="ex-title">Three Properties of the Discrete Stochastic Integral <span class="ex-pill pill-prop">Proposition</span></div>
 
-<div class="result-box"><strong>Starting from one red and one green ball, the long-run fraction of red balls $M_\infty$ is uniformly distributed on $[0,1]$. The urn stabilises to a definite proportion, but that proportion is itself completely random.</strong></div>
+**Property 1 — Martingale property**
+
+$$Z_n \text{ is a martingale with respect to } \{\mathcal{F}_n\}.$$
+
+*Proof:* $$E[Z_{n+1} \mid \mathcal{F}_n] = E[Z_n + J_{n+1} X_{n+1} \mid \mathcal{F}_n] = Z_n + J_{n+1}\, E[X_{n+1} \mid \mathcal{F}_n] = Z_n + J_{n+1} \cdot 0 = Z_n.$$
+
+Here: $$Z_n$$ is $$\mathcal{F}_n$$-measurable (Property 1 of §1.1); $$J_{n+1}$$ is $$\mathcal{F}_n$$-measurable and pulls out (Property 5); $$X_{n+1}$$ is independent of $$\mathcal{F}_n$$ with $$E[X_{n+1}] = 0$$ (Property 3).
 
 ---
 
-### Part 5 — Connection to Bayesian Statistics
+**Property 2 — Linearity**
 
-<div class="note-abstract">
-Pólya's urn is not merely a toy model — it is exactly the Bayesian update rule for a Bernoulli parameter $\theta$ with a uniform prior. The MCT, reinterpreted, is a Bayesian consistency theorem: the posterior mean converges a.s. to the true $\theta$ as data accumulates.
+If $$J_n, K_n$$ are predictable sequences and $$a, b$$ constants, then $$aJ_n + bK_n$$ is predictable and:
+
+$$\sum_{j=1}^n (aJ_j + bK_j) X_j = a \sum_{j=1}^n J_j X_j + b \sum_{j=1}^n K_j X_j.$$
+
+*Proof:* Immediate from linearity of summation.
+
+---
+
+**Property 3 — Variance rule**
+
+$$\mathrm{Var}[Z_n] = E[Z_n^2] = \sigma^2 \sum_{j=1}^n E[J_j^2].$$
+
+*Proof:* Using orthogonality of martingale increments (§1.5), the cross terms $$E[J_j X_j \cdot J_k X_k]$$ vanish for $$j \neq k$$:
+
+$$E[Z_n^2] = \sum_{j=1}^n E[J_j^2 X_j^2].$$
+
+Since $$J_j$$ is $$\mathcal{F}_{j-1}$$-measurable and $$X_j$$ is independent of $$\mathcal{F}_{j-1}$$:
+
+$$E[J_j^2 X_j^2] = E\bigl[E[J_j^2 X_j^2 \mid \mathcal{F}_{j-1}]\bigr] = E\bigl[J_j^2\, E[X_j^2 \mid \mathcal{F}_{j-1}]\bigr] = E[J_j^2]\, \sigma^2.$$
+
+Summing over $$j$$ gives $$E[Z_n^2] = \sigma^2 \sum_{j=1}^n E[J_j^2]$$.
+
+<div class="ex-lesson"><strong>Why the variance rule matters:</strong> It gives an explicit formula for the second moment of $Z_n$ purely in terms of the integrand $J_j$ and the variance $\sigma^2$ of the increments. This is the discrete analogue of the Itô isometry $E\!\left[\left(\int_0^t A_s\, dB_s\right)^2\right] = \int_0^t E[A_s^2]\, ds$, which is the cornerstone of the $L^2$ theory of stochastic integration.</div>
 </div>
 
-**Setup:** Run Bernoulli trials with unknown success probability $$\theta$$, starting from a $$\mathrm{Uniform}[0,1]$$ prior. After $$n$$ trials with $$S_n = k$$ successes, the Bayes update gives the posterior:
+#### Comparison: discrete stochastic integral vs. Itô integral
 
-$$f_{n,k}(\theta) \propto \theta^k (1-\theta)^{n-k}, \quad \theta \in (0,1).$$
-
-This is the $$\mathrm{Beta}(k+1,\, n-k+1)$$ density, with posterior mean:
-
-$$E[\theta \mid S_n = k] = \frac{k+1}{n+2} = \frac{S_n + 1}{n+2}.$$
-
-This is **identical to the Pólya urn fraction** $$M_n = R_n/(n+2)$$ when $$R_n = S_n + 1$$ (successes plus the one initial red ball). The urn fraction equals the posterior mean at every step.
-
-**MCT as Bayesian law of large numbers:** By the strong law, $$S_n/n \to \theta$$ a.s. Combined with $$M_n \to M_\infty$$ a.s., we get $$M_\infty = \theta$$ a.s. — the posterior mean converges to the true parameter.
+| Feature | Discrete: $$Z_n = \sum J_j X_j$$ | Continuous: $$\int_0^t A_s\, dB_s$$ |
+|---|---|---|
+| **Integrand condition** | $$J_n$$ is $$\mathcal{F}_{n-1}$$-measurable (predictable) | $$A_s$$ is adapted, square-integrable |
+| **Martingale property** | $$Z_n$$ is a martingale | $$\int_0^t A_s\, dB_s$$ is a martingale |
+| **Variance rule** | $$E[Z_n^2] = \sigma^2 \sum E[J_j^2]$$ | $$E\!\left[\left(\int_0^t A_s\, dB_s\right)^2\right] = \int_0^t E[A_s^2]\, ds$$ |
+| **Linearity** | ✓ direct from summation | ✓ by construction |
 
 ---
 
-### Part 6 — MCT vs OST: Complementary Tools
+### Part 4 — Section 1.7: A Maximal Inequality
 
-| | **MCT** | **OST** |
+<div class="note-abstract">
+Doob's maximal inequality bounds the probability that a submartingale's running maximum exceeds a level $a$. It is the discrete analogue of the continuous maximal inequality used throughout Chapter 4. The corollary for square integrable martingales follows immediately from the fact that $M_n^2$ is a submartingale.
+</div>
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Theorem 1.7.1 — Doob's Maximal Inequality for Submartingales <span class="ex-pill pill-thm">Theorem</span></div>
+
+"Suppose $$Y_n$$ is a nonneg submartingale with respect to $$\{\mathcal{F}_n\}$$, and $$\bar{Y}_n = \max\{Y_0, Y_1, \ldots, Y_n\}$$. Then for every $$a > 0$$,
+
+$$P\{\bar{Y}_n \geq a\} \leq \frac{1}{a}\, E[Y_n].$$"
+
+**Proof:**
+
+Let $$T = \min\{k \leq n : Y_k \geq a\}$$ (with $$T = n+1$$ if no such $$k$$ exists). Then:
+
+$$\{{\bar{Y}_n \geq a}\} = \bigsqcup_{k=0}^n A_k, \quad A_k = \{T = k\}.$$
+
+Each $$A_k \in \mathcal{F}_k$$. Since $$Y_n$$ is a submartingale, $$E[Y_n \mid \mathcal{F}_k] \geq Y_k$$ for $$k \leq n$$, so:
+
+$$E[Y_n \mathbf{1}_{A_k}] = E\bigl[E[Y_n \mid \mathcal{F}_k]\, \mathbf{1}_{A_k}\bigr] \geq E[Y_k\, \mathbf{1}_{A_k}] \geq a\, P(A_k).$$
+
+Summing over $$k = 0, 1, \ldots, n$$:
+
+$$E[Y_n] \geq E\!\left[Y_n\, \mathbf{1}_{\{\bar{Y}_n \geq a\}}\right] = \sum_{k=0}^n E[Y_n\, \mathbf{1}_{A_k}] \geq a\, P\{\bar{Y}_n \geq a\}.$$
+
+Dividing by $$a$$ gives the result.
+</div>
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Corollary 1.7.2 — Doob's $$L^2$$ Maximal Inequality <span class="ex-pill pill-thm">Corollary</span></div>
+
+"If $$M_n$$ is a square integrable martingale with respect to $$\{\mathcal{F}_n\}$$ and $$\overline{M}_n = \max\{\lvert M_0 \rvert, \ldots, \lvert M_n \rvert\}$$, then for every $$a > 0$$,
+
+$$P\{\overline{M}_n \geq a\} \leq \frac{E[M_n^2]}{a^2}.$$"
+
+**Proof:** Exercise 1.15 shows that if $$M_n$$ is a martingale and $$\varphi$$ is a convex function, then $$\varphi(M_n)$$ is a submartingale. Taking $$\varphi(x) = x^2$$ gives that $$M_n^2$$ is a nonneg submartingale. Apply Theorem 1.7.1 to $$Y_n = M_n^2$$ with threshold $$a^2$$:
+
+$$P\{\bar{Y}_n \geq a^2\} \leq \frac{E[M_n^2]}{a^2}.$$
+
+Since $$\{\bar{Y}_n \geq a^2\} = \{\max_k M_k^2 \geq a^2\} = \{\overline{M}_n \geq a\}$$, the result follows.
+
+<div class="ex-lesson"><strong>Why this matters:</strong> The $L^2$ maximal inequality is used throughout Chapter 3 to show that stochastic integrals defined on dyadic times extend continuously to all times (the Kolmogorov continuity argument). It is also used in Chapter 4 to prove the OST under the $L^2$ boundedness condition (Theorem 1.3.3). Controlling the running maximum by the second moment at the final time is the key tool.</div>
+</div>
+
+<div class="misconception-block">
+  <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception</b></span></div>
+  <div class="mc-wrong"><strong>Wrong:</strong> "Doob's maximal inequality says $P\{\overline{M}_n \geq a\} \leq E[\lvert M_n \rvert]/a$ for any martingale."</div>
+  <div class="mc-correct"><strong>Correct:</strong> Theorem 1.7.1 applies to nonneg <em>submartingales</em>, not arbitrary martingales. For a general martingale $M_n$, we apply it to the submartingale $Y_n = \lvert M_n \rvert$ (since $|\cdot|$ is convex) to get $P\{\overline{M}_n \geq a\} \leq E[\lvert M_n \rvert]/a$. The $L^2$ version in Corollary 1.7.2 applies $Y_n = M_n^2$ and replaces $a$ by $a^2$, giving the sharper $1/a^2$ bound under the stronger $L^2$ hypothesis.</div>
+</div>
+
+---
+
+### Part 5 — Worked Example: Verifying the Variance Rule
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Variance rule for coin-tossing random walk <span class="ex-pill pill-ex">Example</span></div>
+
+**Setup:** $$X_1, X_2, \ldots$$ i.i.d. with $$P\{X_j = \pm 1\} = \tfrac{1}{2}$$, so $$\sigma^2 = 1$$. Let $$S_n = X_1 + \cdots + X_n$$.
+
+**Integrand:** $$J_j = S_{j-1}$$ (the running sum just before step $$j$$, which is $$\mathcal{F}_{j-1}$$-measurable ✓).
+
+**Integral:** $$Z_n = \sum_{j=1}^n S_{j-1} X_j.$$
+
+**Apply the variance rule:**
+
+$$E[Z_n^2] = \sigma^2 \sum_{j=1}^n E[J_j^2] = \sum_{j=1}^n E[S_{j-1}^2] = \sum_{j=1}^n (j-1) = \frac{n(n-1)}{2}.$$
+
+Here we used $$E[S_{j-1}^2] = j - 1$$ (since $$\mathrm{Var}[S_{j-1}] = j-1$$ for zero-mean i.i.d. increments with $$\sigma^2 = 1$$).
+
+**Direct check with Itô's formula analogy:** The integral $$Z_n = \sum S_{j-1} X_j$$ is the discrete analogue of $$\int_0^t B_s\, dB_s$$, which by Itô's formula equals $$\tfrac{1}{2}(B_t^2 - t)$$. The variance of $$\tfrac{1}{2}(B_t^2 - t)$$ at time $$t$$ is $$\tfrac{t^2}{2}$$, consistent with $$n(n-1)/2 \approx n^2/2$$ for large $$n$$.
+
+<div class="ex-lesson"><strong>Key point:</strong> The variance rule allows computing $E[Z_n^2]$ without expanding the square and tracking all cross terms — orthogonality kills them all. The only computation needed is $E[J_j^2]$ for each $j$, which is a much simpler task.</div>
+</div>
+
+---
+
+### Part 6 — The Three Properties as a Unified Blueprint
+
+All three sections prepare the same three-property package that will recur throughout Chapters 3 and 4:
+
+| Property | §1.6 Discrete version | Chapter 3 Continuous version |
 |---|---|---|
-| **Question** | Does $$M_n$$ converge as $$n \to \infty$$? | Does $$E[M_T] = E[M_0]$$ at a stopping time? |
-| **Hypothesis** | $$\sup_n E[\lvert M_n \rvert] \leq C$$ | Bounded $$T$$, or (1.8), or (1.9) |
-| **Conclusion** | $$M_n \to M_\infty$$ a.s. | $$E[M_T] = E[M_0]$$ |
-| **Mean preserved?** | Not guaranteed | Yes — that is the conclusion |
-| **Counterexample** | Simple random walk: $$E[\lvert S_n \rvert] \to \infty$$, no convergence | Doubling strategy: $$P\{T<\infty\}=1$$ but $$E[W_T] \neq E[W_0]$$ |
-| **Key tool** | Upcrossing inequality | Stopped process is a martingale |
+| **Martingale** | $$Z_n = \sum J_j X_j$$ is a martingale | $$\int_0^t A_s\, dB_s$$ is a martingale |
+| **Linearity** | $$\sum (aJ_j + bK_j) X_j = a Z_n^J + b Z_n^K$$ | $$\int (aA + bC)\, dB = a\int A\, dB + b \int C\, dB$$ |
+| **Variance rule (Itô isometry)** | $$E[Z_n^2] = \sigma^2 \sum E[J_j^2]$$ | $$E\!\left[\left(\int_0^t A_s\, dB_s\right)^2\right] = \int_0^t E[A_s^2]\, ds$$ |
+
+And §1.7's maximal inequality:
+
+| Property | §1.7 Discrete version | Chapter 4 Continuous version |
+|---|---|---|
+| **Maximal inequality** | $$P\{\overline{M}_n \geq a\} \leq E[M_n^2]/a^2$$ | $$P\{\sup_{s \leq t} \lvert M_s \rvert \geq a\} \leq E[M_t^2]/a^2$$ |
 
 ---
 
 ### Term Glossary
 
 <div class="glossary-entry">
-<div class="gterm">Martingale Convergence Theorem (MCT) <span class="gcat cat-thm">Theorem</span></div>
-If $M_n$ is a martingale with $\sup_n E[\lvert M_n \rvert] \leq C < \infty$, then $M_\infty = \lim_{n\to\infty} M_n$ exists and is finite a.s. The limit satisfies $E[\lvert M_\infty \rvert] \leq C$ by Fatou's lemma, but $E[M_\infty]$ need not equal $E[M_0]$.
+<div class="gterm">Square integrable martingale <span class="gcat cat-defn">Definition</span></div>
+A martingale $M_n$ with $E[M_n^2] < \infty$ for each $n$. Stronger than ordinary integrability ($E[\lvert M_n \rvert] < \infty$), weaker than uniform $L^2$ boundedness ($\sup_n E[M_n^2] \leq C$). The natural domain for the Pythagorean identity and the variance rule.
 </div>
 
 <div class="glossary-entry">
-<div class="gterm">Uniform $L^1$ bound <span class="gcat cat-prop">Property</span></div>
-The condition $\sup_{n \geq 0} E[\lvert M_n \rvert] \leq C < \infty$. The hypothesis of the MCT. Automatically satisfied for nonneg martingales (since $E[\lvert M_n \rvert] = E[M_n] = E[M_0]$) and for $L^\infty$-bounded martingales. Fails for simple random walk.
+<div class="gterm">$L^2(\Omega, \mathcal{F}, P)$ <span class="gcat cat-defn">Definition</span></div>
+The Hilbert space of square-integrable random variables on $(\Omega, \mathcal{F}, P)$, with inner product $(X,Y) = E[XY]$ and norm $\lVert X \rVert_2 = \sqrt{E[X^2]}$. The conditional expectation $E[Y \mid \mathcal{F}_n]$ is the orthogonal projection of $Y$ onto the closed subspace $L^2(\Omega, \mathcal{F}_n, P)$, minimising $E[(Y-Z)^2]$ over all $\mathcal{F}_n$-measurable $Z$.
 </div>
 
 <div class="glossary-entry">
-<div class="gterm">Upcrossing $U_n(a,b)$ <span class="gcat cat-defn">Definition</span></div>
-The number of times $(M_0, M_1, \ldots, M_n)$ rises from $\leq a$ up through $\geq b$ (a complete upward crossing of the interval $[a,b]$). A sequence converges if and only if $U_\infty(a,b) < \infty$ for every rational $a < b$. The MCT proof shows this holds whenever $\sup_n E[\lvert M_n \rvert] \leq C$.
+<div class="gterm">Orthogonal random variables <span class="gcat cat-defn">Definition</span></div>
+$X$ and $Y$ are orthogonal if $E[XY] = E[X]\,E[Y]$. For zero-mean variables this reduces to $E[XY] = 0$, i.e., $(X,Y) = 0$ in $L^2$. Independent zero-mean variables are orthogonal; the converse fails. Proposition 1.5.1 shows martingale increments $\Delta M_n$ are mutually orthogonal for $n \neq m$ using only the martingale property.
 </div>
 
 <div class="glossary-entry">
-<div class="gterm">Doob's Upcrossing Inequality <span class="gcat cat-thm">Theorem</span></div>
-For any martingale $M_n$ with $\sup_n E[\lvert M_n \rvert] \leq C$ and any $a < b$:
-
-$$E[U_n(a,b)] \leq \frac{\lvert a \rvert + C}{b - a}.$$
-
-The right side is finite and independent of $n$. Monotone convergence then gives $E[U_\infty(a,b)] \leq (\lvert a \rvert + C)/(b-a) < \infty$, forcing $U_\infty(a,b) < \infty$ a.s. and hence a.s. convergence of $M_n$.
+<div class="gterm">Pythagorean identity for martingales <span class="gcat cat-prop">Property</span></div>
+$E[M_n^2] = E[M_0^2] + \sum_{j=1}^n E[(\Delta M_j)^2]$ for any square integrable martingale. Follows from orthogonality of increments: expanding $M_n^2 = (M_0 + \sum \Delta M_j)^2$ and taking expectations, all cross terms $E[\Delta M_j \cdot \Delta M_k]$ for $j \neq k$ vanish. This is the discrete analogue of the Itô isometry.
 </div>
 
 <div class="glossary-entry">
-<div class="gterm">Almost-sure (a.s.) convergence <span class="gcat cat-defn">Definition</span></div>
-$M_n \to M_\infty$ a.s. means $P(\{\omega : M_n(\omega) \to M_\infty(\omega)\}) = 1$. Stronger than convergence in probability; weaker than $L^1$ convergence. The MCT delivers a.s. convergence. Upgrading to $L^1$ convergence (and hence $E[M_\infty] = E[M_0]$) requires the additional condition of uniform integrability.
+<div class="gterm">Predictable process <span class="gcat cat-defn">Definition</span></div>
+A sequence $J_1, J_2, \ldots$ where $J_n$ is $\mathcal{F}_{n-1}$-measurable for every $n$. The value of $J_n$ is known strictly before time $n$. This is the allowable betting condition from §1.2, and the exact discrete analogue of the adapted condition for Itô integrands.
 </div>
 
 <div class="glossary-entry">
-<div class="gterm">Uniform integrability <span class="gcat cat-prop">Property</span></div>
-A sequence $(M_n)$ is uniformly integrable if $\lim_{K\to\infty} \sup_n E[\lvert M_n \rvert \mathbf{1}_{\{\lvert M_n \rvert \geq K\}}] = 0$. Strictly stronger than $\sup_n E[\lvert M_n \rvert] \leq C$. Under UI, a.s. convergence implies $L^1$ convergence and $E[M_\infty] = E[M_0]$. The doubling strategy $W_n$ is not uniformly integrable.
+<div class="gterm">Discrete stochastic integral $Z_n = \sum_{j=1}^n J_j X_j$ <span class="gcat cat-defn">Definition</span></div>
+The sum of a predictable integrand $J_j$ against the i.i.d. increments $X_j$ of a random walk. Satisfies three properties: (1) martingale; (2) linearity; (3) variance rule $E[Z_n^2] = \sigma^2 \sum E[J_j^2]$. The discrete prototype of the Itô integral $\int_0^t A_s\, dB_s$ in Chapter 3.
+</div>
+
+<div class="glossary-entry">
+<div class="gterm">Variance rule (Itô isometry, discrete form) <span class="gcat cat-prop">Property</span></div>
+$\mathrm{Var}[Z_n] = E[Z_n^2] = \sigma^2 \sum_{j=1}^n E[J_j^2]$. Proved by using: (a) orthogonality of martingale increments to kill cross terms; (b) the pull-out property to separate $J_j^2$ from $X_j^2$; (c) independence of $X_j$ from $\mathcal{F}_{j-1}$ to replace $E[X_j^2 \mid \mathcal{F}_{j-1}]$ by $\sigma^2$.
+</div>
+
+<div class="glossary-entry">
+<div class="gterm">Doob's maximal inequality <span class="gcat cat-thm">Theorem</span></div>
+For a nonneg submartingale $Y_n$ with running maximum $\bar{Y}_n = \max_{k \leq n} Y_k$:
+
+$$P\{\bar{Y}_n \geq a\} \leq \frac{E[Y_n]}{a}.$$
+
+Proved by partitioning $\{\bar{Y}_n \geq a\}$ into the disjoint events $A_k = \{T = k\}$ (first time $Y$ hits $a$), and using the submartingale inequality $E[Y_n \mathbf{1}_{A_k}] \geq a\,P(A_k)$ for each $k$.
+</div>
+
+<div class="glossary-entry">
+<div class="gterm">Doob's $L^2$ maximal inequality <span class="gcat cat-thm">Theorem</span></div>
+For a square integrable martingale $M_n$ with $\overline{M}_n = \max_{k \leq n} \lvert M_k \rvert$:
+
+$$P\{\overline{M}_n \geq a\} \leq \frac{E[M_n^2]}{a^2}.$$
+
+Follows from Theorem 1.7.1 applied to the submartingale $Y_n = M_n^2$ (convexity of $x^2$ makes $M_n^2$ a submartingale). Controls the running maximum by the terminal second moment — used in the Kolmogorov continuity argument and in the proof of OST III.
+</div>
+
+---
+
+### Study-Note Summary
+
+- **§1.5 — Square integrable martingales:** $$E[M_n^2] < \infty$$ for each $$n$$. The key result is Proposition 1.5.1: martingale increments $$\Delta M_j$$ are mutually orthogonal in $$L^2$$ ($$E[\Delta M_{n+1}\cdot\Delta M_{m+1}]=0$$ for $$m \neq n$$), giving the Pythagorean identity $$E[M_n^2] = E[M_0^2] + \sum_j E[(\Delta M_j)^2]$$. Proof uses only the martingale property — no independence required.
+- **$$L^2$$ Hilbert space structure:** $$L^2(\Omega,\mathcal{F},P)$$ is a Hilbert space with inner product $$(X,Y)=E[XY]$$. Conditional expectation $$E[Y\mid\mathcal{F}_n]$$ is the orthogonal projection of $$Y$$ onto the subspace $$L^2(\Omega,\mathcal{F}_n,P)$$. Martingale increments are orthogonal vectors in this space.
+- **§1.6 — Discrete stochastic integral:** For a predictable sequence $$J_n$$ ($$\mathcal{F}_{n-1}$$-measurable) and i.i.d. mean-zero variance-$$\sigma^2$$ increments $$X_j$$, the integral $$Z_n=\sum_{j=1}^n J_j X_j$$ satisfies three properties: **(1)** martingale; **(2)** linearity; **(3)** variance rule $$E[Z_n^2]=\sigma^2\sum_j E[J_j^2]$$. These are exactly the properties the Itô integral inherits in Chapter 3.
+- **§1.7 — Doob's maximal inequality:** For any nonneg submartingale $$Y_n$$: $$P\{\max_{k\leq n} Y_k \geq a\} \leq E[Y_n]/a$$. Corollary: for a square integrable martingale $$M_n$$: $$P\{\max_{k\leq n}\lvert M_k\rvert \geq a\} \leq E[M_n^2]/a^2$$. The corollary follows because $$M_n^2$$ is a submartingale (Jensen's inequality applied to the convex function $$x^2$$).
+- **Proof strategy for variance rule:** (a) expand $$E[Z_n^2]$$; (b) orthogonality kills all cross terms $$j \neq k$$; (c) for each $$j$$, pull $$J_j^2$$ out of the conditional expectation and use independence of $$X_j$$ from $$\mathcal{F}_{j-1}$$ to get $$E[J_j^2 X_j^2] = \sigma^2 E[J_j^2]$$.
+- **Key forward connections:** The three §1.6 properties are the exact discrete blueprint for the Itô integral (Chapter 3). The §1.7 maximal inequality is used in the Kolmogorov continuity theorem and in the proof of OST III (Theorem 1.3.3). Both appear throughout Chapters 3–4.
+
+<div class="ref-tags">
+<span class="ref-tag">Square integrable martingale</span>
+<span class="ref-tag">Orthogonal increments</span>
+<span class="ref-tag">Pythagorean identity</span>
+<span class="ref-tag">Hilbert space $L^2$</span>
+<span class="ref-tag">Predictable process</span>
+<span class="ref-tag">Discrete stochastic integral</span>
+<span class="ref-tag">Variance rule</span>
+<span class="ref-tag">Itô isometry</span>
+<span class="ref-tag">Doob's maximal inequality</span>
+<span class="ref-tag">Submartingale</span>
 </div>
 
   </div>
