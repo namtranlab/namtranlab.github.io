@@ -133,8 +133,8 @@ d-appendix {
 }
 
 // Distill's default >=1180px grid uses 60px tracks, which caps text content
-// near 704px (8 text tracks + 7 gaps). Use 97px tracks so the text column is
-// 1000px at maximum width: 8*97 + 7*32 = 1000.
+// near 704px (8 text tracks + 7 gaps). Use 80px tracks so the text column is
+// 864px at maximum width: 8*80 + 7*32 = 864.
 @media (min-width: 1180px) {
   .base-grid,
   distill-header,
@@ -147,7 +147,7 @@ d-appendix {
   d-footnote-list,
   d-citation-list,
   distill-footer {
-    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 97px [middle-start] 97px [text-start kicker-end] 97px 97px 97px 97px 97px 97px 97px 97px [text-end gutter-start] 97px [middle-end] 97px [page-end gutter-end] 1fr [screen-end] !important;
+    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 80px [text-start kicker-end] 80px 80px 80px 80px 80px 80px 80px 80px [text-end gutter-start] 80px [middle-end] 80px [page-end gutter-end] 1fr [screen-end] !important;
     grid-column-gap: 32px !important;
   }
 }
