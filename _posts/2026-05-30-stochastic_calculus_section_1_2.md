@@ -319,11 +319,7 @@ Since $$\{\bar{Y}_n \geq a^2\} = \{\max_k M_k^2 \geq a^2\} = \{\overline{M}_n \g
 <div class="ex-lesson"><strong>Why this matters:</strong> The $L^2$ maximal inequality is used throughout Chapter 3 to show that stochastic integrals defined on dyadic times extend continuously to all times (the Kolmogorov continuity argument). It is also used in Chapter 4 to prove the OST under the $L^2$ boundedness condition (Theorem 1.3.3). Controlling the running maximum by the second moment at the final time is the key tool.</div>
 </div>
 
-<div class="misconception-block">
-  <div class="mc-header"><span class="mc-icon">⚠️</span><span class="mc-label"><b>Common Misconception</b></span></div>
-  <div class="mc-wrong"><strong>Wrong:</strong> "Doob's maximal inequality says $P\{\overline{M}_n \geq a\} \leq E[\lvert M_n \rvert]/a$ for any martingale."</div>
-  <div class="mc-correct"><strong>Correct:</strong> Theorem 1.7.1 applies to nonneg <em>submartingales</em>, not arbitrary martingales. For a general martingale $M_n$, we apply it to the submartingale $Y_n = \lvert M_n \rvert$ (since $|\cdot|$ is convex) to get $P\{\overline{M}_n \geq a\} \leq E[\lvert M_n \rvert]/a$. The $L^2$ version in Corollary 1.7.2 applies $Y_n = M_n^2$ and replaces $a$ by $a^2$, giving the sharper $1/a^2$ bound under the stronger $L^2$ hypothesis.</div>
-</div>
+
 
 
   </div>
