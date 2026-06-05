@@ -92,7 +92,7 @@ function toggleChapter(id) {
 }
 </script>
 
-## Sections 1.5–1.7 — Square Integrable Martingales, Random Walk Integrals, and Maximal Inequality
+## Sections 1.5–Square Integrable Martingales, Random Walk Integrals, and Maximal Inequality
 
 <div class="chapter-block">
   <button class="chapter-toggle" onclick="toggleChapter('s1567')">
