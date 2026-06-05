@@ -351,8 +351,80 @@ Here we used $$E[S_{j-1}^2] = j - 1$$ (since $$\mathrm{Var}[S_{j-1}] = j-1$$ for
 <div class="ex-lesson"><strong>Key point:</strong> The variance rule allows computing $E[Z_n^2]$ without expanding the square and tracking all cross terms — orthogonality kills them all. The only computation needed is $E[J_j^2]$ for each $j$, which is a much simpler task.</div>
 </div>
 
+---
 
+### Part 5 — The Three Properties as a Unified Blueprint
 
+All three sections prepare the same three-property package that will recur throughout Chapters 3 and 4:
+
+| Property | §1.6 Discrete version | Chapter 3 Continuous version |
+|---|---|---|
+| **Martingale** | $$Z_n = \sum J_j X_j$$ is a martingale | $$\int_0^t A_s\, dB_s$$ is a martingale |
+| **Linearity** | $$\sum (aJ_j + bK_j) X_j = a Z_n^J + b Z_n^K$$ | $$\int (aA + bC)\, dB = a\int A\, dB + b \int C\, dB$$ |
+| **Variance rule (Itô isometry)** | $$E[Z_n^2] = \sigma^2 \sum E[J_j^2]$$ | $$E\!\left[\left(\int_0^t A_s\, dB_s\right)^2\right] = \int_0^t E[A_s^2]\, ds$$ |
+
+And §1.7's maximal inequality:
+
+| Property | §1.7 Discrete version | Chapter 4 Continuous version |
+|---|---|---|
+| **Maximal inequality** | $$P\{\overline{M}_n \geq a\} \leq E[M_n^2]/a^2$$ | $$P\{\sup_{s \leq t} \lvert M_s \rvert \geq a\} \leq E[M_t^2]/a^2$$ |
+
+---
+
+### Term Glossary
+
+<div class="glossary-entry">
+<div class="gterm">Square integrable martingale <span class="gcat cat-defn">Definition</span></div>
+A martingale $M_n$ with $E[M_n^2] < \infty$ for each $n$. Stronger than ordinary integrability ($E[\lvert M_n \rvert] < \infty$), weaker than uniform $L^2$ boundedness ($\sup_n E[M_n^2] \leq C$). The natural domain for the Pythagorean identity and the variance rule.
+</div>
+
+<div class="glossary-entry">
+<div class="gterm">$L^2(\Omega, \mathcal{F}, P)$ <span class="gcat cat-defn">Definition</span></div>
+The Hilbert space of square-integrable random variables on $(\Omega, \mathcal{F}, P)$, with inner product $(X,Y) = E[XY]$ and norm $\lVert X \rVert_2 = \sqrt{E[X^2]}$. The conditional expectation $E[Y \mid \mathcal{F}_n]$ is the orthogonal projection of $Y$ onto the closed subspace $L^2(\Omega, \mathcal{F}_n, P)$, minimising $E[(Y-Z)^2]$ over all $\mathcal{F}_n$-measurable $Z$.
+</div>
+
+<div class="glossary-entry">
+<div class="gterm">Orthogonal random variables <span class="gcat cat-defn">Definition</span></div>
+$X$ and $Y$ are orthogonal if $E[XY] = E[X]\,E[Y]$. For zero-mean variables this reduces to $E[XY] = 0$, i.e., $(X,Y) = 0$ in $L^2$. Independent zero-mean variables are orthogonal; the converse fails. Proposition 1.5.1 shows martingale increments $\Delta M_n$ are mutually orthogonal for $n \neq m$ using only the martingale property.
+</div>
+
+<div class="glossary-entry">
+<div class="gterm">Pythagorean identity for martingales <span class="gcat cat-prop">Property</span></div>
+$E[M_n^2] = E[M_0^2] + \sum_{j=1}^n E[(\Delta M_j)^2]$ for any square integrable martingale. Follows from orthogonality of increments: expanding $M_n^2 = (M_0 + \sum \Delta M_j)^2$ and taking expectations, all cross terms $E[\Delta M_j \cdot \Delta M_k]$ for $j \neq k$ vanish. This is the discrete analogue of the Itô isometry.
+</div>
+
+<div class="glossary-entry">
+<div class="gterm">Predictable process <span class="gcat cat-defn">Definition</span></div>
+A sequence $J_1, J_2, \ldots$ where $J_n$ is $\mathcal{F}_{n-1}$-measurable for every $n$. The value of $J_n$ is known strictly before time $n$. This is the allowable betting condition from §1.2, and the exact discrete analogue of the adapted condition for Itô integrands.
+</div>
+
+<div class="glossary-entry">
+<div class="gterm">Discrete stochastic integral $Z_n = \sum_{j=1}^n J_j X_j$ <span class="gcat cat-defn">Definition</span></div>
+The sum of a predictable integrand $J_j$ against the i.i.d. increments $X_j$ of a random walk. Satisfies three properties: (1) martingale; (2) linearity; (3) variance rule $E[Z_n^2] = \sigma^2 \sum E[J_j^2]$. The discrete prototype of the Itô integral $\int_0^t A_s\, dB_s$ in Chapter 3.
+</div>
+
+<div class="glossary-entry">
+<div class="gterm">Variance rule (Itô isometry, discrete form) <span class="gcat cat-prop">Property</span></div>
+$\mathrm{Var}[Z_n] = E[Z_n^2] = \sigma^2 \sum_{j=1}^n E[J_j^2]$. Proved by using: (a) orthogonality of martingale increments to kill cross terms; (b) the pull-out property to separate $J_j^2$ from $X_j^2$; (c) independence of $X_j$ from $\mathcal{F}_{j-1}$ to replace $E[X_j^2 \mid \mathcal{F}_{j-1}]$ by $\sigma^2$.
+</div>
+
+<div class="glossary-entry">
+<div class="gterm">Doob's maximal inequality <span class="gcat cat-thm">Theorem</span></div>
+For a nonneg submartingale $Y_n$ with running maximum $\bar{Y}_n = \max_{k \leq n} Y_k$:
+
+$$P\{\bar{Y}_n \geq a\} \leq \frac{E[Y_n]}{a}.$$
+
+Proved by partitioning $\{\bar{Y}_n \geq a\}$ into the disjoint events $A_k = \{T = k\}$ (first time $Y$ hits $a$), and using the submartingale inequality $E[Y_n \mathbf{1}_{A_k}] \geq a\,P(A_k)$ for each $k$.
+</div>
+
+<div class="glossary-entry">
+<div class="gterm">Doob's $L^2$ maximal inequality <span class="gcat cat-thm">Theorem</span></div>
+For a square integrable martingale $M_n$ with $\overline{M}_n = \max_{k \leq n} \lvert M_k \rvert$:
+
+$$P\{\overline{M}_n \geq a\} \leq \frac{E[M_n^2]}{a^2}.$$
+
+Follows from Theorem 1.7.1 applied to the submartingale $Y_n = M_n^2$ (convexity of $x^2$ makes $M_n^2$ a submartingale). Controls the running maximum by the terminal second moment — used in the Kolmogorov continuity argument and in the proof of OST III.
+</div>
 
 
 
