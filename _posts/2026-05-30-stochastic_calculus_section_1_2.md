@@ -290,6 +290,8 @@ $$P\{\bar{Y}_n \geq a\} \leq \frac{1}{a}\, E[Y_n].$$"
 
 Let $$T = \min\{k \leq n : Y_k \geq a\}$$ (with $$T = n+1$$ if no such $$k$$ exists). Then:
 
+$$\{{\bar{Y}_n \geq a}\} = \bigsqcup_{k=0}^n A_k, \quad A_k = \{T = k\}.$$
+
 
 </div>
 
