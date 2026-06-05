@@ -127,23 +127,7 @@ function toggleChapter(id) {
 
 ---
 
-### Part 1 — How Sections 1.5–1.7 Fit Together
-
-<div class="note-abstract">
-Sections 1.5–1.7 form a tightly connected unit. Section 1.5 introduces the $L^2$ structure of martingales: their increments are orthogonal, giving a Pythagorean identity for the variance. Section 1.6 applies this structure to define and analyse the discrete stochastic integral — the sum $Z_n = \sum J_j X_j$ when $J_j$ is predictable. Section 1.7 uses $L^2$ to prove Doob's maximal inequality, which controls the running maximum of a martingale. All three sections are prerequisites for the continuous-time theory in Chapters 3 and 4.
-</div>
-
-#### How they connect
-
-<div class="key-idea"><strong>§1.5 → §1.6:</strong> The orthogonality of martingale increments (§1.5) is exactly what justifies the variance rule $\mathrm{Var}[Z_n] = \sigma^2 \sum E[J_j^2]$ for the stochastic integral (§1.6). Without orthogonality, cross terms would not vanish.</div>
-
-<div class="key-idea"><strong>§1.5 → §1.7:</strong> The fact that $M_n^2$ is a submartingale (§1.5, Exercise 1.15) is what allows Theorem 1.7.1 to be applied to $M_n^2$ to yield the $L^2$ maximal inequality in Corollary 1.7.2.</div>
-
-<div class="key-idea"><strong>§1.6 → Chapter 3:</strong> The three properties of $Z_n$ — martingale, linearity, variance rule — are exactly the three properties that define the Itô integral $\int_0^t A_s\, dB_s$ in continuous time. Section 1.6 is the discrete blueprint.</div>
-
----
-
-### Part 2 — Section 1.5: Square Integrable Martingales
+### Part 1 — Section 1.5: Square Integrable Martingales
 
 <div class="example-block" markdown="1">
 <div class="ex-title">Definition — Square Integrable Martingale <span class="ex-pill pill-defn">Definition</span></div>
