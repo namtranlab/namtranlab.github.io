@@ -271,6 +271,14 @@ Summing over $$j$$ gives $$E[Z_n^2] = \sigma^2 \sum_{j=1}^n E[J_j^2]$$.
 | **Variance rule** | $$E[Z_n^2] = \sigma^2 \sum E[J_j^2]$$ | $$E\!\left[\left(\int_0^t A_s\, dB_s\right)^2\right] = \int_0^t E[A_s^2]\, ds$$ |
 | **Linearity** | ✓ direct from summation | ✓ by construction |
 
+---
+
+### Part 3 — Section 1.7: A Maximal Inequality
+
+<div class="note-abstract">
+Doob's maximal inequality bounds the probability that a submartingale's running maximum exceeds a level $a$. It is the discrete analogue of the continuous maximal inequality used throughout Chapter 4. The corollary for square integrable martingales follows immediately from the fact that $M_n^2$ is a submartingale.
+</div>
+
 
 
 
