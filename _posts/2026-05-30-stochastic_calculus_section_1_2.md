@@ -127,7 +127,7 @@ function toggleChapter(id) {
 
 ---
 
-### Part 1 — Section 1.5: Square Integrable Martingales
+### Part 1 — Square Integrable Martingales
 
 <div class="example-block" markdown="1">
 <div class="ex-title">Definition — Square Integrable Martingale <span class="ex-pill pill-defn">Definition</span></div>
@@ -195,7 +195,7 @@ Proposition 1.5.1 says the increments $$\Delta M_1, \Delta M_2, \ldots$$ are mut
 
 ---
 
-### Part 3 — Section 1.6: Integrals with Respect to Random Walk
+### Part 2 — Integrals with Respect to Random Walk
 
 <div class="note-abstract">
 Section 1.6 defines the discrete stochastic integral and establishes its three fundamental properties. The setting is a predictable integrand $J_n$ and a random walk $S_n$ with i.i.d. mean-zero increments. The integral $Z_n = \sum_{j=1}^n J_j X_j$ is the discrete prototype of the Itô integral $\int_0^t A_s\, dB_s$.
@@ -272,7 +272,7 @@ Summing over $$j$$ gives $$E[Z_n^2] = \sigma^2 \sum_{j=1}^n E[J_j^2]$$.
 
 ---
 
-### Part 4 — Section 1.7: A Maximal Inequality
+### Part 3 — A Maximal Inequality
 
 <div class="note-abstract">
 Doob's maximal inequality bounds the probability that a submartingale's running maximum exceeds a level $a$. It is the discrete analogue of the continuous maximal inequality used throughout Chapter 4. The corollary for square integrable martingales follows immediately from the fact that $M_n^2$ is a submartingale.
@@ -326,7 +326,7 @@ Since $$\{\bar{Y}_n \geq a^2\} = \{\max_k M_k^2 \geq a^2\} = \{\overline{M}_n \g
 
 ---
 
-### Part 5 — Worked Example: Verifying the Variance Rule
+### Part 4 — Worked Example: Verifying the Variance Rule
 
 <div class="example-block" markdown="1">
 <div class="ex-title">Variance rule for coin-tossing random walk <span class="ex-pill pill-ex">Example</span></div>
@@ -350,7 +350,7 @@ Here we used $$E[S_{j-1}^2] = j - 1$$ (since $$\mathrm{Var}[S_{j-1}] = j-1$$ for
 
 ---
 
-### Part 6 — The Three Properties as a Unified Blueprint
+### Part 5 — The Three Properties as a Unified Blueprint
 
 All three sections prepare the same three-property package that will recur throughout Chapters 3 and 4:
 
@@ -421,30 +421,6 @@ For a square integrable martingale $M_n$ with $\overline{M}_n = \max_{k \leq n} 
 $$P\{\overline{M}_n \geq a\} \leq \frac{E[M_n^2]}{a^2}.$$
 
 Follows from Theorem 1.7.1 applied to the submartingale $Y_n = M_n^2$ (convexity of $x^2$ makes $M_n^2$ a submartingale). Controls the running maximum by the terminal second moment — used in the Kolmogorov continuity argument and in the proof of OST III.
-</div>
-
----
-
-### Study-Note Summary
-
-- **§1.5 — Square integrable martingales:** $$E[M_n^2] < \infty$$ for each $$n$$. The key result is Proposition 1.5.1: martingale increments $$\Delta M_j$$ are mutually orthogonal in $$L^2$$ ($$E[\Delta M_{n+1}\cdot\Delta M_{m+1}]=0$$ for $$m \neq n$$), giving the Pythagorean identity $$E[M_n^2] = E[M_0^2] + \sum_j E[(\Delta M_j)^2]$$. Proof uses only the martingale property — no independence required.
-- **$$L^2$$ Hilbert space structure:** $$L^2(\Omega,\mathcal{F},P)$$ is a Hilbert space with inner product $$(X,Y)=E[XY]$$. Conditional expectation $$E[Y\mid\mathcal{F}_n]$$ is the orthogonal projection of $$Y$$ onto the subspace $$L^2(\Omega,\mathcal{F}_n,P)$$. Martingale increments are orthogonal vectors in this space.
-- **§1.6 — Discrete stochastic integral:** For a predictable sequence $$J_n$$ ($$\mathcal{F}_{n-1}$$-measurable) and i.i.d. mean-zero variance-$$\sigma^2$$ increments $$X_j$$, the integral $$Z_n=\sum_{j=1}^n J_j X_j$$ satisfies three properties: **(1)** martingale; **(2)** linearity; **(3)** variance rule $$E[Z_n^2]=\sigma^2\sum_j E[J_j^2]$$. These are exactly the properties the Itô integral inherits in Chapter 3.
-- **§1.7 — Doob's maximal inequality:** For any nonneg submartingale $$Y_n$$: $$P\{\max_{k\leq n} Y_k \geq a\} \leq E[Y_n]/a$$. Corollary: for a square integrable martingale $$M_n$$: $$P\{\max_{k\leq n}\lvert M_k\rvert \geq a\} \leq E[M_n^2]/a^2$$. The corollary follows because $$M_n^2$$ is a submartingale (Jensen's inequality applied to the convex function $$x^2$$).
-- **Proof strategy for variance rule:** (a) expand $$E[Z_n^2]$$; (b) orthogonality kills all cross terms $$j \neq k$$; (c) for each $$j$$, pull $$J_j^2$$ out of the conditional expectation and use independence of $$X_j$$ from $$\mathcal{F}_{j-1}$$ to get $$E[J_j^2 X_j^2] = \sigma^2 E[J_j^2]$$.
-- **Key forward connections:** The three §1.6 properties are the exact discrete blueprint for the Itô integral (Chapter 3). The §1.7 maximal inequality is used in the Kolmogorov continuity theorem and in the proof of OST III (Theorem 1.3.3). Both appear throughout Chapters 3–4.
-
-<div class="ref-tags">
-<span class="ref-tag">Square integrable martingale</span>
-<span class="ref-tag">Orthogonal increments</span>
-<span class="ref-tag">Pythagorean identity</span>
-<span class="ref-tag">Hilbert space $L^2$</span>
-<span class="ref-tag">Predictable process</span>
-<span class="ref-tag">Discrete stochastic integral</span>
-<span class="ref-tag">Variance rule</span>
-<span class="ref-tag">Itô isometry</span>
-<span class="ref-tag">Doob's maximal inequality</span>
-<span class="ref-tag">Submartingale</span>
 </div>
 
   </div>
