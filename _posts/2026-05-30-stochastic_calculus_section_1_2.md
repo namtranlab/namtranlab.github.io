@@ -126,3 +126,8 @@ function toggleChapter(id) {
 | $$P\{\overline{M}_n \geq a\} \leq a^{-2} E[M_n^2]$$ | Doob's $$L^2$$ maximal inequality for square integrable martingales |
 
 ---
+
+
+
+  </div>
+</div>
