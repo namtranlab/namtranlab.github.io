@@ -583,7 +583,7 @@ There are six possibilities, agreeing with $$\binom{3+2-1}{2}=\binom42=6$$.
 
 <div class="misconception-block" markdown="1">
 
-#### Why you cannot simply divide $$n^k$$ by $$k!$$ — supplementary
+**Why you cannot simply divide $$n^k$$ by $$k!$$ — supplementary**
 
 With repetition, different unordered selections can have different numbers of ordered versions. For example, $$AB$$ corresponds to $$AB$$ and $$BA$$, but $$AA$$ has only one ordering.
 
@@ -607,25 +607,7 @@ Although there are six multisets, they are not equally likely under this samplin
 
 </div>
 
-### Part 8 — A repeatable problem-solving method
-
-1. **Describe the experiment.** State exactly what is selected or observed.
-2. **Define one outcome.** Decide whether it is a sequence, a set, or a multiset.
-3. **Define the event.** Translate the condition into an exact description.
-4. **State the probability assumptions.** Explain why outcomes are equally likely if using the counting ratio.
-5. **Count the full sample space.** Check replacement and order.
-6. **Count favorable outcomes.** Break the construction into stages, explaining each factor.
-7. **Check for overcounting or omissions.** Ask whether every desired outcome appears exactly once.
-8. **Divide and interpret.** Keep fractions, decimals, and percentages distinct.
-
-Useful final checks:
-
-- Is the favorable count no larger than the total count?
-- Is the probability between 0 and 1?
-- Do numerator and denominator use the same outcome convention?
-- Does the method work on a tiny example you can list completely?
-
-### Part 9 — Original practice questions
+### Part 8 — Original practice questions
 
 Try these before reading the answers.
 
@@ -639,7 +621,7 @@ Try these before reading the answers.
 8. Explain why “it happens or it does not happen” does not establish a probability of $$1/2$$.
 9. In the full-house calculation, explain why the two rank factors are 13 and 12, and why there is no division by 2.
 
-### Part 10 — Practice answers
+### Part 9 — Practice answers
 
 #### 1. Exactly one head
 
@@ -696,7 +678,7 @@ The possibilities must also be equally likely before favorable-outcome counting 
 
 Any of 13 ranks can supply the triple. The pair must use one of the other 12 ranks. There is no division by 2 because the triple and pair roles distinguish the two ranks; each full house is already counted once.
 
-### Part 11 — Quick revision sheet
+### Part 10 — Quick revision sheet
 
 | Concept | Essential fact |
 |---|---|
@@ -709,18 +691,6 @@ Any of 13 ranks can supply the triple. The pair must use one of the other 12 ran
 | Unordered, without replacement | $$\binom nk$$ |
 | Unordered, with replacement | $$\binom{n+k-1}{k}$$ |
 | Full house | $$13\binom43\cdot12\binom42/\binom{52}{5}\approx0.1441\%$$ |
-
-#### Self-check before moving on
-
-- [ ] I can distinguish a single outcome from an event.
-- [ ] I can explain both assumptions behind the naive probability formula.
-- [ ] I can explain why two possibilities do not necessarily have equal probabilities.
-- [ ] I can derive the multiplication rule using a tree.
-- [ ] I can derive $$\binom nk$$ by correcting a uniform overcount.
-- [ ] I can classify a selection by order and replacement.
-- [ ] I can reconstruct every factor in the full-house formula.
-- [ ] I can explain why unordered repeated selections need special care.
-- [ ] I can write a solution that explains its assumptions and reasoning.
 
 
 ### Term Glossary
