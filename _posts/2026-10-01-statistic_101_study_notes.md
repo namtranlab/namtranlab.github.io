@@ -100,7 +100,10 @@ function toggleLecture(id) {
 }
 </script>
 
-Study notes for **Statistics 110**, organized by lecture. Each lecture contains definitions, worked examples, common misconceptions, practice questions, and a revision checklist. Further lectures can be added to this collection as the course progresses.
+**Statistics 110: Probability**, taught by Joe Blitzstein at Harvard University, introduces probability as a language for understanding uncertainty, randomness, and statistical reasoning. The course develops both intuition and mathematical problem-solving skills, beginning with counting and sample spaces before moving to conditional probability, Bayes’ rule, random variables, probability distributions, expectation, limit theorems, and Markov chains.
+
+Follow the [course video lectures on YouTube](https://www.youtube.com/playlist?list=PL2SOU6wwxB0uwwH80KTQ6ht66KWxbzTIo), or visit the [official course website](https://stat110.hsites.harvard.edu/) for supporting materials and practice problems.
+
 
 ## Lecture 1 - Probability and Counting
 
@@ -122,11 +125,6 @@ Study notes for **Statistics 110**, organized by lecture. Each lecture contains 
 Probability begins with a precise description of possible outcomes. This lecture explains when probability reduces to counting, develops the multiplication rule and combinations, and applies them to poker and the four basic sampling cases.
 
 </div>
-
-**Course:** Statistics 110  
-**Source:** [Watch the lecture on YouTube](https://www.youtube.com/watch?v=KbB0FjPg0mw)  
-**Length:** Approximately 46 minutes  
-**Basis:** These notes summarize the video's transcript. Supplementary explanations and original practice problems are labeled; they are not presented as additional material covered in the lecture.
 
 ### Notation at a Glance
 
