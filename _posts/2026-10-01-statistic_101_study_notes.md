@@ -155,55 +155,19 @@ After studying these notes, you should be able to:
 - Derive the combination formula and calculate the probability of a full house.
 - Explain your reasoning in words, including the assumptions behind your calculations.
 
-### Lecture roadmap
-
-| Time | Topic |
-|---|---|
-| [00:00](https://www.youtube.com/watch?v=KbB0FjPg0mw&t=0s) | Practice, mathematical explanations, and course announcements |
-| [06:28](https://www.youtube.com/watch?v=KbB0FjPg0mw&t=388s) | Applications and historical motivation |
-| [15:05](https://www.youtube.com/watch?v=KbB0FjPg0mw&t=905s) | Sample spaces and events |
-| [21:33](https://www.youtube.com/watch?v=KbB0FjPg0mw&t=1293s) | The naive definition of probability and its limitations |
-| [28:39](https://www.youtube.com/watch?v=KbB0FjPg0mw&t=1719s) | Counting and the multiplication rule |
-| [34:59](https://www.youtube.com/watch?v=KbB0FjPg0mw&t=2099s) | Poker, combinations, and the full-house calculation |
-| [41:35](https://www.youtube.com/watch?v=KbB0FjPg0mw&t=2495s) | The four cases of sampling |
-
-### Part 1 — How to study probability effectively
-
-#### Practice develops pattern recognition
-
-Learning probability resembles learning chess tactics: practicing one pattern at a time builds recognition, while mixed problems require you to identify the pattern yourself. Problems grouped by topic help you learn a particular technique; mixed practice develops your ability to choose the right technique without a hint.
-
-**Suggested study routine:**
-
-1. Learn a principle and understand its justification.
-2. Solve several problems using that principle.
-3. Mix different problem types.
-4. Explain why your chosen method fits each problem.
-5. Review mistakes in your reasoning, not just numerical errors.
-
-#### A solution needs an explanation
-
-A correct final number is not enough. A good solution identifies the model, explains the counting steps, and justifies the result with words and equations.
-
-For example, instead of writing only `2 × 3 = 6`, explain that each of two cone choices permits three flavor choices, giving six possible cone–flavor pairs.
-
-Be honest about gaps in understanding. Identify the step you cannot justify, then work through it; unexplained algebra cannot repair an unclear argument.
-
-> Study habit: Try reading your solution aloud. It should sound like a coherent explanation with equations included.
-
-### Part 2 — Why probability matters
+### Part 1 — Why probability matters
 
 Probability provides a mathematical way to describe uncertainty. Applications of probability and statistics include physics, genetics, economics, game theory, finance, history, government, and everyday reasoning.
 
 #### Historical example: Who wrote the disputed Federalist Papers?
 
-Frederick Mosteller and David Wallace investigated whether Alexander Hamilton or James Madison wrote 12 disputed Federalist essays. They compared word frequencies in texts with known authorship, focusing on common words whose use is relatively stable across topics. These writing habits provided evidence for comparing the two possible authors using statistical methods, including Bayesian inference. Their analysis supported Madison as the author of all 12 disputed essays. [Original study](https://gwern.net/doc/statistics/bayes/1963-mosteller.pdf)
+Frederick Mosteller and David Wallace investigated whether Alexander Hamilton or James Madison wrote 12 disputed Federalist essays. They compared word frequencies in texts with known authorship, focusing on common words whose use is relatively stable across topics. These writing habits provided evidence for comparing the two possible authors using statistical methods, including Bayesian inference. Their analysis supported Madison as the author of all 12 disputed essays.
 
 **Core idea:** Uncertainty can concern a fixed historical fact. The author does not change, but our assessment of who it was can change as we examine evidence. Probability provides a way to quantify that uncertainty and update it.
 
 #### Historical example: Dividing the prize in an unfinished game
 
-Games involving dice, coins, and cards have clearly defined outcomes, making them useful for developing probability models. In their 1654 correspondence, Pierre de Fermat and Blaise Pascal explored games of chance, including how to divide a prize fairly when a contest stops before either player wins. Their letters helped establish the foundations of modern probability. [Translated correspondence](https://www.york.ac.uk/depts/maths/histstat/pascal.pdf)
+Games involving dice, coins, and cards have clearly defined outcomes, making them useful for developing probability models. In their 1654 correspondence, Pierre de Fermat and Blaise Pascal explored games of chance, including how to divide a prize fairly when a contest stops before either player wins. Their letters helped establish the foundations of modern probability.
 
 For a simplified example, suppose Alice and Bob have equal chances of winning each independent round. The first to win three rounds receives a $100 prize, but play stops with Alice leading two wins to one. Alice needs one more win; Bob needs two.
 
@@ -216,13 +180,13 @@ Imagine two further rounds, including an unused round if Alice wins immediately.
 | Bob, Alice | Alice |
 | Bob, Bob | Bob |
 
-Alice wins the contest in three of the four sequences, so her chance of winning is $$3/4$$; Bob's is $$1/4$$. Dividing the prize in proportion to these chances gives Alice $75 and Bob $25.
+Alice wins the contest in three of the four sequences, so her chance of winning is $$3/4$$; Bob's is $$1/4$$. Dividing the prize in proportion to these chances gives Alice $$75$$ and Bob $$25$$.
 
 **Core idea:** A fair division reflects each player's chance of winning from the current position. Counting equally likely future sequences turns that idea into a precise calculation. The imagined unused round keeps all sequences the same length without changing the contest's winner.
 
 **Main lesson:** Intuition can be unreliable in probability. Precise definitions and explicit reasoning help us check it.
 
-### Part 3 — Experiments, sample spaces, and events
+### Part 2 — Experiments, sample spaces, and events
 
 #### Experiment
 
@@ -293,7 +257,7 @@ Unions, intersections, and complements translate statements about events into pr
 | $$\varnothing$$ | The empty event |
 | $$A\subseteq B$$ | Every outcome in $$A$$ also belongs to $$B$$ |
 
-### Part 4 — The naive definition of probability
+### Part 3 — The naive definition of probability
 
 <div class="result-box" markdown="1">
 
@@ -370,7 +334,7 @@ P(\text{sum}=2)=\frac1{36},\qquad
 P(\text{sum}=7)=\frac6{36}.
 $$
 
-### Part 5 — The multiplication rule for counting
+### Part 4 — The multiplication rule for counting
 
 Suppose a process has $$r$$ stages. There are $$n_1$$ choices at stage 1, $$n_2$$ choices at stage 2 for each possible first choice, and so on. If stage $$i$$ always has $$n_i$$ choices after any allowed preceding history, then:
 
@@ -424,7 +388,7 @@ outcomes. Listing every outcome quickly becomes impractical.
 - The identities of available choices may change between branches, as long as the required number of choices at that stage stays the same.
 - If branches have different numbers of continuations, count the separate branches and add. For example, three flavors for cake cones and two for waffle cones give $$3+2=5$$ possibilities.
 
-### Part 6 — Factorials, ordered selections, and combinations
+### Part 5 — Factorials, ordered selections, and combinations
 
 #### Factorial notation
 
@@ -493,7 +457,7 @@ $$
 
 <div class="ex-title">Counting full houses <span class="ex-pill pill-ex">Worked example</span></div>
 
-### Part 7 — Worked example: A full house in poker
+### Part 6 — Worked example: A full house in poker
 
 #### Set up the model
 
@@ -551,7 +515,7 @@ That is approximately **0.1441%**, or about one in 694 uniformly random five-car
 
 </div>
 
-### Part 8 — The sampling table
+### Part 7 — The sampling table
 
 Two questions determine the basic counting method:
 
@@ -643,7 +607,7 @@ Although there are six multisets, they are not equally likely under this samplin
 
 </div>
 
-### Part 9 — A repeatable problem-solving method
+### Part 8 — A repeatable problem-solving method
 
 1. **Describe the experiment.** State exactly what is selected or observed.
 2. **Define one outcome.** Decide whether it is a sequence, a set, or a multiset.
@@ -661,7 +625,7 @@ Useful final checks:
 - Do numerator and denominator use the same outcome convention?
 - Does the method work on a tiny example you can list completely?
 
-### Part 10 — Original practice questions
+### Part 9 — Original practice questions
 
 Try these before reading the answers.
 
@@ -675,7 +639,7 @@ Try these before reading the answers.
 8. Explain why “it happens or it does not happen” does not establish a probability of $$1/2$$.
 9. In the full-house calculation, explain why the two rank factors are 13 and 12, and why there is no division by 2.
 
-### Part 11 — Practice answers
+### Part 10 — Practice answers
 
 #### 1. Exactly one head
 
@@ -732,7 +696,7 @@ The possibilities must also be equally likely before favorable-outcome counting 
 
 Any of 13 ranks can supply the triple. The pair must use one of the other 12 ranks. There is no division by 2 because the triple and pair roles distinguish the two ranks; each full house is already counted once.
 
-### Part 12 — Quick revision sheet
+### Part 11 — Quick revision sheet
 
 | Concept | Essential fact |
 |---|---|
