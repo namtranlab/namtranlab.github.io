@@ -395,7 +395,7 @@ outcomes. Listing every outcome quickly becomes impractical.
 For a positive integer $$n$$:
 
 $$
-n!=n(n-1)(n-2)\cdots2\cdot1.
+n!=n(n-1)(n-2)\cdots2\cdot1
 $$
 
 For example, $$4!=24$$. The convention is $$0!=1$$.
