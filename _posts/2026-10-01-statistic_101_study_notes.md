@@ -122,7 +122,7 @@ Follow the [course video lectures on YouTube](https://www.youtube.com/playlist?l
 
 <div class="note-abstract" markdown="1">
 
-Probability begins with a precise description of possible outcomes. This lecture explains when probability reduces to counting, develops the multiplication rule and combinations, and applies them to poker and the four basic sampling cases.
+Probability begins with a precise description of possible outcomes. For finite, equally likely outcomes, probability reduces to counting. The multiplication rule and combinations provide the tools to count poker hands and distinguish the four basic sampling cases.
 
 </div>
 
@@ -171,9 +171,9 @@ After studying these notes, you should be able to:
 
 #### Practice develops pattern recognition
 
-The lecturer compares learning probability to learning chess tactics. Initially, practice problems grouped by topic help you recognize a particular technique. Later, mixed problems require you to decide which technique applies.
+Learning probability resembles learning chess tactics: practicing one pattern at a time builds recognition, while mixed problems require you to identify the pattern yourself. Problems grouped by topic help you learn a particular technique; mixed practice develops your ability to choose the right technique without a hint.
 
-**Suggested study routine, based on that advice:**
+**Suggested study routine:**
 
 1. Learn a principle and understand its justification.
 2. Solve several problems using that principle.
@@ -187,19 +187,38 @@ A correct final number is not enough. A good solution identifies the model, expl
 
 For example, instead of writing only `2 × 3 = 6`, explain that each of two cone choices permits three flavor choices, giving six possible cone–flavor pairs.
 
-The lecture also emphasizes being honest about gaps in understanding. An unclear argument should be repaired rather than disguised by unexplained algebra.
+Be honest about gaps in understanding. Identify the step you cannot justify, then work through it; unexplained algebra cannot repair an unclear argument.
 
 > Study habit: Try reading your solution aloud. It should sound like a coherent explanation with equations included.
 
-The opening also contains historical course logistics. Those deadlines and policies are not needed for learning the mathematical content and are not reproduced here as current instructions.
-
 ### Part 2 — Why probability matters
 
-Probability provides a mathematical way to describe uncertainty. The lecture mentions applications in physics, genetics, economics, game theory, finance, history, government, and everyday reasoning.
+Probability provides a mathematical way to describe uncertainty. Applications of probability and statistics include physics, genetics, economics, game theory, finance, history, government, and everyday reasoning.
 
-One historical application is Mosteller and Wallace's study of disputed authorship in the Federalist Papers. The lecture uses this to illustrate how probabilistic reasoning can address questions outside the natural sciences; it does not derive their method here.
+#### Historical example: Who wrote the disputed Federalist Papers?
 
-Games involving dice, coins, and cards are useful examples because the experiments are easy to describe. The lecturer also discusses the Fermat–Pascal correspondence about gambling problems as an important historical root of probability.
+Frederick Mosteller and David Wallace investigated whether Alexander Hamilton or James Madison wrote 12 disputed Federalist essays. They compared word frequencies in texts with known authorship, focusing on common words whose use is relatively stable across topics. These writing habits provided evidence for comparing the two possible authors using statistical methods, including Bayesian inference. Their analysis supported Madison as the author of all 12 disputed essays. [Original study](https://gwern.net/doc/statistics/bayes/1963-mosteller.pdf)
+
+**Core idea:** Uncertainty can concern a fixed historical fact. The author does not change, but our assessment of who it was can change as we examine evidence. Probability provides a way to quantify that uncertainty and update it.
+
+#### Historical example: Dividing the prize in an unfinished game
+
+Games involving dice, coins, and cards have clearly defined outcomes, making them useful for developing probability models. In their 1654 correspondence, Pierre de Fermat and Blaise Pascal explored games of chance, including how to divide a prize fairly when a contest stops before either player wins. Their letters helped establish the foundations of modern probability. [Translated correspondence](https://www.york.ac.uk/depts/maths/histstat/pascal.pdf)
+
+For a simplified example, suppose Alice and Bob have equal chances of winning each independent round. The first to win three rounds receives a $100 prize, but play stops with Alice leading two wins to one. Alice needs one more win; Bob needs two.
+
+Imagine two further rounds, including an unused round if Alice wins immediately. The four equally likely sequences of round winners are:
+
+| Next two round winners | Winner of the contest |
+|---|---|
+| Alice, Alice | Alice |
+| Alice, Bob | Alice |
+| Bob, Alice | Alice |
+| Bob, Bob | Bob |
+
+Alice wins the contest in three of the four sequences, so her chance of winning is $$3/4$$; Bob's is $$1/4$$. Dividing the prize in proportion to these chances gives Alice $75 and Bob $25.
+
+**Core idea:** A fair division reflects each player's chance of winning from the current position. Counting equally likely future sequences turns that idea into a precise calculation. The imagined unused round keeps all sequences the same length without changing the contest's winner.
 
 **Main lesson:** Intuition can be unreliable in probability. Precise definitions and explicit reasoning help us check it.
 
@@ -264,7 +283,7 @@ For two coin tosses:
 
 #### Set notation refresher — supplementary
 
-The lecturer stresses familiarity with unions, intersections, and complements. This table supplies a short refresher.
+Unions, intersections, and complements translate statements about events into precise set notation:
 
 | Notation | Meaning |
 |---|---|
@@ -312,7 +331,7 @@ Only one of the four outcomes belongs to the event.
 
 #### Fairness alone is not enough for a sequence
 
-The lecture cautions that equal chances of heads and tails on an individual toss do not, by themselves, guarantee that the four two-toss sequences are equally likely. Dependence between tosses can change their probabilities.
+Equal chances of heads and tails on an individual toss do not, by themselves, guarantee that the four two-toss sequences are equally likely. Dependence between tosses can change their probabilities.
 
 **Supplementary illustration:** Suppose the first toss is fair, but the second result always repeats the first. Each position individually has a 50% chance of heads, yet:
 
@@ -326,11 +345,11 @@ Independent fair tosses would make all four sequences equally likely. Independen
 
 <div class="misconception-block" markdown="1">
 
-The lecture uses “life on Neptune” as a deliberately invalid argument: there either is life or there is not, but listing two possibilities does not make them equally likely.
+Consider the claim: “There either is life on Neptune or there is not, so the probability of life is 1/2.” This argument is invalid because listing two possibilities does not establish that they are equally likely.
 
 **Key distinction:** Not knowing the probability is different from knowing that outcomes are equally likely.
 
-The lecture also compares life with intelligent life. A precise supplementary clarification is that, if $$I$$ is the event of intelligent life and $$L$$ is the event of any life, then:
+Intelligent life is a more restrictive condition than life of any kind. If $$I$$ is the event of intelligent life and $$L$$ is the event of any life, then:
 
 $$
 I\subseteq L\quad\Longrightarrow\quad P(I)\le P(L).
@@ -359,7 +378,7 @@ $$
 \boxed{\text{Number of complete outcomes}=n_1n_2\cdots n_r.}
 $$
 
-#### Lecture example: Ice cream
+#### Example: Ice cream
 
 <div class="example-block" markdown="1">
 
@@ -474,7 +493,7 @@ $$
 
 <div class="ex-title">Counting full houses <span class="ex-pill pill-ex">Worked example</span></div>
 
-### Part 7 — Worked lecture example: A full house in poker
+### Part 7 — Worked example: A full house in poker
 
 #### Set up the model
 
@@ -520,7 +539,7 @@ P(\text{full house})=
 }
 $$
 
-That is approximately **0.1441%**, or about one in 694 uniformly random five-card hands. The numerical evaluation is added here for study purposes.
+That is approximately **0.1441%**, or about one in 694 uniformly random five-card hands.
 
 #### Common mistakes
 
@@ -582,13 +601,13 @@ $$
 
 Repetitions are allowed, but order is ignored. Such a selection is called a **multiset**.
 
-The lecture states:
+The number of such selections is:
 
 $$
 \binom{n+k-1}{k}.
 $$
 
-**Lecture boundary:** The proof of this formula is deferred to the next lecture. The lecturer suggests checking small cases in the meantime.
+A small case helps illustrate what the formula counts:
 
 **Supplementary small-case check:** Choose two items from $$A,B,C$$, allowing repetition and ignoring order:
 
@@ -697,7 +716,7 @@ $$
 
 #### 7. Unordered selection with repetition
 
-Use the formula stated at the end of the lecture:
+Use the formula for unordered selections with replacement:
 
 $$
 \binom{4+3-1}{3}=\binom63=20.
@@ -724,7 +743,7 @@ Any of 13 ranks can supply the triple. The pair must use one of the other 12 ran
 | Ordered, with replacement | $$n^k$$ |
 | Ordered, without replacement | $$n!/(n-k)!$$ |
 | Unordered, without replacement | $$\binom nk$$ |
-| Unordered, with replacement | $$\binom{n+k-1}{k}$$; proof comes next lecture |
+| Unordered, with replacement | $$\binom{n+k-1}{k}$$ |
 | Full house | $$13\binom43\cdot12\binom42/\binom{52}{5}\approx0.1441\%$$ |
 
 #### Self-check before moving on
