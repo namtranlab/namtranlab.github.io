@@ -546,7 +546,7 @@ $$
 Each selection removes an object:
 
 $$
-n(n-1)\cdots(n-k+1).
+n(n-1)\cdots(n-k+1)
 $$
 
 **Supplementary example:** Awarding gold, silver, and bronze to three of eight people, with no ties, gives $$8\times7\times6=336$$ possibilities.
