@@ -6,7 +6,7 @@ tags: [Statistics, Probability]
 giscus_comments: true
 date: 2026-10-01
 featured: true
-thumbnail: https://img.youtube.com/vi/KbB0FjPg0mw/maxresdefault.jpg
+thumbnail: https://miro.medium.com/v2/resize:fit:1400/format:webp/1*_A7fLYd-0jZzTN5eZJwaKA.jpeg
 
 authors:
   - name: Nam Tran
