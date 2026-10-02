@@ -944,6 +944,27 @@ Compact encoding: ***||**|*
 
 There are six stars and three bars. The adjacent bars indicate an empty second box. A leading bar would indicate an empty first box, and a trailing bar would indicate an empty last box.
 
+#### Visual example: From boxes to a symbol string
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-2-textbook-fig-1-5-box-encoding.png" alt="Four boxes containing one, two, three, and one particles, with the corresponding wall-and-particle encoding below." style="display: block; width: 100%; max-width: 640px; height: auto; margin: 0 auto;">
+  <figcaption>Boxes and their symbol encoding. Reproduced from Joseph K. Blitzstein and Jessica Hwang, <em>Introduction to Probability</em>, Figure 1.5, p. 18.</figcaption>
+</figure>
+
+The four boxes contain $$(1,2,3,1)$$ particles, so $$n=4$$ and $$k=7$$. Reading from left to right, each dot becomes a star and each boundary between boxes becomes a bar:
+
+```text
+*|**|***|*
+```
+
+The lower row also shows an outer wall at each end. Those two walls are fixed; they are not extra separators to arrange. Removing them leaves seven stars and three internal bars, or ten positions. Thus all configurations of seven identical objects in four labeled boxes are counted by:
+
+$$
+\binom{10}{7}=\binom{10}{3}=120.
+$$
+
+**Core idea:** The box boundaries preserve the order of the labeled boxes, while the dots record only occupancies. The diagram uses seven particles; the earlier $$(3,0,2,1)$$ example uses six and shows how an empty box is encoded.
+
 #### Step 2: Show that the encoding is reversible
 
 Every occupancy vector produces exactly one string. Conversely, count the stars before the first bar, between successive bars, and after the last bar to recover every box count.
@@ -1186,6 +1207,28 @@ At this introductory level, a **probability space** consists of:
 The input to $$P$$ is an event, which is a set of outcomes. Its output is a number.
 
 </div>
+
+#### Visual interpretation: Events are sets; probabilities are masses
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-2-textbook-fig-1-1-pebble-world.png" alt="Nine outcomes represented by pebbles. Event A encloses five pebbles, event B encloses four, and one pebble belongs to both events." style="display: block; width: 100%; max-width: 560px; height: auto; margin: 0 auto;">
+  <figcaption>Pebble World: each pebble is an outcome, and each outlined region is an event. Reproduced from Joseph K. Blitzstein and Jessica Hwang, <em>Introduction to Probability</em>, Figure 1.1, p. 3; the mass interpretation is developed in Section 1.6.</figcaption>
+</figure>
+
+The outer rectangle is $$S$$. Event $$A$$ contains five of the nine outcomes; event $$B$$ contains four. One outcome belongs to both, so $$A$$ and $$B$$ are not disjoint.
+
+If all nine outcomes are equally likely, each has probability $$1/9$$. Then:
+
+$$
+P(A)=\frac59,\qquad P(B)=\frac49,\qquad
+P(A\cap B)=\frac19,\qquad P(A\cup B)=\frac89.
+$$
+
+Adding $$5/9$$ and $$4/9$$ counts the shared pebble twice. Their union contains eight distinct pebbles, so direct addition is invalid here.
+
+For a general finite model, imagine giving the pebbles nonnegative masses totaling 1. The probability of an event is the sum of the masses inside it. Equal masses recover counting; unequal masses require adding the assigned probabilities instead. The picture specifies which outcomes belong to each event, but the size or number of drawn circles alone does not specify their probabilities.
+
+**Core idea:** Combining disjoint events adds separate masses. When events overlap, their common outcomes must be accounted for only once.
 
 #### Axiom 1: The empty event and the whole space
 
