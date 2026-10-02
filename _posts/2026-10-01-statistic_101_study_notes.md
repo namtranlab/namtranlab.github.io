@@ -16,6 +16,7 @@ authors:
 
 toc:
   - name: Lecture 1 - Probability and Counting
+  - name: Lecture 2 - Story Proofs and Axioms of Probability
 
 _styles: >
   /* ── Collapsible chapter blocks ── */
@@ -766,3 +767,702 @@ A five-card hand with three cards of one rank and two cards of a different rank.
      a new H2 heading and chapter-block here. Use "Lecture 2 - Topic" (and so on),
      unique lecture-2-toggle/body/arrow IDs, and toggleLecture('lecture-2').
      Keep the shared styles and toggleLecture function defined only once. -->
+
+
+## Lecture 2 - Story Proofs and Axioms of Probability
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-2-toggle" onclick="toggleLecture('lecture-2')" aria-expanded="true" aria-controls="lecture-2-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 2</span>
+      <span>
+        <span class="chapter-title">Lecture 2 - Story Proofs and Axioms of Probability</span>
+        <span class="chapter-subtitle">Labeling, stars and bars, combinatorial identities, and probability spaces</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-2-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-2-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+Counting becomes easier when a problem is represented in a useful way. Labeling clarifies which outcomes are distinct; stars and bars turns repeated selections into arrangements of symbols; story proofs establish identities by counting the same collection in two ways. Probability axioms then extend the framework to unequal probabilities and infinite sample spaces.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$n$$ | Number of available types or labeled boxes in a stars-and-bars problem |
+| $$k$$ | Number of selections or identical objects to distribute |
+| $$x_i$$ | Number of selections of type $$i$$, or occupancy of box $$i$$ |
+| $$\binom{n+k-1}{k}$$ | Number of unordered selections with replacement |
+| $$m,n$$ | Sizes of two disjoint groups in Vandermonde's identity |
+| $$j$$ | Number selected from the first group |
+| $$S$$ | Sample space |
+| $$P(A)$$ | Probability assigned to event $$A$$ |
+| $$\varnothing$$ | Empty event |
+| $$A_i\cap A_j=\varnothing$$ | Events $$A_i$$ and $$A_j$$ are disjoint |
+| $$\bigcup_{j=1}^{\infty}A_j$$ | Event that at least one of the events $$A_1,A_2,\ldots$$ occurs |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Distinguish labeled objects from unordered summaries of those objects.
+- Explain when dividing by an overcounting factor is justified.
+- Derive the stars-and-bars formula using a reversible encoding.
+- Recognize equivalent problems involving repeated selections, box occupancies, and integer solutions.
+- Prove three binomial identities by interpreting both sides as counts.
+- Explain why a count of possible configurations does not specify their probabilities.
+- State the probability axioms and apply additivity to disjoint events.
+
+### Part 1 — Labeling and correcting overcounting
+
+#### Objects can look identical and still represent different outcomes
+
+Suppose a jar contains three red balls and one green ball, and each physical ball is equally likely to be drawn. Label them $$R_1,R_2,R_3,G_1$$. The sample space for one draw has four equally likely outcomes, so:
+
+$$
+P(\text{red})=\frac34.
+$$
+
+The color labels “red” and “green” describe only two possible observations, but those observations are not equally likely. Red combines three underlying outcomes, whereas green corresponds to one.
+
+**Core idea:** Labels make the elementary outcomes explicit. Ignoring a distinction in the final observation does not erase its effect on probability.
+
+#### Example: Splitting ten people into teams of four and six
+
+Choose the four-person team. Everyone else belongs to the six-person team:
+
+$$
+\binom{10}{4}=210.
+$$
+
+Choosing the six-person team first gives the same partition, so:
+
+$$
+\binom{10}{4}=\binom{10}{6}.
+$$
+
+There is no division by two: each partition has exactly one four-person team, so choosing that team counts each partition once.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Two unnamed teams of five <span class="ex-pill pill-ex">Worked example</span></div>
+
+Now split ten people into two five-person teams with no labels or different roles assigned to the teams.
+
+Choosing five people gives $$\binom{10}{5}$$ possibilities, but it counts each partition twice. Selecting one team first or selecting its complement first produces the same pair of teams.
+
+Therefore:
+
+$$
+\boxed{\text{Number of partitions}=\frac12\binom{10}{5}=126.}
+$$
+
+If the teams instead have distinct labels, such as Team A and Team B, assigning a group to Team A differs from assigning that group to Team B. The count is then $$\binom{10}{5}=252$$.
+
+<div class="ex-lesson"><strong>Core idea:</strong> Decide what makes two completed results different before correcting for overcounting. Equal-sized, unnamed teams can be exchanged without changing a partition; labeled teams cannot.</div>
+</div>
+
+<div class="warning-box" markdown="1">
+
+**When can you divide?** Divide by a number $$c$$ only after showing that every desired outcome was counted exactly $$c$$ times. A correction that varies from outcome to outcome cannot be applied as one common divisor.
+
+</div>
+
+### Part 2 — Unordered sampling with replacement
+
+Choose $$k$$ times from $$n$$ available types, allowing repetition and ignoring selection order. Assume $$n\ge1$$ and $$k\ge0$$.
+
+Instead of recording a sequence, record how often each type was chosen:
+
+$$
+(x_1,x_2,\ldots,x_n),\qquad x_i\ge0,\qquad x_1+\cdots+x_n=k.
+$$
+
+The entries are nonnegative integers. For example, choosing types $$A,A,C$$ gives counts $$(2,0,1)$$ for types $$A,B,C$$. Sequences $$AAC$$, $$ACA$$, and $$CAA$$ all give the same count vector.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Three equivalent counting problems <span class="ex-pill pill-defn">Interpretation</span></div>
+
+The following descriptions refer to the same collection of possibilities:
+
+| Description | What one outcome records |
+|---|---|
+| Unordered sampling with replacement | How many times each type was selected |
+| Identical objects in labeled boxes | How many objects occupy each box |
+| Nonnegative integer solutions | A vector $$(x_1,\ldots,x_n)$$ whose entries sum to $$k$$ |
+
+Each type corresponds to a box, and each selection adds one identical tally mark to that box. The boxes remain distinct because they represent different types; the tally marks do not need identities because order is ignored.
+
+</div>
+
+#### Check simple cases
+
+| Case | Direct reasoning | Formula check |
+|---|---|---|
+| $$k=0$$ | One empty selection | $$\binom{n-1}{0}=1$$ |
+| $$k=1$$ | Choose any one of the $$n$$ types | $$\binom n1=n$$ |
+| $$n=1$$ | Every selection is of the only type | $$\binom kk=1$$ |
+| $$n=2$$ | The first count can be $$0,1,\ldots,k$$; the second is determined | $$\binom{k+1}{k}=k+1$$ |
+
+These checks help interpret the formula. They do not replace a proof for arbitrary $$n$$ and $$k$$.
+
+### Part 3 — Stars and bars: deriving the formula
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Stars-and-bars formula <span class="ex-pill pill-thm">Theorem</span></div>
+
+The number of ways to distribute $$k$$ identical objects among $$n$$ labeled boxes, allowing empty boxes, is:
+
+$$
+\boxed{\binom{n+k-1}{k}=\binom{n+k-1}{n-1}.}
+$$
+
+Equivalently, this counts nonnegative integer solutions of $$x_1+\cdots+x_n=k$$ and unordered selections of size $$k$$ with replacement from $$n$$ types.
+
+</div>
+
+#### Step 1: Encode the box counts
+
+Use a star `*` for each object and a bar `|` between neighboring boxes.
+
+For four boxes containing $$(3,0,2,1)$$ objects, the encoding is:
+
+```text
+Box 1   Box 2   Box 3   Box 4
+  ***   |      |  **   |  *
+
+Compact encoding: ***||**|*
+```
+
+There are six stars and three bars. The adjacent bars indicate an empty second box. A leading bar would indicate an empty first box, and a trailing bar would indicate an empty last box.
+
+#### Step 2: Show that the encoding is reversible
+
+Every occupancy vector produces exactly one string. Conversely, count the stars before the first bar, between successive bars, and after the last bar to recover every box count.
+
+This is a **bijection**: a one-to-one correspondence between the two collections. Nothing is omitted and nothing is counted twice.
+
+#### Step 3: Choose the star positions
+
+A valid string contains:
+
+- $$k$$ stars;
+- $$n-1$$ bars;
+- $$n+k-1$$ positions altogether.
+
+Choose which $$k$$ positions contain stars. All remaining positions contain bars:
+
+$$
+\text{Number of strings}=\binom{n+k-1}{k}.
+$$
+
+Choosing the $$n-1$$ bar positions instead gives $$\binom{n+k-1}{n-1}$$. Both descriptions specify the same strings.
+
+**For the example:** Six objects among four boxes give $$\binom96=\binom93=84$$ possible occupancy vectors.
+
+<div class="misconception-block" markdown="1">
+
+**Why not choose gaps only between the stars?** That would rule out adjacent bars and bars at the ends, excluding empty boxes. Stars and bars allows those arrangements because a type may be selected zero times.
+
+**Why not divide $$n^k$$ by $$k!$$?** Different count vectors have different numbers of ordered versions. For example, $$AAA$$ has one ordering, while $$AAB$$ has three. There is no common $$k!$$ overcounting factor.
+
+</div>
+
+#### Supplementary example: Each box must be nonempty
+
+Distribute seven identical objects into three labeled boxes, with at least one in each box.
+
+First place one object in each box. Four objects remain, and they may be distributed with empty boxes allowed. Thus:
+
+$$
+\binom{3+4-1}{4}=\binom64=15.
+$$
+
+More generally, for $$k\ge n\ge1$$, positive integer solutions of $$x_1+\cdots+x_n=k$$ are counted by:
+
+$$
+\binom{k-1}{n-1}.
+$$
+
+If $$k<n$$, no such solution exists. The change of variables $$y_i=x_i-1$$ explains the result: the $$y_i$$ are nonnegative and sum to $$k-n$$.
+
+### Part 4 — A count is not a probability model
+
+The stars-and-bars count is also called the **Bose–Einstein value**, reflecting its connection to counting occupation configurations of indistinguishable particles. For ordinary sampling problems, however, counting configurations does not establish that those configurations are equally likely.
+
+#### Example: Two independent fair coin tosses
+
+The four equally likely ordered outcomes are:
+
+$$
+HH,\quad HT,\quad TH,\quad TT.
+$$
+
+Ignoring order leaves three head–tail count configurations:
+
+| Configuration | Ordered outcomes represented | Probability |
+|---|---|---|
+| Two heads | $$HH$$ | $$1/4$$ |
+| One head and one tail | $$HT,TH$$ | $$1/2$$ |
+| Two tails | $$TT$$ | $$1/4$$ |
+
+Stars and bars correctly counts the three configurations:
+
+$$
+\binom{2+2-1}{2}=3.
+$$
+
+It does **not** imply that each has probability $$1/3$$. A model assigning equal probabilities to the three configurations would describe a different random experiment.
+
+**Core idea:** Whether we can visually distinguish objects is separate from how the experiment assigns probabilities. Identical-looking coins still have a first and second toss, or can be labeled coin 1 and coin 2.
+
+<div class="warning-box" markdown="1">
+
+**The physics connection has limits.** Bose–Einstein counting concerns indistinguishable particles and their occupation configurations. It does not make ordinary coin-toss configurations uniformly distributed, nor does the counting formula alone determine a physical system's probabilities.
+
+</div>
+
+#### Supplementary formula: Probability of a count vector
+
+For $$k$$ independent draws, each uniformly choosing one of $$n$$ types, every ordered sequence has probability $$1/n^k$$.
+
+A count vector $$(x_1,\ldots,x_n)$$ represents:
+
+$$
+\frac{k!}{x_1!x_2!\cdots x_n!}
+$$
+
+ordered sequences. To see why, arrange the $$k$$ selections and divide out the permutations within each repeated type. Therefore:
+
+$$
+P(\text{counts }(x_1,\ldots,x_n))
+=\frac{k!}{x_1!\cdots x_n!}\frac1{n^k}.
+$$
+
+This explains precisely why different occupancy vectors generally receive different probabilities.
+
+### Part 5 — Story proofs: counting the same collection twice
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Story proof <span class="ex-pill pill-defn">Definition</span></div>
+
+A **story proof** establishes a mathematical result through an interpretation. For a counting identity, interpret both sides as the number of objects in the same collection, then justify each count.
+
+A story proof is a general argument. Verifying a few numerical examples provides checks, but does not prove an identity for all admissible values.
+
+</div>
+
+#### Identity 1: Choosing a group or its complement
+
+For integers $$0\le k\le n$$:
+
+$$
+\boxed{\binom nk=\binom n{n-k}.}
+$$
+
+Choose a committee of $$k$$ people from $$n$$ people. Specifying the members uniquely determines the $$n-k$$ nonmembers, and specifying the nonmembers uniquely determines the members.
+
+The two sides count the same committees through complementary descriptions.
+
+**Core idea:** Choosing what to include is equivalent to choosing what to exclude.
+
+#### Identity 2: A committee with a president
+
+For integers $$1\le k\le n$$:
+
+$$
+\boxed{n\binom{n-1}{k-1}=k\binom nk.}
+$$
+
+Count committees of size $$k$$ with one committee member designated as president.
+
+| Method | First choice | Second choice | Total |
+|---|---|---|---|
+| President first | One of $$n$$ people | Remaining $$k-1$$ members from the other $$n-1$$ | $$n\binom{n-1}{k-1}$$ |
+| Committee first | A $$k$$-person committee from $$n$$ | President from its $$k$$ members | $$\binom nk\,k$$ |
+
+Every committee–president pair is counted exactly once by each method, proving the identity.
+
+For example, selecting a three-person committee with a president from five people gives:
+
+$$
+5\binom42=30=3\binom53.
+$$
+
+**Core idea:** Changing the order in which we specify a complete outcome can produce a useful identity without changing the outcomes being counted.
+
+### Part 6 — Vandermonde's identity
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Vandermonde's identity <span class="ex-pill pill-thm">Theorem</span></div>
+
+For nonnegative integers $$m,n,k$$ with $$k\le m+n$$:
+
+$$
+\boxed{\binom{m+n}{k}
+=\sum_{j=0}^{k}\binom mj\binom n{k-j}.}
+$$
+
+A binomial coefficient is zero when its lower argument exceeds its nonnegative upper argument. Impossible selections therefore contribute zero to the sum.
+
+</div>
+
+#### The story: Choose a committee from two groups
+
+There are two disjoint groups: the first has $$m$$ people, and the second has $$n$$ people. Choose a committee of size $$k$$.
+
+**Count directly:** Choose any $$k$$ of the total $$m+n$$ people:
+
+$$
+\binom{m+n}{k}.
+$$
+
+**Count by composition:** Suppose exactly $$j$$ committee members come from the first group. Then $$k-j$$ must come from the second group. For this fixed $$j$$, the multiplication rule gives:
+
+$$
+\binom mj\binom n{k-j}.
+$$
+
+Add over all possible $$j$$. The cases are disjoint because a committee has exactly one value of $$j$$, and they cover all committees. This proves the identity.
+
+The feasible values are:
+
+$$
+\max(0,k-n)\le j\le\min(k,m).
+$$
+
+Using $$j=0,\ldots,k$$ is convenient because the infeasible terms are already zero.
+
+#### Worked numerical example
+
+Choose three people from a group of three and a separate group of four:
+
+| Number from the first group, $$j$$ | Number from the second group | Number of committees |
+|---|---:|---|
+| 0 | 3 | $$\binom30\binom43=4$$ |
+| 1 | 2 | $$\binom31\binom42=18$$ |
+| 2 | 1 | $$\binom32\binom41=12$$ |
+| 3 | 0 | $$\binom33\binom40=1$$ |
+
+Hence:
+
+$$
+4+18+12+1=35=\binom73.
+$$
+
+**Core idea:** Multiply choices within a fixed case; add counts across disjoint cases.
+
+#### Supplementary probability connection
+
+If every $$k$$-person committee is equally likely, then:
+
+$$
+P(\text{exactly }j\text{ from the first group})
+=\frac{\binom mj\binom n{k-j}}{\binom{m+n}{k}}.
+$$
+
+Vandermonde's identity guarantees that these probabilities sum to 1. It connects a combinatorial identity to the requirement that all possible cases account for the whole experiment.
+
+### Part 7 — The general definition of probability
+
+The formula $$P(A)=\lvert A\rvert/\lvert S\rvert$$ requires a finite sample space with equally likely outcomes. To handle unequal probabilities or infinitely many outcomes, assign probabilities to events through a function $$P$$.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Probability space <span class="ex-pill pill-defn">Definition</span></div>
+
+At this introductory level, a **probability space** consists of:
+
+- A sample space $$S$$ describing possible outcomes.
+- A probability function $$P$$ that maps each event $$A$$ to a real number $$P(A)$$ in $$[0,1]$$ and satisfies the axioms below.
+
+The input to $$P$$ is an event, which is a set of outcomes. Its output is a number.
+
+</div>
+
+#### Axiom 1: The empty event and the whole space
+
+$$
+\boxed{P(\varnothing)=0,\qquad P(S)=1.}
+$$
+
+The empty event contains no outcome, so it cannot occur. The full sample space contains every possible outcome, so it must occur.
+
+#### Axiom 2: Countable additivity
+
+If $$A_1,A_2,\ldots$$ are pairwise disjoint events, then:
+
+$$
+\boxed{P\left(\bigcup_{j=1}^{\infty}A_j\right)
+=\sum_{j=1}^{\infty}P(A_j).}
+$$
+
+“Pairwise disjoint” means:
+
+$$
+A_i\cap A_j=\varnothing\qquad\text{whenever }i\ne j.
+$$
+
+No outcome belongs to two of the events. Their union therefore combines non-overlapping probability contributions.
+
+Countable additivity also gives finite additivity: set all events after the last one to $$\varnothing$$. In particular, if $$A\cap B=\varnothing$$, then:
+
+$$
+P(A\cup B)=P(A)+P(B).
+$$
+
+<div class="misconception-block" markdown="1">
+
+**Disjointness is essential.** For two independent fair coin tosses, let $$A$$ mean the first toss is heads and $$B$$ mean the second toss is heads. The outcome $$HH$$ belongs to both events. Adding $$P(A)+P(B)=1$$ counts it twice, whereas $$P(A\cup B)=3/4$$.
+
+Independent events are not necessarily disjoint. Independence describes how probabilities relate; disjointness means that the events cannot occur together.
+
+</div>
+
+#### Supplementary example: Unequal masses on a finite sample space
+
+Let $$S=\{a,b,c\}$$, with individual probabilities $$0.2,0.3,0.5$$. For any event, add the probabilities of its outcomes. Then:
+
+$$
+P(\{a,c\})=0.2+0.5=0.7.
+$$
+
+The empty set has total probability 0, the full space has total probability 1, and disjoint sets add without double counting. This is a valid probability model, although counting two favorable outcomes out of three would give the wrong answer.
+
+Equal masses of $$1/N$$ on a finite sample space of size $$N$$ recover the naive formula. Thus the counting definition is a special case of the general framework.
+
+#### Supplementary example: A countably infinite sample space
+
+Let $$S=\{1,2,3,\ldots\}$$ and assign:
+
+$$
+P(\{j\})=2^{-j},\qquad j=1,2,\ldots.
+$$
+
+The total probability is the geometric series:
+
+$$
+\sum_{j=1}^{\infty}2^{-j}=1.
+$$
+
+For example, the probability of an even result is:
+
+$$
+P(\{2,4,6,\ldots\})=\sum_{r=1}^{\infty}4^{-r}=\frac13.
+$$
+
+The outcomes are not equally likely, but the model has a well-defined total probability. No division by an infinite number of outcomes is needed.
+
+<div class="warning-box" markdown="1">
+
+**Technical clarification for infinite spaces:** In a fully general treatment, probabilities are assigned to a specified collection of measurable events, and a probability space is written $$(S,\mathcal F,P)$$. For finite or countable spaces, we can take all subsets as events. For uncountable spaces, such as a continuous interval, additional care is needed; not every subset must be assigned a probability.
+
+**Probability zero is not always impossibility.** The empty event always has probability zero, but in continuous models a particular point can also have probability zero. The reverse implication is not generally valid.
+
+</div>
+
+### Part 8 — Original practice questions
+
+Try these before reading the answers.
+
+1. How many ways can eight people be split into an unnamed team of three and a team of five? What changes for two unnamed teams of four? What if the two four-person teams are labeled A and B?
+2. Encode $$(2,0,1,2)$$ using stars and bars. How many possible occupancy vectors are there for five identical objects in four labeled boxes?
+3. How many nonnegative integer solutions satisfy $$x_1+x_2+x_3=6$$? How many satisfy the same equation with all entries positive?
+4. Three independent draws select uniformly from types $$A$$ and $$B$$. How many unordered count configurations are possible? Find the probability of each configuration and explain why they are not uniform.
+5. Prove $$6\binom52=3\binom63$$ by describing a committee and a president.
+6. Choose three people from disjoint groups of four and five people. Use Vandermonde's identity to verify the total count. If all committees are equally likely, what is the probability that exactly two members come from the first group?
+7. Suppose $$S=\{a,b,c\}$$ has individual probabilities $$0.1,0.4,0.5$$. Let $$A=\{a,b\}$$ and $$B=\{b,c\}$$. Find $$P(A)$$, $$P(B)$$, and $$P(A\cup B)$$. Why is direct addition invalid?
+8. In the model $$P(\{j\})=2^{-j}$$ for positive integers $$j$$, find the probability of a result at least 3.
+
+### Part 9 — Practice answers
+
+#### 1. Splitting teams
+
+For teams of three and five, choose the three-person team:
+
+$$
+\binom83=56.
+$$
+
+For two unnamed teams of four, each partition is counted twice by selecting a four-person team:
+
+$$
+\frac12\binom84=35.
+$$
+
+For labeled teams A and B, choosing Team A uniquely determines Team B, giving $$\binom84=70$$ assignments.
+
+#### 2. Stars-and-bars encoding
+
+The string is:
+
+```text
+**||*|**
+```
+
+There are five stars and three bars, so:
+
+$$
+\binom{4+5-1}{5}=\binom85=56.
+$$
+
+#### 3. Integer solutions
+
+For nonnegative entries:
+
+$$
+\binom{3+6-1}{6}=\binom82=28.
+$$
+
+For positive entries, subtract one from each variable. The new nonnegative entries sum to 3, giving:
+
+$$
+\binom{3+3-1}{3}=\binom52=10.
+$$
+
+#### 4. Counts versus probabilities
+
+There are $$\binom{2+3-1}{3}=4$$ configurations. The eight ordered sequences are equally likely:
+
+| Counts $$(x_A,x_B)$$ | Number of ordered sequences | Probability |
+|---|---:|---|
+| $$(3,0)$$ | 1 | $$1/8$$ |
+| $$(2,1)$$ | 3 | $$3/8$$ |
+| $$(1,2)$$ | 3 | $$3/8$$ |
+| $$(0,3)$$ | 1 | $$1/8$$ |
+
+The configurations are not uniform because they represent different numbers of equally likely ordered outcomes.
+
+#### 5. Committee and president
+
+Choose the president from six people, then two other members from the remaining five: $$6\binom52$$.
+
+Alternatively, choose three members from six, then select one of the three as president: $$3\binom63$$.
+
+Both count the same committee–president pairs, and both equal 60.
+
+#### 6. Vandermonde and a committee probability
+
+Count by the number selected from the first group:
+
+$$
+\binom40\binom53+\binom41\binom52+
+\binom42\binom51+\binom43\binom50
+=10+40+30+4=84=\binom93.
+$$
+
+Exactly two from the first group gives $$\binom42\binom51=30$$ committees, so:
+
+$$
+P(\text{exactly two})=\frac{30}{84}=\frac5{14}.
+$$
+
+#### 7. Overlapping events
+
+$$
+P(A)=0.1+0.4=0.5,\qquad P(B)=0.4+0.5=0.9.
+$$
+
+Their union is $$S$$, so $$P(A\cup B)=1$$. Adding 0.5 and 0.9 counts outcome $$b$$ twice. Additivity in its direct form requires disjoint events.
+
+#### 8. An infinite tail
+
+By countable additivity:
+
+$$
+P(\{3,4,5,\ldots\})=\sum_{j=3}^{\infty}2^{-j}
+=\frac{1/8}{1-1/2}=\frac14.
+$$
+
+### Part 10 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Labels | Identify elementary outcomes before grouping them into observations |
+| Overcounting correction | Divide by $$c$$ only when every desired outcome is counted exactly $$c$$ times |
+| Stars and bars | $$k$$ identical objects, $$n$$ labeled boxes, empty boxes allowed: $$\binom{n+k-1}{k}$$ |
+| Positive occupancies | For $$k\ge n\ge1$$: $$\binom{k-1}{n-1}$$ |
+| Complement identity | $$\binom nk=\binom n{n-k}$$ |
+| Committee–president identity | $$n\binom{n-1}{k-1}=k\binom nk$$ |
+| Vandermonde's identity | $$\binom{m+n}{k}=\sum_{j=0}^k\binom mj\binom n{k-j}$$ |
+| Story proof | Justify two counts of the same collection |
+| Probability function | Maps events to numbers in $$[0,1]$$ |
+| Normalization | $$P(\varnothing)=0$$ and $$P(S)=1$$ |
+| Countable additivity | For pairwise disjoint events, probability of the union equals the sum of probabilities |
+| Main modeling warning | Equally likely sequences can produce unequally likely count configurations |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Occupancy vector <span class="gcat cat-notn">Notation</span></div>
+
+A vector $$(x_1,\ldots,x_n)$$ recording the number of objects in each labeled box. For unordered repeated selections, it records how many times each type was chosen.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Bijection <span class="gcat cat-defn">Definition</span></div>
+
+A one-to-one correspondence between two collections. Every element of either collection has exactly one partner in the other, so finite collections related by a bijection have the same size.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Stars and bars <span class="gcat cat-prop">Counting method</span></div>
+
+An encoding of identical objects as stars and boundaries between labeled boxes as bars. Choosing the star or bar positions gives the number of nonnegative occupancy vectors.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Story proof <span class="gcat cat-defn">Definition</span></div>
+
+A proof by interpretation. In combinatorics, it often establishes an identity by counting the same collection in two justified ways.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Vandermonde's identity <span class="gcat cat-thm">Identity</span></div>
+
+An equality between choosing a committee from two combined groups and summing over all possible ways to split its membership between those groups.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Probability space <span class="gcat cat-defn">Definition</span></div>
+
+A sample space together with a probability function on its events. In the fully general formulation, the collection of measurable events is also specified.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Pairwise disjoint events <span class="gcat cat-defn">Definition</span></div>
+
+Events for which every pair of distinct events has empty intersection. At most one of them can occur in a single outcome.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Countable additivity <span class="gcat cat-prop">Axiom</span></div>
+
+The probability of a union of countably many pairwise disjoint events equals the sum of their individual probabilities.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 2</span>
+  <span class="ref-tag">Stars and bars</span>
+  <span class="ref-tag">Story proofs</span>
+  <span class="ref-tag">Probability axioms</span>
+</div>
+
+  </div>
+</div>
