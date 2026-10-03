@@ -18,6 +18,8 @@ toc:
   - name: Lecture 1 - Probability and Counting
   - name: Lecture 2 - Story Proofs and Axioms of Probability
   - name: Lecture 3 - Birthday Problem and Properties of Probability
+  - name: Lecture 4 - Conditional Probability
+  - name: Lecture 5 - Conditioning Continued and the Law of Total Probability
 
 _styles: >
   /* ── Collapsible chapter blocks ── */
@@ -2230,6 +2232,1384 @@ A permutation with no fixed points. In the matching game, it corresponds to a de
   <span class="ref-tag">Probability properties</span>
   <span class="ref-tag">Inclusion–exclusion</span>
   <span class="ref-tag">Matching problem</span>
+</div>
+
+  </div>
+</div>
+
+
+## Lecture 4 - Conditional Probability
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-4-toggle" onclick="toggleLecture('lecture-4')" aria-expanded="true" aria-controls="lecture-4-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 4</span>
+      <span>
+        <span class="chapter-title">Lecture 4 - Conditional Probability</span>
+        <span class="chapter-subtitle">Independence, the Newton–Pepys problem, conditioning, and Bayes’ rule</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-4-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-4-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+Independence specifies when intersection probabilities can be multiplied. The Newton–Pepys problem combines independence, counting, and complements to compare three dice games. Conditional probability updates a probability when evidence is known: restrict attention to outcomes consistent with that evidence, then renormalize. Bayes’ rule relates the two directions of conditioning through the same joint probability.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$A\cap B$$ | Both events $$A$$ and $$B$$ occur |
+| $$P(A\mid B)$$ | Probability of $$A$$ given that $$B$$ occurred; requires $$P(B)>0$$ |
+| $$P(A\cap B)=P(A)P(B)$$ | Definition of independence of two events |
+| $$A^c$$ | Event that $$A$$ does not occur |
+| $$n$$, $$r$$ | Number of dice and number of sixes in a dice calculation |
+| $$\binom nr$$ | Number of choices of the $$r$$ dice that show six |
+| $$H$$ | A hypothesis whose probability is being updated |
+| $$E$$ | Observed evidence |
+| $$P(H)$$ | Prior probability of the hypothesis |
+| $$P(E\mid H)$$ | Likelihood: probability of the evidence if the hypothesis holds |
+| $$P(H\mid E)$$ | Posterior probability after conditioning on the evidence |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Use the mathematical definition of independence and distinguish it from disjointness.
+- Explain why independence also holds when either or both events are complemented.
+- Distinguish pairwise independence from mutual independence.
+- Count outcomes with exactly a specified number of sixes and solve the Newton–Pepys problem.
+- Interpret conditional probability as restriction and renormalization.
+- Calculate conditional probabilities with the correct conditioning event in the denominator.
+- Derive the multiplication rule for probabilities and Bayes’ rule.
+- Distinguish a likelihood from a posterior probability and explain why reversing the conditioning bar generally changes the answer.
+
+### Part 1 — Independence of two events
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Independent events <span class="ex-pill pill-defn">Definition</span></div>
+
+Two events $$A$$ and $$B$$ are **independent** if:
+
+$$
+\boxed{P(A\cap B)=P(A)P(B).}
+$$
+
+The definition is symmetric: interchanging $$A$$ and $$B$$ changes neither side. It also makes sense when either event has probability zero.
+
+</div>
+
+Independence means that information about one event does not change the probability of the other, whenever the relevant conditional probability is defined. It is a property of events under a probability model, not something established merely by giving the events different names.
+
+#### Supplementary example: Two independent fair coin tosses
+
+Let $$A$$ be the event that the first toss is heads and $$B$$ the event that the second toss is heads. The four sequences $$HH,HT,TH,TT$$ are equally likely. Thus:
+
+$$
+P(A)=P(B)=\frac12,\qquad P(A\cap B)=P(\{HH\})=\frac14.
+$$
+
+Since $$1/4=(1/2)(1/2)$$, the events are independent. They can occur together: $$HH$$ belongs to both.
+
+#### Independence is different from disjointness
+
+Disjointness is the set statement $$A\cap B=\varnothing$$: the events cannot occur together. Independence is the probability statement $$P(A\cap B)=P(A)P(B)$$.
+
+If disjoint events both have positive probability, then:
+
+$$
+P(A\cap B)=0<P(A)P(B),
+$$
+
+so they are dependent. Learning that one occurred rules out the other.
+
+For example, on one fair die, “roll a 1” and “roll a 2” are disjoint, but $$0\ne(1/6)(1/6)$$. By contrast, the two heads events above are independent and overlap.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** Independent events have nothing in common, so they cannot occur together.
+
+**Correction:** Independent events may occur together. Their joint probability equals the product of their individual probabilities. Disjoint events can be independent only if at least one has probability zero.
+
+</div>
+
+### Part 2 — Complements and independence of several events
+
+#### Complementing independent events
+
+If $$A$$ and $$B$$ are independent, then $$A$$ and $$B^c$$ are independent. To prove this, split $$A$$ into two disjoint pieces:
+
+$$
+A=(A\cap B)\cup(A\cap B^c).
+$$
+
+Therefore:
+
+$$
+\begin{aligned}
+P(A\cap B^c)
+&=P(A)-P(A\cap B)\\
+&=P(A)-P(A)P(B)\\
+&=P(A)(1-P(B))\\
+&=P(A)P(B^c).
+\end{aligned}
+$$
+
+Interchanging the roles of the events also proves that $$A^c$$ and $$B$$ are independent. Applying the same result again shows that $$A^c$$ and $$B^c$$ are independent.
+
+**Core idea:** Knowing whether $$B$$ occurs gives the same information as knowing whether $$B^c$$ occurs. If that information does not affect $$A$$, changing the description to a complement does not create dependence.
+
+#### Pairwise and mutual independence
+
+For three events $$A,B,C$$, **mutual independence** requires all four conditions:
+
+$$
+\begin{aligned}
+P(A\cap B)&=P(A)P(B),\\
+P(A\cap C)&=P(A)P(C),\\
+P(B\cap C)&=P(B)P(C),\\
+P(A\cap B\cap C)&=P(A)P(B)P(C).
+\end{aligned}
+$$
+
+If only the first three hold, the events are **pairwise independent**. Checking each pair is not enough to establish mutual independence.
+
+For $$n$$ events, mutual independence requires the product rule for every subset of two or more events:
+
+$$
+P\left(\bigcap_{i\in I}A_i\right)=\prod_{i\in I}P(A_i),
+\qquad I\subseteq\{1,\ldots,n\},\quad\lvert I\rvert\ge2.
+$$
+
+#### Supplementary worked example: Every pair is independent, but the triple is not
+
+Toss two fair, independent coins. Let:
+
+- $$A$$ mean the first toss is heads: $$\{HH,HT\}$$.
+- $$B$$ mean the second toss is heads: $$\{HH,TH\}$$.
+- $$C$$ mean the tosses agree: $$\{HH,TT\}$$.
+
+Each event has probability $$1/2$$, and each pairwise intersection is $$\{HH\}$$, with probability $$1/4$$. Every pair therefore satisfies the independence equation.
+
+But:
+
+$$
+P(A\cap B\cap C)=\frac14\ne\frac18=P(A)P(B)P(C).
+$$
+
+Knowing either toss alone does not determine whether the tosses agree. Knowing both tosses determines agreement completely.
+
+**Core idea:** Information from several events together may be useful even when information from each event separately is not.
+
+### Part 3 — The Newton–Pepys dice problem
+
+Compare three games, using fair six-sided dice with mutually independent results:
+
+| Game | Number of dice | Winning event |
+|---|---:|---|
+| $$A$$ | 6 | At least one six |
+| $$B$$ | 12 | At least two sixes |
+| $$C$$ | 18 | At least three sixes |
+
+Which game is most likely to win?
+
+More dice give more opportunities for sixes, but the winning threshold also increases. These events belong to different experiments; no containment argument orders their probabilities.
+
+#### Count exactly $$r$$ sixes among $$n$$ dice
+
+An outcome is an ordered list of $$n$$ die results. There are $$6^n$$ equally likely lists.
+
+To obtain exactly $$r$$ sixes:
+
+1. Choose the $$r$$ positions occupied by sixes: $$\binom nr$$ choices.
+2. Each remaining position may contain any of $$1,2,3,4,5$$: $$5^{n-r}$$ choices.
+
+The number of favorable outcomes is $$\binom nr5^{n-r}$$, so:
+
+$$
+\boxed{P(\text{exactly }r\text{ sixes})
+=\frac{\binom nr5^{n-r}}{6^n}
+=\binom nr\left(\frac16\right)^r\left(\frac56\right)^{n-r}.}
+$$
+
+This calculation uses counting and independence directly. The same expression will later appear as a Binomial probability.
+
+#### Game A: At least one six in six rolls
+
+The complement has no sixes. Each die then has five allowed results:
+
+$$
+P(A)=1-\frac{5^6}{6^6}
+=1-\left(\frac56\right)^6
+\approx0.665102.
+$$
+
+#### Game B: At least two sixes in twelve rolls
+
+The complement has either zero sixes or exactly one six. These cases are disjoint:
+
+$$
+\begin{aligned}
+P(B)
+&=1-\frac{5^{12}+\binom{12}{1}5^{11}}{6^{12}}\\
+&=1-\left(\frac56\right)^{12}
+-12\left(\frac16\right)\left(\frac56\right)^{11}\\
+&\approx0.618667.
+\end{aligned}
+$$
+
+The factor 12 chooses which die shows the single six. The other eleven dice must all avoid six.
+
+#### Game C: At least three sixes in eighteen rolls
+
+The complement has zero, one, or two sixes:
+
+$$
+\begin{aligned}
+P(C)
+&=1-\frac{5^{18}+\binom{18}{1}5^{17}+\binom{18}{2}5^{16}}{6^{18}}\\
+&\approx0.597346.
+\end{aligned}
+$$
+
+For exactly two sixes, $$\binom{18}{2}$$ chooses their positions. Each of the other sixteen dice has five possible non-six results.
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{P(A)>P(B)>P(C).}
+$$
+
+The six-dice game has the largest winning probability, about 66.51%, compared with 61.87% and 59.73%.
+
+</div>
+
+**Core idea:** Count the few losing cases rather than all the winning cases. Independence determines the probability of each ordered outcome; combinations account for where the sixes appear.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** Group twelve dice into two groups of six. At least two sixes means each group must contain a six, so the winning probability is $$P(A)^2$$.
+
+**Correction:** Both sixes may lie in the same group. Requiring one in each group describes a smaller event and misses valid wins. Splitting eighteen dice into three groups produces the same problem.
+
+</div>
+
+#### Supplementary clarification: Fairness matters to the ranking
+
+Suppose rolls remain independent but each has probability $$p$$ of showing six. The exactly-$$r$$ formula becomes:
+
+$$
+\binom nr p^r(1-p)^{n-r}.
+$$
+
+For $$p=1/2$$, the winning probabilities are approximately $$0.984375$$, $$0.996826$$, and $$0.999344$$ for the three games. Their ordering reverses. Thus an argument claiming the fair-dice ordering without using the value $$p=1/6$$ cannot establish the general result.
+
+### Part 4 — Conditional probability: restrict and renormalize
+
+Suppose we learn that event $$B$$ occurred. Outcomes outside $$B$$ are no longer compatible with the evidence. Among outcomes inside $$B$$, the ones where $$A$$ also occurs form $$A\cap B$$.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Conditional probability <span class="ex-pill pill-defn">Definition</span></div>
+
+For $$P(B)>0$$:
+
+$$
+\boxed{P(A\mid B)=\frac{P(A\cap B)}{P(B)}.}
+$$
+
+Read this as “the probability of $$A$$ given $$B$$.” The event after the conditioning bar is the information being treated as known.
+
+</div>
+
+The numerator retains the probability mass consistent with both events. Dividing by $$P(B)$$ rescales the total probability mass inside $$B$$ to 1.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-4-textbook-fig-2-1-conditioning.png" alt="Three panels show a sample space of pebbles, removal of outcomes outside event B, and rescaling of the remaining probability masses to total one." style="display: block; width: 100%; max-width: 760px; height: auto; margin: 0 auto;">
+  <figcaption>Conditioning removes outcomes incompatible with the evidence and renormalizes the remaining masses. Reproduced from Joseph K. Blitzstein and Jessica Hwang, <em>Introduction to Probability</em>, Figure 2.1, p. 44.</figcaption>
+</figure>
+
+In the equal-mass version of the diagram, $$B$$ contains four of the nine pebbles and $$A\cap B$$ contains one. Before conditioning, $$P(A\cap B)=1/9$$ and $$P(B)=4/9$$. After conditioning:
+
+$$
+P(A\mid B)=\frac{1/9}{4/9}=\frac14.
+$$
+
+With unequal outcome probabilities, sum the masses instead of simply counting pebbles. Conditioning preserves the relative probabilities of the surviving outcomes.
+
+#### Supplementary example: A die result known to be even
+
+Roll a fair die. Let $$A=\{4,5,6\}$$ and $$B=\{2,4,6\}$$. Then:
+
+$$
+P(A\mid B)=\frac{P(\{4,6\})}{P(\{2,4,6\})}
+=\frac{2/6}{3/6}=\frac23.
+$$
+
+Originally, $$P(A)=1/2$$. The evidence changes the relevant possibilities to $$2,4,6$$, of which two satisfy $$A$$.
+
+**Core idea:** Conditional probability changes the denominator to the probability of the evidence, not to the probability of the event being investigated.
+
+<div class="warning-box" markdown="1">
+
+**The condition $$P(B)>0$$ is essential.** The elementary ratio does not define $$P(A\mid B)$$ when $$P(B)=0$$. Conditioning on probability-zero information requires additional machinery beyond this definition.
+
+**The conditioning bar is not a set operation.** $$P(A\mid B)$$ is a probability under specified information; it does not refer to an event called “$$A\mid B$$.”
+
+</div>
+
+### Part 5 — Properties of conditional probability
+
+For fixed $$B$$ with $$P(B)>0$$, define $$Q(A)=P(A\mid B)$$. This is itself a probability function:
+
+$$
+Q(S)=\frac{P(S\cap B)}{P(B)}=1,\qquad Q(\varnothing)=0.
+$$
+
+If $$A_1,A_2,\ldots$$ are disjoint, their intersections with $$B$$ are disjoint, so:
+
+$$
+Q\left(\bigcup_i A_i\right)
+=\frac{\sum_i P(A_i\cap B)}{P(B)}
+=\sum_i Q(A_i).
+$$
+
+Consequently, ordinary probability rules apply while keeping the evidence fixed. In particular:
+
+$$
+P(A^c\mid B)=1-P(A\mid B),
+$$
+
+$$
+P(A\cup C\mid B)=P(A\mid B)+P(C\mid B)-P(A\cap C\mid B).
+$$
+
+Also, $$P(B\mid B)=1$$, and $$P(A\mid B)=1$$ whenever $$B\subseteq A$$.
+
+#### Independence as “no update”
+
+For $$P(B)>0$$:
+
+$$
+A\text{ and }B\text{ independent}
+\quad\Longleftrightarrow\quad
+P(A\mid B)=P(A).
+$$
+
+Indeed, substituting $$P(A\cap B)=P(A)P(B)$$ into the definition cancels $$P(B)$$. Conversely, multiply the no-update equation by $$P(B)$$ to recover independence.
+
+If $$P(A)>0$$ as well, independence also gives $$P(B\mid A)=P(B)$$. The product definition remains valid even when a conditional ratio would be undefined.
+
+### Part 6 — The multiplication rule for probabilities
+
+Rearranging the conditional-probability definition gives:
+
+$$
+\boxed{P(A\cap B)=P(B)P(A\mid B),\qquad P(B)>0.}
+$$
+
+If $$P(A)>0$$, we can also write:
+
+$$
+P(A\cap B)=P(A)P(B\mid A).
+$$
+
+These are general multiplication rules. Independence allows the conditional factor to be replaced by its unconditional probability; without independence, the conditional factor must remain.
+
+#### Supplementary worked example: Two hearts without replacement
+
+Draw two cards in order from a uniformly shuffled standard deck. Let $$H_1$$ and $$H_2$$ denote a heart on the first and second draws.
+
+The first draw is a heart with probability $$13/52$$. Given a first heart, twelve hearts remain among 51 cards:
+
+$$
+P(H_1\cap H_2)=P(H_1)P(H_2\mid H_1)
+=\frac{13}{52}\frac{12}{51}=\frac1{17}.
+$$
+
+The unconditional probability of a heart on the second draw is still $$13/52=1/4$$ by symmetry. But $$12/51\ne1/4$$, so the two heart events are dependent.
+
+With replacement and independent draws, the second factor would be $$13/52$$, giving $$1/16$$ instead.
+
+**Core idea:** The first result changes the composition of the remaining deck. The multiplication rule accounts for that change through a conditional probability.
+
+#### Supplementary extension: Three events
+
+Repeated application gives:
+
+$$
+P(A\cap B\cap C)=P(A)P(B\mid A)P(C\mid A\cap B),
+$$
+
+provided $$P(A)>0$$ and $$P(A\cap B)>0$$. The left-hand side is unchanged by reordering the events, but the conditioning events on the right must change with the chosen order.
+
+### Part 7 — Bayes’ rule: reversing the direction of conditioning
+
+When $$P(A)>0$$ and $$P(B)>0$$, the two multiplication rules describe the same intersection:
+
+$$
+P(A\mid B)P(B)=P(A\cap B)=P(B\mid A)P(A).
+$$
+
+Divide by $$P(B)$$:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{P(A\mid B)=\frac{P(B\mid A)P(A)}{P(B)}.}
+$$
+
+</div>
+
+Bayes’ rule is useful when the conditional probability in one direction is easier to calculate than the one in the other direction.
+
+For a hypothesis $$H$$ and evidence $$E$$:
+
+$$
+P(H\mid E)=\frac{P(E\mid H)P(H)}{P(E)}.
+$$
+
+| Quantity | Interpretation |
+|---|---|
+| Prior, $$P(H)$$ | Probability assigned before incorporating evidence $$E$$ |
+| Likelihood, $$P(E\mid H)$$ | Probability of observing the evidence if $$H$$ holds |
+| Evidence probability, $$P(E)$$ | Overall probability of observing $$E$$ |
+| Posterior, $$P(H\mid E)$$ | Updated probability after incorporating $$E$$ |
+
+A high likelihood does not by itself imply a high posterior. The prior and the overall probability of the evidence also matter.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** $$P(A\mid B)=P(B\mid A)$$ because both concern $$A$$ and $$B$$ occurring.
+
+**Correction:** Both use the same numerator $$P(A\cap B)$$, but divide by different probabilities. In general:
+
+$$
+P(A\mid B)=\frac{P(A\cap B)}{P(B)},\qquad
+P(B\mid A)=\frac{P(A\cap B)}{P(A)}.
+$$
+
+</div>
+
+#### Supplementary worked example: A heart first, given a red card second
+
+Draw two cards without replacement. Let $$A$$ mean the first card is a heart, and $$B$$ mean the second card is red.
+
+**Find the easier direction:** Given a first heart, 25 red cards remain among 51 cards:
+
+$$
+P(B\mid A)=\frac{25}{51}.
+$$
+
+**Find the unconditional probabilities:** The first card is a heart with probability $$1/4$$. Before either draw is observed, the second card is equally likely to be any of the 52 cards, so $$P(B)=1/2$$.
+
+**Reverse the conditioning:**
+
+$$
+P(A\mid B)=\frac{(25/51)(1/4)}{1/2}=\frac{25}{102}.
+$$
+
+The two directions differ: $$25/102$$ versus $$25/51$$. As a check, their common intersection probability is:
+
+$$
+P(A\cap B)=\frac14\frac{25}{51}=\frac{25}{204}.
+$$
+
+**Core idea:** Information about the second draw can update the probability of the first. Conditioning concerns information, not a causal influence traveling backward in time.
+
+### Part 8 — Supplementary example: The exact evidence matters
+
+Consider a family with two children. Use an idealized model in which each child is independently a girl or a boy with equal probability. List the elder child first, so the four equally likely outcomes are:
+
+$$
+S=\{GG,GB,BG,BB\}.
+$$
+
+Let $$F$$ be the event that both children are girls.
+
+#### Evidence 1: At least one child is a girl
+
+Let $$E=\{GG,GB,BG\}$$. Then $$F\cap E=F$$, and:
+
+$$
+P(F\mid E)=\frac{1/4}{3/4}=\frac13.
+$$
+
+The surviving family types are three equally likely outcomes, one of which is $$GG$$.
+
+#### Evidence 2: The elder child is a girl
+
+Let $$E_1=\{GG,GB\}$$. Then:
+
+$$
+P(F\mid E_1)=\frac{1/4}{1/2}=\frac12.
+$$
+
+Here the evidence designates a particular child, leaving two equally likely possibilities for the younger child.
+
+**Core idea:** Both descriptions guarantee a girl, but they define different events. Conditional probabilities depend on the precise information and how it was obtained. Observing a randomly selected child is another experiment; it should not automatically be treated as conditioning on “at least one girl.”
+
+### Part 9 — Original practice questions
+
+Try these before reading the answers.
+
+1. Roll a fair die. Let $$A=\{1,2\}$$ and $$B=\{3,4\}$$. Are the events disjoint? Are they independent?
+2. Suppose $$A$$ and $$B$$ are independent, with $$P(A)=0.30$$ and $$P(B)=0.40$$. Find $$P(A\cap B^c)$$, $$P(A^c\cap B^c)$$, and $$P(A\cup B)$$.
+3. In the two-coin example with $$A$$ meaning first heads, $$B$$ second heads, and $$C$$ agreement, verify pairwise independence and explain the failure of mutual independence.
+4. Roll four independent fair dice. Find the probability of exactly two sixes and the probability of at least two sixes.
+5. In the Newton–Pepys twelve-dice game, explain why the complement includes exactly one six and why its count is $$12\cdot5^{11}$$.
+6. Suppose $$P(A)=0.40$$, $$P(B)=0.50$$, and $$P(A\cap B)=0.10$$. Find $$P(A\mid B)$$, $$P(B\mid A)$$, and $$P(A^c\mid B)$$. Are the events independent?
+7. Draw two cards without replacement. Find the probability of two aces. Compare with independent draws with replacement.
+8. Suppose $$P(H)=0.20$$, $$P(E\mid H)=0.60$$, and $$P(E)=0.30$$. Find $$P(H\mid E)$$ and $$P(H\cap E)$$.
+9. Under the idealized two-child model, compare the probability of two boys given at least one boy with the probability of two boys given that the younger child is a boy.
+
+### Part 10 — Practice answers
+
+#### 1. Disjoint die events
+
+Their intersection is empty, so they are disjoint. But:
+
+$$
+P(A\cap B)=0\ne\frac26\frac26=\frac19.
+$$
+
+They are not independent. Learning that $$A$$ occurred rules out $$B$$.
+
+#### 2. Independent events and complements
+
+Independence also holds for complements:
+
+$$
+P(A\cap B^c)=0.30(0.60)=0.18,
+$$
+
+$$
+P(A^c\cap B^c)=0.70(0.60)=0.42.
+$$
+
+The union probability is:
+
+$$
+P(A\cup B)=0.30+0.40-0.30(0.40)=0.58.
+$$
+
+It also equals $$1-0.42$$, by taking the complement of neither event occurring.
+
+#### 3. Pairwise but not mutual independence
+
+All three events have probability $$1/2$$. Each pairwise intersection is $$\{HH\}$$, so its probability is $$1/4=(1/2)(1/2)$$.
+
+The triple intersection is also $$\{HH\}$$, with probability $$1/4$$, rather than $$1/8$$. Thus the pairwise checks pass but the triple condition fails.
+
+#### 4. Four dice
+
+Exactly two sixes:
+
+$$
+P(\text{exactly two})=\frac{\binom42 5^2}{6^4}
+=\frac{150}{1296}=\frac{25}{216}\approx0.115741.
+$$
+
+For at least two, subtract the disjoint zero-six and one-six cases:
+
+$$
+P(\text{at least two})=1-\frac{5^4+4\cdot5^3}{6^4}
+=\frac{171}{1296}=\frac{19}{144}\approx0.131944.
+$$
+
+#### 5. The twelve-dice complement
+
+Failing to obtain at least two sixes means obtaining either zero or one. For exactly one, choose its position in twelve ways. Each of the other eleven dice has five allowed non-six results, giving $$12\cdot5^{11}$$ outcomes. The two complement cases are disjoint, so their counts add.
+
+#### 6. Conditional probabilities
+
+$$
+P(A\mid B)=\frac{0.10}{0.50}=0.20,\qquad
+P(B\mid A)=\frac{0.10}{0.40}=0.25.
+$$
+
+Keeping the evidence $$B$$ fixed:
+
+$$
+P(A^c\mid B)=1-0.20=0.80.
+$$
+
+The events are dependent, since $$P(A)P(B)=0.20\ne0.10=P(A\cap B)$$.
+
+#### 7. Two aces
+
+Without replacement:
+
+$$
+P(\text{two aces})=\frac4{52}\frac3{51}=\frac1{221}\approx0.004525.
+$$
+
+With replacement and independent draws:
+
+$$
+P(\text{two aces})=\left(\frac4{52}\right)^2=\frac1{169}\approx0.005917.
+$$
+
+Removing a first ace decreases the proportion of aces available for the second draw.
+
+#### 8. Bayesian update
+
+$$
+P(H\mid E)=\frac{P(E\mid H)P(H)}{P(E)}
+=\frac{0.60(0.20)}{0.30}=0.40.
+$$
+
+The joint probability is $$P(H\cap E)=0.20(0.60)=0.12$$. The likelihood $$0.60$$ and the posterior $$0.40$$ answer different questions.
+
+#### 9. Two kinds of evidence
+
+Given at least one boy, the surviving outcomes are $$BB,BG,GB$$, each equally likely. Thus the probability of two boys is $$1/3$$.
+
+Given that the younger child is a boy, only $$BB,GB$$ remain. The probability of two boys is $$1/2$$. The difference comes from conditioning on different events.
+
+### Part 11 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Independence | $$P(A\cap B)=P(A)P(B)$$ |
+| Disjointness | $$A\cap B=\varnothing$$; disjoint positive-probability events are dependent |
+| Complements of independent events | Complementing either or both preserves independence |
+| Mutual independence | The intersection product rule must hold for every subset of events |
+| Exactly $$r$$ sixes in $$n$$ fair independent rolls | $$\binom nr5^{n-r}/6^n$$ |
+| Newton–Pepys ranking | One six in six rolls is more likely than two in twelve or three in eighteen |
+| Conditional probability | $$P(A\mid B)=P(A\cap B)/P(B)$$, with $$P(B)>0$$ |
+| Conditioning intuition | Remove outcomes outside the evidence, then renormalize |
+| Conditional complement | $$P(A^c\mid B)=1-P(A\mid B)$$ |
+| Independence as no update | For $$P(B)>0$$, $$P(A\mid B)=P(A)$$ |
+| Multiplication rule | $$P(A\cap B)=P(B)P(A\mid B)$$ |
+| Bayes’ rule | $$P(A\mid B)=P(B\mid A)P(A)/P(B)$$ |
+| Direction of conditioning | $$P(A\mid B)$$ and $$P(B\mid A)$$ generally differ |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Independent events <span class="gcat cat-defn">Definition</span></div>
+
+Events whose intersection probability equals the product of their individual probabilities. For positive-probability evidence, conditioning on one leaves the probability of the other unchanged.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Pairwise independence <span class="gcat cat-defn">Definition</span></div>
+
+Independence of every pair in a collection of events. This does not guarantee independence of the collection as a whole.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Mutual independence <span class="gcat cat-defn">Definition</span></div>
+
+The intersection product rule holding for every subset of two or more events in a collection.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Conditional probability <span class="gcat cat-defn">Definition</span></div>
+
+A probability calculated with specified evidence treated as known, using the mass of the intersection divided by the mass of the evidence.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Renormalization <span class="gcat cat-defn">Definition</span></div>
+
+Rescaling surviving probability masses so they total 1. When conditioning on $$B$$, each surviving mass is divided by $$P(B)$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Prior probability <span class="gcat cat-defn">Definition</span></div>
+
+The probability of a hypothesis before incorporating the specified new evidence. It can already reflect other background information.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Likelihood <span class="gcat cat-defn">Definition</span></div>
+
+The probability of the observed evidence given a hypothesis, $$P(E\mid H)$$. It is not the probability of the hypothesis given the evidence.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Posterior probability <span class="gcat cat-defn">Definition</span></div>
+
+The updated probability of a hypothesis after conditioning on evidence, $$P(H\mid E)$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Bayes’ rule <span class="gcat cat-thm">Theorem</span></div>
+
+A relation between the two directions of conditioning, obtained by writing the same intersection probability in two ways.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 4</span>
+  <span class="ref-tag">Independence</span>
+  <span class="ref-tag">Newton–Pepys</span>
+  <span class="ref-tag">Conditional probability</span>
+  <span class="ref-tag">Bayes’ rule</span>
+</div>
+
+  </div>
+</div>
+
+
+## Lecture 5 - Conditioning Continued and the Law of Total Probability
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-5-toggle" onclick="toggleLecture('lecture-5')" aria-expanded="true" aria-controls="lecture-5-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 5</span>
+      <span>
+        <span class="chapter-title">Lecture 5 - Conditioning Continued and the Law of Total Probability</span>
+        <span class="chapter-subtitle">Precise evidence, partitions, Bayesian updates, and conditional independence</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-5-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-5-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+Conditional probabilities depend on the exact evidence being used. The law of total probability combines simpler conditional calculations across disjoint cases, supplying the denominator needed in Bayes’ rule. Conditional independence allows multiplication within a specified context, but mixing contexts or selecting outcomes can create dependence that was absent within the original model.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$P(A\mid B)$$ | Probability of $$A$$ given $$B$$, with $$P(B)>0$$ |
+| $$A_1,\ldots,A_n$$ | A partition of $$S$$: disjoint cases covering the whole sample space |
+| $$P(B\mid A_i)P(A_i)$$ | Joint probability $$P(B\cap A_i)$$ |
+| $$\sum_i P(B\mid A_i)P(A_i)$$ | Law of total probability for $$P(B)$$ |
+| $$H_i$$ | One of several mutually exclusive, exhaustive hypotheses |
+| $$E$$ | Evidence being conditioned on |
+| $$P(A\mid B,E)$$ | Probability of $$A$$ given both $$B$$ and $$E$$; commas mean intersections |
+| $$D$$, $$T$$ | Disease and positive test result in a hypothetical test model |
+| $$P(T\mid D)$$ | Sensitivity: true-positive rate |
+| $$P(T^c\mid D^c)$$ | Specificity: true-negative rate |
+| $$P(A\cap B\mid E)=P(A\mid E)P(B\mid E)$$ | Conditional independence of $$A$$ and $$B$$ given $$E$$ |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Distinguish “at least one ace,” “the ace of spades,” and “the first card is an ace” as different evidence.
+- Define a partition and derive the law of total probability from disjoint additivity.
+- Combine Bayes’ rule with a partition to calculate posterior probabilities.
+- Explain why a test's sensitivity is different from the probability of a condition given a positive result.
+- Keep background conditioning consistent throughout a calculation.
+- Define conditional independence and distinguish it from unconditional independence.
+- Explain how an unknown shared factor or selected evidence can make two outcomes dependent.
+
+### Part 1 — Conditional examples: the exact evidence matters
+
+Draw two cards without replacement from a uniformly shuffled standard deck. Let $$F$$ be the event that both cards are aces.
+
+Because these questions concern the two-card hand rather than its draw order, use unordered hands as outcomes. There are:
+
+$$
+\binom{52}{2}=1326
+$$
+
+equally likely hands, of which $$\binom42=6$$ contain two aces.
+
+#### Case 1: At least one card is an ace
+
+Let $$E$$ be the event that the hand contains at least one ace. Count it using two disjoint cases:
+
+| Case | Count | Reason |
+|---|---:|---|
+| Exactly one ace | $$4\cdot48=192$$ | Choose one ace and one non-ace |
+| Two aces | $$\binom42=6$$ | Choose two of the four aces |
+
+Thus $$\lvert E\rvert=198$$. Since $$F\subseteq E$$:
+
+$$
+\boxed{P(F\mid E)=\frac{6/1326}{198/1326}=\frac6{198}=\frac1{33}.}
+$$
+
+An equivalent denominator is $$\binom{52}{2}-\binom{48}{2}$$, subtracting hands with no aces.
+
+#### Case 2: The hand contains the ace of spades
+
+Let $$E_s$$ mean that the ace of spades is one of the two cards. Fix that card and choose its companion from the other 51 cards. There are 51 such hands, and three have another ace:
+
+$$
+\boxed{P(F\mid E_s)=\frac3{51}=\frac1{17}.}
+$$
+
+The evidence identifies a particular card. The remaining card is uniformly distributed among the 51 other cards.
+
+#### Case 3: The first card drawn is an ace
+
+This evidence refers to draw order, so now use ordered outcomes. Given that the first card is an ace, three aces remain among 51 cards:
+
+$$
+P(\text{two aces}\mid\text{first card is an ace})=\frac3{51}=\frac1{17}.
+$$
+
+Cases 2 and 3 happen to give the same answer, but they are different conditioning events. Neither is equivalent to merely knowing that at least one card is an ace.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** Knowing that there is an ace lets us remove it and treat the other card as uniform among 51 cards, giving $$1/17$$ in every case.
+
+**Correction:** “At least one ace” does not designate which card was identified. Among its 198 compatible hands, only six contain two aces. The particular-card evidence and the at-least-one evidence select different collections of hands.
+
+</div>
+
+**Core idea:** A more specific conditioning event can change the probability of another event. The difference comes from the outcomes compatible with the evidence, not from the words “an ace” alone.
+
+### Part 2 — Partitions and the law of total probability
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Partition <span class="ex-pill pill-defn">Definition</span></div>
+
+Events $$A_1,\ldots,A_n$$ form a **partition** of $$S$$ if:
+
+$$
+A_i\cap A_j=\varnothing\quad(i\ne j),\qquad
+\bigcup_{i=1}^{n}A_i=S.
+$$
+
+Each outcome belongs to exactly one case. To use conditional probabilities $$P(B\mid A_i)$$, assume each case has positive probability.
+
+</div>
+
+For any event $$B$$, the pieces $$B\cap A_i$$ are disjoint and together cover $$B$$:
+
+$$
+B=\bigcup_{i=1}^{n}(B\cap A_i).
+$$
+
+By additivity and the multiplication rule:
+
+$$
+P(B)=\sum_{i=1}^{n}P(B\cap A_i)
+=\sum_{i=1}^{n}P(B\mid A_i)P(A_i).
+$$
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{P(B)=\sum_{i=1}^{n}P(B\mid A_i)P(A_i).}
+$$
+
+This is the **law of total probability**, abbreviated LOTP.
+
+</div>
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-5-textbook-fig-2-3-partition.png" alt="Sample space divided into six disjoint vertical cases; event B crosses the cases and is divided into pieces B intersection A one through B intersection A six." style="display: block; width: 100%; max-width: 650px; height: auto; margin: 0 auto;">
+  <figcaption>A partition divides an event into disjoint contributions. Reproduced from Joseph K. Blitzstein and Jessica Hwang, <em>Introduction to Probability</em>, Figure 2.3, p. 50.</figcaption>
+</figure>
+
+The weight $$P(A_i)$$ is the chance of being in case $$i$$; $$P(B\mid A_i)$$ is the chance of $$B$$ within that case. Their product is the contribution of that case to the overall probability.
+
+**Core idea:** The unconditional probability is a weighted average of conditional probabilities. The weights sum to 1; they need not be equal.
+
+#### Two complementary cases
+
+For $$0<P(A)<1$$, the cases $$A$$ and $$A^c$$ form a partition:
+
+$$
+\boxed{P(B)=P(B\mid A)P(A)+P(B\mid A^c)P(A^c).}
+$$
+
+<div class="warning-box" markdown="1">
+
+**Disjoint and exhaustive are both required.** Overlapping cases double-count some outcomes; cases that do not cover $$S$$ omit others. Adding $$P(B\mid A_i)$$ without multiplying by $$P(A_i)$$ also gives the wrong weighting.
+
+If a case has probability zero, its joint contribution is zero. Omit it rather than treating an undefined conditional probability as a number to multiply by zero.
+
+</div>
+
+### Part 3 — Bayes’ rule with a partition
+
+Let $$H_1,\ldots,H_n$$ be a partition with positive prior probabilities, and suppose $$P(E)>0$$. Bayes’ rule gives:
+
+$$
+P(H_j\mid E)=\frac{P(E\mid H_j)P(H_j)}{P(E)}.
+$$
+
+Use LOTP to calculate the denominator:
+
+$$
+\boxed{P(H_j\mid E)=
+\frac{P(E\mid H_j)P(H_j)}
+{\sum_{i=1}^{n}P(E\mid H_i)P(H_i)}.}
+$$
+
+The numerator is the probability of hypothesis $$j$$ together with the evidence. The denominator is the total probability of that evidence across every possible hypothesis. Dividing assigns the fraction of the evidence probability attributable to hypothesis $$j$$.
+
+#### Supplementary worked example: A randomly chosen coin
+
+Choose once between a fair coin and a biased coin, each with probability $$1/2$$. The biased coin lands heads with probability $$3/4$$. Toss the selected coin three times, independently given which coin was selected, and observe $$HHH$$.
+
+Let $$F$$ mean the coin is fair and $$E$$ mean three heads. The likelihoods are:
+
+$$
+P(E\mid F)=\left(\frac12\right)^3=\frac18,
+\qquad
+P(E\mid F^c)=\left(\frac34\right)^3=\frac{27}{64}.
+$$
+
+The total evidence probability is:
+
+$$
+P(E)=\frac18\frac12+\frac{27}{64}\frac12
+=\frac8{128}+\frac{27}{128}=\frac{35}{128}.
+$$
+
+Hence:
+
+$$
+\boxed{P(F\mid E)=\frac{(1/8)(1/2)}{35/128}
+=\frac8{35}\approx0.228571.}
+$$
+
+The biased coin has posterior probability $$27/35$$. Three heads are possible under either coin, but are more likely under the biased coin, so the observation shifts probability toward that coin.
+
+**Core idea:** Multiply within each hypothesis, add across the mutually exclusive hypotheses, and normalize to update their probabilities.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** We observed $$E$$, so substitute $$P(E)=1$$ into Bayes’ rule.
+
+**Correction:** Observing $$E$$ makes $$P(E\mid E)=1$$. The denominator $$P(E)$$ in Bayes’ rule is the probability of the evidence under the original model, before conditioning on it.
+
+</div>
+
+### Part 4 — A test result: sensitivity, specificity, and the base rate
+
+Consider a hypothetical test model. Let $$D$$ be the event that a person has a condition and $$T$$ the event of a positive result. Assume the person is drawn from a population with condition prevalence $$p=P(D)$$.
+
+“95% accurate” is ambiguous unless the relevant conditional probabilities are stated. In this model, take:
+
+$$
+P(T\mid D)=0.95,\qquad P(T^c\mid D^c)=0.95.
+$$
+
+Thus the false-positive rate is $$P(T\mid D^c)=0.05$$. These are assumptions for an illustrative probability problem.
+
+The desired probability after a positive result is $$P(D\mid T)$$, not $$P(T\mid D)$$. By Bayes’ rule and LOTP:
+
+$$
+\boxed{P(D\mid T)=
+\frac{0.95p}{0.95p+0.05(1-p)}.}
+$$
+
+The denominator includes both ways of getting a positive result: a true positive and a false positive.
+
+#### Supplementary textbook example: Prevalence of 1%
+
+For $$p=0.01$$:
+
+$$
+P(T)=0.95(0.01)+0.05(0.99)=0.0095+0.0495=0.059,
+$$
+
+$$
+P(D\mid T)=\frac{0.0095}{0.059}
+=\frac{19}{118}\approx0.161017.
+$$
+
+The probability rises from 1% before the result to about 16.10% afterward. The result is informative even though the posterior is much lower than the sensitivity.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-5-textbook-fig-2-4-test-counts.png" alt="A model population of ten thousand divides into one hundred with the condition and nine thousand nine hundred without it, yielding ninety-five true positives and four hundred ninety-five false positives." style="display: block; width: 100%; max-width: 680px; height: auto; margin: 0 auto;">
+  <figcaption>Expected counts in the hypothetical 1%-prevalence model, with 95% sensitivity and specificity. Reproduced from Blitzstein and Hwang, <em>Introduction to Probability</em>, Figure 2.4, p. 52. Bubble sizes are not to scale.</figcaption>
+</figure>
+
+For 10,000 people under these proportions:
+
+| Group | Expected positive results | Expected negative results | Total |
+|---|---:|---:|---:|
+| Condition present | 95 | 5 | 100 |
+| Condition absent | 495 | 9405 | 9900 |
+| Total | 590 | 9410 | 10,000 |
+
+Among positive results, the expected fraction with the condition is $$95/590=19/118$$. A small false-positive rate applied to a large condition-free group can produce more positives than a high true-positive rate applied to a small group.
+
+#### Supplementary comparison: A rarer condition
+
+Keeping the same test assumptions but changing the prevalence to $$1/1000$$ gives:
+
+$$
+P(D\mid T)=\frac{0.95/1000}{0.95/1000+0.05(999/1000)}
+=\frac{19}{1018}\approx0.018664.
+$$
+
+The sensitivity and specificity are unchanged, but the posterior is now about 1.87%. The prior prevalence affects the relative contributions of true and false positives.
+
+**Core idea:** A conditional probability about how evidence is generated cannot be read directly as a probability about its underlying cause. The base rate supplies essential information.
+
+#### The same reversal error in reasoning about evidence
+
+A small probability of evidence given innocence, $$P(E\mid I)$$, does not equal a small probability of innocence given the evidence, $$P(I\mid E)$$. Bayes’ rule also requires the prior probabilities and the probability of the evidence under alternatives. Confusing these directions is called the **prosecutor's fallacy**.
+
+### Part 5 — Keeping background conditioning consistent
+
+For a fixed event $$E$$ with $$P(E)>0$$, the function $$Q(B)=P(B\mid E)$$ obeys the probability axioms. Consequently, LOTP and Bayes’ rule can be applied inside that conditional model.
+
+#### Supplementary formula: LOTP with extra conditioning
+
+For a partition $$A_1,\ldots,A_n$$, retaining positive-probability cases within $$E$$:
+
+$$
+\boxed{P(B\mid E)=\sum_{i=1}^{n}
+P(B\mid A_i,E)P(A_i\mid E).}
+$$
+
+The weights are now $$P(A_i\mid E)$$, not the original $$P(A_i)$$. The evidence can change the distribution of the cases themselves.
+
+#### Supplementary formula: Bayes’ rule with extra conditioning
+
+When $$P(A\cap E)>0$$ and $$P(B\cap E)>0$$:
+
+$$
+\boxed{P(A\mid B,E)=
+\frac{P(B\mid A,E)P(A\mid E)}{P(B\mid E)}.}
+$$
+
+The same background evidence $$E$$ appears in every probability. Commas to the right of the bar denote joint evidence, so $$P(B\mid A,E)=P(B\mid A\cap E)$$.
+
+**Core idea:** Once a calculation is conditional on a context, both the case probabilities and within-case probabilities must use that context.
+
+### Part 6 — Conditional independence
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Conditional independence <span class="ex-pill pill-defn">Definition</span></div>
+
+For $$P(E)>0$$, events $$A$$ and $$B$$ are **conditionally independent given $$E$$** if:
+
+$$
+\boxed{P(A\cap B\mid E)=P(A\mid E)P(B\mid E).}
+$$
+
+If also $$P(B\cap E)>0$$, this is equivalent to:
+
+$$
+P(A\mid B,E)=P(A\mid E).
+$$
+
+</div>
+
+Given the context $$E$$, learning $$B$$ supplies no further information that changes the probability of $$A$$. This statement is about the probability model after conditioning, not necessarily about the original model.
+
+Independence does not imply conditional independence. Conditional independence does not imply independence. Independence given $$E$$ also need not imply independence given $$E^c$$.
+
+#### Supplementary example: An unknown shared coin creates dependence
+
+Return to choosing once between the fair coin and the $$3/4$$-heads coin. Let $$A$$ and $$B$$ be heads on the first and second tosses.
+
+Given the fair coin:
+
+$$
+P(A\cap B\mid F)=\frac14=P(A\mid F)P(B\mid F).
+$$
+
+Given the biased coin:
+
+$$
+P(A\cap B\mid F^c)=\frac9{16}=P(A\mid F^c)P(B\mid F^c).
+$$
+
+Thus the tosses are independent within each coin type. Without knowing the type:
+
+$$
+P(A)=P(B)=\frac12\frac12+\frac34\frac12=\frac58,
+$$
+
+$$
+P(A\cap B)=\frac14\frac12+\frac9{16}\frac12=\frac{13}{32}.
+$$
+
+But:
+
+$$
+\frac{13}{32}=\frac{26}{64}\ne\frac{25}{64}
+=\left(\frac58\right)^2.
+$$
+
+Indeed:
+
+$$
+P(B\mid A)=\frac{13/32}{5/8}=\frac{13}{20}=0.65>\frac58.
+$$
+
+A first head supplies evidence that the selected coin is biased, which in turn raises the probability of a second head.
+
+**Core idea:** Multiplying within each known case is valid; averaging over an unknown shared case can introduce dependence. Choosing a fresh coin independently before every toss would describe a different experiment.
+
+#### Example: Games against an opponent of unknown strength
+
+Suppose repeated game results are independent once an opponent's strength is known. If the opponent's strength is unknown, an observed loss can make a strong opponent more plausible, changing the probability of losing the next game. Conditional independence within each strength category does not imply independence after those categories are mixed.
+
+This is the same structure as the shared-coin example: one unknown factor affects several outcomes, and observing one outcome supplies information about that factor.
+
+### Part 7 — Conditioning can also create dependence
+
+#### Supplementary worked example: At least one head
+
+Toss two independent fair coins. Let $$A$$ mean first heads, $$B$$ mean second heads, and $$E=A\cup B$$ mean at least one head.
+
+Before conditioning, $$A$$ and $$B$$ are independent. Given $$E$$, the three equally likely surviving outcomes are:
+
+$$
+HH,\quad HT,\quad TH.
+$$
+
+Therefore:
+
+$$
+P(A\mid E)=P(B\mid E)=\frac23,
+$$
+
+but:
+
+$$
+P(A\cap B\mid E)=\frac13\ne\frac49
+=P(A\mid E)P(B\mid E).
+$$
+
+Once at least one head is known, learning that the first toss is tails forces the second to be heads:
+
+$$
+P(B\mid A^c,E)=1.
+$$
+
+The independent events have become dependent under the selected evidence.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** Independence is a permanent property, so conditioning cannot change it.
+
+**Correction:** Independence refers to a particular probability function. Conditioning changes that function. Always specify the context in which multiplication is justified.
+
+</div>
+
+**Core idea:** Restricting the sample space can remove combinations that originally made independence possible. Conditional independence must be checked using probabilities with the same evidence throughout.
+
+### Part 8 — Original practice questions
+
+Try these before reading the answers.
+
+1. Draw two cards without replacement. Find the probability of two kings given at least one king, and given that the king of hearts is in the hand.
+2. Boxes A and B are chosen with probabilities $$0.30$$ and $$0.70$$. A draw is red with probability $$0.80$$ from A and $$0.20$$ from B. Find the overall red probability and the probability that a red draw came from A.
+3. Explain why using “contains an ace” and “contains a heart” as the only two cases is not a valid partition of two-card hands.
+4. Choose once between a fair coin and a $$3/4$$-heads coin, with equal probabilities, and observe two heads. Find the posterior probability that the coin is fair.
+5. In a hypothetical population with prevalence $$0.02$$, a test has sensitivity $$0.90$$ and specificity $$0.95$$. Find the probability of a positive result and the posterior probability of the condition given a positive result.
+6. For the preceding test model, find the probability of the condition given a negative result.
+7. Suppose $$P(A\mid E)=0.40$$ and $$P(B\mid E)=0.50$$, with conditional independence given $$E$$. Find $$P(A\cap B\mid E)$$ and $$P(A\cup B\mid E)$$. Can you infer unconditional independence?
+8. For the shared-coin example, compute $$P(B\mid A)$$ and compare it with $$P(B)$$. Explain what information the first head provides.
+9. Toss two independent fair coins and condition on at least one head. Find the probability of second heads given first heads and the same evidence. Compare with the probability of second heads given only the at-least-one-head evidence.
+
+### Part 9 — Practice answers
+
+#### 1. Two kinds of king evidence
+
+There are $$4\cdot48+\binom42=198$$ hands containing at least one king, of which six have two kings:
+
+$$
+P(\text{two kings}\mid\text{at least one king})=\frac6{198}=\frac1{33}.
+$$
+
+Given the king of hearts, its companion is one of 51 other cards, of which three are kings. The probability is $$3/51=1/17$$.
+
+#### 2. Mixture of boxes
+
+By LOTP:
+
+$$
+P(R)=0.80(0.30)+0.20(0.70)=0.38.
+$$
+
+By Bayes’ rule:
+
+$$
+P(A\mid R)=\frac{0.80(0.30)}{0.38}=\frac{12}{19}\approx0.631579.
+$$
+
+The more red-heavy box becomes more likely after observing red.
+
+#### 3. Invalid cases
+
+The events overlap: a hand may contain both an ace and a heart. They also fail to cover the sample space: a hand may contain neither. A valid partition could instead use the four combinations of containing or not containing an ace and containing or not containing a heart.
+
+#### 4. Two heads and coin identity
+
+The likelihoods are $$1/4$$ and $$9/16$$. With equal priors:
+
+$$
+P(F\mid HH)=\frac{(1/4)(1/2)}{(1/4)(1/2)+(9/16)(1/2)}
+=\frac4{13}\approx0.307692.
+$$
+
+#### 5. A positive test
+
+The false-positive rate is $$1-0.95=0.05$$. Thus:
+
+$$
+P(T)=0.90(0.02)+0.05(0.98)=0.067,
+$$
+
+$$
+P(D\mid T)=\frac{0.018}{0.067}=\frac{18}{67}\approx0.268657.
+$$
+
+The posterior is about 26.87%, rather than the 90% sensitivity.
+
+#### 6. A negative test
+
+The false-negative rate is $$0.10$$. Therefore:
+
+$$
+P(T^c)=0.10(0.02)+0.95(0.98)=0.933,
+$$
+
+$$
+P(D\mid T^c)=\frac{0.10(0.02)}{0.933}
+=\frac2{933}\approx0.002144.
+$$
+
+This is about 0.2144%. The positive and negative evidence probabilities sum to 1, but their corresponding condition posteriors do not have to do so: they condition on different events.
+
+#### 7. Conditional independence
+
+$$
+P(A\cap B\mid E)=0.40(0.50)=0.20,
+$$
+
+$$
+P(A\cup B\mid E)=0.40+0.50-0.20=0.70.
+$$
+
+These calculations apply within $$E$$. They do not determine whether $$A$$ and $$B$$ are independent without conditioning.
+
+#### 8. A shared unknown coin
+
+$$
+P(B\mid A)=\frac{13/32}{5/8}=\frac{13}{20}=0.65,
+\qquad P(B)=\frac58=0.625.
+$$
+
+The first head favors the biased coin, increasing the probability of heads on the second toss. The tosses are independent given coin type, but not after mixing the two types.
+
+#### 9. Selected coin outcomes
+
+Given $$A$$ and $$E$$, only $$HH$$ and $$HT$$ survive, with equal probabilities, so:
+
+$$
+P(B\mid A,E)=\frac12.
+$$
+
+Given only $$E$$, the three outcomes $$HH,HT,TH$$ survive, giving $$P(B\mid E)=2/3$$. The difference shows that $$A$$ and $$B$$ are not conditionally independent given $$E$$.
+
+### Part 10 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Exact evidence | At least one ace gives $$1/33$$ for two aces; a specified ace gives $$1/17$$ |
+| Partition | Pairwise disjoint cases whose union is $$S$$ |
+| LOTP | $$P(B)=\sum_i P(B\mid A_i)P(A_i)$$ |
+| Two-case LOTP | Split into $$A$$ and $$A^c$$, with both conditional probabilities defined |
+| Partition form of Bayes | Posterior equals one likelihood-times-prior contribution divided by their total |
+| Sensitivity | $$P(T\mid D)$$ |
+| Specificity | $$P(T^c\mid D^c)$$ |
+| False-positive rate | $$P(T\mid D^c)=1-\text{specificity}$$ |
+| Positive-result posterior | $$P(D\mid T)$$ depends on prevalence as well as test rates |
+| Background evidence | Keep the same context to the right of the bar throughout a calculation |
+| Conditional independence | $$P(A\cap B\mid E)=P(A\mid E)P(B\mid E)$$ |
+| Unknown shared factor | Independence within each case can become dependence after mixing cases |
+| Selected evidence | Unconditional independence can disappear after conditioning |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Partition <span class="gcat cat-defn">Definition</span></div>
+
+Disjoint events covering the whole sample space, so every outcome belongs to exactly one case.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Law of total probability <span class="gcat cat-thm">Theorem</span></div>
+
+A formula combining within-case conditional probabilities with the probabilities of the cases to recover an overall probability.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Base rate <span class="gcat cat-defn">Definition</span></div>
+
+The prior frequency or probability of a category before incorporating the specified new evidence. In the test model, it is condition prevalence.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Sensitivity <span class="gcat cat-meas">Measure</span></div>
+
+The probability of a positive test result given that the condition is present, $$P(T\mid D)$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Specificity <span class="gcat cat-meas">Measure</span></div>
+
+The probability of a negative test result given that the condition is absent, $$P(T^c\mid D^c)$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Prosecutor's fallacy <span class="gcat cat-defn">Misconception</span></div>
+
+Confusing the probability of evidence under innocence with the probability of innocence given that evidence.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Conditional independence <span class="gcat cat-defn">Definition</span></div>
+
+Independence under a specified conditional probability model. It does not establish independence outside that context.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Mixture <span class="gcat cat-defn">Definition</span></div>
+
+A probability model formed by combining different case-specific models with weights given by their case probabilities.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 5</span>
+  <span class="ref-tag">Law of total probability</span>
+  <span class="ref-tag">Bayesian updates</span>
+  <span class="ref-tag">Conditional independence</span>
 </div>
 
   </div>
