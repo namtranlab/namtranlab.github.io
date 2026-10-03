@@ -17,6 +17,7 @@ authors:
 toc:
   - name: Lecture 1 - Probability and Counting
   - name: Lecture 2 - Story Proofs and Axioms of Probability
+  - name: Lecture 3 - Birthday Problem and Properties of Probability
 
 _styles: >
   /* ── Collapsible chapter blocks ── */
@@ -1505,6 +1506,730 @@ The probability of a union of countably many pairwise disjoint events equals the
   <span class="ref-tag">Stars and bars</span>
   <span class="ref-tag">Story proofs</span>
   <span class="ref-tag">Probability axioms</span>
+</div>
+
+  </div>
+</div>
+
+
+## Lecture 3 - Birthday Problem and Properties of Probability
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-3-toggle" onclick="toggleLecture('lecture-3')" aria-expanded="true" aria-controls="lecture-3-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 3</span>
+      <span>
+        <span class="chapter-title">Lecture 3 - Birthday Problem and Properties of Probability</span>
+        <span class="chapter-subtitle">Complements, probability axioms, inclusion–exclusion, and de Montmort's matching problem</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-3-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-3-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+A coincidence can become likely when there are many opportunities for it to occur. The birthday problem illustrates this through counting the complement. Probability axioms give general rules for complements, containment, and overlapping events. Inclusion–exclusion then handles the overlaps in a shuffled deck, giving a surprisingly stable probability of at least one matching card.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$k$$ | Number of people in the birthday problem |
+| $$M$$, $$M^c$$ | At least one birthday match, and no birthday matches |
+| $$\prod_{j=0}^{k-1}(1-j/365)$$ | Product of the $$k$$ factors for distinct birthdays |
+| $$A^c$$ | Complement of event $$A$$ within $$S$$ |
+| $$B\cap A^c$$ | Outcomes in $$B$$ but outside $$A$$ |
+| $$A\subseteq B$$ | Every outcome in $$A$$ belongs to $$B$$ |
+| $$\bigcup_{i=1}^n A_i$$ | At least one of the events $$A_1,\ldots,A_n$$ occurs |
+| $$\bigcap_{i\in I}A_i$$ | All events whose indices belong to $$I$$ occur |
+| $$n$$ | Number of distinct cards in the matching problem |
+| $$\pi(i)$$ | Label on the card in position $$i$$ of a shuffled deck |
+| $$A_i=\{\pi(i)=i\}$$ | Card $$i$$ matches its position |
+| $$D_n$$ | Number of permutations of $$n$$ objects with no fixed points |
+| $$e$$ | Base of the natural logarithm; $$e\approx2.71828$$ |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- State the birthday model's assumptions and identify its equally likely outcomes.
+- Derive the probability of at least one birthday match by counting the complement.
+- Distinguish any matching pair from a match with one specified person's birthday.
+- Prove the complement rule, monotonicity, and the two-event addition rule from the probability axioms.
+- Explain the alternating signs in inclusion–exclusion.
+- Calculate intersection probabilities for specified matching positions in a permutation.
+- Derive the matching probability and explain its limit of $$1-e^{-1}$$.
+
+### Part 1 — The birthday problem: defining the model
+
+Suppose $$k$$ people are in a room. What is the probability that **at least two** have the same birthday?
+
+Use the following idealized model:
+
+- There are 365 possible birthdays; February 29 is excluded.
+- Each person's birthday is equally likely to be any of those days.
+- People's birthdays are mutually independent.
+- People are distinguishable: person 1's birthday and person 2's birthday occupy different positions in an outcome.
+
+An outcome is an ordered list of $$k$$ birthdays. Each position has 365 possibilities, so:
+
+$$
+\lvert S\rvert=365^k.
+$$
+
+The uniformity and independence assumptions make every such list equally likely, with probability $$365^{-k}$$.
+
+Let $$M$$ be the event of at least one match. A match may involve one pair, several pairs, or three or more people on one day. All of these belong to $$M$$.
+
+<div class="warning-box" markdown="1">
+
+**Modeling clarification:** Real birthdays need not be uniformly distributed or independent. The formula below is exact for the stated model; it is not an exact description of every real group. Labeling people does not establish independence—it specifies which outcomes we are counting.
+
+</div>
+
+#### Boundary cases
+
+With zero or one person, a match is impossible. With more than 365 people, a match is certain by the **pigeonhole principle**: assigning more than 365 people to 365 days forces some day to receive at least two people.
+
+With exactly 365 people, a match is extremely likely but not certain: an assignment with one person on each day is still possible.
+
+### Part 2 — Count no matches, then take the complement
+
+Directly counting all possible kinds of matches is difficult because the cases overlap. The complement $$M^c$$ has a simple description: all birthdays are different.
+
+For $$1\le k\le365$$:
+
+| Person | Allowed birthdays if all birthdays must differ |
+|---|---:|
+| First | 365 |
+| Second | 364 |
+| Third | 363 |
+| $$k$$th | $$365-k+1$$ |
+
+Thus:
+
+$$
+\lvert M^c\rvert=365\cdot364\cdots(365-k+1).
+$$
+
+Divide by the number of equally likely birthday lists:
+
+$$
+P(M^c)=\frac{365\cdot364\cdots(365-k+1)}{365^k}
+=\prod_{j=0}^{k-1}\left(1-\frac j{365}\right).
+$$
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{P(M)=1-\prod_{j=0}^{k-1}\left(1-\frac j{365}\right),\qquad1\le k\le365.}
+$$
+
+For $$k=0$$, the empty product is 1, giving probability 0. For $$k>365$$, use $$P(M)=1$$ rather than extending the product to negative factors.
+
+</div>
+
+**Core idea:** The experiment allows repeated birthdays, so the denominator counts sampling with replacement. The no-match event restricts birthdays to distinct days, so its numerator counts assignments without replacement. Both counts still describe ordered lists for the same labeled people.
+
+#### Worked example: Why 23 people are enough
+
+For 23 people:
+
+$$
+P(M)=1-\frac{365\cdot364\cdots343}{365^{23}}
+\approx0.507297.
+$$
+
+The no-match probability is approximately $$0.492703$$. For 22 people, the match probability is approximately $$0.475695$$, so 23 is the smallest group size with a match probability above 50%.
+
+| People, $$k$$ | Probability of at least one match |
+|---:|---:|
+| 2 | $$0.002740$$ |
+| 10 | $$0.116948$$ |
+| 22 | $$0.475695$$ |
+| 23 | $$0.507297$$ |
+| 30 | $$0.706316$$ |
+| 50 | $$0.970374$$ |
+| 57 | $$0.990122$$ |
+| 100 | $$0.999999693$$ |
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-3-textbook-fig-1-4-birthday.png" alt="Birthday-match probability rises with group size, crossing one half at 23 people and approaching one by 100 people." style="display: block; width: 100%; max-width: 680px; height: auto; margin: 0 auto;">
+  <figcaption>Birthday-match probability under the independent, uniform 365-day model. Reproduced from Joseph K. Blitzstein and Jessica Hwang, <em>Introduction to Probability</em>, Figure 1.4, p. 12.</figcaption>
+</figure>
+
+#### Why the result is less surprising after counting pairs
+
+A group of 23 people contains:
+
+$$
+\binom{23}{2}=253
+$$
+
+pairs. The event concerns any of these pairs, not just the 22 comparisons involving one particular person. The number of pairs grows quadratically with group size.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** There are 253 pairs, each matching with probability $$1/365$$, so the probability of a match is $$253/365$$.
+
+**Correction:** Pair-match events overlap. If three people share a birthday, all three pairs among them match. Adding their probabilities counts that outcome repeatedly. The ratio $$253/365\approx0.693151$$ is not the probability of at least one match.
+
+</div>
+
+#### Supplementary comparison: Someone shares your birthday
+
+Fix your birthday and consider 22 other people under the same independent, uniform model. Each avoids your birthday with probability $$364/365$$. Therefore:
+
+$$
+P(\text{at least one shares your birthday})
+=1-\left(\frac{364}{365}\right)^{22}
+\approx0.058571.
+$$
+
+This is about 5.86%, compared with 50.73% for any match among all 23 people. The first event asks for a match with one specified birthday; the second allows any pair to match.
+
+### Part 3 — Probability axioms and the complement rule
+
+A probability function assigns every event a number in $$[0,1]$$. The axioms are:
+
+$$
+P(\varnothing)=0,\qquad P(S)=1,
+$$
+
+and, for pairwise disjoint events:
+
+$$
+P\left(\bigcup_{i=1}^{\infty}A_i\right)
+=\sum_{i=1}^{\infty}P(A_i).
+$$
+
+These rules apply beyond finite, equally likely sample spaces. The following properties are consequences of the axioms, rather than additional assumptions.
+
+#### Derive the complement rule
+
+The events $$A$$ and $$A^c$$ are disjoint, and their union is $$S$$. By additivity:
+
+$$
+1=P(S)=P(A\cup A^c)=P(A)+P(A^c).
+$$
+
+Rearranging gives:
+
+$$
+\boxed{P(A^c)=1-P(A).}
+$$
+
+This justifies the final step in the birthday calculation. It also applies when individual outcomes have unequal probabilities or when the sample space is infinite.
+
+**Core idea:** An event and its complement divide the entire experiment into two mutually exclusive possibilities, whose probabilities sum to 1.
+
+### Part 4 — Monotonicity: a larger event cannot be less likely
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Monotonicity <span class="ex-pill pill-thm">Theorem</span></div>
+
+If $$A\subseteq B$$, then:
+
+$$
+\boxed{P(A)\le P(B).}
+$$
+
+</div>
+
+#### Proof by disjoint decomposition
+
+Separate $$B$$ into the outcomes in $$A$$ and the outcomes outside $$A$$:
+
+$$
+B=A\cup(B\cap A^c).
+$$
+
+These two pieces are disjoint. Hence:
+
+$$
+P(B)=P(A)+P(B\cap A^c)\ge P(A),
+$$
+
+because probabilities are nonnegative.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-3-textbook-monotonicity.png" alt="Event A lies inside event B; the remainder of B is labeled B intersection A complement." style="display: block; width: 100%; max-width: 430px; height: auto; margin: 0 auto;">
+  <figcaption>Decomposing a containing event into disjoint pieces. Reproduced from Blitzstein and Hwang, <em>Introduction to Probability</em>, diagram in the proof of Theorem 1.6.2, p. 22.</figcaption>
+</figure>
+
+#### Supplementary example: Nested dice events
+
+Roll a fair six-sided die. Let $$A=\{6\}$$ and $$B=\{4,5,6\}$$. Since $$A\subseteq B$$:
+
+$$
+P(A)=\frac16\le\frac36=P(B).
+$$
+
+The extra outcomes $$B\cap A^c=\{4,5\}$$ contribute probability $$2/6$$.
+
+<div class="warning-box" markdown="1">
+
+**Containment need not give strict inequality.** Even if $$A$$ is a proper subset of $$B$$, it is possible that $$P(A)=P(B)$$. Strict inequality holds exactly when $$P(B\cap A^c)>0$$. A nonempty event need not have positive probability in every model.
+
+</div>
+
+### Part 5 — Two overlapping events: the addition rule
+
+<div class="result-box" markdown="1">
+
+For any two events $$A$$ and $$B$$:
+
+$$
+\boxed{P(A\cup B)=P(A)+P(B)-P(A\cap B).}
+$$
+
+</div>
+
+The sum $$P(A)+P(B)$$ counts outcomes in the intersection twice. Subtracting $$P(A\cap B)$$ leaves each outcome in the union counted once.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-3-textbook-two-event-union.png" alt="Two overlapping events A and B inside sample space S, with their shared region labeled A intersection B." style="display: block; width: 100%; max-width: 430px; height: auto; margin: 0 auto;">
+  <figcaption>The intersection is included in both event probabilities. Reproduced from Blitzstein and Hwang, <em>Introduction to Probability</em>, diagram in the proof of Theorem 1.6.2, p. 22.</figcaption>
+</figure>
+
+#### Proof using the axioms
+
+Write the union as two disjoint pieces:
+
+$$
+A\cup B=A\cup(B\cap A^c).
+$$
+
+Therefore:
+
+$$
+P(A\cup B)=P(A)+P(B\cap A^c).
+$$
+
+Also, $$B=(A\cap B)\cup(B\cap A^c)$$ is a disjoint union, so:
+
+$$
+P(B\cap A^c)=P(B)-P(A\cap B).
+$$
+
+Substitution gives the addition rule. No independence assumption is needed. For disjoint events, the intersection has probability zero and the rule reduces to direct addition.
+
+#### Supplementary worked example: An even result or a result above 3
+
+For a fair die, let $$A=\{2,4,6\}$$ and $$B=\{4,5,6\}$$. Their intersection is $$\{4,6\}$$. Hence:
+
+$$
+P(A\cup B)=\frac36+\frac36-\frac26=\frac46=\frac23.
+$$
+
+The union is $$\{2,4,5,6\}$$, confirming the result by direct counting.
+
+**Core idea:** “Or” includes outcomes where both events occur, but each such outcome contributes only once to the union.
+
+### Part 6 — Inclusion–exclusion for three or more events
+
+#### Three events
+
+$$
+\boxed{\begin{aligned}
+P(A\cup B\cup C)
+={}&P(A)+P(B)+P(C)\\
+&-P(A\cap B)-P(A\cap C)-P(B\cap C)\\
+&+P(A\cap B\cap C).
+\end{aligned}}
+$$
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-3-textbook-three-event-union.png" alt="Three overlapping events A, B, and C, including pairwise overlaps and a central triple overlap." style="display: block; width: 100%; max-width: 400px; height: auto; margin: 0 auto;">
+  <figcaption>Pairwise corrections remove the central overlap too many times, so the triple intersection is added back. Reproduced from Blitzstein and Hwang, <em>Introduction to Probability</em>, Section 1.6, p. 23.</figcaption>
+</figure>
+
+Track how often a particular outcome contributes:
+
+| Events containing the outcome | Single-event additions | Pairwise subtractions | Triple addition | Net count |
+|---|---:|---:|---:|---:|
+| Exactly one | 1 | 0 | 0 | 1 |
+| Exactly two | 2 | 1 | 0 | 1 |
+| All three | 3 | 3 | 1 | 1 |
+
+The pairwise intersections include the triple intersection. Subtracting all three pairwise terms removes a central outcome three times after adding it three times, leaving zero. The final addition restores its contribution to one.
+
+#### General formula
+
+For events $$A_1,\ldots,A_n$$:
+
+$$
+\boxed{
+P\left(\bigcup_{i=1}^{n}A_i\right)
+=\sum_{r=1}^{n}(-1)^{r+1}
+\sum_{1\le i_1<\cdots<i_r\le n}
+P(A_{i_1}\cap\cdots\cap A_{i_r}).
+}
+$$
+
+Add single-event probabilities, subtract two-event intersections, add three-event intersections, and continue with alternating signs. Each unordered group of indices appears once; the condition $$i_1<\cdots<i_r$$ prevents repeated listings of the same intersection.
+
+**Core idea:** Inclusion–exclusion corrects overlap systematically. Symmetry makes it especially useful when all intersections involving the same number of specified events have the same probability.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** For three events, subtracting the three pairwise intersections is enough.
+
+**Correction:** The triple intersection must be added back. Pairwise intersections mean that both named events occur, whether or not a third event also occurs; they do not mean “exactly those two.”
+
+</div>
+
+### Part 7 — de Montmort's matching problem
+
+Shuffle $$n\ge1$$ distinct cards labeled $$1,2,\ldots,n$$, with all $$n!$$ permutations equally likely. Reveal them in order while counting $$1,2,\ldots,n$$. Win if at least one revealed card matches the number called out.
+
+A match is a **fixed point** of the permutation. If the deck is $$(3,2,1,4)$$, positions 2 and 4 match; positions 1 and 3 do not.
+
+Let:
+
+$$
+A_i=\{\pi(i)=i\}.
+$$
+
+The event of winning is $$A_1\cup\cdots\cup A_n$$. The events overlap because several positions can match at once.
+
+#### Step 1: One specified position matches
+
+Fix card $$i$$ in position $$i$$. The remaining $$n-1$$ cards may be arranged freely, giving $$(n-1)!$$ favorable permutations:
+
+$$
+P(A_i)=\frac{(n-1)!}{n!}=\frac1n.
+$$
+
+#### Step 2: Several specified positions match
+
+For distinct positions $$i_1,\ldots,i_r$$, fixing their cards leaves $$(n-r)!$$ arrangements:
+
+$$
+P(A_{i_1}\cap\cdots\cap A_{i_r})=\frac{(n-r)!}{n!}.
+$$
+
+For example:
+
+$$
+P(A_i\cap A_j)=\frac1{n(n-1)},\qquad
+P(A_i\cap A_j\cap A_\ell)=\frac1{n(n-1)(n-2)}.
+$$
+
+Fixing the specified positions does **not** forbid additional matches among the remaining positions. That is exactly what an intersection requires: all named events occur, possibly along with others.
+
+#### Step 3: Group the inclusion–exclusion terms
+
+There are $$\binom nr$$ ways to choose the $$r$$ specified matching positions. Each intersection has the same probability, so the total at order $$r$$ is:
+
+$$
+\binom nr\frac{(n-r)!}{n!}
+=\frac{n!}{r!(n-r)!}\frac{(n-r)!}{n!}
+=\frac1{r!}.
+$$
+
+Therefore:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{P(\text{at least one match})
+=\sum_{r=1}^{n}\frac{(-1)^{r+1}}{r!}
+=1-\frac1{2!}+\frac1{3!}-\cdots+\frac{(-1)^{n+1}}{n!}.}
+$$
+
+</div>
+
+**Core idea:** A complicated union becomes manageable because intersection probabilities depend only on how many positions are specified. The binomial coefficient counts the choices of positions; the factorial ratio counts decks satisfying those choices.
+
+#### Worked example: Three cards
+
+For $$n=3$$:
+
+$$
+P(\text{win})=1-\frac12+\frac16=\frac23.
+$$
+
+All six decks can be listed:
+
+| Deck order | Matching positions | Result |
+|---|---|---|
+| $$(1,2,3)$$ | 1, 2, 3 | Win |
+| $$(1,3,2)$$ | 1 | Win |
+| $$(2,1,3)$$ | 3 | Win |
+| $$(2,3,1)$$ | None | Lose |
+| $$(3,1,2)$$ | None | Lose |
+| $$(3,2,1)$$ | 2 | Win |
+
+Four of six permutations win. No permutation has exactly two matching positions: if two cards are fixed, the remaining card is forced into its own position.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** Each position matches with probability $$1/n$$, so the probability of winning is $$n(1/n)=1$$.
+
+**Correction:** The events are not disjoint. The fully ordered deck belongs to every $$A_i$$ and is counted $$n$$ times in that sum. Inclusion–exclusion corrects those repeated contributions.
+
+**Another trap:** The match events are not independent. For $$n\ge2$$, $$P(A_i\cap A_j)=1/[n(n-1)]$$, whereas $$P(A_i)P(A_j)=1/n^2$$.
+
+</div>
+
+### Part 8 — Derangements and the large-deck limit
+
+A **derangement** is a permutation with no fixed points. It is a losing deck in the matching game.
+
+Taking the complement of the winning probability gives:
+
+$$
+P(\text{no matches})=\sum_{r=0}^{n}\frac{(-1)^r}{r!}.
+$$
+
+Multiply by the total number of permutations:
+
+$$
+\boxed{D_n=n!\sum_{r=0}^{n}\frac{(-1)^r}{r!}.}
+$$
+
+For example, $$D_3=6(1-1+1/2-1/6)=2$$, agreeing with the two losing decks above.
+
+#### The limiting probability
+
+The exponential series gives:
+
+$$
+e^{-1}=\sum_{r=0}^{\infty}\frac{(-1)^r}{r!}.
+$$
+
+Consequently:
+
+$$
+\boxed{P(\text{no matches})\longrightarrow e^{-1}\approx0.367879,}
+$$
+
+$$
+\boxed{P(\text{at least one match})\longrightarrow1-e^{-1}\approx0.632121.}
+$$
+
+| Cards, $$n$$ | Exact winning probability | Decimal |
+|---:|---|---:|
+| 1 | $$1$$ | $$1.000000$$ |
+| 2 | $$1-1/2!$$ | $$0.500000$$ |
+| 3 | $$1-1/2!+1/3!$$ | $$0.666667$$ |
+| 4 | $$1-1/2!+1/3!-1/4!$$ | $$0.625000$$ |
+| 5 | $$1-1/2!+1/3!-1/4!+1/5!$$ | $$0.633333$$ |
+| 6 | $$1-1/2!+1/3!-1/4!+1/5!-1/6!$$ | $$0.631944$$ |
+
+The finite probabilities alternate around the limit; they do not increase monotonically with deck size. A larger deck provides more candidate matching positions, but each specified position matches with smaller probability $$1/n$$.
+
+#### Supplementary clarification: Accuracy of the limit
+
+The alternating-series remainder bounds the error by the first omitted term:
+
+$$
+\left|P(\text{win})-(1-e^{-1})\right|\le\frac1{(n+1)!}.
+$$
+
+For six cards, the error is at most $$1/7!\approx0.000198413$$. For 52 distinct numbered cards, the limiting value is an extraordinarily accurate approximation, although the finite alternating sum remains the exact probability.
+
+### Part 9 — Original practice questions
+
+Try these before reading the answers.
+
+1. Under the birthday model, find the probability of at least one match among three people. Explain why there are two different counting rules in the calculation.
+2. What is the smallest group size that guarantees a birthday match? Why does a group of 365 people not guarantee one?
+3. Fix your birthday. Find the probability that at least one of ten other people shares it, under the independent, uniform model. Is this the same event as any birthday match among all eleven people?
+4. Suppose $$A\subseteq B$$, $$P(A)=0.25$$, and $$P(B)=0.60$$. Find $$P(B\cap A^c)$$ and $$P(B^c)$$.
+5. Suppose $$P(A)=0.60$$, $$P(B)=0.50$$, and $$P(A\cap B)=0.20$$. Find the probabilities of the union, neither event, and exactly one event.
+6. Three events each have probability $$0.40$$. Each pairwise intersection has probability $$0.15$$, and the triple intersection has probability $$0.05$$. Find the probability of their union. What answer would omitting the triple correction give?
+7. Shuffle five distinct numbered cards uniformly. Find the probability that positions 1 and 3 both match. How many permutations satisfy this condition? Does the condition forbid other matches?
+8. For four distinct numbered cards, find the probability of winning the matching game and the number of derangements.
+9. In a deck of four distinct numbered cards, explain why the probability that positions 1 and 2 both match is not $$1/16$$.
+
+### Part 10 — Practice answers
+
+#### 1. Three birthdays
+
+The denominator counts all birthday assignments with repetition allowed. The no-match numerator counts only assignments of distinct birthdays:
+
+$$
+P(M)=1-\frac{365\cdot364\cdot363}{365^3}
+=\frac{1093}{133225}\approx0.008204.
+$$
+
+The probability is about 0.8204%. Taking the complement includes every possible kind of match without counting overlapping match cases separately.
+
+#### 2. A guaranteed match
+
+The smallest size is 366. With 365 people, assigning exactly one person to each day produces no match. With 366 people, there are more people than available days, so at least two must share a day.
+
+#### 3. A specified birthday
+
+All ten people avoid your birthday with probability $$(364/365)^{10}$$, so:
+
+$$
+P(\text{at least one shares yours})
+=1-\left(\frac{364}{365}\right)^{10}
+\approx0.027062.
+$$
+
+This is about 2.7062%. Any match among eleven people also includes pairs among the other ten, so it is a different, larger event.
+
+#### 4. Containment and complement
+
+The disjoint decomposition of $$B$$ gives:
+
+$$
+P(B\cap A^c)=P(B)-P(A)=0.60-0.25=0.35.
+$$
+
+The complement rule gives $$P(B^c)=1-0.60=0.40$$.
+
+#### 5. Union, neither, and exactly one
+
+$$
+P(A\cup B)=0.60+0.50-0.20=0.90.
+$$
+
+Neither event is the complement of the union, so its probability is $$0.10$$.
+
+Exactly one consists of the disjoint events $$A\cap B^c$$ and $$B\cap A^c$$:
+
+$$
+P(\text{exactly one})=(0.60-0.20)+(0.50-0.20)=0.70.
+$$
+
+The union includes the both-events case; exactly one excludes it.
+
+#### 6. Three-event correction
+
+$$
+P(A\cup B\cup C)=3(0.40)-3(0.15)+0.05=0.80.
+$$
+
+Omitting the triple correction gives $$0.75$$, undercounting the union by the probability $$0.05$$ of the triple intersection.
+
+#### 7. Two specified matching positions
+
+Fix cards 1 and 3 in positions 1 and 3. Arrange the remaining three cards in $$3!=6$$ ways. Thus:
+
+$$
+P(A_1\cap A_3)=\frac{3!}{5!}=\frac1{20}.
+$$
+
+Other positions may also match. The intersection requires at least the two specified matches, not exactly two matches.
+
+#### 8. Four-card game
+
+$$
+P(\text{win})=1-\frac1{2!}+\frac1{3!}-\frac1{4!}
+=\frac{15}{24}=\frac58.
+$$
+
+The no-match probability is $$3/8$$, so:
+
+$$
+D_4=4!\cdot\frac38=9.
+$$
+
+#### 9. Dependence between matching positions
+
+Each specified position matches with probability $$1/4$$. But fixing two specified cards leaves $$2!$$ favorable permutations out of $$4!$$:
+
+$$
+P(A_1\cap A_2)=\frac{2!}{4!}=\frac1{12}.
+$$
+
+Multiplying $$1/4$$ by $$1/4$$ would require independence, which does not hold for these events.
+
+### Part 11 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Birthday sample space | $$365^k$$ equally likely ordered assignments under uniformity and mutual independence |
+| No birthday match | $$\prod_{j=0}^{k-1}(1-j/365)$$ for $$1\le k\le365$$ |
+| At least one birthday match | One minus the no-match probability; exceeds 50% first at $$k=23$$ |
+| Guaranteed birthday match | $$k>365$$ |
+| Complement | $$P(A^c)=1-P(A)$$ |
+| Monotonicity | $$A\subseteq B\Rightarrow P(A)\le P(B)$$ |
+| Two-event addition | $$P(A\cup B)=P(A)+P(B)-P(A\cap B)$$ |
+| Inclusion–exclusion | Add singles, subtract pairs, add triples, and continue alternating |
+| $$r$$ specified card matches | $$(n-r)!/n!$$ |
+| Total order-$$r$$ contribution | $$\binom nr(n-r)!/n!=1/r!$$ |
+| Matching-game win | $$\sum_{r=1}^n(-1)^{r+1}/r!$$ |
+| Derangements | $$D_n=n!\sum_{r=0}^n(-1)^r/r!$$ |
+| Large-deck win probability | $$1-e^{-1}\approx0.632121$$ |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Birthday match <span class="gcat cat-defn">Definition</span></div>
+
+An event in which at least two people share a birthday. It includes several pairs or larger groups sharing a day, not only exactly one matching pair.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Pigeonhole principle <span class="gcat cat-prop">Counting principle</span></div>
+
+Placing more objects than boxes into boxes forces at least one box to contain two or more objects.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Complement rule <span class="gcat cat-thm">Theorem</span></div>
+
+The probability that an event does not occur is one minus the probability that it occurs.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Monotonicity <span class="gcat cat-thm">Theorem</span></div>
+
+If one event is contained in another, its probability cannot exceed that of the containing event.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Inclusion–exclusion <span class="gcat cat-thm">Theorem</span></div>
+
+A formula for the probability of a union that corrects repeated contributions from overlapping events using alternating sums of intersection probabilities.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Permutation <span class="gcat cat-defn">Definition</span></div>
+
+An ordering of distinct objects. There are $$n!$$ permutations of $$n$$ distinct objects.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Fixed point <span class="gcat cat-defn">Definition</span></div>
+
+A position $$i$$ at which a permutation leaves the label unchanged: $$\pi(i)=i$$. In the matching game, it is a card whose label equals its position.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Derangement <span class="gcat cat-defn">Definition</span></div>
+
+A permutation with no fixed points. In the matching game, it corresponds to a deck with no matching positions.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 3</span>
+  <span class="ref-tag">Birthday problem</span>
+  <span class="ref-tag">Probability properties</span>
+  <span class="ref-tag">Inclusion–exclusion</span>
+  <span class="ref-tag">Matching problem</span>
 </div>
 
   </div>
