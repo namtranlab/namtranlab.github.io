@@ -20,6 +20,11 @@ toc:
   - name: Lecture 3 - Birthday Problem and Properties of Probability
   - name: Lecture 4 - Conditional Probability
   - name: Lecture 5 - Conditioning Continued and the Law of Total Probability
+  - name: Lecture 6 - Monty Hall and Simpson’s Paradox
+  - name: Lecture 7 - Gambler’s Ruin and Random Variables
+  - name: Lecture 8 - Random Variables and Their Distributions
+  - name: Lecture 9 - Expectation, Indicator Random Variables, and Linearity
+  - name: Lecture 10 - Expectation Continued
 
 _styles: >
   /* ── Collapsible chapter blocks ── */
@@ -3610,6 +3615,2754 @@ A probability model formed by combining different case-specific models with weig
   <span class="ref-tag">Law of total probability</span>
   <span class="ref-tag">Bayesian updates</span>
   <span class="ref-tag">Conditional independence</span>
+</div>
+
+  </div>
+</div>
+
+
+## Lecture 6 - Monty Hall and Simpson’s Paradox
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-6-toggle" onclick="toggleLecture('lecture-6')" aria-expanded="true" aria-controls="lecture-6-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 6</span>
+      <span>
+        <span class="chapter-title">Lecture 6 - Monty Hall and Simpson’s Paradox</span>
+        <span class="chapter-subtitle">Host information, Bayesian conditioning, aggregation, and weighted averages</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-6-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-6-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+Information depends on how it is generated. In Monty Hall, a knowledgeable host's deliberate goat reveal differs from opening a door at random. In Simpson’s paradox, comparisons within every subgroup can reverse after aggregation because the groups receive different weights. Both problems become clear when the conditioning events and the probabilities of the cases are written explicitly.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$C_i$$ | Car is behind door $$i$$ |
+| $$M_j$$ | Monty opens door $$j$$ under the specified host protocol |
+| $$W$$ | The contestant wins by following the switching strategy |
+| $$P(M_j\mid C_i)$$ | Probability of the host's action given the car location |
+| $$N$$ | Number of doors in a supplementary generalized game |
+| $$S$$ | Successful procedure in the Simpson example |
+| $$H$$, $$H^c$$ | Heart procedure and Band-Aid removal |
+| $$D_H$$, $$D_N$$ | Procedure performed by Dr. Hibbert and Dr. Nick |
+| $$P(S\mid D_H,H)$$ | Success rate for Dr. Hibbert within heart procedures |
+| $$P(H\mid D_H)$$ | Fraction of Dr. Hibbert's procedures that are heart procedures |
+| $$w$$ | A common weight assigned to heart procedures in a standardized comparison |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- State the host assumptions in the standard Monty Hall problem.
+- Calculate switching success by conditioning on the car location.
+- Use Bayes’ rule to incorporate the identity of the door opened.
+- Explain why two remaining doors need not be equally likely.
+- Distinguish a deliberate goat reveal from a random reveal that happens to show a goat.
+- Calculate subgroup and overall rates in a Simpson reversal.
+- Express overall rates as conditional weighted averages using LOTP.
+- Explain why comparing groups under common weights prevents this reversal when one group has the higher rate in every stratum.
+
+### Part 1 — Monty Hall: specify the experiment
+
+Three closed doors hide one car and two goats. The contestant chooses a door. Monty opens one of the other doors, revealing a goat, and offers the contestant the chance to switch to the remaining closed door.
+
+Use the standard model:
+
+- The car is equally likely to be behind each door.
+- The contestant's initial choice supplies no information about the car location.
+- Monty knows where the car is.
+- Monty always opens an unchosen door containing a goat.
+- Monty always offers the switch.
+- If both unchosen doors contain goats, Monty chooses between them with equal probability.
+
+Label the contestant's initial choice door 1. Let $$C_i$$ mean that the car is behind door $$i$$. Then:
+
+$$
+P(C_1)=P(C_2)=P(C_3)=\frac13.
+$$
+
+Should the contestant stay with door 1 or switch?
+
+<div class="warning-box" markdown="1">
+
+**The host protocol is part of the probability model.** Knowing only that a door opened and a goat appeared does not specify how that evidence was generated. The host's knowledge, choice rule, and decision to offer a switch affect the relevant probabilities.
+
+</div>
+
+### Part 2 — Switching wins exactly when the first choice is wrong
+
+Condition on the car location:
+
+| Car location | Initial door 1 | Door Monty can open | Outcome if switching |
+|---|---|---|---|
+| Door 1 | Car | Door 2 or door 3 | Lose |
+| Door 2 | Goat | Door 3 only | Win |
+| Door 3 | Goat | Door 2 only | Win |
+
+The initial choice is correct with probability $$1/3$$. If it is wrong, Monty must reveal the other goat, leaving the car behind the remaining unchosen door.
+
+By LOTP:
+
+$$
+\begin{aligned}
+P(W)
+&=P(W\mid C_1)P(C_1)+P(W\mid C_2)P(C_2)+P(W\mid C_3)P(C_3)\\
+&=0\cdot\frac13+1\cdot\frac13+1\cdot\frac13\\
+&=\frac23.
+\end{aligned}
+$$
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{P(\text{win by switching})=\frac23,\qquad
+P(\text{win by staying})=\frac13.}
+$$
+
+</div>
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-6-textbook-fig-2-5-monty-hall.png" alt="Monty Hall tree after choosing door one: a car behind door one leads to two losing switch paths of probability one sixth each; a car behind door two or three leads to winning paths of probability one third each." style="display: block; width: 100%; max-width: 720px; height: auto; margin: 0 auto;">
+  <figcaption>Multiply probabilities along each branch and add the winning branches. Reproduced from Joseph K. Blitzstein and Jessica Hwang, <em>Introduction to Probability</em>, Figure 2.5, p. 62.</figcaption>
+</figure>
+
+The two losing paths each have probability $$(1/3)(1/2)=1/6$$. The two winning paths each have probability $$(1/3)(1)=1/3$$. These four probabilities sum to 1.
+
+**Core idea:** Switching exchanges the event “the original choice is correct” for its complement. Monty's guaranteed goat reveal makes that exchange possible.
+
+#### Why a random initial choice does not need to be reconsidered
+
+The overall $$2/3$$ success rate does not depend on how Monty breaks a tie between two goats. If the original choice is wrong, he has no choice; if it is right, either goat reveal makes switching lose. Tie-breaking matters when conditioning on **which particular door** he opened, as the next calculation shows.
+
+### Part 3 — Condition on the door actually opened
+
+Suppose Monty opens door 2. The evidence is $$M_2$$. Under the equal tie-breaking rule:
+
+| Car location | $$P(C_i)$$ | $$P(M_2\mid C_i)$$ | $$P(C_i\cap M_2)$$ |
+|---|---|---|---|
+| Door 1 | $$1/3$$ | $$1/2$$ | $$1/6$$ |
+| Door 2 | $$1/3$$ | $$0$$ | $$0$$ |
+| Door 3 | $$1/3$$ | $$1$$ | $$1/3$$ |
+
+By LOTP:
+
+$$
+P(M_2)=\frac12\frac13+0\frac13+1\frac13=\frac12.
+$$
+
+Bayes’ rule gives:
+
+$$
+P(C_1\mid M_2)=\frac{(1/2)(1/3)}{1/2}=\frac13,
+$$
+
+$$
+P(C_3\mid M_2)=\frac{1\cdot(1/3)}{1/2}=\frac23.
+$$
+
+Thus switching to door 3 wins with conditional probability $$2/3$$. If Monty instead opens door 3, symmetry gives the same advantage for switching to door 2.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** There are two closed doors and one car, so each door has probability $$1/2$$.
+
+**Correction:** Counting two possibilities does not establish equal probabilities. Monty's action is more likely when the car is behind door 3 than when it is behind the originally chosen door 1. Bayes’ rule retains this difference in the posterior probabilities.
+
+</div>
+
+**Core idea:** Monty is not eliminating an arbitrary possibility. His choice is constrained by the hidden car location, so the reveal carries information.
+
+### Part 4 — Supplementary variations: changing the protocol
+
+#### A host who prefers opening door 2
+
+Suppose that, when the car is behind door 1, Monty opens door 2 with probability $$q$$ and door 3 with probability $$1-q$$. In other cases he still must reveal the only unchosen goat, and he always offers a switch.
+
+After he opens door 2:
+
+$$
+P(M_2)=q\frac13+1\frac13=\frac{1+q}{3},
+$$
+
+$$
+P(C_3\mid M_2)=\frac{1/3}{(1+q)/3}=\frac1{1+q},
+\qquad
+P(C_1\mid M_2)=\frac q{1+q}.
+$$
+
+For $$q=1/2$$, these are $$2/3$$ and $$1/3$$. For $$q=1$$, this particular reveal leaves a $$1/2$$–$$1/2$$ comparison. Yet the overall probability of winning by always switching is still $$2/3$$.
+
+For example, with $$q=1$$, Monty opens door 3 only when the car is behind door 2. That reveal makes switching certain to win. The conditional rates average to:
+
+$$
+P(W)=\frac12\frac23+1\frac13=\frac23.
+$$
+
+#### A host who opens an unchosen door blindly
+
+Now suppose the host does not know where the car is and chooses randomly between doors 2 and 3. Condition on the observation that he opened door 2 and it contained a goat. Call this evidence $$E_2$$.
+
+The likelihoods are:
+
+$$
+P(E_2\mid C_1)=\frac12,\qquad
+P(E_2\mid C_2)=0,\qquad
+P(E_2\mid C_3)=\frac12.
+$$
+
+Unlike the knowledgeable host, the blind host is equally likely to generate this evidence under $$C_1$$ and $$C_3$$. Consequently:
+
+$$
+P(E_2)=\frac13,
+\qquad
+P(C_1\mid E_2)=P(C_3\mid E_2)=\frac12.
+$$
+
+Switching and staying are equally likely to win under this conditional experiment.
+
+**Core idea:** The visible outcome may look identical—a goat behind an opened door—but different selection mechanisms give different likelihoods and posteriors.
+
+#### Supplementary extension: Many doors
+
+With $$N\ge3$$ doors and a uniformly placed car, the contestant first chooses one door. A knowledgeable host then always reveals $$N-2$$ unchosen goats and offers a switch to the sole remaining unchosen door.
+
+The contestant initially selects a goat with probability $$(N-1)/N$$. In every such case, the surviving alternative must contain the car. Thus:
+
+$$
+P(\text{win by switching})=\frac{N-1}{N},\qquad
+P(\text{win by staying})=\frac1N.
+$$
+
+For a million doors, switching wins with probability $$999999/1000000$$. The host's deliberate elimination of goats is especially clear in this large version.
+
+### Part 5 — Simpson’s paradox: better in every subgroup, worse overall
+
+A comparison can reverse when data from different subgroups are combined. This phenomenon is called **Simpson’s paradox**.
+
+#### Supplementary textbook example: Two doctors and two procedure types
+
+Consider the following hypothetical records. Heart procedures are harder than Band-Aid removals. The numbers are an illustration of aggregation, not evidence about actual clinical practice.
+
+| Procedure | Dr. Hibbert: successes / total | Dr. Hibbert: success rate | Dr. Nick: successes / total | Dr. Nick: success rate |
+|---|---|---|---|---|
+| Heart | $$70/90$$ | $$7/9\approx77.78\%$$ | $$2/10$$ | $$20\%$$ |
+| Band-Aid removal | $$10/10$$ | $$100\%$$ | $$81/90$$ | $$90\%$$ |
+| All procedures | $$80/100$$ | $$80\%$$ | $$83/100$$ | $$83\%$$ |
+
+Dr. Hibbert has the higher success rate in **both** procedure types, but Dr. Nick has the higher overall success rate.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-6-textbook-fig-2-6-simpson.png" alt="Doctor Hibbert has ninety heart procedures and ten Band-Aid removals, while Doctor Nick has ten heart procedures and ninety Band-Aid removals. White dots show successes and black dots show failures." style="display: block; width: 100%; max-width: 720px; height: auto; margin: 0 auto;">
+  <figcaption>Different procedure mixes reverse the aggregate comparison. Reproduced from Blitzstein and Hwang, <em>Introduction to Probability</em>, Figure 2.6, p. 68. White dots indicate successes; black dots indicate failures.</figcaption>
+</figure>
+
+Dr. Hibbert performs mostly difficult procedures. Dr. Nick performs mostly easy procedures. Their overall rates average over very different case mixes.
+
+**Core idea:** An aggregate rate combines performance within groups and the proportions of cases belonging to those groups. A higher aggregate rate need not imply a higher rate within a comparable group.
+
+### Part 6 — Explain the reversal with LOTP
+
+Let $$S$$ mean success and $$H$$ mean a heart procedure. Let $$D_H$$ mean Dr. Hibbert performed the procedure and $$D_N$$ mean Dr. Nick performed it.
+
+Keeping doctor identity as background evidence, LOTP gives:
+
+$$
+\begin{aligned}
+P(S\mid D_H)
+={}&P(S\mid D_H,H)P(H\mid D_H)\\
+&+P(S\mid D_H,H^c)P(H^c\mid D_H).
+\end{aligned}
+$$
+
+For Dr. Hibbert:
+
+$$
+P(S\mid D_H)=\frac79\frac9{10}+1\frac1{10}
+=\frac7{10}+\frac1{10}=0.80.
+$$
+
+For Dr. Nick:
+
+$$
+P(S\mid D_N)=\frac15\frac1{10}+\frac9{10}\frac9{10}
+=\frac2{100}+\frac{81}{100}=0.83.
+$$
+
+The weights differ:
+
+$$
+P(H\mid D_H)=0.90,\qquad P(H\mid D_N)=0.10.
+$$
+
+Dr. Hibbert's lower within-doctor rate—the heart rate—receives much more weight than Dr. Nick's heart rate. Dr. Nick's easier-procedure rate receives most of his weight.
+
+#### General probability form
+
+For an outcome $$A$$, a group indicator $$B$$, and a subgroup indicator $$C$$, a reversal can have the form:
+
+$$
+P(A\mid B,C)>P(A\mid B^c,C),
+$$
+
+$$
+P(A\mid B,C^c)>P(A\mid B^c,C^c),
+$$
+
+but:
+
+$$
+P(A\mid B)<P(A\mid B^c).
+$$
+
+All conditioning events must have positive probability. The reversal is possible because the overall probabilities use different subgroup weights, $$P(C\mid B)$$ and $$P(C\mid B^c)$$.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** If one doctor has the higher success rate in each type, adding the records must preserve that advantage.
+
+**Correction:** Adding counts forms a weighted average of rates. The weights are each doctor's own procedure proportions. Different weights can reverse the comparison, even though every within-type comparison points the other way.
+
+</div>
+
+### Part 7 — Supplementary clarification: Compare using common weights
+
+Suppose both doctors are evaluated using the same fraction $$w$$ of heart procedures and $$1-w$$ of Band-Aid removals. Define standardized rates:
+
+$$
+R_H(w)=w\frac79+(1-w)\cdot1,
+$$
+
+$$
+R_N(w)=w\frac15+(1-w)\frac9{10}.
+$$
+
+Their difference is:
+
+$$
+R_H(w)-R_N(w)
+=w\left(\frac79-\frac15\right)+(1-w)\left(1-\frac9{10}\right)
+=\frac{26}{45}w+\frac1{10}(1-w)>0
+$$
+
+for every $$0\le w\le1$$. With common weights, the higher rate in both subgroups produces a higher weighted rate.
+
+For an equal mix, $$w=1/2$$:
+
+$$
+R_H(1/2)=\frac89\approx88.89\%,\qquad
+R_N(1/2)=\frac{11}{20}=55\%.
+$$
+
+These are comparisons for a specified common mix, not the observed overall success rates. Reweighting changes the question being answered.
+
+#### Aggregation and causal interpretation
+
+The observed data establish subgroup rates and an aggregate reversal. They do not, by themselves, establish what would happen if the same person were assigned to either doctor. Patient selection, procedure difficulty, and other differences may matter.
+
+Likewise, finding a reversal does not automatically mean that conditioning on every available variable gives the right comparison. The relevant conditioning depends on the question and how the data were generated.
+
+**Core idea:** Identify whether the desired quantity concerns the observed mix, a common comparison mix, or a causal intervention. Those quantities need not agree.
+
+### Part 8 — Original practice questions
+
+Try these before reading the answers.
+
+1. In standard Monty Hall, the contestant chooses door 1. State the outcome of switching for each possible car location and derive the overall winning probability.
+2. Suppose standard Monty opens door 3. Find $$P(C_1\mid M_3)$$ and $$P(C_2\mid M_3)$$ using the likelihoods of that action.
+3. Monty always reveals a goat and offers a switch, but when the car is behind door 1 he opens door 2 with probability $$3/4$$. Given that he opens door 2, find the switching success probability. Does always switching still win $$2/3$$ of the time overall?
+4. In the blind-host version, condition on door 2 being opened and showing a goat. Find the probability that the car is behind door 3 and explain the difference from standard Monty Hall.
+5. In a ten-door game, a knowledgeable host always opens eight unchosen goat doors. Find the success rates of staying and switching.
+6. Using the hypothetical doctors' records, verify each within-type rate and each overall rate. Identify the weights causing the reversal.
+7. Evaluate both doctors with a common mix of 25% heart procedures and 75% Band-Aid removals. Which standardized rate is higher?
+8. Can an aggregate reversal occur if one group has a strictly higher success rate in every subgroup and both groups use identical subgroup weights? Explain algebraically.
+
+### Part 9 — Practice answers
+
+#### 1. Standard switching
+
+Switching loses if $$C_1$$ occurs and wins if $$C_2$$ or $$C_3$$ occurs. The equally likely car locations give:
+
+$$
+P(W)=0\frac13+1\frac13+1\frac13=\frac23.
+$$
+
+The host's tie-breaking does not affect this overall result because the initial choice is wrong in exactly two of the three cases.
+
+#### 2. Monty opens door 3
+
+The likelihoods are $$P(M_3\mid C_1)=1/2$$, $$P(M_3\mid C_2)=1$$, and $$P(M_3\mid C_3)=0$$. Hence $$P(M_3)=1/2$$ and:
+
+$$
+P(C_1\mid M_3)=\frac{(1/2)(1/3)}{1/2}=\frac13,
+$$
+
+$$
+P(C_2\mid M_3)=\frac{1(1/3)}{1/2}=\frac23.
+$$
+
+Switching to door 2 is preferable.
+
+#### 3. Unequal tie-breaking
+
+Here $$q=3/4$$, so:
+
+$$
+P(C_3\mid M_2)=\frac1{1+3/4}=\frac47.
+$$
+
+The probability of staying successfully after this reveal is $$3/7$$. Overall, switching still succeeds whenever the first choice is wrong, so its unconditional winning probability remains $$2/3$$.
+
+#### 4. A blind goat reveal
+
+The likelihood of opening door 2 and finding a goat is $$1/2$$ under $$C_1$$, zero under $$C_2$$, and $$1/2$$ under $$C_3$$. The two compatible car locations have equal prior probabilities and equal likelihoods. Thus:
+
+$$
+P(C_3\mid E_2)=\frac12.
+$$
+
+Standard Monty is forced to open door 2 when the car is behind door 3; the blind host is not. That difference changes the likelihood of the evidence.
+
+#### 5. Ten doors
+
+Staying wins only when the initial choice is correct, with probability $$1/10$$. Switching wins whenever that choice is wrong, with probability $$9/10$$.
+
+#### 6. Procedure mix and reversal
+
+Heart success rates are $$70/90=7/9$$ and $$2/10=1/5$$. Band-Aid success rates are $$10/10=1$$ and $$81/90=9/10$$. Dr. Hibbert is higher in both.
+
+Overall rates are $$(70+10)/100=0.80$$ and $$(2+81)/100=0.83$$. Heart procedures carry weights $$0.90$$ for Dr. Hibbert and $$0.10$$ for Dr. Nick, reversing the aggregate comparison.
+
+#### 7. Common 25% heart mix
+
+For Dr. Hibbert:
+
+$$
+R_H(1/4)=\frac14\frac79+\frac34
+=\frac{17}{18}\approx94.44\%.
+$$
+
+For Dr. Nick:
+
+$$
+R_N(1/4)=\frac14\frac15+\frac34\frac9{10}
+=\frac{29}{40}=72.5\%.
+$$
+
+Dr. Hibbert has the higher standardized rate.
+
+#### 8. Identical weights
+
+Let subgroup rates be $$a_i>b_i$$, with common weights $$w_i\ge0$$ summing to 1. Then:
+
+$$
+\sum_i w_i a_i-\sum_i w_i b_i
+=\sum_i w_i(a_i-b_i)>0.
+$$
+
+At least one weight is positive, and every positively weighted difference is positive. The common weighted average preserves the ordering, so a reversal cannot occur under these assumptions.
+
+### Part 10 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Standard Monty protocol | Host knows the car location, always reveals an unchosen goat, and always offers a switch |
+| Stay | Wins exactly when the initial choice is correct: $$1/3$$ |
+| Switch | Wins exactly when the initial choice is wrong: $$2/3$$ |
+| Particular reveal | Equal tie-breaking gives $$1/3$$ for the original door and $$2/3$$ for the alternative |
+| Unequal tie-breaking | Changes reveal-specific posteriors; overall always-switch success remains $$2/3$$ |
+| Blind reveal | A randomly opened door that happens to show a goat can yield $$1/2$$–$$1/2$$ |
+| $$N$$-door extension | With deliberate elimination of all but one alternative, switching wins $$(N-1)/N$$ |
+| Simpson reversal | Within-subgroup comparisons and aggregate comparison point in opposite directions |
+| Aggregate rate | Weighted average of subgroup rates, using each group's own case mix |
+| Common-weight comparison | Preserves an advantage present in every positively weighted subgroup |
+| Interpretation | Observed rates, standardized rates, and causal effects answer different questions |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Host protocol <span class="gcat cat-defn">Definition</span></div>
+
+The rules governing which door is opened and whether a switch is offered. These rules determine the likelihoods of the observed evidence.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Switching strategy <span class="gcat cat-defn">Definition</span></div>
+
+Choosing the sole remaining unchosen door after a standard Monty Hall goat reveal.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Simpson’s paradox <span class="gcat cat-defn">Definition</span></div>
+
+A reversal of a comparison after subgroup data are aggregated, despite the subgroup comparisons consistently pointing in the other direction.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Stratum <span class="gcat cat-defn">Definition</span></div>
+
+A subgroup defined by a conditioning variable, such as procedure type. Comparing within strata keeps that variable fixed.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Case mix <span class="gcat cat-defn">Definition</span></div>
+
+The proportions of cases belonging to different subgroups. These proportions serve as the weights in an aggregate rate.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Standardized rate <span class="gcat cat-meas">Measure</span></div>
+
+A weighted average calculated using a specified reference case mix, allowing groups to be compared under common weights.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 6</span>
+  <span class="ref-tag">Monty Hall</span>
+  <span class="ref-tag">Simpson’s paradox</span>
+  <span class="ref-tag">Conditioning</span>
+  <span class="ref-tag">Weighted averages</span>
+</div>
+
+  </div>
+</div>
+
+## Lecture 7 - Gambler’s Ruin and Random Variables
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-7-toggle" onclick="toggleLecture('lecture-7')" aria-expanded="true" aria-controls="lecture-7-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 7</span>
+      <span>
+        <span class="chapter-title">Lecture 7 - Gambler’s Ruin and Random Variables</span>
+        <span class="chapter-subtitle">First-step analysis, difference equations, Bernoulli trials, and success counts</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-7-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-7-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+A repeated game can be understood by conditioning on its first round: the remaining problem has the same structure, with a different starting fortune. This produces a difference equation for the probability of winning the entire game. Random variables then provide a concise way to describe numerical features of an experiment. A single success indicator is Bernoulli; a count of successes in a fixed number of independent, equally likely trials is Binomial.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$N$$ | Fixed total fortune shared by two gamblers |
+| $$i$$ | Gambler A’s initial fortune; B starts with $$N-i$$ |
+| $$p$$, $$q=1-p$$ | Probabilities that A wins or loses one round |
+| $$u_i$$ | Probability A reaches $$N$$ before 0, starting at $$i$$ |
+| $$d_i=u_i-u_{i-1}$$ | Difference between neighboring winning probabilities |
+| $$S$$, $$s\in S$$ | Sample space and an individual outcome |
+| $$X:S\to\mathbb R$$ | Random variable assigning a number to each outcome |
+| $$X(s)$$ | Value of the random variable at outcome $$s$$ |
+| $$\{X=x\}$$ | Event consisting of outcomes mapped to $$x$$ |
+| $$I_A$$ | Indicator of event $$A$$: 1 when it occurs, 0 otherwise |
+| $$X\sim\operatorname{Bern}(p)$$ | Bernoulli distribution with success probability $$p$$ |
+| $$X\sim\operatorname{Bin}(n,p)$$ | Binomial distribution: successes in $$n$$ independent trials |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Translate gambler’s ruin into a random walk with absorbing boundaries.
+- Derive a recurrence by conditioning on the first round.
+- Solve the fair and biased cases using neighboring differences and boundary conditions.
+- Explain why winning one round and winning the whole game have different probabilities.
+- Define a random variable as a function and interpret events such as $$X=x$$.
+- Distinguish a random variable, its observed value, and its distribution.
+- Recognize Bernoulli indicators and the assumptions of a Binomial count.
+- Derive the Binomial probability formula by counting success positions.
+
+### Part 1 — Gambler’s ruin as a random walk
+
+Two gamblers, A and B, repeatedly make $1 bets. A begins with $$i$$ dollars and B with $$N-i$$ dollars. Every round transfers one dollar between them, so the total remains $$N$$. The rounds are independent, and A wins each round with the same probability $$p$$; B wins with probability $$q=1-p$$.
+
+The game ends when one gambler has all the money. A’s fortune moves:
+
+$$
+i\longrightarrow
+\begin{cases}
+i+1,&\text{with probability }p,\\
+i-1,&\text{with probability }q.
+\end{cases}
+$$
+
+The states 0 and $$N$$ are **absorbing**: once reached, the game is over. The question is the probability of reaching $$N$$ before 0, rather than the probability of winning the next round.
+
+Define:
+
+$$
+u_i=P(\text{A reaches }N\text{ before }0\mid\text{A starts at }i).
+$$
+
+At the boundaries:
+
+$$
+u_0=0,\qquad u_N=1.
+$$
+
+**Core idea:** The current fortune summarizes the information needed for future winning probabilities. Past wins and losses do not change future independent round probabilities.
+
+### Part 2 — First-step analysis: condition on one round
+
+For $$1\le i\le N-1$$, the first round either raises A’s fortune to $$i+1$$ or lowers it to $$i-1$$. After either outcome, the remaining game has exactly the original rules with a new starting fortune.
+
+By the law of total probability:
+
+$$
+\begin{aligned}
+u_i
+&=P(\text{eventual win}\mid\text{first round won})p
+ +P(\text{eventual win}\mid\text{first round lost})q\\
+&=pu_{i+1}+qu_{i-1}.
+\end{aligned}
+$$
+
+The starting state $$i$$ is understood as fixed throughout this calculation.
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{u_i=pu_{i+1}+qu_{i-1},\quad 1\le i\le N-1;\qquad u_0=0,\quad u_N=1.}
+$$
+
+</div>
+
+This is a **difference equation**: it relates a sequence at neighboring integer indices. The boundary conditions select the solution describing this particular game.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** A wins the game with probability $$p$$ because that is A’s chance of winning a bet.
+
+**Correction:** $$p$$ concerns one round. $$u_i$$ concerns an entire path until absorption and depends on the starting fortune and total fortune as well as $$p$$.
+
+</div>
+
+### Part 3 — Solve the fair game
+
+When $$p=q=1/2$$:
+
+$$
+2u_i=u_{i+1}+u_{i-1}.
+$$
+
+Rearrange:
+
+$$
+u_{i+1}-u_i=u_i-u_{i-1}.
+$$
+
+Every neighboring difference is the same. Therefore $$u_i=a+bi$$. The boundary $$u_0=0$$ gives $$a=0$$, and $$u_N=1$$ gives $$b=1/N$$.
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{u_i=\frac{i}{N}\qquad\text{when }p=\frac12.}
+$$
+
+</div>
+
+<div class="example-block" markdown="1">
+<div class="ex-title">A fair game with unequal fortunes <span class="ex-pill pill-num">Worked example</span></div>
+
+A starts with $3 and B with $7, so $$N=10$$. Each round is fair, but:
+
+$$
+P(\text{A wins the whole game})=u_3=\frac3{10},\qquad
+P(\text{B wins})=\frac7{10}.
+$$
+
+A has fewer dollars available to absorb losses before bankruptcy. Fair individual bets do not make the two eventual winning probabilities equal when the initial fortunes differ.
+
+<div class="ex-lesson">The winning probability equals the initial share of the total fortune in the fair game.</div>
+</div>
+
+### Part 4 — Solve the biased game
+
+Assume $$0<p<1$$ and set $$r=q/p$$. Because $$p+q=1$$, the recurrence can be rewritten as:
+
+$$
+p(u_{i+1}-u_i)=q(u_i-u_{i-1}).
+$$
+
+With $$d_i=u_i-u_{i-1}$$, this becomes:
+
+$$
+d_{i+1}=rd_i,\qquad d_i=d_1r^{i-1}.
+$$
+
+Starting from $$u_0=0$$, add the differences:
+
+$$
+u_i=d_1(1+r+\cdots+r^{i-1}).
+$$
+
+The other boundary condition gives:
+
+$$
+1=u_N=d_1(1+r+\cdots+r^{N-1}).
+$$
+
+Divide these equations. For $$r\ne1$$, evaluate the geometric sums:
+
+$$
+u_i=\frac{1+r+\cdots+r^{i-1}}{1+r+\cdots+r^{N-1}}
+=\frac{1-r^i}{1-r^N}.
+$$
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{
+u_i=
+\begin{cases}
+\displaystyle\frac{1-(q/p)^i}{1-(q/p)^N},&p\ne\frac12,\quad 0<p<1,\\[6pt]
+\displaystyle\frac{i}{N},&p=\frac12.
+\end{cases}}
+$$
+
+</div>
+
+For an interior starting state, $$p=0$$ gives $$u_i=0$$ and $$p=1$$ gives $$u_i=1$$ directly. The boundaries remain $$u_0=0$$ and $$u_N=1$$ in every case.
+
+#### Check the transition to a fair game
+
+The geometric-sum form stays meaningful as $$r\to1$$: its numerator approaches $$i$$ and denominator approaches $$N$$. Thus the biased formula approaches $$i/N$$. The apparent $$0/0$$ in the power formula at $$p=1/2$$ reflects its algebraic form, not an undefined winning probability.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Equal starting fortunes with biased rounds <span class="ex-pill pill-num">Worked example</span></div>
+
+Let $$N=4$$ and $$i=2$$. If $$p=2/3$$, then $$q=1/3$$ and $$r=1/2$$. Hence:
+
+$$
+u_2=\frac{1-(1/2)^2}{1-(1/2)^4}
+=\frac{3/4}{15/16}=\frac45.
+$$
+
+A’s probability of winning one round is $$2/3$$, while A’s probability of winning the whole game is $$4/5$$. If instead $$p=1/3$$, then $$r=2$$ and:
+
+$$
+u_2=\frac{1-2^2}{1-2^4}=\frac{-3}{-15}=\frac15.
+$$
+
+The negative numerator and denominator cancel; the probability is positive.
+
+<div class="ex-lesson">Repeated opportunities and absorbing boundaries transform a per-round advantage into a different eventual winning probability.</div>
+</div>
+
+### Part 5 — Supplementary clarification: Why the finite game ends
+
+An arbitrarily long game is possible, but the probability of continuing forever is zero.
+
+For $$0<p<1$$, from any interior state, $$N$$ consecutive wins would force absorption at $$N$$ within those rounds. The probability of that run of potential round outcomes is $$p^N>0$$. Thus, conditional on any history that has not yet ended, the probability of surviving the next $$N$$ rounds is at most $$1-p^N$$.
+
+After $$m$$ such blocks:
+
+$$
+P(\text{not absorbed after }mN\text{ rounds})\le(1-p^N)^m\longrightarrow0.
+$$
+
+At $$p=0$$ or $$p=1$$, absorption occurs deterministically within $$N$$ rounds. Consequently, in this finite game:
+
+$$
+P(\text{A wins})+P(\text{B wins})=1.
+$$
+
+This argument establishes eventual absorption; it does not calculate the expected duration.
+
+### Part 6 — A random variable is a numerical function
+
+A **random variable** is a function assigning a real number to every outcome in the sample space:
+
+$$
+X:S\longrightarrow\mathbb R.
+$$
+
+The experiment selects a random outcome $$s$$ according to the probability model. The rule $$X$$ is fixed; its realized value is $$X(s)$$. An outcome need not be a number: it may be a sequence of coin tosses, a path of fortunes, or another experimental record.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-7-textbook-fig-3-1-random-variable.png" alt="A fixed random-variable function maps six sample outcomes to the numerical values zero, one, and four; multiple outcomes can share a value." style="display: block; width: 100%; max-width: 720px; height: auto; margin: 0 auto;">
+  <figcaption>The randomness comes from selecting an outcome; the numerical assignment is fixed. Reproduced from Joseph K. Blitzstein and Jessica Hwang, <em>Introduction to Probability</em>, Figure 3.1, p. 92.</figcaption>
+</figure>
+
+#### Worked example: Two fair coin tosses
+
+Assume independent tosses. The four outcomes $$HH,HT,TH,TT$$ each have probability $$1/4$$. Define $$X$$ as the number of Heads, $$Y$$ as the number of Tails, and $$I$$ as the indicator that the first toss is Heads.
+
+| Outcome $$s$$ | $$X(s)$$ | $$Y(s)$$ | $$I(s)$$ |
+|---|---|---|---|
+| $$HH$$ | 2 | 0 | 1 |
+| $$HT$$ | 1 | 1 | 1 |
+| $$TH$$ | 1 | 1 | 0 |
+| $$TT$$ | 0 | 2 | 0 |
+
+The relationship $$Y=2-X$$ holds outcome by outcome. The statement $$X=1$$ describes the event $$\{HT,TH\}$$, so:
+
+$$
+P(X=1)=P(\{HT,TH\})=\frac12.
+$$
+
+In general:
+
+$$
+\{X=x\}=\{s\in S:X(s)=x\}.
+$$
+
+**Core idea:** A numerical value can summarize several distinct outcomes. Its probability is the combined probability of all outcomes mapped to it.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** The three possible Head counts, 0, 1, and 2, are equally likely.
+
+**Correction:** They collect different numbers of equally likely outcomes. Their probabilities are $$1/4,1/2,1/4$$, respectively. Equal likelihood of sample outcomes does not automatically transfer to numerical summaries.
+
+</div>
+
+#### Random variable versus distribution
+
+A distribution specifies the probabilities associated with a random variable’s possible values. In this example, $$X$$ and $$Y$$ have the same distribution: each has probabilities $$1/4,1/2,1/4$$ at 0, 1, and 2. They are different functions, since $$X(HH)=2$$ but $$Y(HH)=0$$.
+
+Knowing a distribution does not identify the outcome-by-outcome function or the dependence between two random variables. Here $$X+Y=2$$ always, so the counts are dependent despite having identical distributions.
+
+#### Return to the gambling game
+
+Let $$X_t$$ be A’s fortune after $$t$$ rounds, keeping the fortune fixed after absorption. Then B’s fortune is $$N-X_t$$, and the fortune difference is $$2X_t-N$$. These are numerical functions of the same game path. Random-variable notation expresses their relationship directly.
+
+### Part 7 — Bernoulli: encode whether an event occurs
+
+For an event $$A$$, its **indicator** is:
+
+$$
+I_A(s)=
+\begin{cases}
+1,&s\in A,\\
+0,&s\notin A.
+\end{cases}
+$$
+
+If $$P(A)=p$$, then:
+
+$$
+P(I_A=1)=p,\qquad P(I_A=0)=1-p.
+$$
+
+We write $$I_A\sim\operatorname{Bern}(p)$$. The symbol $$\sim$$ means “is distributed as”; it does not mean equality of functions.
+
+“Success” is simply the outcome labeled 1. It could represent Heads, a correct answer, or the occurrence of a defect. A Bernoulli model describes one binary indicator even if the underlying experiment has many possible outcomes.
+
+For example, let $$J$$ indicate that A wins the entire gambling game starting from $$i$$. Then $$J\sim\operatorname{Bern}(u_i)$$. The indicator of winning one round has parameter $$p$$ instead. Both are Bernoulli, but they summarize different events.
+
+The usual nondegenerate case has $$0<p<1$$. Allowing $$p=0$$ or $$p=1$$ gives a constant random variable.
+
+### Part 8 — Binomial: count independent successes
+
+Suppose there are:
+
+1. A fixed number $$n$$ of trials.
+2. A success/failure outcome for each trial.
+3. Independent trials.
+4. The same success probability $$p$$ in every trial.
+
+If $$I_j$$ indicates success on trial $$j$$, then:
+
+$$
+X=I_1+\cdots+I_n
+$$
+
+counts successes, and $$X\sim\operatorname{Bin}(n,p)$$. One trial is the special case $$\operatorname{Bin}(1,p)=\operatorname{Bern}(p)$$ in distribution.
+
+#### Derive the probability of exactly $$k$$ successes
+
+One specified sequence containing $$k$$ successes and $$n-k$$ failures has probability:
+
+$$
+p^k(1-p)^{n-k}.
+$$
+
+There are $$\binom nk$$ sequences of this kind: choose the $$k$$ positions occupied by successes. The sequences are disjoint, so their probabilities add:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{P(X=k)=\binom nk p^k(1-p)^{n-k},\qquad k=0,1,\ldots,n.}
+$$
+
+</div>
+
+The probability is zero outside these integer values. This function is called the **probability mass function (PMF)**. For $$0<p<1$$, all integers from 0 through $$n$$ are possible with positive probability. At the endpoints, $$p=0$$ concentrates at 0 and $$p=1$$ concentrates at $$n$$.
+
+The binomial theorem verifies that the probabilities sum to 1:
+
+$$
+\sum_{k=0}^n\binom nk p^k(1-p)^{n-k}
+=(p+(1-p))^n=1.
+$$
+
+This is the probability formula needed for the Binomial story; a broader treatment of PMFs and CDFs follows in the next lecture.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Supplementary numerical example: Four independent attempts <span class="ex-pill pill-num">Worked example</span></div>
+
+Suppose four attempts are independent and each succeeds with probability $$1/3$$. Let $$X$$ count successes. Then $$X\sim\operatorname{Bin}(4,1/3)$$, and:
+
+$$
+P(X=2)=\binom42\left(\frac13\right)^2\left(\frac23\right)^2
+=6\frac19\frac49=\frac8{27}.
+$$
+
+The sequence success, success, failure, failure is only one of six arrangements with two successes. Its probability is $$4/81$$, while the event $$X=2$$ combines all six.
+
+For at least one success, use the complement:
+
+$$
+P(X\ge1)=1-P(X=0)=1-\left(\frac23\right)^4=\frac{65}{81}.
+$$
+
+<div class="ex-lesson">The powers describe a specified success/failure pattern; the binomial coefficient counts how many patterns give the requested count.</div>
+</div>
+
+### Part 9 — Misconceptions about success counts
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** Any count of successes in $$n$$ trials is Binomial.
+
+**Correction:** Independence and a common success probability are part of the model. If trials have different success probabilities, or one trial’s outcome changes the others, the Binomial formula is not automatically valid.
+
+</div>
+
+#### Supplementary counterexample: Identical probabilities without independence
+
+Toss one fair coin and copy its result into two trial records. Each record individually has success probability $$1/2$$, but the records are perfectly dependent. The total success count is 0 or 2, each with probability $$1/2$$, and never 1.
+
+A $$\operatorname{Bin}(2,1/2)$$ count would instead assign probability $$1/2$$ to 1. Identical Bernoulli marginal distributions do not establish independent trials.
+
+#### A fixed number of rounds versus an absorbing game
+
+If independent potential gambling rounds are generated for a fixed $$n$$, their win count is $$\operatorname{Bin}(n,p)$$. The actual gambler’s ruin game stops at a random time determined by its outcomes. The number of wins before bankruptcy or total victory is therefore not justified as a fixed-$$n$$ Binomial count.
+
+**Core idea:** Identify what is counted and when observation stops. The distribution story depends on the experiment’s rules.
+
+### Part 10 — Original practice questions
+
+Try these before reading the answers.
+
+1. Derive the first-step recurrence and boundary conditions for gambler’s ruin. Which assumption lets you reuse $$u_{i+1}$$ and $$u_{i-1}$$ after the first round?
+2. In a fair game, A starts with $4 and B with $6. Find both eventual winning probabilities.
+3. Let $$N=3$$, $$i=1$$, and $$p=2/3$$. Calculate A’s winning probability and compare it with the per-round probability.
+4. For $$N=4$$ and $$p=1/3$$, calculate $$u_1,u_2,u_3$$ and verify the recurrence at $$i=2$$.
+5. In two independent fair coin tosses, let $$X$$ count Heads and $$I$$ indicate that the first toss is Heads. Identify the outcomes in $$\{X=1,I=1\}$$ and calculate its probability.
+6. Define the indicator of getting at least one Head in two independent fair tosses. Give its Bernoulli parameter.
+7. For $$X\sim\operatorname{Bin}(5,1/2)$$, find $$P(X=2)$$ and $$P(X\ge1)$$. Explain the counting factor in the first calculation.
+8. Two records copy the same fair coin toss. Is their success count $$\operatorname{Bin}(2,1/2)$$? Give its actual distribution.
+9. A game ends when a player goes broke. Explain why the number of rounds won before the game ends does not automatically follow a fixed-$$n$$ Binomial distribution.
+
+### Part 11 — Practice answers
+
+#### 1. Recurrence and boundaries
+
+Conditioning on the first-round outcome gives $$u_i=pu_{i+1}+qu_{i-1}$$ for interior states. Independence and the unchanged round probability make the remaining game equivalent to a fresh game at the new fortune. A has already lost at 0 and already won at $$N$$, giving $$u_0=0$$ and $$u_N=1$$.
+
+#### 2. Fair fortunes
+
+Here $$N=10$$. A wins with probability $$u_4=4/10=2/5$$. Since the finite game ends with probability 1, B wins with probability $$1-2/5=3/5$$.
+
+#### 3. Biased game from one dollar
+
+With $$r=q/p=1/2$$:
+
+$$
+u_1=\frac{1-1/2}{1-(1/2)^3}=\frac{1/2}{7/8}=\frac47.
+$$
+
+This is less than $$2/3$$. A has a favorable per-round probability but only one dollar of starting fortune; eventual victory requires reaching $3 before losing that dollar.
+
+#### 4. Check a biased recurrence
+
+Here $$r=2$$ and $$1-r^4=-15$$. Therefore:
+
+$$
+u_1=\frac1{15},\qquad u_2=\frac3{15}=\frac15,\qquad u_3=\frac7{15}.
+$$
+
+At $$i=2$$:
+
+$$
+pu_3+qu_1=\frac13\frac7{15}+\frac23\frac1{15}
+=\frac9{45}=\frac15=u_2.
+$$
+
+#### 5. Intersect numerical events
+
+Exactly one Head with the first toss Heads occurs only for $$HT$$. Hence $$\{X=1,I=1\}=\{HT\}$$ and its probability is $$1/4$$.
+
+#### 6. Bernoulli indicator
+
+Let $$J=1$$ for $$HH,HT,TH$$ and 0 for $$TT$$. Then $$P(J=1)=3/4$$, so $$J\sim\operatorname{Bern}(3/4)$$. A two-toss experiment can still yield a Bernoulli random variable when the summary is binary.
+
+#### 7. Binomial probabilities
+
+$$
+P(X=2)=\binom52\left(\frac12\right)^5=\frac{10}{32}=\frac5{16}.
+$$
+
+The factor 10 counts the choices of two success positions among five trials. Also:
+
+$$
+P(X\ge1)=1-P(X=0)=1-\frac1{32}=\frac{31}{32}.
+$$
+
+#### 8. Copied records
+
+The records are dependent. Their count has probabilities $$P(X=0)=1/2$$, $$P(X=2)=1/2$$, and $$P(X=1)=0$$, which differs from the Binomial distribution.
+
+#### 9. Random stopping
+
+The number of trials is determined by the game’s outcomes, rather than fixed in advance. Independence of potential round outcomes alone does not supply the fixed-trial Binomial story for a count taken up to that stopping time.
+
+### Part 12 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Gambler’s ruin | Fortune moves by one dollar until reaching 0 or $$N$$ |
+| One round versus whole game | $$p$$ and $$u_i$$ describe different events |
+| First-step recurrence | $$u_i=pu_{i+1}+qu_{i-1}$$ |
+| Boundaries | $$u_0=0$$ and $$u_N=1$$ |
+| Fair game | $$u_i=i/N$$ |
+| Biased game | $$u_i=[1-(q/p)^i]/[1-(q/p)^N]$$ for $$0<p<1$$, $$p\ne1/2$$ |
+| Neighboring differences | $$d_{i+1}=(q/p)d_i$$ |
+| Finite-game termination | Absorption occurs with probability 1 |
+| Random variable | A fixed function $$X:S\to\mathbb R$$ |
+| Numerical event | $$\{X=x\}=\{s:X(s)=x\}$$ |
+| Same distribution | Same value probabilities; functions may differ |
+| Bernoulli | Indicator with probabilities $$p$$ at 1 and $$1-p$$ at 0 |
+| Binomial story | Fixed $$n$$, independent binary trials, common $$p$$ |
+| Binomial formula | $$P(X=k)=\binom nk p^k(1-p)^{n-k}$$ |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Absorbing boundary <span class="gcat cat-defn">Definition</span></div>
+
+A state at which the process stops or remains permanently. In gambler’s ruin, these are fortunes 0 and $$N$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">First-step analysis <span class="gcat cat-defn">Definition</span></div>
+
+Conditioning on the first transition to express a probability in terms of the same problem at new starting states.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Difference equation <span class="gcat cat-defn">Definition</span></div>
+
+An equation relating a sequence at different integer indices. Boundary conditions determine the desired solution here.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Random variable <span class="gcat cat-defn">Definition</span></div>
+
+A real-valued function on the sample space. Its realized value depends on the outcome selected by the experiment.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Distribution <span class="gcat cat-defn">Definition</span></div>
+
+The probabilities of the numerical events associated with a random variable.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Indicator <span class="gcat cat-defn">Definition</span></div>
+
+A random variable equal to 1 when a specified event occurs and 0 otherwise.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Bernoulli distribution <span class="gcat cat-defn">Definition</span></div>
+
+The distribution of a success indicator, with probability $$p$$ at 1 and $$1-p$$ at 0.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Binomial distribution <span class="gcat cat-defn">Definition</span></div>
+
+The distribution of the number of successes in a fixed number $$n$$ of independent Bernoulli trials sharing success probability $$p$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Probability mass function <span class="gcat cat-meas">Measure</span></div>
+
+For a discrete random variable, the function assigning $$P(X=x)$$ to each possible numerical value $$x$$.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 7</span>
+  <span class="ref-tag">Gambler’s ruin</span>
+  <span class="ref-tag">First-step analysis</span>
+  <span class="ref-tag">Random variables</span>
+  <span class="ref-tag">Bernoulli</span>
+  <span class="ref-tag">Binomial</span>
+</div>
+
+  </div>
+</div>
+
+## Lecture 8 - Random Variables and Their Distributions
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-8-toggle" onclick="toggleLecture('lecture-8')" aria-expanded="true" aria-controls="lecture-8-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 8</span>
+      <span>
+        <span class="chapter-title">Lecture 8 - Random Variables and Their Distributions</span>
+        <span class="chapter-subtitle">Probability mass, cumulative probability, and sampling without replacement</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-8-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-8-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+A random variable summarizes an outcome numerically; its distribution describes the probabilities of those numerical values. For a discrete random variable, the PMF gives probability at each value and the CDF accumulates probability up to a threshold. Their connection makes the jumps of a CDF meaningful. Sampling without replacement gives a different success-count story from independent trials: the Hypergeometric distribution accounts for the finite supply of successes and failures.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$X$$, $$x$$ | Random variable and a numerical value or threshold |
+| $$\{X=x\}$$ | Event of outcomes mapped to $$x$$ |
+| $$p_X(x)$$ | PMF: $$P(X=x)$$ for a discrete random variable |
+| $$F_X(x)$$ | CDF: $$P(X\le x)$$ for any random variable |
+| $$F_X(a^-)$$ | Left limit at $$a$$: $$P(X<a)$$ |
+| $$\operatorname{supp}(X)$$ | Discrete support: values with positive probability |
+| $$X\sim\operatorname{Bin}(n,p)$$ | Success count in $$n$$ independent trials with common probability $$p$$ |
+| $$w,b$$ | Numbers of success-type and failure-type items in a population |
+| $$n$$ | Number of items sampled without replacement |
+| $$X\sim\operatorname{HGeom}(w,b,n)$$ | Number of success-type items in a uniform sample of size $$n$$ |
+| $$\binom ak$$ | Number of subsets of size $$k$$ from $$a$$ distinct items |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Distinguish a random variable from its distribution and its realized value.
+- Identify the support of a discrete random variable and validate a PMF.
+- Obtain probabilities by summing the relevant PMF values.
+- Construct a CDF and recover point probabilities from its jumps.
+- Use the correct CDF formulas for strict and non-strict inequalities.
+- Explain the difference between discrete mass and continuous probability.
+- Derive the Hypergeometric PMF, including its feasible range.
+- Recognize sampling without replacement and distinguish it from the Binomial story.
+
+### Part 1 — Outcomes, random variables, and distributions
+
+A random variable is a fixed numerical function of the outcome of an experiment. Its **distribution** describes the probabilities of events involving its values. Several distinct outcomes may produce the same value, and two different random variables may have the same distribution.
+
+For two independent fair coin tosses, let $$X$$ count Heads and $$Y$$ count Tails. Then $$Y=2-X$$, and both variables have probabilities $$1/4,1/2,1/4$$ at 0, 1, and 2. Yet $$X(HH)=2$$ and $$Y(HH)=0$$: they are different functions.
+
+The notation $$P(X=x)$$ refers to an event:
+
+$$
+\{X=x\}=\{s\in S:X(s)=x\}.
+$$
+
+Writing $$P(X)$$ alone does not identify an event whose probability is being requested.
+
+**Core idea:** The distribution retains the probabilities of numerical summaries. It need not retain the full experimental record or identify the function that created the summary.
+
+### Part 2 — Probability mass functions
+
+A random variable is **discrete** if its probability is concentrated on a finite or countably infinite set of values. These values need not be integers. For example, a variable taking values $$-2,1/2,\sqrt2$$ is discrete.
+
+For a discrete random variable:
+
+$$
+p_X(x)=P(X=x).
+$$
+
+Its support is the set of values at which $$p_X(x)>0$$. A valid PMF must be nonnegative and sum to 1 over the distinct support values:
+
+$$
+p_X(x)\ge0,\qquad \sum_{x\in\operatorname{supp}(X)}p_X(x)=1.
+$$
+
+The events $$\{X=x\}$$ are disjoint and exhaust the possible values with probability 1. Thus for a set $$A$$ of numerical values:
+
+$$
+P(X\in A)=\sum_{x\in A\cap\operatorname{supp}(X)}p_X(x).
+$$
+
+A PMF plot shows probability through the heights of the mass markers or vertical lines. Summing those heights gives total probability; ordinary area beneath the connecting lines is not the relevant quantity.
+
+#### Worked example: The sum of two dice
+
+Roll two independent fair six-sided dice and let $$T$$ be their sum. The 36 ordered outcomes are equally likely. A total of 2 comes only from $$(1,1)$$; a total of 7 comes from six outcomes, $$(1,6),(2,5),\ldots,(6,1)$$.
+
+| $$t$$ | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| $$36p_T(t)$$ | 1 | 2 | 3 | 4 | 5 | 6 | 5 | 4 | 3 | 2 | 1 |
+
+The support is $$\{2,3,\ldots,12\}$$. The numerators sum to 36, verifying normalization. For example:
+
+$$
+P(T\le4)=\frac{1+2+3}{36}=\frac16.
+$$
+
+**Core idea:** Equally likely ordered dice outcomes produce unequal probabilities for the sum because different totals collect different numbers of outcomes.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** The sum has eleven possible values, so each has probability $$1/11$$.
+
+**Correction:** Counting possible values does not establish equal probability. Count or otherwise measure the underlying outcomes mapped to each value.
+
+</div>
+
+### Part 3 — Cumulative distribution functions
+
+The **cumulative distribution function** is:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{F_X(x)=P(X\le x).}
+$$
+
+</div>
+
+The CDF is defined at every real threshold $$x$$, including thresholds that the random variable cannot attain. For a discrete variable:
+
+$$
+F_X(x)=\sum_{t\le x}p_X(t),
+$$
+
+where only support values contribute. A threshold of 1.5 can therefore have a nonzero CDF value even when $$P(X=1.5)=0$$.
+
+#### Worked example: Four fair coin tosses
+
+Let $$X\sim\operatorname{Bin}(4,1/2)$$. The PMF is:
+
+$$
+p_X(k)=\frac{\binom4k}{16},\qquad k=0,1,2,3,4.
+$$
+
+| $$k$$ | 0 | 1 | 2 | 3 | 4 |
+|---|---|---|---|---|---|
+| $$p_X(k)$$ | $$1/16$$ | $$4/16$$ | $$6/16$$ | $$4/16$$ | $$1/16$$ |
+| $$F_X(k)$$ | $$1/16$$ | $$5/16$$ | $$11/16$$ | $$15/16$$ | $$1$$ |
+
+The full CDF, including noninteger thresholds, is:
+
+$$
+F_X(x)=
+\begin{cases}
+0,&x<0,\\
+1/16,&0\le x<1,\\
+5/16,&1\le x<2,\\
+11/16,&2\le x<3,\\
+15/16,&3\le x<4,\\
+1,&x\ge4.
+\end{cases}
+$$
+
+Hence $$F_X(1.5)=5/16$$ because the allowed counts up to 1.5 are 0 and 1. At $$x=2$$, the CDF includes the probability at 2 and rises to $$11/16$$.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-8-textbook-fig-3-8-pmf-cdf.png" alt="Binomial four-trial fair-coin PMF beside its step CDF. The PMF height at two equals the CDF jump at two; closed dots mark the included right-hand values." style="display: block; width: 100%; max-width: 800px; height: auto; margin: 0 auto;">
+  <figcaption>Probability at a point becomes the height of a CDF jump. Reproduced from Joseph K. Blitzstein and Jessica Hwang, <em>Introduction to Probability</em>, Figure 3.8, p. 109.</figcaption>
+</figure>
+
+**Core idea:** A PMF assigns probability separately; a CDF accumulates it. They describe the same discrete distribution in different forms.
+
+### Part 4 — CDF properties and endpoint probabilities
+
+Every CDF has three defining properties:
+
+- **Nondecreasing:** If $$a\le b$$, then $$F_X(a)\le F_X(b)$$ because $$\{X\le a\}\subseteq\{X\le b\}$$.
+- **Right-continuous:** $$F_X(a)=\lim_{x\downarrow a}F_X(x)$$. At a jump, the value includes the mass at the jump location.
+- **Correct limits:** $$F_X(x)\to0$$ as $$x\to-\infty$$ and $$F_X(x)\to1$$ as $$x\to\infty$$.
+
+A CDF can have flat regions and jumps; it need not increase strictly or be continuous everywhere.
+
+Define the left limit $$F_X(a^-)=\lim_{x\uparrow a}F_X(x)=P(X<a)$$. Then:
+
+$$
+P(X=a)=F_X(a)-F_X(a^-).
+$$
+
+For an integer-valued variable and integer $$k$$, this simplifies to:
+
+$$
+P(X=k)=F_X(k)-F_X(k-1).
+$$
+
+The integer formula should not be applied blindly to a variable with noninteger support.
+
+#### Supplementary clarification: Which endpoints are included?
+
+For $$a<b$$:
+
+| Requested probability | CDF expression |
+|---|---|
+| $$P(a<X\le b)$$ | $$F_X(b)-F_X(a)$$ |
+| $$P(a\le X\le b)$$ | $$F_X(b)-F_X(a^-)$$ |
+| $$P(X>a)$$ | $$1-F_X(a)$$ |
+| $$P(X\ge a)$$ | $$1-F_X(a^-)$$ |
+
+For the four-toss example:
+
+$$
+P(1<X\le3)=\frac{15}{16}-\frac5{16}=\frac58,
+$$
+
+whereas:
+
+$$
+P(1\le X\le3)=\frac{15}{16}-\frac1{16}=\frac78.
+$$
+
+The difference is exactly $$P(X=1)=4/16$$.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** $$P(X\ge a)=1-F_X(a)$$ for every random variable.
+
+**Correction:** That expression gives $$P(X>a)$$. If there is positive probability at $$a$$, including or excluding the endpoint changes the answer.
+
+</div>
+
+### Part 5 — Discrete and continuous probability
+
+A discrete variable has probability mass at individual values. A continuous distribution has a continuous CDF and no positive probability at a single point. Its probability is assigned to ranges of values.
+
+For example, a continuously uniform location on $$[0,1]$$ has:
+
+$$
+F_X(x)=
+\begin{cases}
+0,&x<0,\\
+x,&0\le x\le1,\\
+1,&x>1.
+\end{cases}
+$$
+
+Then $$P(1/4<X\le3/4)=1/2$$, but $$P(X=1/2)=0$$. Observing a particular value does not require that value to have positive point probability.
+
+The CDF works for both discrete and continuous distributions. A PMF describes discrete probability mass; continuous distributions with densities are treated in more detail later. Mixed distributions can contain both point masses and a continuous component.
+
+**Core idea:** Zero probability at each individual point is compatible with positive probability over an interval containing infinitely many points.
+
+### Part 6 — Binomial counts and combining trials
+
+For $$n$$ independent Bernoulli trials with common success probability $$p$$:
+
+$$
+X=I_1+\cdots+I_n\sim\operatorname{Bin}(n,p),\qquad
+P(X=k)=\binom nk p^k(1-p)^{n-k}.
+$$
+
+The story, indicator sum, and PMF are three descriptions of the same model.
+
+#### Supplementary connection: Add independent Binomial counts
+
+If $$X\sim\operatorname{Bin}(n,p)$$ and $$Y\sim\operatorname{Bin}(m,p)$$ are independent, then:
+
+$$
+X+Y\sim\operatorname{Bin}(n+m,p).
+$$
+
+Construct the two independent counts using separate blocks of independent Bernoulli trials. Combining the blocks gives $$n+m$$ trials with the same success probability.
+
+Conditioning on $$X=j$$ gives the same result algebraically. With impossible terms interpreted as zero:
+
+$$
+\begin{aligned}
+P(X+Y=k)
+&=\sum_jP(X=j)P(Y=k-j)\\
+&=p^k(1-p)^{n+m-k}\sum_j\binom nj\binom m{k-j}\\
+&=\binom{n+m}{k}p^k(1-p)^{n+m-k}.
+\end{aligned}
+$$
+
+The last step uses Vandermonde’s identity. Independence and a common $$p$$ are essential for this conclusion; two Binomial marginal distributions alone do not establish it.
+
+### Part 7 — Hypergeometric: sampling without replacement
+
+A population contains $$w$$ success-type items and $$b$$ failure-type items. Choose a sample of size $$n$$ uniformly without replacement, meaning every subset of size $$n$$ is equally likely. Let $$X$$ count success-type items in the sample:
+
+$$
+X\sim\operatorname{HGeom}(w,b,n).
+$$
+
+Assume $$w,b,n$$ are nonnegative integers, $$w+b>0$$, and $$0\le n\le w+b$$.
+
+There are $$\binom{w+b}{n}$$ possible samples. A sample with exactly $$k$$ successes must contain $$k$$ of the $$w$$ success items and $$n-k$$ of the $$b$$ failure items. Therefore:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{P(X=k)=\frac{\binom wk\binom b{n-k}}{\binom{w+b}n}.}
+$$
+
+</div>
+
+The feasible integer values satisfy:
+
+$$
+0\le k\le w,\qquad 0\le n-k\le b,
+$$
+
+or equivalently:
+
+$$
+\boxed{\max(0,n-b)\le k\le\min(n,w).}
+$$
+
+The PMF is zero outside this range. If the sample is larger than the supply of failures, some successes are unavoidable. If the success supply is smaller than the sample, the count cannot exceed that supply.
+
+Vandermonde’s identity verifies normalization:
+
+$$
+\sum_k\binom wk\binom b{n-k}=\binom{w+b}n.
+$$
+
+**Core idea:** Count the successful sample subsets, then divide by all equally likely sample subsets. The finite supplies determine both the numerator and the feasible range.
+
+#### Supplementary numerical example: Three items from a small urn
+
+An urn contains four white balls and two black balls. Select three uniformly without replacement, and let $$X$$ count white balls. Then $$X\sim\operatorname{HGeom}(4,2,3)$$.
+
+Since only two black balls exist, at least one white ball must be selected. The support is $$\{1,2,3\}$$. There are $$\binom63=20$$ samples:
+
+| $$k$$ | Successful subsets | $$P(X=k)$$ |
+|---|---|---|
+| 1 | $$\binom41\binom22=4$$ | $$1/5$$ |
+| 2 | $$\binom42\binom21=12$$ | $$3/5$$ |
+| 3 | $$\binom43\binom20=4$$ | $$1/5$$ |
+
+Thus $$P(X\ge2)=3/5+1/5=4/5$$. Its CDF is:
+
+$$
+F_X(x)=
+\begin{cases}
+0,&x<1,\\
+1/5,&1\le x<2,\\
+4/5,&2\le x<3,\\
+1,&x\ge3.
+\end{cases}
+$$
+
+The CDF jumps recover the three PMF values, connecting the sampling story to both distribution representations.
+
+### Part 8 — Why Hypergeometric is different from Binomial
+
+With replacement, each draw from the urn has success probability $$w/(w+b)$$ and, under independent random draws, the success count is:
+
+$$
+\operatorname{Bin}\left(n,\frac{w}{w+b}\right).
+$$
+
+Without replacement, successive outcomes are dependent. In the four-white, two-black urn:
+
+$$
+P(\text{second white}\mid\text{first white})=\frac35,
+$$
+
+but:
+
+$$
+P(\text{second white}\mid\text{first black})=\frac45.
+$$
+
+The second draw’s unconditional white probability is still $$4/6$$ by symmetry. Equal marginal success probabilities do not imply independence.
+
+| Feature | Binomial | Hypergeometric |
+|---|---|---|
+| Basic experiment | Independent binary trials | Uniform sample from a finite population |
+| Urn interpretation | With replacement | Without replacement |
+| Dependence | Trials independent | Draws generally dependent |
+| Parameters | $$n,p$$ | $$w,b,n$$ |
+| Support | $$0,\ldots,n$$ for $$0<p<1$$ | $$\max(0,n-b),\ldots,\min(n,w)$$ |
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** The initial white-ball proportion is $$2/3$$, so three draws without replacement give $$\operatorname{Bin}(3,2/3)$$.
+
+**Correction:** The composition changes after each draw. The Hypergeometric model gives $$P(X=3)=1/5$$, while the with-replacement Binomial model gives $$(2/3)^3=8/27$$. They describe different experiments.
+
+</div>
+
+### Part 9 — Supplementary textbook applications
+
+#### Aces in a five-card hand
+
+A uniformly chosen five-card hand from a standard 52-card deck contains four possible aces and 48 non-aces. If $$X$$ counts aces, then:
+
+$$
+X\sim\operatorname{HGeom}(4,48,5),\qquad
+P(X=3)=\frac{\binom43\binom{48}2}{\binom{52}5}
+=\frac{4512}{2598960}\approx0.001736.
+$$
+
+This is approximately $$0.1736\%$$. Selecting which three aces and which two non-aces gives the favorable hands; ordering within a hand is irrelevant.
+
+#### Tagged animals in a recapture sample
+
+A population has $$N$$ animals, of which $$m$$ have been tagged. A later sample of $$n$$ distinct animals is uniformly selected. If $$X$$ counts tagged animals in the sample:
+
+$$
+X\sim\operatorname{HGeom}(m,N-m,n).
+$$
+
+For $$N=20$$, $$m=5$$, and $$n=4$$:
+
+$$
+P(X=2)=\frac{\binom52\binom{15}2}{\binom{20}4}
+=\frac{1050}{4845}=\frac{70}{323}\approx0.2167.
+$$
+
+Uniform sampling assumes that tagged and untagged animals are sampled under the same mechanism; tagging must not alter recapture chances for this model.
+
+**Core idea:** White balls, aces, and tagged animals share the same structure: a fixed success subset intersected with a uniform sample subset.
+
+### Part 10 — Original practice questions
+
+Try these before reading the answers.
+
+1. A variable takes values $$-1,0,2$$ with probabilities $$c,2c,c$$. Find $$c$$, its support, and $$P(X>0)$$.
+2. Construct the full CDF for the variable in Question 1. Find $$F_X(1)$$ and the jump at 2.
+3. For $$X\sim\operatorname{Bin}(4,1/2)$$, find $$P(X<2)$$, $$P(X\le2)$$, and $$P(X\ge2)$$. Explain the endpoint differences.
+4. Does a function with $$F(0)=0.6$$ and $$F(1)=0.4$$ qualify as a CDF? Explain.
+5. If a continuously uniform variable on $$[0,1]$$ has zero probability at every individual point, why is $$P(0<X<1)=1$$?
+6. An urn contains three white and seven black balls. Sample four without replacement. Find the support and $$P(X=2)$$ for the white count.
+7. An urn contains eight white and two black balls. Sample five without replacement. Why is $$P(X=2)=0$$?
+8. For the four-white, two-black, three-draw example, find $$F_X(2.5)$$ and $$P(X>1)$$.
+9. Independent variables have distributions $$\operatorname{Bin}(3,1/4)$$ and $$\operatorname{Bin}(2,1/4)$$. Find the distribution of their sum and its probability of being zero.
+
+### Part 11 — Practice answers
+
+#### 1. Normalize a PMF
+
+The total mass is $$4c=1$$, so $$c=1/4$$. The support is $$\{-1,0,2\}$$ and $$P(X>0)=P(X=2)=1/4$$.
+
+#### 2. Construct a CDF
+
+$$
+F_X(x)=
+\begin{cases}
+0,&x<-1,\\
+1/4,&-1\le x<0,\\
+3/4,&0\le x<2,\\
+1,&x\ge2.
+\end{cases}
+$$
+
+Thus $$F_X(1)=3/4$$ and the jump at 2 is $$1-3/4=1/4=P(X=2)$$.
+
+#### 3. Include or exclude a mass point
+
+$$
+P(X<2)=\frac5{16},\qquad P(X\le2)=\frac{11}{16},\qquad
+P(X\ge2)=1-\frac5{16}=\frac{11}{16}.
+$$
+
+The first two differ by the mass $$P(X=2)=6/16$$. For the last probability, subtract $$P(X<2)$$, leaving the endpoint mass included.
+
+#### 4. A decreasing candidate
+
+No. A CDF is nondecreasing, but the candidate drops from 0.6 to 0.4 as the threshold increases from 0 to 1. The events cannot lose probability as more values become included.
+
+#### 5. Continuous probability
+
+Probability is countably additive, not additive through an unrestricted sum over uncountably many individual points. The interval probability is determined by the CDF: $$F_X(1)-F_X(0)=1$$. The endpoints have zero mass, so strict inequalities give the same result here.
+
+#### 6. A Hypergeometric count
+
+$$
+X\sim\operatorname{HGeom}(3,7,4),\qquad 0\le X\le3.
+$$
+
+All integers in that range are feasible, and:
+
+$$
+P(X=2)=\frac{\binom32\binom72}{\binom{10}4}
+=\frac{63}{210}=\frac3{10}.
+$$
+
+#### 7. Too few failures
+
+Five sampled items can include at most two black balls, so at least three must be white. The support is $$\{3,4,5\}$$ and a white count of 2 is impossible.
+
+#### 8. Read the urn CDF
+
+$$F_X(2.5)=P(X\le2)=1/5+3/5=4/5$$. Also $$P(X>1)=1-F_X(1)=4/5$$. These happen to match because the support is $$\{1,2,3\}$$.
+
+#### 9. Combine independent blocks
+
+The sum is $$\operatorname{Bin}(5,1/4)$$. Zero successes means failure in all five trials:
+
+$$
+P(X+Y=0)=\left(\frac34\right)^5=\frac{243}{1024}.
+$$
+
+### Part 12 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Random variable | Numerical function of an outcome |
+| Distribution | Probabilities of numerical events |
+| Discrete support | Values with $$P(X=x)>0$$ |
+| PMF | $$p_X(x)=P(X=x)$$; nonnegative and sums to 1 |
+| CDF | $$F_X(x)=P(X\le x)$$, defined for every real threshold |
+| Valid CDF | Nondecreasing, right-continuous, limits 0 and 1 |
+| PMF from CDF | $$P(X=a)=F_X(a)-F_X(a^-)$$ |
+| Integer-valued case | $$P(X=k)=F_X(k)-F_X(k-1)$$ for integer $$k$$ |
+| Interval | $$P(a<X\le b)=F_X(b)-F_X(a)$$ |
+| Strict upper tail | $$P(X>a)=1-F_X(a)$$ |
+| Continuous point probability | No mass at a single point; ranges can have positive probability |
+| Hypergeometric story | Uniform sample of $$n$$ items without replacement |
+| Hypergeometric PMF | $$\binom wk\binom b{n-k}/\binom{w+b}n$$ |
+| Hypergeometric support | $$\max(0,n-b)\le k\le\min(n,w)$$, integer $$k$$ |
+| Binomial comparison | Independent trials versus dependent finite-population draws |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Support <span class="gcat cat-defn">Definition</span></div>
+
+For a discrete random variable, the set of numerical values with positive probability.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Probability mass function <span class="gcat cat-meas">Measure</span></div>
+
+The function giving the probability of each individual value of a discrete random variable.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Cumulative distribution function <span class="gcat cat-meas">Measure</span></div>
+
+The function giving the probability of falling at or below each real threshold. It describes discrete, continuous, and mixed distributions.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">CDF jump <span class="gcat cat-prop">Property</span></div>
+
+The difference between the CDF value at a point and its left limit, equal to the probability mass at that point.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Right-continuity <span class="gcat cat-prop">Property</span></div>
+
+The CDF value at a point equals the limit approached from larger thresholds; a mass point is included at its own threshold.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Hypergeometric distribution <span class="gcat cat-defn">Definition</span></div>
+
+The distribution of a success count in a uniform sample of fixed size drawn without replacement from a finite population with known success and failure counts.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Sampling without replacement <span class="gcat cat-defn">Definition</span></div>
+
+Selecting distinct population items so a selected item cannot be drawn again. The remaining composition depends on earlier draws.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 8</span>
+  <span class="ref-tag">Random variables</span>
+  <span class="ref-tag">PMF</span>
+  <span class="ref-tag">CDF</span>
+  <span class="ref-tag">Hypergeometric</span>
+</div>
+
+  </div>
+</div>
+
+## Lecture 9 - Expectation, Indicator Random Variables, and Linearity
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-9-toggle" onclick="toggleLecture('lecture-9')" aria-expanded="true" aria-controls="lecture-9-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 9</span>
+      <span>
+        <span class="chapter-title">Lecture 9 - Expectation, Indicator Random Variables, and Linearity</span>
+        <span class="chapter-subtitle">Independence, Geometric waiting times, weighted averages, and symmetry</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-9-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-9-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+Expectation compresses a distribution into a probability-weighted average. Its most useful property is linearity: expectations of sums add even when the summands are dependent. Indicators turn counts into sums of simple yes/no variables, and their expectations are probabilities. Together with symmetry, this connects probability calculations to expected counts without requiring the full distribution of the count. Geometric waiting times provide an example where the counting convention matters by exactly one trial.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$X\perp Y$$ | Independent random variables |
+| $$p$$, $$q=1-p$$ | Success and failure probabilities in repeated independent trials |
+| $$G\sim\operatorname{Geom}(p)$$ | Number of failures before the first success |
+| $$T=G+1$$ | Total trials through and including the first success |
+| $$E(X)$$ | Expected value, or mean, of $$X$$ |
+| $$\sum_x xP(X=x)$$ | Probability-weighted average over distinct support values |
+| $$I_A$$ | Indicator of event $$A$$ |
+| $$E(I_A)=P(A)$$ | Fundamental bridge between expectation and probability |
+| $$C=\sum_j I_j$$ | A count written as a sum of indicators |
+| $$w,b,n$$ | Success population, failure population, and sample size in a Hypergeometric model |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- State independence of random variables and distinguish it from having the same distribution.
+- Derive the Geometric PMF from independent repeated trials.
+- Distinguish failures before success from trials through success.
+- Calculate a discrete expectation as a probability-weighted average.
+- Explain why an expected value need not be a possible observed value.
+- Apply linearity without assuming independence.
+- Use indicators and the fundamental bridge to calculate expected counts.
+- Use symmetry to obtain Binomial and Hypergeometric expectations.
+
+### Part 1 — Independence of random variables
+
+Random variables $$X$$ and $$Y$$ are independent when learning the value of one does not change the distribution of the other. A definition that works generally is:
+
+$$
+P(X\le x,Y\le y)=P(X\le x)P(Y\le y)
+$$
+
+for all real $$x,y$$. For discrete variables, an equivalent condition is:
+
+$$
+P(X=x,Y=y)=P(X=x)P(Y=y)
+$$
+
+for every pair of support values. Where $$P(X=x)>0$$, this gives $$P(Y=y\mid X=x)=P(Y=y)$$.
+
+Having the same distribution is a different property. If one fair coin is tossed and $$X$$ indicates Heads while $$Y=1-X$$ indicates Tails, both are $$\operatorname{Bern}(1/2)$$. But:
+
+$$
+P(X=1,Y=1)=0\ne\frac12\frac12.
+$$
+
+They are dependent. Indicators from two independent fair tosses also have the same distribution, but are independent.
+
+For several variables, mutual independence requires the analogous factorization for all value combinations. Pairwise independence alone is weaker. The abbreviation **i.i.d.** means independent and identically distributed: it specifies both properties.
+
+**Core idea:** Marginal distributions tell how each variable behaves separately. Independence specifies how their outcomes occur together.
+
+### Part 2 — Geometric waiting times
+
+Perform independent Bernoulli trials, each with success probability $$p$$, where $$0<p<1$$. Stop at the first success. Let $$G$$ count the failures before that success:
+
+$$
+G\sim\operatorname{Geom}(p),\qquad G\in\{0,1,2,\ldots\}.
+$$
+
+The event $$G=k$$ requires exactly $$k$$ failures followed by one success. Independence gives:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{P(G=k)=q^kp,\qquad k=0,1,2,\ldots,\quad q=1-p.}
+$$
+
+</div>
+
+There is no binomial coefficient: stopping at the first success fixes the order. Summing the geometric series verifies normalization:
+
+$$
+\sum_{k=0}^{\infty}q^kp=\frac{p}{1-q}=1.
+$$
+
+The probability of no success in the first $$m$$ trials is $$q^m\to0$$. Thus a success eventually occurs with probability 1, although there is no finite bound on the possible waiting time.
+
+#### Two counting conventions
+
+Let $$T=G+1$$ count all trials, including the success. The textbook calls this the **First Success** distribution. Then:
+
+$$
+P(T=t)=q^{t-1}p,\qquad t=1,2,3,\ldots.
+$$
+
+| Quantity counted | Smallest value | Probability formula |
+|---|---|---|
+| Failures before success, $$G$$ | 0 | $$P(G=k)=q^kp$$ |
+| Trials including success, $$T$$ | 1 | $$P(T=t)=q^{t-1}p$$ |
+
+<div class="example-block" markdown="1">
+<div class="ex-title">First six on repeated die rolls <span class="ex-pill pill-num">Worked example</span></div>
+
+Roll a fair die independently until the first six. Here $$p=1/6$$ and $$q=5/6$$. A first six on roll 4 means three non-sixes followed by a six:
+
+$$
+P(T=4)=P(G=3)=\left(\frac56\right)^3\frac16=\frac{125}{1296}.
+$$
+
+At least four rolls are required precisely when the first three rolls are non-sixes:
+
+$$
+P(T\ge4)=\left(\frac56\right)^3=\frac{125}{216}.
+$$
+
+<div class="ex-lesson">“First success on trial 4” and “no success before trial 4” differ by the requirement of success on that fourth trial.</div>
+</div>
+
+### Part 3 — Expectation is a weighted average
+
+For a discrete random variable with distinct support values:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{E(X)=\sum_x xP(X=x).}
+$$
+
+</div>
+
+Each possible value receives weight equal to its probability. For the finite expectations used here, the sum is well-defined; with an infinite support, absolute convergence, $$\sum_x|x|P(X=x)<\infty$$, guarantees a finite expectation. A nonnegative variable can also have an infinite mean.
+
+For a fair die result $$D$$:
+
+$$
+E(D)=\frac{1+2+3+4+5+6}{6}=\frac72=3.5.
+$$
+
+No die roll equals 3.5. The mean describes the center of the distribution, not a guaranteed or necessarily possible observation.
+
+#### Supplementary numerical example: Unequal probability weights
+
+Suppose $$X$$ takes values $$-2,1,4$$ with probabilities $$1/4,1/2,1/4$$. Then:
+
+$$
+E(X)=(-2)\frac14+1\frac12+4\frac14=1.
+$$
+
+The simple average of the three distinct values happens also to be 1 here, but that coincidence does not justify ignoring the weights. For example, changing the probabilities to $$1/2,1/4,1/4$$ changes the expectation to $$1/4$$ while leaving the possible values unchanged.
+
+The expectation depends only on the distribution. Equal distributions imply equal expectations when finite. The converse fails: a constant 1 and a variable taking 0 or 2 with equal probability both have mean 1 but different distributions.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** Replace $$X$$ by $$E(X)$$ whenever a formula contains $$X$$.
+
+**Correction:** $$X$$ is a random variable; $$E(X)$$ is a number. Replacing one by the other generally discards variability and changes the quantity being calculated.
+
+</div>
+
+### Part 4 — The fundamental bridge
+
+An indicator $$I_A$$ equals 1 if event $$A$$ occurs and 0 otherwise. Its expectation is:
+
+$$
+E(I_A)=1\cdot P(A)+0\cdot P(A^c)=P(A).
+$$
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{E(I_A)=P(A).}
+$$
+
+</div>
+
+This is the **fundamental bridge**: probabilities can be expressed as expectations of indicators. For example, if $$I$$ indicates that a die shows six, then $$E(I)=1/6$$. If $$J$$ indicates at least one Head in two independent fair tosses, then $$E(J)=3/4$$.
+
+A count $$C$$ can often be written as a sum of indicators, one per counted item. Each indicator asks a simpler yes/no question than the full count distribution.
+
+**Core idea:** An indicator converts an event into a numerical variable whose expected value is exactly the event’s probability.
+
+### Part 5 — Linearity of expectation
+
+For variables with finite expectations and constants $$a,b,c$$:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{E(aX+bY+c)=aE(X)+bE(Y)+c.}
+$$
+
+</div>
+
+In particular:
+
+$$
+E(X+Y)=E(X)+E(Y),\qquad E(aX)=aE(X).
+$$
+
+**Independence is not required.** More generally, for a finite sum:
+
+$$
+E\left(\sum_{j=1}^nX_j\right)=\sum_{j=1}^nE(X_j).
+$$
+
+#### Supplementary textbook proof: Average over the same outcomes
+
+On a finite sample space, group outcomes by the value assigned by $$X$$ or average directly over individual outcomes:
+
+$$
+E(X)=\sum_sX(s)P(\{s\}).
+$$
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-9-textbook-fig-4-3-expectation-grouping.png" alt="Nine sample outcomes labeled zero, one, or two are grouped into three sets according to the assigned value. Each group's probability is the sum of its outcome probabilities." style="display: block; width: 100%; max-width: 720px; height: auto; margin: 0 auto;">
+  <figcaption>Grouping outcomes by value gives the PMF-weighted average; averaging directly over the same outcomes makes linearity transparent. Reproduced from Blitzstein and Hwang, <em>Introduction to Probability</em>, Figure 4.3, p. 141.</figcaption>
+</figure>
+
+Both $$X$$ and $$Y$$ use the same outcome probabilities, so:
+
+$$
+\begin{aligned}
+E(X+Y)
+&=\sum_s[X(s)+Y(s)]P(\{s\})\\
+&=\sum_sX(s)P(\{s\})+\sum_sY(s)P(\{s\})\\
+&=E(X)+E(Y).
+\end{aligned}
+$$
+
+No factorization of joint probabilities is used. Even $$Y=X$$, an extreme dependence, gives $$E(X+Y)=E(2X)=2E(X)$$.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** Dependent summands prevent adding expectations.
+
+**Correction:** Dependence affects the distribution of a sum but does not invalidate linearity. A different operation, such as multiplying variables, does not inherit this rule: generally $$E(XY)\ne E(X)E(Y)$$ without additional assumptions.
+
+</div>
+
+### Part 6 — Binomial expectation through indicators
+
+Let $$X\sim\operatorname{Bin}(n,p)$$ count successes in $$n$$ independent trials with common probability $$p$$. Write:
+
+$$
+X=I_1+\cdots+I_n,
+$$
+
+where $$I_j$$ indicates success on trial $$j$$. By the fundamental bridge, $$E(I_j)=p$$. Therefore:
+
+$$
+\boxed{E(X)=np.}
+$$
+
+For ten independent trials with success probability $$0.3$$, the expected success count is 3. The observed count remains random; it need not equal 3.
+
+The calculation of the mean uses only the individual success probabilities. Independence is needed for the Binomial distribution story, but a count of dependent indicators, each with success probability $$p$$, still has mean $$np$$ even when its distribution is not Binomial.
+
+#### Supplementary counterexample: A mean does not identify a model
+
+Toss one fair coin and copy its result into ten records. The total number of recorded Heads is 0 or 10, each with probability $$1/2$$. Its mean is 5, just like $$\operatorname{Bin}(10,1/2)$$, but its distribution is very different.
+
+**Core idea:** Linearity can determine an expected count from marginal probabilities without identifying the joint model or the full count distribution.
+
+### Part 7 — Hypergeometric expectation through symmetry
+
+Sample $$n$$ items uniformly without replacement from a population with $$w$$ success-type and $$b$$ failure-type items. Let $$X$$ count successes and $$I_j$$ indicate that draw $$j$$ is a success:
+
+$$
+X=\sum_{j=1}^nI_j.
+$$
+
+By symmetry, each draw position is equally likely to contain any population item. Its **unconditional** success probability is:
+
+$$
+P(I_j=1)=\frac{w}{w+b}.
+$$
+
+Earlier draws change conditional probabilities, so the indicators are generally dependent. Nonetheless:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{E(X)=\sum_{j=1}^nE(I_j)=n\frac{w}{w+b}.}
+$$
+
+</div>
+
+#### Worked example: Aces in a five-card hand
+
+Shuffle a standard deck uniformly and inspect its first five cards. Let $$X$$ count aces. The five position indicators each have probability $$4/52=1/13$$ of being 1, so:
+
+$$
+E(X)=5\frac1{13}=\frac5{13}.
+$$
+
+This is an expected count of about 0.385 aces, not a probability of drawing an ace or a claim that a hand contains a fractional card.
+
+An alternative decomposition uses one indicator per ace. Each of the four aces has probability $$5/52$$ of appearing in the hand. Thus:
+
+$$
+E(X)=4\frac5{52}=\frac5{13}.
+$$
+
+**Core idea:** Choose indicators indexed by draw positions or by population items. Both decompositions count the same quantity, and symmetry supplies the individual probabilities.
+
+### Part 8 — Expected Geometric waiting time
+
+Let $$G\sim\operatorname{Geom}(p)$$ and $$q=1-p$$. By definition:
+
+$$
+E(G)=\sum_{k=0}^{\infty}kq^kp.
+$$
+
+For $$0<q<1$$, differentiate the geometric power series:
+
+$$
+\sum_{k=0}^{\infty}q^k=\frac1{1-q}
+\quad\Longrightarrow\quad
+\sum_{k=1}^{\infty}kq^{k-1}=\frac1{(1-q)^2}.
+$$
+
+Multiplying by $$pq$$ gives:
+
+$$
+E(G)=\frac{pq}{(1-q)^2}=\frac qp.
+$$
+
+Since $$T=G+1$$, linearity gives:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{E(G)=\frac{1-p}{p},\qquad E(T)=\frac1p.}
+$$
+
+</div>
+
+For independent fair die rolls until a six, $$E(G)=5$$ non-sixes and $$E(T)=6$$ total rolls. Neither mean specifies an exact stopping time in a particular experiment.
+
+#### Supplementary story proof: Restart after a failure
+
+The series calculation establishes finiteness of the mean. Let $$\mu=E(G)$$. A first-trial success contributes zero failures; a first-trial failure contributes one failure plus a fresh waiting problem with the same distribution. Averaging these cases:
+
+$$
+\mu=p\cdot0+q(1+\mu).
+$$
+
+Thus $$p\mu=q$$ and $$\mu=q/p$$, agreeing with the direct calculation. Independence and unchanged success probability make the restart argument valid.
+
+### Part 9 — Supplementary applications and limits of linearity
+
+#### Expected matches in a random permutation
+
+Return $$n$$ labeled items uniformly at random to $$n$$ labeled recipients, one item each. Let $$M$$ count correct matches and $$I_j$$ indicate that recipient $$j$$ receives their own item.
+
+Each recipient has probability $$1/n$$ of a match by symmetry. Therefore:
+
+$$
+M=\sum_{j=1}^nI_j,\qquad E(M)=n\frac1n=1.
+$$
+
+The indicators are dependent, but the expected number of matches is 1 for every positive $$n$$. This does not mean exactly one match is guaranteed or that the probability of any match is 1.
+
+#### Nonlinear operations need separate calculations
+
+Let $$X$$ equal $$-1$$ or 1 with equal probability. Then $$E(X)=0$$ but $$X^2=1$$ always, so:
+
+$$
+E(X^2)=1\ne0=(E(X))^2.
+$$
+
+Linearity applies to sums and constant multiples. It does not allow moving expectation through an arbitrary square, reciprocal, or other nonlinear function.
+
+### Part 10 — Original practice questions
+
+Try these before reading the answers.
+
+1. Let $$X$$ indicate Heads on one fair toss and $$Y=1-X$$. Are they identically distributed? Are they independent? Show one probability calculation.
+2. Independently toss a coin with Heads probability $$1/4$$ until the first Head. Find the probability of exactly two preceding Tails, and both waiting-time means.
+3. For the same experiment, find the probability that at least four tosses are needed.
+4. A variable has values $$0,2,5$$ with probabilities $$1/2,1/3,1/6$$. Calculate its mean. Must an observation equal that mean?
+5. If $$E(X)=3$$ and $$E(Y)=-1$$, find $$E(2X-4Y+7)$$. Is independence required?
+6. An urn has six white and four black balls. Draw three uniformly without replacement. Find the expected white count and explain why dependence does not obstruct the calculation.
+7. Twenty binary records each have success probability $$0.2$$, but may be dependent. Find the expected total. Can you conclude the total is Binomial?
+8. Four labeled items are randomly returned to four recipients. Find the expected number of correct matches. Does this equal the probability of at least one match?
+9. A fair die has mean $$7/2$$. Find the mean of the sum of two fair dice when the second die always copies the first. Is the sum distributed like two independent dice?
+
+### Part 11 — Practice answers
+
+#### 1. Same distribution, dependence
+
+Both variables are $$\operatorname{Bern}(1/2)$$. They cannot both equal 1, so $$P(X=1,Y=1)=0$$, whereas $$P(X=1)P(Y=1)=1/4$$. They are dependent.
+
+#### 2. Failures and total trials
+
+Here $$p=1/4$$ and $$q=3/4$$:
+
+$$
+P(G=2)=\left(\frac34\right)^2\frac14=\frac9{64}.
+$$
+
+The means are $$E(G)=q/p=3$$ failures and $$E(T)=1/p=4$$ total tosses.
+
+#### 3. At least four tosses
+
+The first three tosses must all fail:
+
+$$
+P(T\ge4)=q^3=\frac{27}{64}.
+$$
+
+Success on the fourth toss is not required by this event.
+
+#### 4. Weighted mean
+
+$$
+E(X)=0\frac12+2\frac13+5\frac16=\frac32.
+$$
+
+The mean is not in the support, so no observation equals it.
+
+#### 5. Linear combination
+
+$$
+E(2X-4Y+7)=2(3)-4(-1)+7=17.
+$$
+
+Independence is not required; finite expectations suffice here.
+
+#### 6. Sampling without replacement
+
+Each position has unconditional white probability $$6/10$$. Thus $$E(X)=3(6/10)=9/5$$. The draw indicators are dependent, but linearity still applies.
+
+#### 7. Dependent binary records
+
+The expected total is $$20(0.2)=4$$. Dependence may change its distribution, so a Binomial conclusion is not justified.
+
+#### 8. Expected matches versus a probability
+
+Each of four recipients matches with probability $$1/4$$, giving $$E(M)=1$$. This is not the probability of at least one match. For four items, that probability is $$1-9/24=5/8$$, using the nine permutations with no matches; its inequality with the mean illustrates the distinction between an event indicator and the match count.
+
+#### 9. Copied dice
+
+Writing the second result as $$Y=X$$:
+
+$$
+E(X+Y)=E(X)+E(Y)=7.
+$$
+
+The sum takes only the even values $$2,4,6,8,10,12$$, each with probability $$1/6$$. Its mean equals the independent-dice mean, but its distribution does not.
+
+### Part 12 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Independence, discrete case | Joint value probabilities factor for every pair |
+| Identical distributions | Does not imply independence or equal observed values |
+| Geometric convention | $$G$$ counts failures before success, starting at 0 |
+| Geometric PMF | $$P(G=k)=q^kp$$ |
+| Total waiting time | $$T=G+1$$ counts the successful trial |
+| Expectation | $$E(X)=\sum_xxP(X=x)$$ |
+| Interpretation | Probability-weighted average; need not be an attainable value |
+| Fundamental bridge | $$E(I_A)=P(A)$$ |
+| Linearity | $$E(\sum_j a_jX_j+c)=\sum_j a_jE(X_j)+c$$ for finite expectations |
+| Dependence | Does not invalidate linearity |
+| Binomial mean | $$np$$ |
+| Hypergeometric mean | $$nw/(w+b)$$ |
+| Geometric mean | $$(1-p)/p$$ failures |
+| First Success mean | $$1/p$$ total trials |
+| Nonlinear transformations | Generally $$E(g(X))\ne g(E(X))$$ |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Independent random variables <span class="gcat cat-defn">Definition</span></div>
+
+Variables whose joint probabilities factor into marginal probabilities, so observing one does not change the distribution of the other.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Geometric distribution <span class="gcat cat-defn">Definition</span></div>
+
+The distribution of failures before the first success in independent trials with a fixed success probability, under the convention used here.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">First Success distribution <span class="gcat cat-defn">Definition</span></div>
+
+The distribution of the total number of trials up to and including the first success; one more than the corresponding failure count.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Expected value <span class="gcat cat-meas">Measure</span></div>
+
+A probability-weighted average of a random variable’s values, also called its mean or expectation.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Fundamental bridge <span class="gcat cat-thm">Identity</span></div>
+
+The identity $$E(I_A)=P(A)$$ connecting event probabilities with expectations of their indicators.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Linearity of expectation <span class="gcat cat-thm">Theorem</span></div>
+
+Finite sums and constant multiples pass through expectation when the expectations are finite, regardless of dependence.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Symmetry <span class="gcat cat-prop">Property</span></div>
+
+Invariance of the probability model under exchanging equivalent labels or positions, allowing their event probabilities to be identified as equal.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 9</span>
+  <span class="ref-tag">Expectation</span>
+  <span class="ref-tag">Indicators</span>
+  <span class="ref-tag">Linearity</span>
+  <span class="ref-tag">Geometric</span>
+</div>
+
+  </div>
+</div>
+
+## Lecture 10 - Expectation Continued
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-10-toggle" onclick="toggleLecture('lecture-10')" aria-expanded="true" aria-controls="lecture-10-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 10</span>
+      <span>
+        <span class="chapter-title">Lecture 10 - Expectation Continued</span>
+        <span class="chapter-subtitle">Proving linearity, local maxima, Negative Binomial waiting times, and St. Petersburg</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-10-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-10-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+Linearity follows from averaging different numerical functions over the same experimental outcomes. Combined with indicators and symmetry, it makes the average number of local maxima in a permutation easy to calculate despite complicated dependence. Waiting for several successes gives the Negative Binomial distribution, a sum of Geometric failure counts. The St. Petersburg game shows a different limit of expectation: a payoff can be finite in every completed game while its mean is infinite.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$E(X)$$ | Expected value of random variable $$X$$ |
+| $$s\in S$$ | Outcome in a sample space |
+| $$a_1,\ldots,a_n$$ | A permutation of $$1,\ldots,n$$ |
+| $$I_j$$ | Indicator of a local maximum at position $$j$$ |
+| $$L=\sum_jI_j$$ | Number of local maxima |
+| $$p$$, $$q=1-p$$ | Success and failure probabilities in independent trials |
+| $$r$$ | Fixed positive integer number of successes being awaited |
+| $$X\sim\operatorname{NBin}(r,p)$$ | Failures before the $$r$$th success |
+| $$G_j$$ | Failures between the $$(j-1)$$st and $$j$$th successes |
+| $$T=X+r$$ | Total trials through the $$r$$th success |
+| $$N$$ | Toss number of the first Head in St. Petersburg |
+| $$W=2^N$$ | Ideal St. Petersburg payoff |
+| $$m$$ | Cutoff toss number in a finite-payoff version |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Prove linearity by averaging over common sample outcomes.
+- Explain why dependence does not obstruct adding finite expectations.
+- Define local maxima at interior and endpoint positions in a permutation.
+- Use indicators and symmetry to derive their expected count.
+- Derive the Negative Binomial PMF with the last trial constrained to be successful.
+- Express a Negative Binomial failure count as a sum of Geometric variables.
+- Convert failure counts into total trial counts and calculate their means.
+- Derive the infinite St. Petersburg mean and compare two finite-payoff variants.
+- Explain why expectation does not commute with nonlinear transformations.
+
+### Part 1 — Prove linearity over the same outcomes
+
+For a finite sample space, the PMF definition of expectation can be rewritten as:
+
+$$
+E(X)=\sum_x xP(X=x)=\sum_{s\in S}X(s)P(\{s\}).
+$$
+
+To obtain the second expression, replace each $$P(X=x)$$ by the sum of probabilities of outcomes mapped to $$x$$. Every outcome contributes its assigned value times its probability.
+
+Now $$X$$ and $$Y$$ use the same outcome weights:
+
+$$
+\begin{aligned}
+E(X+Y)
+&=\sum_s(X(s)+Y(s))P(\{s\})\\
+&=\sum_sX(s)P(\{s\})+\sum_sY(s)P(\{s\})\\
+&=E(X)+E(Y).
+\end{aligned}
+$$
+
+Similarly, $$E(cX)=cE(X)$$ for a constant $$c$$. The same conclusion extends to general random variables with finite expectations; the finite-space argument makes its arithmetic structure explicit.
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{E\left(\sum_{j=1}^na_jX_j+c\right)=\sum_{j=1}^na_jE(X_j)+c.}
+$$
+
+</div>
+
+No independence assumption appears. Dependence may change the distribution of the sum, but not this identity.
+
+**Core idea:** Average the sum at each outcome, or add the separate averages. Both use the same probabilities and differ only in the order of addition.
+
+### Part 2 — Putnam problem: Local maxima in a permutation
+
+Choose a permutation $$a_1,\ldots,a_n$$ of $$1,\ldots,n$$ uniformly, with all $$n!$$ permutations equally likely. Assume $$n\ge2$$.
+
+An interior position $$j$$ is a **local maximum** when:
+
+$$
+a_j>a_{j-1}\quad\text{and}\quad a_j>a_{j+1}.
+$$
+
+At the endpoints, there is only one neighbor: position 1 is a local maximum if $$a_1>a_2$$, and position $$n$$ is one if $$a_n>a_{n-1}$$.
+
+For example, $$4,2,5,3,6,1$$ has local maxima at positions 1, 3, and 5. A local maximum need not be the largest value in the whole permutation.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-10-local-maxima.svg" alt="Permutation four, two, five, three, six, one plotted by position. Positions one, three, and five are highlighted as local maxima, including the first endpoint." style="display: block; width: 100%; max-width: 720px; height: auto; margin: 0 auto;">
+  <figcaption>Original diagram for these notes, using the example in Blitzstein and Hwang, <em>Introduction to Probability</em>, Example 4.4.6, p. 154. A local maximum exceeds its immediate neighbors.</figcaption>
+</figure>
+
+The average count across all permutations is an expectation. Let $$I_j$$ indicate a local maximum at position $$j$$, so $$L=\sum_{j=1}^nI_j$$.
+
+#### Interior positions
+
+For $$2\le j\le n-1$$, the three values at $$j-1,j,j+1$$ are distinct. Their relative ordering is uniform among the six possible orders. Each position is equally likely to contain the largest of the three, so:
+
+$$
+E(I_j)=P(I_j=1)=\frac13.
+$$
+
+#### Endpoint positions
+
+Each endpoint is equally likely to exceed or fall below its sole neighbor:
+
+$$
+E(I_1)=E(I_n)=\frac12.
+$$
+
+By linearity:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{E(L)=2\frac12+(n-2)\frac13=\frac{n+1}{3},\qquad n\ge2.}
+$$
+
+</div>
+
+For $$n=6$$, the expected count is $$7/3$$, while the particular illustrated permutation has three maxima. For $$n=2$$, exactly one of the two positions is a maximum, consistent with the formula.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** All positions have probability $$1/3$$ of being maxima, or the indicators must be independent to add their expectations.
+
+**Correction:** Endpoints have only one neighbor and probability $$1/2$$. Adjacent positions cannot both be strict local maxima, so their indicators are dependent; linearity still applies.
+
+</div>
+
+**Core idea:** The global count has a complicated distribution, but each local indicator requires only the relative order of two or three values.
+
+### Part 3 — Negative Binomial: Wait for a fixed number of successes
+
+Run independent Bernoulli trials, each with the same success probability $$p$$, where $$0<p<1$$. Stop as soon as the $$r$$th success occurs. Let $$X$$ count failures before that success:
+
+$$
+X\sim\operatorname{NBin}(r,p),\qquad X\in\{0,1,2,\ldots\}.
+$$
+
+The stopping rule differs from Binomial sampling:
+
+| Model | Fixed in advance | Random quantity counted |
+|---|---|---|
+| Binomial | Number of trials $$n$$ | Successes in those trials |
+| Geometric | One required success | Failures before that success |
+| Negative Binomial | Number of successes $$r$$ | Failures before the $$r$$th success |
+
+When $$r=1$$, the Negative Binomial is the Geometric distribution under the failures-before-success convention.
+
+### Part 4 — Derive the Negative Binomial PMF
+
+If $$X=k$$, there were $$k$$ failures and $$r$$ successes, so the experiment lasted $$k+r$$ trials. Its final trial must be the $$r$$th success. In the preceding $$k+r-1$$ positions, choose where the other $$r-1$$ successes occurred:
+
+$$
+\binom{k+r-1}{r-1}.
+$$
+
+Each admissible sequence has probability $$p^rq^k$$. Adding their probabilities gives:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{P(X=k)=\binom{k+r-1}{r-1}p^rq^k,\qquad k=0,1,2,\ldots.}
+$$
+
+</div>
+
+The coefficient can equivalently be written $$\binom{k+r-1}{k}$$. The distribution is normalized because independent trials with positive success probability eventually accumulate any fixed number $$r$$ of successes with probability 1.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Supplementary numerical example: Failures before a third Head <span class="ex-pill pill-num">Worked example</span></div>
+
+Toss a fair coin independently until the third Head. Exactly two preceding Tails means five tosses total, with the last toss Heads. Among the first four positions, choose the two positions containing the earlier Heads:
+
+$$
+P(X=2)=\binom42\left(\frac12\right)^3\left(\frac12\right)^2
+=\frac6{32}=\frac3{16}.
+$$
+
+The six admissible sequences end in Heads. Using $$\binom53$$ would also count five-toss sequences whose third Head occurred earlier, after which this experiment would already have stopped.
+
+<div class="ex-lesson">The final success is fixed by the stopping rule; only the earlier success positions are free to choose.</div>
+</div>
+
+### Part 5 — Decompose the waiting time into Geometric pieces
+
+Let $$G_1$$ count failures before the first success, $$G_2$$ failures between the first and second successes, and so on through $$G_r$$. Then:
+
+$$
+X=G_1+\cdots+G_r.
+$$
+
+Every interval restarts independent trials with the same success probability, so the $$G_j$$ are i.i.d. $$\operatorname{Geom}(p)$$ variables. Since $$E(G_j)=q/p$$:
+
+$$
+\boxed{E(X)=\frac{rq}{p}.}
+$$
+
+The total trial count $$T=X+r$$ includes the $$r$$ successful trials:
+
+$$
+\boxed{E(T)=\frac{rq}{p}+r=\frac rp.}
+$$
+
+Its PMF is obtained by shifting the failure count:
+
+$$
+P(T=t)=\binom{t-1}{r-1}p^rq^{t-r},\qquad t=r,r+1,\ldots.
+$$
+
+For the third-Head example, $$E(X)=3$$ Tails and $$E(T)=6$$ total tosses.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** Every source’s “Negative Binomial” variable starts at 0 and has mean $$rq/p$$.
+
+**Correction:** Some sources count failures, while others count all trials. Define the variable explicitly. Counting all trials shifts the support to $$\{r,r+1,\ldots\}$$ and the mean to $$r/p$$.
+
+</div>
+
+**Core idea:** A waiting time for several successes is a sum of waiting intervals. Linearity obtains its mean without summing the Negative Binomial PMF.
+
+### Part 6 — St. Petersburg: A finite payoff with infinite mean
+
+Toss a fair coin independently until the first Head. If that Head appears on toss $$N=n$$, receive a payoff of $$2^n$$ dollars. Thus:
+
+$$
+P(N=n)=2^{-n},\qquad n=1,2,3,\ldots,
+$$
+
+and $$W=2^N$$. The payoff distribution begins:
+
+| First Head on toss $$n$$ | Probability | Payoff | Contribution to $$E(W)$$ |
+|---|---|---|---|
+| 1 | $$1/2$$ | 2 | 1 |
+| 2 | $$1/4$$ | 4 | 1 |
+| 3 | $$1/8$$ | 8 | 1 |
+| $$n$$ | $$2^{-n}$$ | $$2^n$$ | 1 |
+
+Every toss number contributes one dollar to the expectation:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{E(W)=\sum_{n=1}^{\infty}2^n2^{-n}=\sum_{n=1}^{\infty}1=\infty.}
+$$
+
+</div>
+
+The game ends with probability 1 because $$P(N>m)=2^{-m}\to0$$. Its payout is finite whenever it ends. Infinite expectation therefore does not mean infinite winnings in a typical game, or any positive probability of an infinite payoff. It means the weighted tail cannot be summed to a finite mean.
+
+The paradox is that this idealized infinite expected payoff does not correspond to an unlimited practical willingness to pay. The mathematical model permits arbitrarily large payouts, while a real payer has finite resources. Expected money alone also does not describe a person’s preferences over uncertain outcomes.
+
+**Core idea:** Exponentially small probabilities can be exactly offset by exponentially large payoffs, making the total expected contribution diverge.
+
+### Part 7 — Finite-payoff versions: Specify the tail rule
+
+#### Zero payoff if the game exceeds $$m$$ tosses
+
+Keep the original payout for $$N\le m$$, but pay nothing when $$N>m$$. Let:
+
+$$
+W_m=2^N I_{\{N\le m\}}.
+$$
+
+Only the first $$m$$ one-dollar contributions remain:
+
+$$
+\boxed{E(W_m)=\sum_{n=1}^m2^n2^{-n}=m.}
+$$
+
+With $$m=40$$, this expectation is $40, even though the probability of crossing the cutoff is only $$2^{-40}$$.
+
+#### Cap the payout at $$2^m$$
+
+Instead define $$V_m=\min(2^N,2^m)$$. Retain the original payout through toss $$m$$, and pay the cap if the first Head arrives later. Then:
+
+$$
+\begin{aligned}
+E(V_m)
+&=\sum_{n=1}^m2^n2^{-n}+2^mP(N>m)\\
+&=m+2^m2^{-m}=m+1.
+\end{aligned}
+$$
+
+With $$m=40$$, the capped expectation is $41. Both tail rules make the mean finite, but they define different payoff variables.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** An extremely rare cutoff can have only a negligible effect on the expected payoff.
+
+**Correction:** Rarity alone does not determine an event’s contribution to expectation. Its payoff matters too. The omitted infinite tail contributes an infinite amount in the ideal game despite having very small probability.
+
+</div>
+
+### Part 8 — Nonlinear functions do not commute with expectation
+
+The first-Head trial count has $$E(N)=2$$. But:
+
+$$
+E(2^N)=\infty,\qquad 2^{E(N)}=4.
+$$
+
+Replacing a random input by its mean before applying a nonlinear function can give an entirely different result. To calculate an expected payoff, weight the actual payoff in each case by that case’s probability.
+
+#### Supplementary finite example
+
+If $$X$$ takes 0 and 2 with equal probability, then $$E(X)=1$$. Yet:
+
+$$
+E(X^2)=\frac12(0^2)+\frac12(2^2)=2,
+\qquad (E(X))^2=1.
+$$
+
+The failure of $$E(g(X))=g(E(X))$$ is not restricted to infinite means. Linearity applies to sums and constant multiples, not arbitrary nonlinear transformations.
+
+### Part 9 — Original practice questions
+
+Try these before reading the answers.
+
+1. Explain why the outcome-based proof of $$E(X+Y)=E(X)+E(Y)$$ does not require independence.
+2. Find the expected number of local maxima in a uniform permutation of $$1,\ldots,8$$, counting endpoints. What if only interior positions count?
+3. In the permutation $$3,1,4,2$$, identify all local maxima under the endpoint convention.
+4. Independent trials have success probability $$1/3$$. Let $$X$$ count failures before the second success. Find $$P(X=3)$$.
+5. For the same experiment, find the expected failure count and expected total trial count.
+6. Explain why $$\binom{k+r}{r}p^rq^k$$ is not the PMF for failures before the $$r$$th success.
+7. In St. Petersburg, calculate $$P(W\ge16)$$. Does infinite mean imply the payout is infinite with positive probability?
+8. Compute the means under a cutoff at $$m=5$$ for the zero-tail and capped-payoff versions.
+9. Why does $$2^{E(N)}$$ not give the expected St. Petersburg payoff?
+
+### Part 10 — Practice answers
+
+#### 1. Common outcome weights
+
+Both variables are averaged over the same outcomes with the same probabilities. Distributing the weighted sum over $$X(s)+Y(s)$$ proves the identity without factoring any joint probabilities.
+
+#### 2. Endpoint and interior counts
+
+With endpoints, $$E(L)=(8+1)/3=3$$. Counting only interiors gives $$(8-2)/3=2$$. The two endpoints contribute $$1/2$$ each.
+
+#### 3. Identify the maxima
+
+Positions 1 and 3 are maxima: 3 exceeds its sole neighbor 1, and 4 exceeds both neighbors 1 and 2. The count is 2.
+
+#### 4. Negative Binomial probability
+
+With $$r=2$$, $$k=3$$, $$p=1/3$$, and $$q=2/3$$:
+
+$$
+P(X=3)=\binom41\left(\frac13\right)^2\left(\frac23\right)^3
+=\frac{32}{243}.
+$$
+
+The last of five trials is a success; the other success can occupy any of the first four positions.
+
+#### 5. Two means
+
+$$
+E(X)=\frac{2(2/3)}{1/3}=4,\qquad E(T)=\frac2{1/3}=6.
+$$
+
+The total count exceeds the failure count by the two required successful trials.
+
+#### 6. Respect the stopping rule
+
+That coefficient counts all sequences with $$r$$ successes in $$k+r$$ positions, including sequences whose $$r$$th success occurs before the last position. The experiment would stop earlier in those cases. Fix the final success and choose only $$r-1$$ earlier success positions, giving $$\binom{k+r-1}{r-1}$$.
+
+#### 7. Large payout and finite termination
+
+$$W\ge16$$ is equivalent to $$N\ge4$$, which requires Tails on the first three tosses:
+
+$$
+P(W\ge16)=\frac18.
+$$
+
+The game ends almost surely and its realized payout is finite almost surely. Its infinite mean comes from the unbounded weighted tail.
+
+#### 8. Finite-payoff means
+
+The zero-tail version has mean $5. The capped version has mean $6, since the tail adds $$2^5P(N>5)=32/32=1$$ dollar to the expectation.
+
+#### 9. Nonlinear transformation
+
+Exponentiation is nonlinear. The expected payoff is $$\sum_n2^nP(N=n)$$, which diverges, whereas exponentiating the mean trial count gives 4. They are different operations on the distribution.
+
+### Part 11 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Linearity proof | Average over common outcomes and distribute the sum |
+| Independence | Not needed for linearity with finite expectations |
+| Interior local maximum | Largest of three neighboring values: probability $$1/3$$ |
+| Endpoint maximum | Larger than its sole neighbor: probability $$1/2$$ |
+| Mean maxima count | $$(n+1)/3$$ for $$n\ge2$$, including endpoints |
+| Negative Binomial story | Failures before a fixed $$r$$th success |
+| PMF | $$\binom{k+r-1}{r-1}p^r(1-p)^k$$, $$k\ge0$$ |
+| Geometric decomposition | $$X=\sum_{j=1}^rG_j$$ with i.i.d. $$\operatorname{Geom}(p)$$ intervals |
+| Failure-count mean | $$rq/p$$ |
+| Total-trial mean | $$r/p$$ |
+| St. Petersburg | $$P(N=n)=2^{-n}$$, payoff $$2^n$$, mean infinite |
+| Zero payoff beyond $$m$$ | Mean $$m$$ |
+| Payout capped at $$2^m$$ | Mean $$m+1$$ |
+| Nonlinear expectation | Generally $$E(g(X))\ne g(E(X))$$ |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Local maximum <span class="gcat cat-defn">Definition</span></div>
+
+A permutation value larger than each immediate neighbor, with only one comparison at an endpoint under the convention used here.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Negative Binomial distribution <span class="gcat cat-defn">Definition</span></div>
+
+The distribution of failures before a fixed number of successes in independent Bernoulli trials with a common success probability.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Stopping rule <span class="gcat cat-defn">Definition</span></div>
+
+The condition determining when an experiment ends, such as reaching the $$r$$th success. It constrains which outcome sequences are admissible.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Infinite expectation <span class="gcat cat-meas">Measure</span></div>
+
+For a nonnegative variable, divergence of the probability-weighted sum of values, even when the realized value is finite almost surely.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Tail contribution <span class="gcat cat-defn">Definition</span></div>
+
+The part of an expected value contributed by outcomes beyond a specified threshold. Both their probabilities and values determine its size.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Capped payoff <span class="gcat cat-defn">Definition</span></div>
+
+A payoff limited to a fixed maximum, represented here by $$\min(2^N,2^m)$$.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 10</span>
+  <span class="ref-tag">Linearity</span>
+  <span class="ref-tag">Putnam problem</span>
+  <span class="ref-tag">Negative Binomial</span>
+  <span class="ref-tag">St. Petersburg</span>
 </div>
 
   </div>
