@@ -25,6 +25,7 @@ toc:
   - name: Lecture 8 - Random Variables and Their Distributions
   - name: Lecture 9 - Expectation, Indicator Random Variables, and Linearity
   - name: Lecture 10 - Expectation Continued
+  - name: Lecture 11 - The Poisson Distribution
 
 _styles: >
   /* ── Collapsible chapter blocks ── */
@@ -6363,6 +6364,598 @@ A payoff limited to a fixed maximum, represented here by $$\min(2^N,2^m)$$.
   <span class="ref-tag">Putnam problem</span>
   <span class="ref-tag">Negative Binomial</span>
   <span class="ref-tag">St. Petersburg</span>
+</div>
+
+  </div>
+</div>
+
+## Lecture 11 - The Poisson Distribution
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-11-toggle" onclick="toggleLecture('lecture-11')" aria-expanded="true" aria-controls="lecture-11-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 11</span>
+      <span>
+        <span class="chapter-title">Lecture 11 - The Poisson Distribution</span>
+        <span class="chapter-subtitle">Sympathetic magic, the Poisson PMF and mean, the Poisson paradigm, the Binomial limit, and birthday matches</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-11-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-11-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+A random variable and its distribution are different objects. Arithmetic on random variables does not translate into the same arithmetic on their PMFs. The Poisson distribution counts rare events across many opportunities. It has one parameter, the rate $$\lambda$$, which is also its mean. The Poisson paradigm approximates the number of events that occur among many unlikely, independent or weakly dependent events by a Poisson count with the same mean. The Binomial distribution converges to the Poisson when the number of trials grows and the success probability shrinks with their product held fixed. Birthday problems show the approximation in use: matching pairs and matching triples become one-line calculations.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$X\sim\operatorname{Pois}(\lambda)$$ | $$X$$ has the Poisson distribution with rate $$\lambda>0$$ |
+| $$\lambda$$ | Rate parameter: the expected number of events |
+| $$e^{-\lambda}\lambda^k/k!$$ | Poisson probability of exactly $$k$$ events |
+| $$A_1,\ldots,A_n$$ | Events whose occurrences are counted |
+| $$p_j=P(A_j)$$ | Probability of the $$j$$th event |
+| $$I(A_j)$$ | Indicator of event $$A_j$$ |
+| $$X=\sum_jI(A_j)$$ | Number of the events $$A_j$$ that occur |
+| $$\operatorname{Bin}(n,p)$$ | Successes in $$n$$ independent trials with success probability $$p$$ |
+| $$q=1-p$$ | Failure probability |
+| $$I_{ijk}$$ | Indicator that persons $$i<j<k$$ share a birthday |
+| $$\approx$$ | Approximately equal (an approximation, not an identity) |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Distinguish a random variable from its distribution and identify sympathetic-magic errors.
+- State the Poisson PMF and verify that it sums to 1.
+- Derive the Poisson mean by shifting the summation index.
+- Interpret $$\lambda$$ as the expected count of rare events.
+- State the Poisson paradigm and explain what “rare” and “weakly dependent” mean in it.
+- Prove that the Binomial PMF converges to the Poisson PMF when $$n\to\infty$$, $$p\to0$$, and $$np=\lambda$$ is fixed.
+- Use the Poisson approximation for birthday pairs, near-birthday matches, and triple matches.
+
+### Part 1 — Sympathetic magic: A random variable is not its distribution
+
+A random variable $$X$$ is a function that assigns a number to each outcome of an experiment. Its distribution, for example its PMF $$p_X(x)=P(X=x)$$, records how probability is spread over the possible values. The distribution describes the random variable, but it is not the random variable. Treating one as the other is called **sympathetic magic**: manipulating the description as if that manipulated the object itself.
+
+The distribution is a blueprint and the random variable is a house built from it. Many houses can share one blueprint. Likewise, many random variables, possibly defined on different experiments, can share one distribution.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Adding random variables is not adding PMFs <span class="ex-pill pill-ex">Worked example</span></div>
+
+Let $$X$$ and $$Y$$ be random variables with PMFs $$p_X$$ and $$p_Y$$. A tempting but wrong claim is
+
+$$
+P(X+Y=t)\overset{?}{=}P(X=t)+P(Y=t).
+$$
+
+The right-hand side need not even be a valid probability. Take a fair coin, with $$X$$ the indicator of Heads and $$Y=X$$. Then $$P(X=1)+P(Y=1)=1/2+1/2=1$$, and summing the claimed PMF over $$t\in\{0,1\}$$ gives a total of 2, not 1.
+
+The correct calculation starts from the random variables. Here $$X+Y=2X$$ takes the value 0 or 2, each with probability $$1/2$$:
+
+$$
+P(X+Y=0)=\frac12,\qquad P(X+Y=2)=\frac12.
+$$
+
+The value 1 is impossible, although the incorrect formula assigns it probability 1.
+
+<div class="ex-lesson"><strong>Core idea:</strong> Operations act on the random variables, outcome by outcome. Find the distribution of the result from the definition of the new random variable, not by applying the operation to PMFs.</div>
+</div>
+
+The same error appears when scaling. The PMF of $$2X$$ moves each value $$x$$ to $$2x$$ while keeping its probability. That is a horizontal stretch of the PMF. Multiplying the PMF of $$X$$ by 2 is a vertical stretch, and the result sums to 2.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-11-sympathetic-magic.svg" alt="Three bar charts. Left: PMF of X on values 0 to 4. Middle: PMF of 2X on values 0, 2, 4, 6, 8 with the same bar heights. Right: twice the PMF of X, with bars summing to 2." style="display: block; width: 100%; max-width: 760px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes, illustrating the scaling example in Blitzstein and Hwang, <em>Introduction to Probability</em>, Section 3.7 (sympathetic magic). The PMF of $$2X$$ relocates probabilities; doubling the PMF of $$X$$ does not produce a PMF.</figcaption>
+</figure>
+
+A second form of the error is to conclude from equal distributions that the random variables are equal. In the coin example, the indicator of Heads $$X$$ and the indicator of Tails $$1-X$$ both have the $$\operatorname{Bern}(1/2)$$ distribution, yet $$X=1-X$$ never happens.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** If $$X$$ and $$Y$$ have the same distribution, then $$X=Y$$, or at least $$P(X=Y)$$ is large.
+
+**Correction:** Equal distributions only mean equal probabilities for each value. Random variables with the same distribution can be equal always, sometimes, or never.
+
+</div>
+
+**Core idea:** Before writing an answer, check its category: a number, an event, a random variable, or a distribution. Many errors in this course are category errors.
+
+### Part 2 — The Poisson distribution
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Poisson distribution <span class="ex-pill pill-defn">Definition</span></div>
+
+A random variable $$X$$ has the **Poisson distribution** with parameter $$\lambda>0$$, written $$X\sim\operatorname{Pois}(\lambda)$$, if
+
+$$
+P(X=k)=\frac{e^{-\lambda}\lambda^k}{k!},\qquad k=0,1,2,\ldots.
+$$
+
+</div>
+
+The support is all nonnegative integers. Unlike the Binomial, there is no upper bound on the count.
+
+#### Validity of the PMF
+
+Each term is positive because $$e^{-\lambda}>0$$, $$\lambda^k>0$$, and $$k!>0$$. For the total, use the Taylor series of the exponential function, which converges for every real $$\lambda$$:
+
+$$
+e^{\lambda}=\sum_{k=0}^{\infty}\frac{\lambda^k}{k!}.
+$$
+
+Factor $$e^{-\lambda}$$ out of the sum:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{\sum_{k=0}^{\infty}\frac{e^{-\lambda}\lambda^k}{k!}=e^{-\lambda}\sum_{k=0}^{\infty}\frac{\lambda^k}{k!}=e^{-\lambda}e^{\lambda}=1.}
+$$
+
+</div>
+
+The factor $$e^{-\lambda}$$ is exactly the normalizing constant that turns the terms of the exponential series into probabilities.
+
+#### Shape of the PMF
+
+The ratio of consecutive probabilities is
+
+$$
+\frac{P(X=k+1)}{P(X=k)}=\frac{\lambda}{k+1}.
+$$
+
+The probabilities increase while $$k+1<\lambda$$ and decrease once $$k+1>\lambda$$, so the PMF rises to a peak near $$\lambda$$ and then falls. For small $$\lambda$$ the PMF is strongly right-skewed. For larger $$\lambda$$ it becomes more symmetric and bell-shaped.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-11-poisson-pmfs.svg" alt="Poisson PMFs for lambda equal to 1, 4, 8, and 16, plotted for k from 0 to 30. Each PMF peaks near its lambda and becomes wider and more symmetric as lambda increases." style="display: block; width: 100%; max-width: 720px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes. Poisson PMFs for $$\lambda=1,4,8,16$$; compare Blitzstein and Hwang, <em>Introduction to Probability</em>, Figure 4.7.</figcaption>
+</figure>
+
+### Part 3 — The Poisson mean
+
+Let $$X\sim\operatorname{Pois}(\lambda)$$. By definition of expectation,
+
+$$
+E(X)=\sum_{k=0}^{\infty}k\frac{e^{-\lambda}\lambda^k}{k!}.
+$$
+
+The derivation has three steps.
+
+1. **Drop the zero term.** The $$k=0$$ term is $$0$$, so the sum may start at $$k=1$$.
+2. **Cancel $$k$$.** For $$k\ge1$$, $$k/k!=1/(k-1)!$$.
+3. **Factor out one $$\lambda$$ and re-index.** Write $$\lambda^k=\lambda\cdot\lambda^{k-1}$$ and set $$j=k-1$$.
+
+$$
+\begin{aligned}
+E(X)
+&=e^{-\lambda}\sum_{k=1}^{\infty}\frac{\lambda^k}{(k-1)!}
+=\lambda e^{-\lambda}\sum_{k=1}^{\infty}\frac{\lambda^{k-1}}{(k-1)!}\\
+&=\lambda e^{-\lambda}\sum_{j=0}^{\infty}\frac{\lambda^{j}}{j!}
+=\lambda e^{-\lambda}e^{\lambda}=\lambda.
+\end{aligned}
+$$
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{X\sim\operatorname{Pois}(\lambda)\implies E(X)=\lambda.}
+$$
+
+</div>
+
+The parameter is therefore the average count. If a count is modeled as Poisson, $$\lambda$$ is read as a rate: the expected number of events per hour, per page, per cookie, or per region.
+
+#### Supplementary: The variance is also $$\lambda$$
+
+Textbook Example 4.7.2 shows that $$\operatorname{Var}(X)=\lambda$$ as well. A short route uses the same shifting idea on $$E(X(X-1))$$:
+
+$$
+E(X(X-1))=e^{-\lambda}\sum_{k=2}^{\infty}\frac{\lambda^k}{(k-2)!}=\lambda^2.
+$$
+
+Then $$E(X^2)=E(X(X-1))+E(X)=\lambda^2+\lambda$$, so $$\operatorname{Var}(X)=E(X^2)-(E(X))^2=\lambda$$. Equality of mean and variance is a quick diagnostic: count data whose variance is far larger than their mean are poorly described by a single Poisson model.
+
+### Part 4 — What the Poisson counts
+
+The Poisson is used for the number of successes when there are many opportunities for success, each with a small probability. Typical counts are:
+
+| Count | Many opportunities | Small probability for each |
+|---|---|---|
+| Emails received in an hour | Many possible senders, or many short time slots | Any given sender writes, or any given millisecond brings an email |
+| Chocolate chips in a cookie | Many small cubes of dough | Any given cube contains a chip |
+| Earthquakes in a region in a year | Many places and times | Any given place and time has a quake |
+| Buses arriving at a stop in a day | Many short intervals | Any given interval contains an arrival |
+
+The counts above are not exactly Poisson. The number of possible senders is finite, and only so many chips fit in a cookie, while a Poisson variable is unbounded. The Poisson is an approximation, and the approximation is good when the individual probabilities are small.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** The Poisson “law of rare events” requires the total count to be small, so $$\lambda$$ must be small.
+
+**Correction:** “Rare” refers to each individual event $$A_j$$ having a small probability. The total rate $$\lambda=\sum_jp_j$$ can be large, because many small probabilities add up. A popular inbox can have $$\lambda=20$$ emails per hour even though any single person is unlikely to write in that hour.
+
+</div>
+
+### Part 5 — The Poisson paradigm
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Poisson paradigm <span class="ex-pill pill-thm">Approximation</span></div>
+
+Let $$A_1,\ldots,A_n$$ be events with $$p_j=P(A_j)$$. Suppose $$n$$ is large, every $$p_j$$ is small, and the events are independent or weakly dependent. Let
+
+$$
+X=\sum_{j=1}^nI(A_j)
+$$
+
+count how many of the events occur. Then
+
+$$
+X\ \dot\sim\ \operatorname{Pois}(\lambda),\qquad \lambda=\sum_{j=1}^np_j.
+$$
+
+</div>
+
+Here $$\dot\sim$$ means “is approximately distributed as.” Three features make the paradigm flexible:
+
+1. **Unequal probabilities are allowed.** The $$p_j$$ need not be equal, so the count need not be Binomial.
+2. **Mild dependence is allowed.** The events need not be independent, provided that knowing whether some occur changes the probabilities of the others only slightly.
+3. **The rate comes from linearity.** By the fundamental bridge and linearity, $$E(X)=\sum_jE(I(A_j))=\sum_jp_j$$. This is exact, whatever the dependence. The paradigm chooses the Poisson distribution with that same mean.
+
+The approximation is most useful for small counts, especially for
+
+$$
+P(X\ge1)=1-P(X=0)\approx1-e^{-\lambda}.
+$$
+
+Computing $$P(X=0)$$ exactly requires the joint behavior of all the events. The approximation requires only their total probability.
+
+#### Supplementary: How good is the approximation?
+
+For independent $$A_j$$ and $$N\sim\operatorname{Pois}(\lambda)$$, the textbook (Section 4.7) quotes a bound, proved by the Stein–Chen method: for every set $$B$$ of nonnegative integers,
+
+$$
+|P(X\in B)-P(N\in B)|\le\min\left(1,\frac1\lambda\right)\sum_{j=1}^np_j^2.
+$$
+
+The error is controlled by $$\sum_jp_j^2$$. This makes “small $$p_j$$” precise: the squares of the probabilities must sum to something small compared with $$\lambda$$. For instance, if all $$p_j=p$$, the right side is at most $$\min(np^2,p)$$.
+
+### Part 6 — The Binomial converges to the Poisson
+
+The Binomial is the special case of the Poisson paradigm in which the events are independent and share one probability $$p$$. In that case the approximation can be proved exactly as a limit.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Poisson limit of the Binomial <span class="ex-pill pill-thm">Theorem</span></div>
+
+Let $$X\sim\operatorname{Bin}(n,p)$$. If $$n\to\infty$$ and $$p\to0$$ with $$\lambda=np$$ held fixed, then for each fixed $$k\in\{0,1,2,\ldots\}$$,
+
+$$
+P(X=k)\to\frac{e^{-\lambda}\lambda^k}{k!}.
+$$
+
+</div>
+
+**Proof.** Fix $$k$$ and take $$n\ge k$$. Substitute $$p=\lambda/n$$ into the Binomial PMF and expand the binomial coefficient:
+
+$$
+\begin{aligned}
+P(X=k)
+&=\binom nk\left(\frac{\lambda}{n}\right)^k\left(1-\frac{\lambda}{n}\right)^{n-k}\\
+&=\frac{\lambda^k}{k!}\cdot\frac{n(n-1)\cdots(n-k+1)}{n^k}\cdot\left(1-\frac{\lambda}{n}\right)^{n}\cdot\left(1-\frac{\lambda}{n}\right)^{-k}.
+\end{aligned}
+$$
+
+Take the limit of each factor separately as $$n\to\infty$$.
+
+| Factor | Limit | Reason |
+|---|---|---|
+| $$\dfrac{\lambda^k}{k!}$$ | $$\dfrac{\lambda^k}{k!}$$ | Does not depend on $$n$$ |
+| $$\dfrac{n(n-1)\cdots(n-k+1)}{n^k}=\prod_{i=0}^{k-1}\left(1-\dfrac in\right)$$ | $$1$$ | A fixed number $$k$$ of factors, each tending to 1 |
+| $$\left(1-\dfrac{\lambda}{n}\right)^n$$ | $$e^{-\lambda}$$ | Compound-interest limit $$\left(1+\dfrac xn\right)^n\to e^x$$ with $$x=-\lambda$$ |
+| $$\left(1-\dfrac{\lambda}{n}\right)^{-k}$$ | $$1$$ | Fixed power of a quantity tending to 1 |
+
+Multiplying the limits gives
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{\lim_{n\to\infty}\binom nk\left(\frac{\lambda}{n}\right)^k\left(1-\frac{\lambda}{n}\right)^{n-k}=\frac{e^{-\lambda}\lambda^k}{k!}.}
+$$
+
+</div>
+
+$$\blacksquare$$
+
+The key step is that $$k$$ stays fixed while $$n$$ grows. A fixed number of factors near 1 multiplies to something near 1. The only factor whose exponent grows with $$n$$ is $$(1-\lambda/n)^n$$, and it produces the $$e^{-\lambda}$$.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-11-binomial-to-poisson.svg" alt="Grouped bar chart comparing Binomial PMFs with n equal to 6, 15, and 60 and p equal to 3 over n against the Poisson PMF with rate 3, for k from 0 to 10. The Binomial bars move toward the Poisson bars as n increases." style="display: block; width: 100%; max-width: 720px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes, illustrating Blitzstein and Hwang, <em>Introduction to Probability</em>, Theorem 4.8.3. With $$np=3$$ fixed, the largest pointwise PMF gap to $$\operatorname{Pois}(3)$$ is about 0.088 for $$n=6$$, 0.026 for $$n=15$$, and 0.006 for $$n=60$$.</figcaption>
+</figure>
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** Any Binomial with large $$n$$ is approximately Poisson.
+
+**Correction:** The success probability must be small. If $$p$$ stays fixed while $$n$$ grows, the mean $$np$$ and the variance $$np(1-p)$$ grow without bound, and the variance stays below the mean. That is a different regime (later approximated by the Normal). The Poisson limit needs $$p\to0$$ with $$np$$ moderate.
+
+</div>
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Supplementary numerical example: Rare defects <span class="ex-pill pill-num">Worked example</span></div>
+
+A machine produces 1000 items independently, and each is defective with probability $$0.003$$. Find the probability of at most one defect.
+
+**Model.** The defect count is $$X\sim\operatorname{Bin}(1000,0.003)$$. Here $$n$$ is large, $$p$$ is small, and $$\lambda=np=3$$ is moderate, so use $$\operatorname{Pois}(3)$$.
+
+**Approximation.**
+
+$$
+P(X\le1)\approx e^{-3}+e^{-3}\cdot3=4e^{-3}\approx0.1991.
+$$
+
+**Exact value.** $$P(X\le1)=(0.997)^{1000}+1000(0.003)(0.997)^{999}\approx0.1987$$.
+
+The absolute error is about $$0.0004$$, well within the bound $$\min(p,np^2)=0.003$$.
+
+<div class="ex-lesson">The Poisson approximation replaces large powers and binomial coefficients with one exponential and a few small factorials, with little loss of accuracy when $$p$$ is small.</div>
+</div>
+
+### Part 7 — Thought experiment: Counting raindrops
+
+Count the raindrops that land on a patch of ground during one minute. To fit a Binomial model, divide the patch into a fine grid of $$n$$ tiny squares and call a square a success if a drop lands in it. Each square has a small chance of a hit, and there are very many squares.
+
+The Binomial model has three weaknesses here:
+
+1. **The grid is arbitrary.** Each choice of $$n$$ gives a different model, and refining the grid sends $$n\to\infty$$ and $$p\to0$$. The Poisson is the limit that does not depend on the grid.
+2. **A square can receive two drops.** A Binomial square only records hit or miss. The Poisson counts drops directly, with no cap per square.
+3. **Equal, independent squares are a strong assumption.** Wind or overhanging trees can make some squares more likely to be hit. The Poisson paradigm tolerates unequal $$p_j$$ and mild dependence.
+
+Computing with $$\binom nk$$ for astronomically large $$n$$ is also numerically awkward. The Poisson PMF needs only $$\lambda$$, the expected number of drops.
+
+**Core idea:** The Poisson is the natural model when events can happen anywhere in a continuum of time or space and any small piece rarely contains one.
+
+### Part 8 — Birthday problems by the Poisson paradigm
+
+Assume 365 equally likely birthdays, independent across people, and ignore February 29.
+
+#### Matching pairs
+
+With $$m$$ people there are $$\binom m2$$ pairs. Let $$A_{ij}$$ be the event that persons $$i<j$$ share a birthday. Each has probability $$1/365$$. The events are weakly dependent: for example, if persons 1 and 2 match and persons 2 and 3 match, then persons 1 and 3 must match. The Poisson paradigm gives
+
+$$
+X=\#\{\text{matching pairs}\}\ \dot\sim\ \operatorname{Pois}(\lambda),\qquad \lambda=\binom m2\frac1{365}.
+$$
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Twenty-three people <span class="ex-pill pill-ex">Worked example</span></div>
+
+For $$m=23$$, there are $$\binom{23}2=253$$ pairs, so $$\lambda=253/365\approx0.6932$$. Then
+
+$$
+P(\text{at least one match})=1-P(X=0)\approx1-e^{-253/365}\approx0.5000.
+$$
+
+The exact answer from Lecture 3 is about $$0.5073$$, so the approximation recovers the familiar threshold of 23 people.
+
+<div class="ex-lesson"><strong>Core idea:</strong> Although $$m=23$$ is small, the number of trials is the number of pairs, 253. Many trials, each with probability $$1/365$$, is the Poisson setting.</div>
+</div>
+
+#### Supplementary: Near-birthday matches
+
+Textbook Example 4.7.5 asks for at least one pair with birthdays at most one day apart. For two given people, the second must have birthday on the first person's day or on one of the two adjacent days, so the probability is $$3/365$$. Then $$\lambda=\binom m2\frac3{365}$$. Setting $$1-e^{-\lambda}\ge1/2$$ requires $$\lambda\ge\ln2$$, which first holds at $$m=14$$. The exact answer is also 14, while an exact calculation without the approximation is much harder.
+
+#### Triple matches
+
+Now ask for three people who share a birthday. For each triple $$i<j<k$$, let $$I_{ijk}$$ indicate that all three share a birthday. Whatever the birthday of person $$i$$, persons $$j$$ and $$k$$ must both match it:
+
+$$
+E(I_{ijk})=P(\text{triple }ijk\text{ matches})=\left(\frac1{365}\right)^2.
+$$
+
+By linearity, the expected number of triple matches among $$m$$ people is
+
+$$
+E\left(\sum_{i<j<k}I_{ijk}\right)=\binom m3\frac1{365^2}.
+$$
+
+The indicators are dependent. For example, $$I_{123}$$ and $$I_{124}$$ share persons 1 and 2, so knowing $$I_{123}=1$$ raises the chance that $$I_{124}=1$$. But each triple is very unlikely and there are many triples, so the dependence is weak. Hence, with $$\lambda=\binom m3/365^2$$,
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{P(\text{at least one triple match})\approx1-e^{-\lambda},\qquad\lambda=\binom m3\frac1{365^2}.}
+$$
+
+</div>
+
+<div class="example-block" markdown="1">
+<div class="ex-title">How many people for an even chance of a triple match? <span class="ex-pill pill-num">Worked example</span></div>
+
+Require $$1-e^{-\lambda}\ge1/2$$, that is, $$\lambda\ge\ln2\approx0.6931$$. This means
+
+$$
+\binom m3\ge0.6931\times365^2\approx92{,}340.
+$$
+
+Since $$\binom m3\approx m^3/6$$, this gives $$m\approx\sqrt[3]{554{,}000}\approx82$$. Checking exact values of $$\binom m3$$:
+
+| $$m$$ | $$\lambda=\binom m3/365^2$$ | $$1-e^{-\lambda}$$ |
+|---|---|---|
+| 82 | 0.665 | 0.486 |
+| 83 | 0.690 | 0.498 |
+| 84 | 0.715 | 0.511 |
+
+The approximation therefore suggests about 84 people.
+
+**Supplementary caveat.** The exact threshold for a triple match is 88 people. The approximation is less accurate here than for pairs because the dependence is stronger. A single day shared by four people creates $$\binom43=4$$ matching triples at once, so matching triples arrive in clumps. Clumping raises $$P(X=0)$$ above $$e^{-\lambda}$$ for a given mean, so the Poisson estimate is slightly too optimistic.
+
+<div class="ex-lesson">Linearity gives the mean exactly. The Poisson paradigm turns that mean into an approximate probability of no occurrences, whose accuracy depends on how weak the dependence really is.</div>
+</div>
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** The Poisson paradigm needs independent events, so it cannot be used for birthday matches.
+
+**Correction:** Weak dependence is allowed. Pair and triple indicators overlap in people and are dependent, but each event is rare and any one event's dependence on the rest is slight. The approximation is excellent for pairs and reasonable for triples.
+
+</div>
+
+### Part 9 — Original practice questions
+
+Try these before reading the answers.
+
+1. Let $$X$$ be the indicator that a fair die shows 6, and let $$Y=1-X$$. Someone claims that the PMF of $$X+Y$$ is $$p_X+p_Y$$. Find the correct distribution of $$X+Y$$ and explain the error.
+2. Let $$X\sim\operatorname{Pois}(4)$$. Find $$P(X=2)$$ and $$P(X\le2)$$.
+3. For $$X\sim\operatorname{Pois}(\lambda)$$, find $$\lambda$$ such that $$P(X=0)=0.1$$.
+4. Show that the most likely value of a $$\operatorname{Pois}(\lambda)$$ variable is $$\lfloor\lambda\rfloor$$ when $$\lambda$$ is not an integer. *(Supplementary.)*
+5. Each of 300 acquaintances independently emails you this week with probability $$0.005$$. Approximate the probability of at least two emails.
+6. Approximate the probability of at least one shared birthday among 30 people, and compare it with the exact value $$0.7063$$.
+7. Approximate the probability of at least one triple birthday match among 100 people.
+8. Explain why $$n\to\infty$$ with fixed $$p$$ does not lead to a Poisson limit.
+9. In the proof of the Binomial limit, why does $$\frac{n(n-1)\cdots(n-k+1)}{n^k}\to1$$ require $$k$$ to be fixed?
+
+### Part 10 — Practice answers
+
+#### 1. Constant sum
+
+Since $$Y=1-X$$, the sum is $$X+Y=1$$ for every outcome, so $$P(X+Y=1)=1$$. The proposed formula assigns $$p_X(1)+p_Y(1)=1/6+5/6=1$$ to the value 1 and $$p_X(0)+p_Y(0)=5/6+1/6=1$$ to the value 0, a total of 2. It treats PMFs as if they were the random variables. The distribution of a sum depends on how $$X$$ and $$Y$$ are related, not only on their separate PMFs.
+
+#### 2. Poisson probabilities
+
+$$
+P(X=2)=e^{-4}\frac{4^2}{2!}=8e^{-4}\approx0.1465,
+$$
+
+$$
+P(X\le2)=e^{-4}\left(1+4+8\right)=13e^{-4}\approx0.2381.
+$$
+
+#### 3. Solving for the rate
+
+$$P(X=0)=e^{-\lambda}=0.1$$ gives $$\lambda=\ln10\approx2.303$$.
+
+#### 4. The mode
+
+From $$P(X=k+1)/P(X=k)=\lambda/(k+1)$$, the PMF increases from $$k$$ to $$k+1$$ exactly when $$k+1<\lambda$$ and decreases when $$k+1>\lambda$$. If $$\lambda$$ is not an integer, the last increase reaches $$k=\lfloor\lambda\rfloor$$, after which the PMF decreases. (If $$\lambda$$ is an integer, $$\lambda-1$$ and $$\lambda$$ tie.)
+
+#### 5. Emails
+
+Here $$\lambda=300\times0.005=1.5$$:
+
+$$
+P(X\ge2)=1-e^{-1.5}(1+1.5)=1-2.5e^{-1.5}\approx0.4422.
+$$
+
+#### 6. Thirty people
+
+$$\lambda=\binom{30}2/365=435/365\approx1.1918$$, so $$1-e^{-\lambda}\approx0.6963$$. The approximation is about $$0.010$$ below the exact $$0.7063$$.
+
+#### 7. Triple matches among 100 people
+
+$$\lambda=\binom{100}3/365^2=161{,}700/133{,}225\approx1.214$$, so $$P\approx1-e^{-1.214}\approx0.703$$. The clumping caveat in Part 8 suggests the true value is somewhat smaller.
+
+#### 8. Fixed success probability
+
+With $$p$$ fixed, $$E(X)=np\to\infty$$, so for each fixed $$k$$, $$P(X=k)\to0$$. Probability escapes to ever larger values and no limiting PMF exists. A Poisson limit requires the expected count $$np$$ to stay bounded, which forces $$p\to0$$.
+
+#### 9. Fixed number of factors
+
+The ratio is $$\prod_{i=0}^{k-1}(1-i/n)$$. With $$k$$ fixed, it is a product of finitely many factors, each tending to 1. If $$k$$ grew with $$n$$, for example $$k=n$$, the product would become $$n!/n^n$$, which tends to 0.
+
+### Part 11 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Sympathetic magic | Confusing a random variable with its distribution |
+| Sum of random variables | Find its distribution from the variables, not by adding PMFs |
+| Scaling | PMF of $$2X$$ relocates values; $$2p_X$$ is not a PMF |
+| Poisson PMF | $$P(X=k)=e^{-\lambda}\lambda^k/k!$$, $$k=0,1,2,\ldots$$ |
+| Validity | Taylor series $$\sum_k\lambda^k/k!=e^\lambda$$ |
+| Mean | $$E(X)=\lambda$$ by dropping $$k=0$$ and re-indexing |
+| Variance *(supplementary)* | $$\operatorname{Var}(X)=\lambda$$ |
+| Consecutive ratio | $$P(X=k+1)/P(X=k)=\lambda/(k+1)$$ |
+| Poisson paradigm | Count of many rare, weakly dependent events $$\dot\sim\operatorname{Pois}(\sum_jp_j)$$ |
+| “Rare” | Each $$p_j$$ small; $$\lambda$$ itself need not be small |
+| Binomial limit | $$\operatorname{Bin}(n,\lambda/n)\to\operatorname{Pois}(\lambda)$$ as $$n\to\infty$$ |
+| Key limit | $$(1-\lambda/n)^n\to e^{-\lambda}$$ |
+| At least one event | $$P(X\ge1)\approx1-e^{-\lambda}$$ |
+| Birthday pairs | $$\lambda=\binom m2/365$$; 23 people gives about 0.50 |
+| Triple matches | $$\lambda=\binom m3/365^2$$; about 84 people by approximation, 88 exactly |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Sympathetic magic <span class="gcat cat-defn">Definition</span></div>
+
+The category error of confusing a random variable with its distribution, for example by adding or scaling PMFs to represent adding or scaling random variables.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Category error <span class="gcat cat-defn">Definition</span></div>
+
+An answer of the wrong type of mathematical object, such as a distribution where a number is required. It is necessarily wrong, not merely inaccurate.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Poisson distribution <span class="gcat cat-defn">Definition</span></div>
+
+The distribution on $$\{0,1,2,\ldots\}$$ with PMF $$e^{-\lambda}\lambda^k/k!$$ for a rate $$\lambda>0$$. Its mean and variance both equal $$\lambda$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Rate parameter $$\lambda$$ <span class="gcat cat-notn">Notation</span></div>
+
+The Poisson parameter, interpreted as the expected number of events in the given unit of time, area, or volume.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Poisson paradigm <span class="gcat cat-thm">Approximation</span></div>
+
+The approximation of the number of occurring events among many independent or weakly dependent rare events by a Poisson distribution with $$\lambda=\sum_jP(A_j)$$. Also called the law of rare events.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Weak dependence <span class="gcat cat-defn">Definition</span></div>
+
+Dependence in which learning whether some of the events occurred changes the probabilities of the others only slightly.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Poisson limit of the Binomial <span class="gcat cat-thm">Theorem</span></div>
+
+As $$n\to\infty$$ and $$p\to0$$ with $$np=\lambda$$ fixed, the $$\operatorname{Bin}(n,p)$$ PMF converges pointwise to the $$\operatorname{Pois}(\lambda)$$ PMF.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Count data <span class="gcat cat-defn">Definition</span></div>
+
+Data whose values are nonnegative integers, such as numbers of arrivals or occurrences. The Poisson is a standard first model for such data.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 11</span>
+  <span class="ref-tag">Poisson</span>
+  <span class="ref-tag">Poisson paradigm</span>
+  <span class="ref-tag">Binomial limit</span>
+  <span class="ref-tag">Birthday problem</span>
+  <span class="ref-tag">Sympathetic magic</span>
 </div>
 
   </div>
