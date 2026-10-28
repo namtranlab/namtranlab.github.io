@@ -27,6 +27,13 @@ toc:
   - name: Lecture 10 - Expectation Continued
   - name: Lecture 11 - The Poisson Distribution
   - name: Lecture 12 - Discrete vs. Continuous Distributions and the Uniform
+  - name: Lecture 13 - Universality of the Uniform, Independence, and the Normal Distribution
+  - name: Lecture 14 - Location, Scale, and LOTUS
+  - name: Lecture 16 - The Exponential Distribution
+  - name: Lecture 17 - Moment Generating Functions
+  - name: Lecture 18 - MGFs Continued and Joint Distributions
+  - name: Lecture 19 - Joint, Conditional, and Marginal Distributions
+  - name: Lecture 20 - Multinomial and Cauchy
 
 _styles: >
   /* ── Collapsible chapter blocks ── */
@@ -7620,6 +7627,3252 @@ A transformation $$Y=\sigma X+\mu$$ with $$\sigma>0$$, which shifts and rescales
   <span class="ref-tag">Variance</span>
   <span class="ref-tag">LOTUS</span>
   <span class="ref-tag">Uniform</span>
+</div>
+
+  </div>
+</div>
+
+## Lecture 13 - Universality of the Uniform, Independence, and the Normal Distribution
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-13-toggle" onclick="toggleLecture('lecture-13')" aria-expanded="true" aria-controls="lecture-13-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 13</span>
+      <span>
+        <span class="chapter-title">Lecture 13 - Universality of the Uniform, Independence, and the Normal Distribution</span>
+        <span class="chapter-subtitle">Inverse-CDF simulation, plugging a random variable into its own CDF, independence of random variables, and the standard Normal</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-13-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-13-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+A single $$\operatorname{Unif}(0,1)$$ random variable can be turned into a random variable with any continuous distribution by applying the inverse CDF. In the other direction, plugging a continuous random variable into its own CDF produces a $$\operatorname{Unif}(0,1)$$ random variable. Independence of random variables means that the joint CDF factors into marginal CDFs, which is stronger than pairwise independence. The standard Normal distribution has density proportional to $$e^{-z^2/2}$$. A polar-coordinates argument finds its normalizing constant $$1/\sqrt{2\pi}$$, odd symmetry gives mean 0, and integration by parts gives variance 1.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$U\sim\operatorname{Unif}(0,1)$$ | Standard Uniform random variable |
+| $$F$$ | A CDF, continuous and strictly increasing on its support |
+| $$F^{-1}$$ | Inverse CDF, also called the quantile function |
+| $$F(X)$$ | The random variable obtained by plugging $$X$$ into the function $$F$$ |
+| $$X_1,\ldots,X_n$$ | Random variables defined on the same experiment |
+| i.i.d. | Independent and identically distributed |
+| $$Z\sim\mathcal N(0,1)$$ | $$Z$$ has the standard Normal distribution |
+| $$\varphi(z)$$ | Standard Normal PDF, $$\frac1{\sqrt{2\pi}}e^{-z^2/2}$$ |
+| $$\Phi(z)$$ | Standard Normal CDF, $$\int_{-\infty}^z\varphi(t)\,dt$$ |
+| $$(r,\theta)$$ | Polar coordinates, with $$x=r\cos\theta$$, $$y=r\sin\theta$$ |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- State and prove both directions of the universality of the Uniform.
+- Simulate a continuous random variable from $$\operatorname{Unif}(0,1)$$ by inverting its CDF.
+- Interpret $$F(X)$$ correctly and explain why it is not $$P(X\le X)$$.
+- Simulate a discrete random variable by partitioning $$(0,1)$$.
+- Define independence of random variables through the joint CDF and the joint PMF.
+- Construct random variables that are pairwise independent but not independent.
+- Derive the normalizing constant of the standard Normal PDF.
+- Show that $$E(Z)=0$$ and $$\operatorname{Var}(Z)=1$$ for $$Z\sim\mathcal N(0,1)$$.
+
+### Part 1 — Universality of the Uniform
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Universality of the Uniform <span class="ex-pill pill-thm">Theorem</span></div>
+
+Let $$F$$ be a CDF that is continuous and strictly increasing on the support of its distribution, so that $$F^{-1}:(0,1)\to\mathbb R$$ exists.
+
+1. If $$U\sim\operatorname{Unif}(0,1)$$ and $$X=F^{-1}(U)$$, then $$X$$ has CDF $$F$$.
+2. If $$X$$ has CDF $$F$$, then $$F(X)\sim\operatorname{Unif}(0,1)$$.
+
+</div>
+
+The theorem says that $$\operatorname{Unif}(0,1)$$ is a universal raw material: every continuous distribution can be built from it, and every continuous random variable can be converted back to it. It is also called the probability integral transform or inverse transform sampling.
+
+**Proof of part 1.** Because $$F$$ is strictly increasing, $$F^{-1}(U)\le x$$ holds exactly when $$U\le F(x)$$. For a standard Uniform, $$P(U\le u)=u$$ for $$u\in(0,1)$$. Hence
+
+$$
+P(X\le x)=P\left(F^{-1}(U)\le x\right)=P\left(U\le F(x)\right)=F(x).
+$$
+
+**Proof of part 2.** Let $$Y=F(X)$$, which takes values in $$(0,1)$$. For $$y\in(0,1)$$, apply the increasing function $$F^{-1}$$ to both sides of the inequality:
+
+$$
+P(Y\le y)=P\left(F(X)\le y\right)=P\left(X\le F^{-1}(y)\right)=F\left(F^{-1}(y)\right)=y.
+$$
+
+This is the $$\operatorname{Unif}(0,1)$$ CDF. $$\blacksquare$$
+
+Both proofs use only one fact: an increasing function preserves inequalities, so an event about $$X$$ can be rewritten as an event about $$U$$.
+
+#### What $$F(X)$$ means
+
+$$F$$ is an ordinary function, so $$F(X)$$ is a function of a random variable and hence a random variable. First write $$F(x)$$ as a formula in $$x$$, then substitute $$X$$. For example, if $$F(x)=1-e^{-x}$$ for $$x>0$$, then $$F(X)=1-e^{-X}$$.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** $$F(X)=P(X\le X)=1$$.
+
+**Correction:** $$F(x)=P(X\le x)$$ defines a function of a fixed number $$x$$. Replacing $$x$$ inside the probability by the random $$X$$ confuses the function with the event that defines it. The correct object is the formula $$F(x)$$ evaluated at $$x=X$$, which is a random number between 0 and 1.
+
+</div>
+
+**Interpretation as percentiles.** If $$X$$ is the score of a randomly chosen student and $$F$$ is the score distribution, then $$F(x)$$ is the fraction of students scoring below $$x$$, the percentile of score $$x$$. $$F(X)$$ is the percentile of a random student. Scores can have any shape, but percentiles are spread evenly: 10% of students lie in each tenth of the percentile scale. That is part 2 of the theorem.
+
+### Part 2 — Simulating with the inverse CDF
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Simulating the Exponential distribution <span class="ex-pill pill-ex">Worked example</span></div>
+
+The $$\operatorname{Expo}(1)$$ distribution has CDF $$F(x)=1-e^{-x}$$ for $$x>0$$. Generate draws from it using only Uniform draws.
+
+**Step 1: Invert the CDF.** Solve $$u=1-e^{-x}$$ for $$x$$:
+
+$$
+e^{-x}=1-u\implies x=-\ln(1-u),\qquad F^{-1}(u)=-\ln(1-u).
+$$
+
+**Step 2: Substitute the Uniform.** By part 1 of the theorem,
+
+$$
+X=-\ln(1-U)\sim\operatorname{Expo}(1).
+$$
+
+**Step 3: Check directly.** For $$x>0$$,
+
+$$
+P(-\ln(1-U)\le x)=P(1-U\ge e^{-x})=P(U\le1-e^{-x})=1-e^{-x}.
+$$
+
+**Step 4: Simplify (optional).** Since $$1-U\sim\operatorname{Unif}(0,1)$$ as well, $$-\ln U\sim\operatorname{Expo}(1)$$ too. To simulate ten independent draws, apply the transformation to ten independent Uniforms.
+
+**Reverse direction.** If $$X\sim\operatorname{Expo}(1)$$, part 2 gives $$1-e^{-X}\sim\operatorname{Unif}(0,1)$$.
+
+<div class="ex-lesson"><strong>Core idea:</strong> Simulation reduces to algebra: solve $$u=F(x)$$ for $$x$$, then substitute $$U$$. A computer that can only produce Uniform numbers can produce any continuous distribution whose CDF can be inverted.</div>
+</div>
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-13-universality-expo.svg" alt="Left: the Expo(1) CDF with arrows from u-values 0.2, 0.5, 0.8, and 0.95 on the vertical axis across to the curve and down to x equals minus log of 1 minus u. Right: a histogram of 100,000 values of minus log of 1 minus U closely matching the Expo(1) density e to the minus x." style="display: block; width: 100%; max-width: 760px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes, illustrating Blitzstein and Hwang, <em>Introduction to Probability</em>, Theorem 5.3.1 (compare Figures 5.6–5.7). Left: the inverse CDF maps Uniform heights to $$x$$-values. Right: $$10^5$$ simulated values of $$-\ln(1-U)$$ follow the $$\operatorname{Expo}(1)$$ PDF.</figcaption>
+</figure>
+
+Large values of $$u$$ near 1 map to widely spaced $$x$$-values because the CDF is flat in the right tail. A flat region of $$F$$ means little probability per unit length, so the inverse spreads Uniform mass thinly there.
+
+#### Transformations of the Uniform
+
+- **Symmetry:** $$1-U\sim\operatorname{Unif}(0,1)$$.
+- **Linear maps:** $$a+bU$$ with $$b>0$$ is $$\operatorname{Unif}(a,a+b)$$.
+- **Nonlinear maps:** generally not Uniform. For example, $$\sqrt U$$ has CDF $$P(\sqrt U\le x)=P(U\le x^2)=x^2$$ on $$(0,1)$$, with PDF $$2x$$. This is universality again: $$F(x)=x^2$$ has inverse $$\sqrt u$$.
+
+#### Supplementary: The discrete case
+
+A discrete CDF has jumps and flat parts, so it has no ordinary inverse. Part 1 still works with a different construction. To build $$X$$ with $$P(X=j)=p_j$$ for $$j=0,1,\ldots$$, cut $$(0,1)$$ into consecutive pieces of lengths $$p_0,p_1,\ldots$$ and let $$X=j$$ when $$U$$ falls in the $$j$$th piece. Since probability is length for $$U$$, $$P(X=j)=p_j$$. For example, $$X=I(U<p)$$ is $$\operatorname{Bern}(p)$$.
+
+Part 2 fails for discrete $$X$$: $$F(X)$$ is still discrete. If $$X\sim\operatorname{Bern}(p)$$, then $$F(X)$$ takes only the values $$1-p$$ and $$1$$.
+
+### Part 3 — Independence of random variables
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Independence of random variables <span class="ex-pill pill-defn">Definition</span></div>
+
+Random variables $$X_1,\ldots,X_n$$ are **independent** if
+
+$$
+P(X_1\le x_1,\ldots,X_n\le x_n)=P(X_1\le x_1)\cdots P(X_n\le x_n)\quad\text{for all }x_1,\ldots,x_n\in\mathbb R.
+$$
+
+For discrete random variables, this is equivalent to factorization of the joint PMF:
+
+$$
+P(X_1=x_1,\ldots,X_n=x_n)=P(X_1=x_1)\cdots P(X_n=x_n)\quad\text{for all }x_1,\ldots,x_n.
+$$
+
+Infinitely many random variables are independent if every finite subcollection is.
+
+</div>
+
+**Meaning.** Learning the values of any subset of the variables does not change the distribution of the others.
+
+**One equation, infinitely many conditions.** For $$n$$ events, independence requires checking every subcollection of 2, 3, …, $$n$$ events. For random variables, one product formula suffices because it must hold for every choice of $$x_1,\ldots,x_n$$. Letting some $$x_k\to\infty$$ removes those variables from the statement, so the definition already includes every subcollection. A single choice of values where the formula fails proves dependence.
+
+**i.i.d.** Random variables are **independent and identically distributed** when they are independent and share one distribution. The two properties are unrelated: independence concerns information, identical distribution concerns the shape of the PMF or CDF.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Maximum and minimum of two dice <span class="ex-pill pill-ex">Worked example</span></div>
+
+Roll two fair dice. Let $$M$$ be the larger value and $$L$$ the smaller. Are $$M$$ and $$L$$ independent?
+
+Find one pair of values where the joint PMF does not factor. Take $$M=1$$ and $$L=6$$. The maximum cannot be below the minimum, so $$P(M=1,L=6)=0$$. But $$P(M=1)=1/36$$ (both dice show 1) and $$P(L=6)=1/36$$ (both dice show 6), so
+
+$$
+P(M=1)P(L=6)=\frac1{1296}\ne0.
+$$
+
+Hence $$M$$ and $$L$$ are dependent.
+
+<div class="ex-lesson">Dependence needs only one counterexample. Look for values that are individually possible but jointly impossible.</div>
+</div>
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Matching pennies: Pairwise independent but not independent <span class="ex-pill pill-ex">Worked example</span></div>
+
+Let $$X_1,X_2$$ be i.i.d. $$\operatorname{Bern}(1/2)$$, two fair coin tosses coded 0 or 1. Let $$X_3=1$$ if $$X_1=X_2$$ and $$X_3=0$$ otherwise.
+
+**Each variable is $$\operatorname{Bern}(1/2)$$.** $$X_3=1$$ for the outcomes $$(0,0)$$ and $$(1,1)$$, so $$P(X_3=1)=1/2$$.
+
+**Each pair is independent.** $$X_1$$ and $$X_2$$ are independent by construction. For $$X_1$$ and $$X_3$$, the four joint probabilities are each $$1/4$$, since each joint value pins down one equally likely outcome. For instance,
+
+$$
+P(X_1=1,X_3=1)=P(X_1=1,X_2=1)=\frac14=P(X_1=1)P(X_3=1).
+$$
+
+The same argument applies to $$X_2$$ and $$X_3$$.
+
+**The three are not independent.** Knowing $$X_1$$ and $$X_2$$ determines $$X_3$$. For instance,
+
+$$
+P(X_1=1,X_2=1,X_3=0)=0\ne\frac18=P(X_1=1)P(X_2=1)P(X_3=0).
+$$
+
+<div class="ex-lesson"><strong>Core idea:</strong> Any two of the variables carry no information about each other, but two of them together determine the third. Independence of the whole collection is stronger than independence of every pair.</div>
+</div>
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** If every pair among $$X_1,\ldots,X_n$$ is independent, then the collection is independent.
+
+**Correction:** Pairwise independence does not imply joint independence, as matching pennies shows. The converse does hold: independence of the collection implies independence of every pair and every subcollection.
+
+</div>
+
+### Part 4 — The Normal distribution and why it matters
+
+The Normal distribution, also called the Gaussian distribution, is the most important distribution in statistics. Its importance comes from the **central limit theorem**: under mild conditions, a sum of many i.i.d. random variables, suitably standardized, has an approximately Normal distribution, whatever the distribution of each term, discrete or continuous. Sums and averages appear throughout statistics, so the Normal appears with them.
+
+The Normal family has two parameters, the mean $$\mu$$ and the variance $$\sigma^2$$, written $$\mathcal N(\mu,\sigma^2)$$. Its PDF is a symmetric bell centered at $$\mu$$, with spread controlled by $$\sigma$$. The standard case $$\mu=0$$, $$\sigma^2=1$$ is treated first.
+
+### Part 5 — The standard Normal PDF and its normalizing constant
+
+Start from the shape $$e^{-z^2/2}$$: positive, symmetric about 0, and decaying very fast. To make it a PDF, multiply by a constant $$c$$ chosen so the total area is 1:
+
+$$
+f(z)=ce^{-z^2/2},\qquad c=\left(\int_{-\infty}^{\infty}e^{-z^2/2}\,dz\right)^{-1}.
+$$
+
+The antiderivative of $$e^{-z^2/2}$$ has no closed form, but the definite integral over the whole line can still be computed.
+
+#### The polar-coordinates argument
+
+Let $$I=\int_{-\infty}^{\infty}e^{-z^2/2}\,dz$$. The integration variable is a dummy variable, so write $$I$$ twice with different names and multiply:
+
+$$
+I^2=\int_{-\infty}^{\infty}e^{-x^2/2}\,dx\int_{-\infty}^{\infty}e^{-y^2/2}\,dy=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}e^{-(x^2+y^2)/2}\,dx\,dy.
+$$
+
+The integrand depends only on the distance $$r=\sqrt{x^2+y^2}$$ from the origin, so switch to polar coordinates. The area element becomes $$dx\,dy=r\,dr\,d\theta$$, where the factor $$r$$ is the Jacobian:
+
+$$
+I^2=\int_0^{2\pi}\int_0^{\infty}e^{-r^2/2}\,r\,dr\,d\theta.
+$$
+
+The extra $$r$$ makes the inner integral elementary. Substitute $$u=r^2/2$$, so $$du=r\,dr$$:
+
+$$
+\int_0^{\infty}e^{-r^2/2}\,r\,dr=\int_0^{\infty}e^{-u}\,du=1.
+$$
+
+The outer integral then gives $$I^2=\int_0^{2\pi}1\,d\theta=2\pi$$. Since $$I>0$$, $$I=\sqrt{2\pi}$$.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Standard Normal distribution <span class="ex-pill pill-defn">Definition</span></div>
+
+$$Z$$ has the **standard Normal distribution**, $$Z\sim\mathcal N(0,1)$$, if its PDF is
+
+$$
+\varphi(z)=\frac1{\sqrt{2\pi}}e^{-z^2/2},\qquad-\infty<z<\infty.
+$$
+
+Its CDF is
+
+$$
+\Phi(z)=\int_{-\infty}^{z}\frac1{\sqrt{2\pi}}e^{-t^2/2}\,dt.
+$$
+
+</div>
+
+$$\Phi$$ has no closed form in elementary functions, but it is a well-defined function, tabulated and built into software. Reference values: $$\Phi(0)=0.5$$, $$\Phi(1)\approx0.8413$$, $$\Phi(1.96)\approx0.9750$$, $$\Phi(2)\approx0.9772$$.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-13-standard-normal-pdf-cdf.svg" alt="Left: the standard Normal bell-shaped PDF with equal shaded tail areas below minus 1 and above 1, labelled Phi of minus 1 and 1 minus Phi of 1. Right: the S-shaped standard Normal CDF crossing one half at zero." style="display: block; width: 100%; max-width: 760px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes; compare Blitzstein and Hwang, <em>Introduction to Probability</em>, Figure 5.9. The PDF is symmetric, so the left and right tails beyond $$\pm1$$ have equal area.</figcaption>
+</figure>
+
+#### Symmetry
+
+Because $$\varphi(-z)=\varphi(z)$$, the area to the left of $$-z$$ equals the area to the right of $$z$$:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{\Phi(-z)=1-\Phi(z)\quad\text{for all }z.}
+$$
+
+</div>
+
+So $$P(\lvert Z\rvert<z)=\Phi(z)-\Phi(-z)=2\Phi(z)-1$$. For example, $$P(\lvert Z\rvert<1)\approx0.6827$$ and $$P(\lvert Z\rvert<1.96)\approx0.95$$. *(Supplementary: the same symmetry shows that $$-Z\sim\mathcal N(0,1)$$.)*
+
+### Part 6 — Mean and variance of the standard Normal
+
+#### Mean
+
+$$
+E(Z)=\frac1{\sqrt{2\pi}}\int_{-\infty}^{\infty}ze^{-z^2/2}\,dz.
+$$
+
+The integrand $$g(z)=ze^{-z^2/2}$$ is odd: $$g(-z)=-g(z)$$. Its area on $$(-\infty,0)$$ is the negative of its area on $$(0,\infty)$$, and each of these areas is finite: $$\int_0^\infty ze^{-z^2/2}\,dz=1$$ by the substitution $$u=z^2/2$$. Hence
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{E(Z)=0.}
+$$
+
+</div>
+
+The finiteness check matters, since $$\infty-\infty$$ is undefined. The same reasoning gives $$E(Z^n)=0$$ for every odd $$n$$.
+
+#### Variance
+
+Since $$E(Z)=0$$, LOTUS gives
+
+$$
+\operatorname{Var}(Z)=E(Z^2)=\frac1{\sqrt{2\pi}}\int_{-\infty}^{\infty}z^2e^{-z^2/2}\,dz=\frac2{\sqrt{2\pi}}\int_0^{\infty}z^2e^{-z^2/2}\,dz,
+$$
+
+where the last step uses that $$z^2e^{-z^2/2}$$ is even.
+
+Integrate by parts, splitting $$z^2e^{-z^2/2}=z\cdot\left(ze^{-z^2/2}\right)$$:
+
+| Choice | Derivative or antiderivative |
+|---|---|
+| $$u=z$$ | $$du=dz$$ |
+| $$dv=ze^{-z^2/2}\,dz$$ | $$v=-e^{-z^2/2}$$ |
+
+Then
+
+$$
+\int_0^{\infty}z^2e^{-z^2/2}\,dz=\Big[-ze^{-z^2/2}\Big]_0^{\infty}+\int_0^{\infty}e^{-z^2/2}\,dz=0+\frac{\sqrt{2\pi}}2.
+$$
+
+The boundary term vanishes because $$e^{-z^2/2}$$ decays faster than $$z$$ grows. The remaining integral is half of $$I=\sqrt{2\pi}$$ by symmetry. Therefore
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{\operatorname{Var}(Z)=\frac2{\sqrt{2\pi}}\cdot\frac{\sqrt{2\pi}}2=1.}
+$$
+
+</div>
+
+The notation $$\mathcal N(0,1)$$ records exactly these two facts: mean 0 and variance 1.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-13-odd-even-integrands.svg" alt="Left: the odd function z times e to the minus z squared over 2, with a negative lobe for z below zero and an equal positive lobe above zero. Right: the even function z squared times e to the minus z squared over 2, with two equal positive lobes." style="display: block; width: 100%; max-width: 760px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes. The mean integrand is odd, so its two lobes cancel. The second-moment integrand is even, so the integral over the whole line is twice the integral over $$(0,\infty)$$.</figcaption>
+</figure>
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** Any integral of an odd function over $$(-\infty,\infty)$$ equals 0.
+
+**Correction:** The two half-line integrals must be finite. For example, $$\int_{-\infty}^{\infty}z\,dz$$ is undefined, not 0. For the Normal, the rapid decay of $$e^{-z^2/2}$$ makes every moment finite, so the symmetry argument is valid.
+
+</div>
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** Since $$\varphi(0)=1/\sqrt{2\pi}\approx0.399$$, the probability that $$Z=0$$ is about 0.4.
+
+**Correction:** $$\varphi(0)$$ is a density. $$P(Z=0)=0$$, and $$P(-\varepsilon/2<Z<\varepsilon/2)\approx0.399\,\varepsilon$$ for small $$\varepsilon$$.
+
+</div>
+
+### Part 7 — Original practice questions
+
+Try these before reading the answers.
+
+1. A random variable has CDF $$F(x)=x^3$$ on $$(0,1)$$. Express a random variable with this distribution as a function of $$U\sim\operatorname{Unif}(0,1)$$, and verify its CDF.
+2. Use the universality of the Uniform to simulate a random variable with CDF $$F(x)=1-1/x$$ for $$x\ge1$$.
+3. Let $$X\sim\operatorname{Expo}(1)$$. What is the distribution of $$e^{-X}$$?
+4. Using $$U\sim\operatorname{Unif}(0,1)$$, construct a random variable that takes values $$1,2,3$$ with probabilities $$0.2,0.5,0.3$$. *(Supplementary: discrete case.)*
+5. Roll two fair dice with values $$X$$ and $$Y$$. Are $$X$$ and $$X+Y$$ independent? Justify with one calculation.
+6. In matching pennies, are $$X_1$$ and $$(X_2,X_3)$$ independent? Explain.
+7. Find $$c$$ such that $$ce^{-z^2/8}$$ is a PDF on the real line.
+8. For $$Z\sim\mathcal N(0,1)$$, express $$P(-0.5<Z<1.5)$$ in terms of $$\Phi$$ and evaluate it numerically.
+9. Use integration by parts to show $$E(Z^4)=3$$. *(Supplementary.)*
+
+### Part 8 — Practice answers
+
+#### 1. Inverting a cubic CDF
+
+Solve $$u=x^3$$: $$F^{-1}(u)=u^{1/3}$$. So $$X=U^{1/3}$$. Check: for $$0<x<1$$, $$P(U^{1/3}\le x)=P(U\le x^3)=x^3$$.
+
+#### 2. A heavy-tailed variable
+
+Solve $$u=1-1/x$$: $$x=1/(1-u)$$. So $$X=1/(1-U)$$ has the required CDF, and so does $$1/U$$ by symmetry of the Uniform.
+
+#### 3. Exponential back to Uniform
+
+By part 2 of the theorem, $$F(X)=1-e^{-X}\sim\operatorname{Unif}(0,1)$$. Then $$e^{-X}=1-F(X)$$ is also $$\operatorname{Unif}(0,1)$$, because $$1-U$$ is Uniform when $$U$$ is.
+
+#### 4. Partitioning the unit interval
+
+Let $$X=1$$ if $$U<0.2$$, $$X=2$$ if $$0.2\le U<0.7$$, and $$X=3$$ if $$U\ge0.7$$. The three pieces have lengths $$0.2,0.5,0.3$$, which are the required probabilities.
+
+#### 5. A die and the sum
+
+They are dependent. $$P(X=1,X+Y=12)=0$$, since a sum of 12 requires both dice to show 6. But $$P(X=1)P(X+Y=12)=\frac16\cdot\frac1{36}>0$$.
+
+#### 6. One variable against a pair
+
+No. The pair $$(X_2,X_3)$$ determines $$X_1$$: $$X_1=X_2$$ if $$X_3=1$$ and $$X_1=1-X_2$$ if $$X_3=0$$. For example, $$P(X_1=0\mid X_2=1,X_3=1)=0\ne\frac12$$.
+
+#### 7. A wider bell
+
+Substitute $$z=2w$$, $$dz=2\,dw$$: $$\int e^{-z^2/8}\,dz=2\int e^{-w^2/2}\,dw=2\sqrt{2\pi}$$. So $$c=\frac1{2\sqrt{2\pi}}$$. This is the $$\mathcal N(0,4)$$ density.
+
+#### 8. A standard Normal interval
+
+$$P(-0.5<Z<1.5)=\Phi(1.5)-\Phi(-0.5)=\Phi(1.5)+\Phi(0.5)-1\approx0.9332+0.6915-1=0.6247$$.
+
+#### 9. The fourth moment
+
+Write $$E(Z^4)=\frac1{\sqrt{2\pi}}\int z^3\cdot ze^{-z^2/2}\,dz$$ and integrate by parts with $$u=z^3$$ and $$v=-e^{-z^2/2}$$. The boundary term vanishes, leaving
+
+$$
+E(Z^4)=\frac1{\sqrt{2\pi}}\int_{-\infty}^{\infty}3z^2e^{-z^2/2}\,dz=3E(Z^2)=3.
+$$
+
+### Part 9 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Universality, part 1 | $$U\sim\operatorname{Unif}(0,1)\implies F^{-1}(U)\sim F$$ |
+| Universality, part 2 | $$X\sim F$$ continuous $$\implies F(X)\sim\operatorname{Unif}(0,1)$$ |
+| Key step in proofs | Increasing functions preserve inequalities |
+| $$F(X)$$ | Formula $$F(x)$$ evaluated at $$x=X$$; not $$P(X\le X)$$ |
+| Exponential simulation | $$-\ln(1-U)$$ or $$-\ln U\sim\operatorname{Expo}(1)$$ |
+| Uniform symmetry | $$1-U\sim\operatorname{Unif}(0,1)$$ |
+| Discrete simulation | Split $$(0,1)$$ into pieces of lengths $$p_j$$ |
+| Independence | Joint CDF (or PMF) factors for all values |
+| Dependence | One failing pair of values suffices |
+| Pairwise vs. joint | Pairwise independence does not imply independence |
+| Normal importance | Central limit theorem for sums of i.i.d. variables |
+| Standard Normal PDF | $$\varphi(z)=e^{-z^2/2}/\sqrt{2\pi}$$ |
+| Gaussian integral | $$\int e^{-z^2/2}\,dz=\sqrt{2\pi}$$ via polar coordinates |
+| Symmetry | $$\Phi(-z)=1-\Phi(z)$$ |
+| Moments | $$E(Z)=0$$, $$E(Z^2)=\operatorname{Var}(Z)=1$$ |
+| Reference values | $$\Phi(1)\approx0.841$$, $$\Phi(1.96)\approx0.975$$ |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Universality of the Uniform <span class="gcat cat-thm">Theorem</span></div>
+
+The pair of results $$F^{-1}(U)\sim F$$ for $$U\sim\operatorname{Unif}(0,1)$$, and $$F(X)\sim\operatorname{Unif}(0,1)$$ for continuous $$X$$ with CDF $$F$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Quantile function <span class="gcat cat-defn">Definition</span></div>
+
+The inverse CDF $$F^{-1}$$, which maps a probability level $$u$$ to the value with that fraction of the distribution below it.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Inverse transform sampling <span class="gcat cat-prop">Technique</span></div>
+
+Generating draws from a distribution by applying its quantile function to Uniform draws.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Independence of random variables <span class="gcat cat-defn">Definition</span></div>
+
+Factorization of the joint CDF into marginal CDFs for all arguments; for discrete variables, equivalently, factorization of the joint PMF.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Pairwise independence <span class="gcat cat-defn">Definition</span></div>
+
+Independence of every pair in a collection. It is weaker than independence of the whole collection.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">i.i.d. <span class="gcat cat-notn">Notation</span></div>
+
+Independent and identically distributed: independent random variables sharing a single distribution.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Standard Normal distribution <span class="gcat cat-defn">Definition</span></div>
+
+The distribution with PDF $$\varphi(z)=e^{-z^2/2}/\sqrt{2\pi}$$, mean 0, and variance 1, written $$\mathcal N(0,1)$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">$$\varphi$$ and $$\Phi$$ <span class="gcat cat-notn">Notation</span></div>
+
+The standard Normal PDF and CDF. $$\Phi$$ has no elementary closed form.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Normalizing constant <span class="gcat cat-defn">Definition</span></div>
+
+The constant multiplying a nonnegative function so that it integrates (or sums) to 1. For the standard Normal it is $$1/\sqrt{2\pi}$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Central limit theorem <span class="gcat cat-thm">Theorem</span></div>
+
+The result that a standardized sum of many i.i.d. random variables is approximately standard Normal. It explains the central role of the Normal distribution.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 13</span>
+  <span class="ref-tag">Universality of the Uniform</span>
+  <span class="ref-tag">Simulation</span>
+  <span class="ref-tag">Independence</span>
+  <span class="ref-tag">Normal</span>
+</div>
+
+  </div>
+</div>
+
+## Lecture 14 - Location, Scale, and LOTUS
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-14-toggle" onclick="toggleLecture('lecture-14')" aria-expanded="true" aria-controls="lecture-14-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 14</span>
+      <span>
+        <span class="chapter-title">Lecture 14 - Location, Scale, and LOTUS</span>
+        <span class="chapter-subtitle">General Normal distributions, standardization, the 68-95-99.7% rule, LOTUS, and Poisson and Binomial variances</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-14-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-14-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+Every Normal distribution is a shifted and rescaled standard Normal: $$X=\mu+\sigma Z$$. Location-scale reasoning gives its mean, variance, CDF, and PDF directly from the standard case, and standardization turns any Normal probability into a statement about $$\Phi$$. The 68-95-99.7% rule summarizes how much probability lies within one, two, and three standard deviations of the mean. LOTUS computes $$E(g(X))$$ by keeping the probabilities of $$X$$ and changing only the values. Combined with series manipulation and indicator decompositions, it gives the variances of the Poisson and Binomial distributions.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$Z\sim\mathcal N(0,1)$$ | Standard Normal random variable |
+| $$\varphi$$, $$\Phi$$ | Standard Normal PDF and CDF |
+| $$X\sim\mathcal N(\mu,\sigma^2)$$ | Normal with mean $$\mu$$ and variance $$\sigma^2$$ |
+| $$\mu$$ | Location parameter (mean) |
+| $$\sigma>0$$ | Scale parameter (standard deviation) |
+| $$(X-\mu)/\sigma$$ | Standardized version of $$X$$ |
+| $$\Phi^{-1}$$ | Standard Normal quantile function |
+| $$g(X)$$ | A function of a random variable |
+| $$I_j$$ | Indicator of success on trial $$j$$ |
+| $$q=1-p$$ | Failure probability |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Construct $$\mathcal N(\mu,\sigma^2)$$ from $$\mathcal N(0,1)$$ and derive its mean and variance.
+- Standardize a Normal random variable and compute probabilities and quantiles with $$\Phi$$.
+- Derive the general Normal CDF and PDF from $$\Phi$$ and $$\varphi$$.
+- Apply the 68-95-99.7% rule.
+- State and prove LOTUS for discrete random variables.
+- Derive $$\operatorname{Var}(X)=\lambda$$ for $$X\sim\operatorname{Pois}(\lambda)$$ by differentiating a series.
+- Derive $$\operatorname{Var}(X)=npq$$ for $$X\sim\operatorname{Bin}(n,p)$$ using indicators.
+
+### Part 1 — Variance scales by the square
+
+Variance measures squared distance from the mean, so a scale factor enters squared, while a shift has no effect:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{\operatorname{Var}(aX+b)=a^2\operatorname{Var}(X).}
+$$
+
+</div>
+
+A frequent error follows from treating variance as linear. Adding a random variable to itself is the same as doubling it:
+
+$$
+\operatorname{Var}(X+X)=\operatorname{Var}(2X)=4\operatorname{Var}(X)\ne2\operatorname{Var}(X)\quad\text{unless }\operatorname{Var}(X)=0.
+$$
+
+The value $$2\operatorname{Var}(X)$$ is what independent copies would give: if $$X_1,X_2$$ are i.i.d. with the distribution of $$X$$, then $$\operatorname{Var}(X_1+X_2)=2\operatorname{Var}(X)$$. Two independent copies partly cancel each other's deviations; $$X$$ and itself never do.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** $$X+X$$ and $$X_1+X_2$$ have the same variance because $$X$$, $$X_1$$, and $$X_2$$ have the same distribution.
+
+**Correction:** The variance of a sum depends on how the terms are related, not only on their individual distributions. $$X+X=2X$$ has variance $$4\operatorname{Var}(X)$$; an independent pair has variance $$2\operatorname{Var}(X)$$. Treating the two as equal is sympathetic magic.
+
+</div>
+
+### Part 2 — The general Normal distribution
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Normal distribution <span class="ex-pill pill-defn">Definition</span></div>
+
+Let $$Z\sim\mathcal N(0,1)$$, $$\mu\in\mathbb R$$, and $$\sigma>0$$. The random variable
+
+$$
+X=\mu+\sigma Z
+$$
+
+has the **Normal distribution** with mean $$\mu$$ and variance $$\sigma^2$$, written $$X\sim\mathcal N(\mu,\sigma^2)$$.
+
+</div>
+
+**Mean and variance.** Linearity and the scaling rule give
+
+$$
+E(X)=\mu+\sigma E(Z)=\mu,\qquad\operatorname{Var}(X)=\sigma^2\operatorname{Var}(Z)=\sigma^2.
+$$
+
+The scale factor is the standard deviation $$\sigma$$, not the variance $$\sigma^2$$. Multiplying $$Z$$ by $$\sigma^2$$ would give variance $$\sigma^4$$.
+
+**Parameter convention.** The second parameter of $$\mathcal N(\mu,\sigma^2)$$ is the variance. $$\mathcal N(0,4)$$ has standard deviation 2. Software often takes the standard deviation instead, so check which one a function expects.
+
+**Standardization.** Solving for $$Z$$ reverses the construction:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{X\sim\mathcal N(\mu,\sigma^2)\implies\frac{X-\mu}{\sigma}\sim\mathcal N(0,1).}
+$$
+
+</div>
+
+The standardized value measures how many standard deviations $$X$$ lies from its mean.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-14-normal-location-scale.svg" alt="Four Normal densities: N(0,1) centered at 0; N(3,1), the same shape shifted to 3; N(0,4), wider and lower at 0; and N(-2,0.25), narrow and tall at minus 2." style="display: block; width: 100%; max-width: 720px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes, illustrating the location-scale construction in Blitzstein and Hwang, <em>Introduction to Probability</em>, Section 5.4. Changing $$\mu$$ translates the curve; changing $$\sigma$$ stretches it horizontally and compresses it vertically so the area stays 1.</figcaption>
+</figure>
+
+#### CDF and PDF
+
+The CDF follows by standardizing inside the probability. Since $$\sigma>0$$, dividing by $$\sigma$$ preserves the inequality:
+
+$$
+F(x)=P(X\le x)=P\left(\frac{X-\mu}{\sigma}\le\frac{x-\mu}{\sigma}\right)=\Phi\left(\frac{x-\mu}{\sigma}\right).
+$$
+
+Differentiate with the chain rule. The inner function $$(x-\mu)/\sigma$$ has derivative $$1/\sigma$$:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{f(x)=\frac1\sigma\varphi\left(\frac{x-\mu}{\sigma}\right)=\frac1{\sigma\sqrt{2\pi}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right).}
+$$
+
+</div>
+
+The factor $$1/\sigma$$ is essential. Stretching the curve horizontally by $$\sigma$$ multiplies its area by $$\sigma$$, so its height must be divided by $$\sigma$$ to keep total area 1.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** The PDF of $$\mu+\sigma Z$$ is $$\mu+\sigma\varphi(z)$$, obtained by shifting and scaling the density.
+
+**Correction:** Location-scale operations act on the random variable, not on its PDF. Applying them to $$\varphi$$ gives a function whose area is not 1. The correct density substitutes the standardized argument and divides by $$\sigma$$: $$\frac1\sigma\varphi\left(\frac{x-\mu}\sigma\right)$$.
+
+</div>
+
+#### Negation and sums
+
+- **Negation.** $$-X=-\mu+\sigma(-Z)$$. Since $$-Z\sim\mathcal N(0,1)$$ by symmetry, $$-X\sim\mathcal N(-\mu,\sigma^2)$$. More generally, $$a+bX\sim\mathcal N(a+b\mu,b^2\sigma^2)$$ for any $$b\ne0$$.
+- **Sums of independent Normals (stated now, proved later).** If $$X_1\sim\mathcal N(\mu_1,\sigma_1^2)$$ and $$X_2\sim\mathcal N(\mu_2,\sigma_2^2)$$ are independent, then $$X_1+X_2\sim\mathcal N(\mu_1+\mu_2,\sigma_1^2+\sigma_2^2)$$. The means and variances add for any independent variables; the surprising part is that the sum is still Normal. For the difference, $$X_1-X_2\sim\mathcal N(\mu_1-\mu_2,\sigma_1^2+\sigma_2^2)$$: variances add even when the variables are subtracted.
+
+### Part 3 — Computing Normal probabilities
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Heights in a population <span class="ex-pill pill-ex">Worked example</span></div>
+
+Model adult heights as $$X\sim\mathcal N(170,64)$$ in centimeters, so $$\mu=170$$ and $$\sigma=8$$.
+
+**(a) Probability above 186 cm.** Standardize: $$(186-170)/8=2$$. Then
+
+$$
+P(X>186)=P(Z>2)=1-\Phi(2)\approx1-0.9772=0.0228.
+$$
+
+**(b) Probability between 162 and 186 cm.** The standardized endpoints are $$-1$$ and $$2$$:
+
+$$
+P(162<X<186)=\Phi(2)-\Phi(-1)=\Phi(2)-(1-\Phi(1))\approx0.9772-0.1587=0.8186.
+$$
+
+**(c) The 90th percentile.** Find $$x$$ with $$P(X\le x)=0.9$$. Since $$\Phi\left(\frac{x-170}8\right)=0.9$$,
+
+$$
+x=170+8\,\Phi^{-1}(0.9)\approx170+8(1.2816)\approx180.3\text{ cm}.
+$$
+
+<div class="ex-lesson"><strong>Core idea:</strong> Convert every Normal question to the standard scale. Probabilities need $$\Phi$$ of standardized endpoints; quantiles reverse the steps through $$x=\mu+\sigma\,\Phi^{-1}(u)$$.</div>
+</div>
+
+#### The 68-95-99.7% rule
+
+For $$X\sim\mathcal N(\mu,\sigma^2)$$, standardization gives $$P(\lvert X-\mu\rvert<k\sigma)=P(\lvert Z\rvert<k)=2\Phi(k)-1$$. The values for $$k=1,2,3$$ are worth memorizing:
+
+<div class="result-box" markdown="1">
+
+$$
+\begin{aligned}
+P(\lvert X-\mu\rvert<\sigma)&\approx0.68,\\
+P(\lvert X-\mu\rvert<2\sigma)&\approx0.95,\\
+P(\lvert X-\mu\rvert<3\sigma)&\approx0.997.
+\end{aligned}
+$$
+
+</div>
+
+More precisely, the three values are $$0.6827$$, $$0.9545$$, and $$0.9973$$. The exact 95% multiplier is $$1.96$$, since $$\Phi(1.96)\approx0.975$$, which is why $$\pm1.96$$ standard deviations appears in 95% confidence intervals.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-14-68-95-99-7.svg" alt="Standard Normal curve with nested shaded bands from mu minus sigma to mu plus sigma (68.27 percent), mu minus 2 sigma to mu plus 2 sigma (95.45 percent), and mu minus 3 sigma to mu plus 3 sigma (99.73 percent)." style="display: block; width: 100%; max-width: 720px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes, illustrating Blitzstein and Hwang, <em>Introduction to Probability</em>, Theorem 5.4.5. Nested bands within one, two, and three standard deviations of the mean.</figcaption>
+</figure>
+
+The rule gives quick estimates. In the height example, $$162<X<186$$ is $$\mu-\sigma$$ to $$\mu+2\sigma$$. Half the 68% band plus half the 95% band gives $$0.34+0.475=0.815$$, close to the exact $$0.8186$$.
+
+### Part 4 — LOTUS
+
+The distribution of $$g(X)$$ uses the same probabilities as $$X$$, attached to transformed values. If $$X$$ takes values $$0,1,2,3,\ldots$$, then $$X^2$$ takes $$0,1,4,9,\ldots$$ with the same probabilities, so
+
+$$
+E(X)=\sum_xxP(X=x),\qquad E(X^2)=\sum_xx^2P(X=x).
+$$
+
+This works without change when $$g$$ is one-to-one on the support. When several values of $$x$$ share one value of $$g(x)$$, their probabilities must be combined to get the PMF of $$g(X)$$. LOTUS states that the expectation comes out right either way.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">LOTUS for discrete random variables <span class="ex-pill pill-thm">Theorem</span></div>
+
+If $$X$$ is discrete and $$g:\mathbb R\to\mathbb R$$, then
+
+$$
+E(g(X))=\sum_xg(x)P(X=x),
+$$
+
+where the sum is over the support of $$X$$.
+
+</div>
+
+**Proof.** Work with the sample space $$S$$, finite or countable, each outcome $$s$$ a “pebble” with mass $$P(\{s\})$$. The random variable $$g(X)$$ assigns the value $$g(X(s))$$ to pebble $$s$$, so
+
+$$
+E(g(X))=\sum_{s\in S}g(X(s))P(\{s\}).
+$$
+
+Group the pebbles by their value of $$X$$. All pebbles with $$X(s)=x$$ form a “super-pebble” of total mass $$P(X=x)$$, and every one of them has the same $$g$$-value $$g(x)$$:
+
+$$
+\sum_{s\in S}g(X(s))P(\{s\})=\sum_x\sum_{s:\,X(s)=x}g(x)P(\{s\})=\sum_xg(x)\sum_{s:\,X(s)=x}P(\{s\})=\sum_xg(x)P(X=x).
+$$
+
+$$\blacksquare$$
+
+The proof only reorders a sum. Any grouping of the pebbles gives the same total, so grouping by $$x$$ (LOTUS) and grouping by $$g(x)$$ (the definition of $$E(g(X))$$) must agree.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Two routes to $$E(X^2)$$ <span class="ex-pill pill-ex">Worked example</span></div>
+
+Let $$X$$ be uniform on $$\{-2,-1,0,1,2\}$$.
+
+**By LOTUS.** Keep each probability $$1/5$$ and square each value:
+
+$$
+E(X^2)=\frac{4+1+0+1+4}{5}=2.
+$$
+
+**By the distribution of $$X^2$$.** The values $$\pm1$$ both map to 1, and $$\pm2$$ both map to 4, so $$X^2$$ has PMF $$P(X^2=0)=1/5$$, $$P(X^2=1)=2/5$$, $$P(X^2=4)=2/5$$:
+
+$$
+E(X^2)=0\cdot\frac15+1\cdot\frac25+4\cdot\frac25=2.
+$$
+
+Both routes give 2. Since $$E(X)=0$$, this is also $$\operatorname{Var}(X)$$.
+
+<div class="ex-lesson">LOTUS skips the step of finding the PMF of $$g(X)$$. That step is easy here but can be hard when $$g$$ merges many values.</div>
+</div>
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-14-lotus-grouping.svg" alt="Five circles for the values minus 2, minus 1, 0, 1, 2 of X, each with probability one fifth, with arrows to three circles for the values 0, 1, 4 of X squared with probabilities one fifth, two fifths, and two fifths." style="display: block; width: 100%; max-width: 720px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes, illustrating the grouping argument behind LOTUS (Blitzstein and Hwang, <em>Introduction to Probability</em>, Theorem 4.5.1). Values of $$X$$ that share a value of $$X^2$$ pool their probabilities.</figcaption>
+</figure>
+
+### Part 5 — Variance of the Poisson by differentiating a series
+
+Let $$X\sim\operatorname{Pois}(\lambda)$$. Its mean is $$\lambda$$ (Lecture 11). For the variance, LOTUS gives
+
+$$
+E(X^2)=\sum_{k=0}^{\infty}k^2\frac{e^{-\lambda}\lambda^k}{k!}=e^{-\lambda}\sum_{k=0}^{\infty}k^2\frac{\lambda^k}{k!}.
+$$
+
+The sum $$\sum k^2\lambda^k/k!$$ can be produced from the exponential series. Each application of the operation “differentiate with respect to $$\lambda$$, then multiply by $$\lambda$$” brings down one factor of $$k$$, because $$\lambda\frac{d}{d\lambda}\lambda^k=k\lambda^k$$.
+
+**Step 1.** Start from $$\sum_{k=0}^\infty\lambda^k/k!=e^\lambda$$.
+
+**Step 2.** Differentiate and multiply by $$\lambda$$:
+
+$$
+\sum_{k=0}^{\infty}k\frac{\lambda^k}{k!}=\lambda e^{\lambda}.
+$$
+
+**Step 3.** Repeat on both sides:
+
+$$
+\sum_{k=0}^{\infty}k^2\frac{\lambda^k}{k!}=\lambda\frac{d}{d\lambda}\left(\lambda e^\lambda\right)=\lambda\left(e^\lambda+\lambda e^\lambda\right)=\lambda e^\lambda(1+\lambda).
+$$
+
+Term-by-term differentiation is valid because power series can be differentiated inside their interval of convergence, which here is the whole real line.
+
+**Step 4.** Multiply by $$e^{-\lambda}$$ and subtract the squared mean:
+
+$$
+E(X^2)=\lambda(1+\lambda)=\lambda^2+\lambda,\qquad
+\operatorname{Var}(X)=\lambda^2+\lambda-\lambda^2=\lambda.
+$$
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{X\sim\operatorname{Pois}(\lambda)\implies E(X)=\operatorname{Var}(X)=\lambda.}
+$$
+
+</div>
+
+Equal mean and variance is a characteristic feature of the Poisson. Lecture 11 reached the same result through $$E(X(X-1))$$; the derivative method is a general tool for sums of the form $$\sum k^mc_k\lambda^k$$.
+
+### Part 6 — Variance of the Binomial with indicators
+
+Let $$X\sim\operatorname{Bin}(n,p)$$ and write $$X=I_1+\cdots+I_n$$, where $$I_j$$ indicates success on trial $$j$$. The $$I_j$$ are i.i.d. $$\operatorname{Bern}(p)$$, and $$E(X)=np$$ by linearity.
+
+#### Route 1: Expand $$X^2$$
+
+Squaring the sum produces $$n$$ squared terms and $$\binom n2$$ distinct cross terms, each appearing twice:
+
+$$
+X^2=\sum_{j=1}^nI_j^2+2\sum_{i<j}I_iI_j.
+$$
+
+Two facts make each expectation easy:
+
+- An indicator satisfies $$I_j^2=I_j$$, since $$0^2=0$$ and $$1^2=1$$. So $$E(I_j^2)=p$$.
+- $$I_iI_j$$ is the indicator that trials $$i$$ and $$j$$ both succeed. By independence, $$E(I_iI_j)=p^2$$ for $$i\ne j$$.
+
+By linearity,
+
+$$
+E(X^2)=np+2\binom n2p^2=np+n(n-1)p^2.
+$$
+
+Then
+
+$$
+\operatorname{Var}(X)=np+n(n-1)p^2-n^2p^2=np-np^2=np(1-p).
+$$
+
+#### Route 2: Add variances of independent indicators
+
+Each indicator has $$\operatorname{Var}(I_j)=E(I_j^2)-(EI_j)^2=p-p^2=pq$$. For independent random variables variances add (proved later), so $$\operatorname{Var}(X)=npq$$ immediately.
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{X\sim\operatorname{Bin}(n,p)\implies\operatorname{Var}(X)=npq=np(1-p).}
+$$
+
+</div>
+
+The variance is largest at $$p=1/2$$ and vanishes when $$p=0$$ or $$p=1$$, when the outcome is certain. For $$\operatorname{Bin}(10,0.3)$$, $$\operatorname{Var}(X)=10(0.3)(0.7)=2.1$$.
+
+**Comparison with the Poisson.** With $$np=\lambda$$, the Binomial variance is $$\lambda(1-p)$$, which tends to $$\lambda$$ as $$p\to0$$. This matches the Poisson limit of the Binomial from Lecture 11.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** $$E(I_iI_j)=E(I_i)$$ because indicators satisfy $$I^2=I$$.
+
+**Correction:** $$I^2=I$$ holds for one indicator multiplied by itself. For $$i\ne j$$, $$I_iI_j$$ indicates that two different events both occur, with expectation $$P(A_i\cap A_j)$$, which equals $$p^2$$ only under independence.
+
+</div>
+
+#### Supplementary: Why the Hypergeometric differs
+
+For draws without replacement, the indicators are dependent, so $$E(I_iI_j)\ne p^2$$ and the cross terms change. The same expansion still works with the correct joint probability; the Hypergeometric variance is derived later in the course.
+
+### Part 7 — Original practice questions
+
+Try these before reading the answers.
+
+1. Let $$X\sim\mathcal N(-2,9)$$. Find $$P(X>1)$$ and $$P(\lvert X+2\rvert<6)$$.
+2. If $$X\sim\mathcal N(\mu,\sigma^2)$$, what is the distribution of $$3-2X$$?
+3. Let $$X\sim\mathcal N(50,25)$$. Find the value $$x$$ exceeded with probability $$0.025$$.
+4. Independent $$X\sim\mathcal N(1,4)$$ and $$Y\sim\mathcal N(2,5)$$. Find $$P(X+Y>6)$$ using the stated sum result.
+5. Explain why $$\operatorname{Var}(X-Y)=\operatorname{Var}(X)+\operatorname{Var}(Y)$$ for independent $$X,Y$$, rather than a difference.
+6. Let $$X\sim\operatorname{Pois}(\lambda)$$. Use LOTUS to find $$E\left(\frac1{X+1}\right)$$.
+7. Let $$X\sim\operatorname{Pois}(\lambda)$$. Find $$E(X(X-1))$$ without the derivative method.
+8. Find $$\operatorname{Var}(X)$$ for $$X\sim\operatorname{Bin}(20,0.25)$$ and the value of $$p$$ that maximizes the variance of $$\operatorname{Bin}(20,p)$$.
+9. Let $$X$$ have PMF $$P(X=k)=q^{k-1}p$$ for $$k=1,2,\ldots$$ (trials up to and including the first success). Find $$E(X)$$ and $$\operatorname{Var}(X)$$ by differentiating a geometric series.
+
+### Part 8 — Practice answers
+
+#### 1. Standardizing
+
+Here $$\sigma=3$$. $$P(X>1)=P\left(Z>\frac{1-(-2)}3\right)=1-\Phi(1)\approx0.1587$$. The second event is $$\lvert X-\mu\rvert<2\sigma$$, so its probability is $$2\Phi(2)-1\approx0.9545$$.
+
+#### 2. A linear transformation
+
+$$3-2X\sim\mathcal N(3-2\mu,4\sigma^2)$$. The mean transforms linearly; the variance picks up $$(-2)^2=4$$.
+
+#### 3. An upper quantile
+
+$$P(X>x)=0.025$$ means $$\Phi\left(\frac{x-50}5\right)=0.975$$, so $$x\approx50+5(1.96)=59.8$$.
+
+#### 4. A Normal sum
+
+$$X+Y\sim\mathcal N(3,9)$$, standard deviation 3. $$P(X+Y>6)=1-\Phi(1)\approx0.1587$$.
+
+#### 5. Variances add for differences
+
+$$X-Y=X+(-1)Y$$ and $$\operatorname{Var}(-Y)=(-1)^2\operatorname{Var}(Y)=\operatorname{Var}(Y)$$. Uncertainty from both sources accumulates whether they are added or subtracted.
+
+#### 6. LOTUS with a reciprocal
+
+$$
+E\left(\frac1{X+1}\right)=\sum_{k=0}^\infty\frac1{k+1}\frac{e^{-\lambda}\lambda^k}{k!}=\frac{e^{-\lambda}}{\lambda}\sum_{k=0}^\infty\frac{\lambda^{k+1}}{(k+1)!}=\frac{e^{-\lambda}}{\lambda}\left(e^\lambda-1\right)=\frac{1-e^{-\lambda}}{\lambda}.
+$$
+
+Note that this is not $$1/(\lambda+1)$$: for $$\lambda=3$$ it is $$0.317$$, not $$0.25$$.
+
+#### 7. A factorial moment
+
+The terms with $$k=0,1$$ vanish, and $$k(k-1)/k!=1/(k-2)!$$:
+
+$$
+E(X(X-1))=e^{-\lambda}\sum_{k=2}^\infty\frac{\lambda^k}{(k-2)!}=\lambda^2e^{-\lambda}\sum_{j=0}^\infty\frac{\lambda^j}{j!}=\lambda^2.
+$$
+
+Then $$E(X^2)=\lambda^2+\lambda$$, consistent with Part 5.
+
+#### 8. Binomial variance
+
+$$20(0.25)(0.75)=3.75$$. The function $$p(1-p)$$ is maximized at $$p=1/2$$, giving variance $$5$$.
+
+#### 9. Trials up to the first success
+
+Differentiate $$\sum_{k=0}^\infty q^k=\frac1{1-q}$$: $$\sum_{k=1}^\infty kq^{k-1}=\frac1{(1-q)^2}=\frac1{p^2}$$. So $$E(X)=p\cdot\frac1{p^2}=\frac1p$$.
+
+Multiply by $$q$$ and differentiate again: $$\sum_{k=1}^\infty k^2q^{k-1}=\frac{1+q}{(1-q)^3}$$. So $$E(X^2)=\frac{p(1+q)}{p^3}=\frac{1+q}{p^2}$$ and
+
+$$
+\operatorname{Var}(X)=\frac{1+q}{p^2}-\frac1{p^2}=\frac{q}{p^2}.
+$$
+
+The failures-before-success version $$X-1$$ has the same variance, since shifting does not change spread.
+
+### Part 9 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Scaling variance | $$\operatorname{Var}(aX+b)=a^2\operatorname{Var}(X)$$ |
+| $$X+X$$ vs. independent copies | $$4\operatorname{Var}(X)$$ vs. $$2\operatorname{Var}(X)$$ |
+| General Normal | $$X=\mu+\sigma Z\sim\mathcal N(\mu,\sigma^2)$$ |
+| Second parameter | Variance $$\sigma^2$$; scale factor is $$\sigma$$ |
+| Standardization | $$(X-\mu)/\sigma\sim\mathcal N(0,1)$$ |
+| Normal CDF | $$\Phi\left((x-\mu)/\sigma\right)$$ |
+| Normal PDF | $$\frac1\sigma\varphi\left((x-\mu)/\sigma\right)$$ |
+| Quantile | $$\mu+\sigma\,\Phi^{-1}(u)$$ |
+| Negation | $$-X\sim\mathcal N(-\mu,\sigma^2)$$ |
+| Independent sum | $$\mathcal N(\mu_1+\mu_2,\sigma_1^2+\sigma_2^2)$$ |
+| 68-95-99.7% | Within $$1,2,3$$ SDs of the mean |
+| 95% multiplier | $$1.96$$ |
+| LOTUS | $$E(g(X))=\sum_xg(x)P(X=x)$$ |
+| LOTUS proof | Regroup a sum over outcomes |
+| Series trick | $$\lambda\frac{d}{d\lambda}$$ brings down a factor $$k$$ |
+| Poisson | Mean and variance $$\lambda$$ |
+| Indicator facts | $$I^2=I$$; $$E(I_iI_j)=P(A_i\cap A_j)$$ |
+| Binomial | Variance $$npq$$ |
+| First Success | Mean $$1/p$$, variance $$q/p^2$$ |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Location-scale transformation <span class="gcat cat-prop">Technique</span></div>
+
+A map $$X\mapsto\mu+\sigma X$$ with $$\sigma>0$$. It shifts the center by $$\mu$$ and stretches the spread by $$\sigma$$, and it keeps a random variable within the Normal family (and within the Uniform family).
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Normal distribution $$\mathcal N(\mu,\sigma^2)$$ <span class="gcat cat-defn">Definition</span></div>
+
+The distribution of $$\mu+\sigma Z$$ for $$Z\sim\mathcal N(0,1)$$, with mean $$\mu$$, variance $$\sigma^2$$, and PDF $$\frac1{\sigma\sqrt{2\pi}}e^{-(x-\mu)^2/(2\sigma^2)}$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Standardization <span class="gcat cat-prop">Technique</span></div>
+
+Subtracting the mean and dividing by the standard deviation, $$(X-\mu)/\sigma$$. For a Normal random variable the result is standard Normal.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">68-95-99.7% rule <span class="gcat cat-thm">Rule</span></div>
+
+For a Normal random variable, the approximate probabilities of lying within one, two, and three standard deviations of the mean.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">LOTUS <span class="gcat cat-thm">Theorem</span></div>
+
+$$E(g(X))=\sum_xg(x)P(X=x)$$ for discrete $$X$$ (with an integral against the PDF for continuous $$X$$). It follows by regrouping the sum over outcomes.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Super-pebble <span class="gcat cat-notn">Notation</span></div>
+
+The set of outcomes on which $$X$$ takes a given value $$x$$, with total mass $$P(X=x)$$. Grouping pebbles into super-pebbles proves LOTUS.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Factorial moment <span class="gcat cat-meas">Measure</span></div>
+
+An expectation such as $$E(X(X-1))$$. For count variables it is often easier to compute than $$E(X^2)$$ and leads to the variance.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 14</span>
+  <span class="ref-tag">Normal</span>
+  <span class="ref-tag">Location-scale</span>
+  <span class="ref-tag">LOTUS</span>
+  <span class="ref-tag">Variance</span>
+  <span class="ref-tag">Binomial</span>
+  <span class="ref-tag">Poisson</span>
+</div>
+
+  </div>
+</div>
+
+## Lecture 16 - The Exponential Distribution
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-16-toggle" onclick="toggleLecture('lecture-16')" aria-expanded="true" aria-controls="lecture-16-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 16</span>
+      <span>
+        <span class="chapter-title">Lecture 16 - The Exponential Distribution</span>
+        <span class="chapter-subtitle">PDF and CDF, scaling to Expo(1), mean and variance, the memoryless property, and conditional expectation</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-16-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-16-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+The Exponential distribution models a continuous waiting time when events occur at a constant rate $$\lambda$$. Its survival function $$e^{-\lambda x}$$ gives the CDF and PDF at once. Every Exponential is a rescaled $$\operatorname{Expo}(1)$$, so its mean $$1/\lambda$$ and variance $$1/\lambda^2$$ follow from two integrals for the standard case. Its defining feature is the memoryless property: having waited any length of time without the event does not change the distribution of the remaining wait. Memorylessness gives conditional expectations such as $$E(X\mid X>a)=a+1/\lambda$$ immediately, and among continuous distributions on $$(0,\infty)$$ only the Exponential has it.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$X\sim\operatorname{Expo}(\lambda)$$ | $$X$$ is Exponential with rate $$\lambda>0$$ |
+| $$\lambda$$ | Rate: expected number of events per unit time |
+| $$1/\lambda$$ | Mean waiting time |
+| $$f(x)=\lambda e^{-\lambda x}$$ | PDF for $$x>0$$ |
+| $$F(x)=1-e^{-\lambda x}$$ | CDF for $$x>0$$ |
+| $$G(x)=P(X>x)$$ | Survival function, $$1-F(x)$$ |
+| $$s$$ | Time already waited |
+| $$t$$ | Additional waiting time |
+| $$E(X\mid A)$$ | Conditional expectation of $$X$$ given event $$A$$ |
+| $$\operatorname{Geom}(p)$$ | Discrete analogue: failures before the first success |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- State the Exponential PDF, CDF, and survival function and interpret the rate $$\lambda$$.
+- Show that $$\lambda X\sim\operatorname{Expo}(1)$$ when $$X\sim\operatorname{Expo}(\lambda)$$.
+- Derive the mean and variance of $$\operatorname{Expo}(\lambda)$$ from the $$\operatorname{Expo}(1)$$ case.
+- State and verify the memoryless property, and explain what it does and does not claim.
+- Compute $$E(X\mid X>a)$$ using memorylessness and linearity.
+- Explain why the Exponential is the only memoryless continuous distribution on $$(0,\infty)$$.
+- Relate the Exponential to the Geometric distribution.
+
+### Part 1 — Definition, PDF, and CDF
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Exponential distribution <span class="ex-pill pill-defn">Definition</span></div>
+
+A continuous random variable $$X$$ has the **Exponential distribution** with rate $$\lambda>0$$, written $$X\sim\operatorname{Expo}(\lambda)$$, if its PDF is
+
+$$
+f(x)=\lambda e^{-\lambda x},\qquad x>0,
+$$
+
+and $$f(x)=0$$ for $$x\le0$$.
+
+</div>
+
+**Validity.** The PDF is positive on $$(0,\infty)$$, and with $$u=\lambda x$$,
+
+$$
+\int_0^\infty\lambda e^{-\lambda x}\,dx=\int_0^\infty e^{-u}\,du=1.
+$$
+
+**CDF and survival function.** Integrating from 0 to $$x$$:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{F(x)=1-e^{-\lambda x},\qquad G(x)=P(X>x)=e^{-\lambda x},\qquad x>0.}
+$$
+
+</div>
+
+The survival function is the most convenient form. It decays geometrically in continuous time: each additional unit of time multiplies the survival probability by the same factor $$e^{-\lambda}$$.
+
+**Interpretation.** $$X$$ is the waiting time for an event that happens at constant rate $$\lambda$$. If the number of events in $$[0,t]$$ is $$\operatorname{Pois}(\lambda t)$$, then the first event time $$T$$ satisfies $$\{T>t\}=\{\text{no events in }[0,t]\}$$, so $$P(T>t)=e^{-\lambda t}$$. Typical uses are times between arrivals in a queue, times between calls, decay times of radioactive atoms, and lifetimes of components that do not wear out.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-16-exponential-pdf-cdf.svg" alt="Left: Exponential PDFs for rates 0.5, 1, and 2, each starting at height lambda at zero and decaying. Right: the corresponding CDFs rising from 0 toward 1, faster for larger lambda." style="display: block; width: 100%; max-width: 760px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes; compare Blitzstein and Hwang, <em>Introduction to Probability</em>, Figure 5.10. A larger rate concentrates the waiting time near 0.</figcaption>
+</figure>
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** In $$\operatorname{Expo}(\lambda)$$, the parameter $$\lambda$$ is the mean waiting time.
+
+**Correction:** $$\lambda$$ is a rate, in events per unit time; the mean waiting time is $$1/\lambda$$. A rate of 4 calls per hour gives a mean wait of 15 minutes. Some software parametrizes the Exponential by the mean (a “scale”), so check the convention.
+
+</div>
+
+### Part 2 — Scaling to the standard Exponential
+
+Let $$X\sim\operatorname{Expo}(\lambda)$$ and $$Y=\lambda X$$. For $$y>0$$,
+
+$$
+P(Y>y)=P\left(X>\frac y\lambda\right)=e^{-\lambda\cdot y/\lambda}=e^{-y}.
+$$
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{X\sim\operatorname{Expo}(\lambda)\iff Y=\lambda X\sim\operatorname{Expo}(1).}
+$$
+
+</div>
+
+Measuring time in units of the mean waiting time removes the parameter. Conversely, if $$Y\sim\operatorname{Expo}(1)$$, then $$Y/\lambda\sim\operatorname{Expo}(\lambda)$$. This is a scale transformation; shifting is not allowed, because it would move the support away from $$(0,\infty)$$.
+
+### Part 3 — Mean and variance
+
+#### Standard case
+
+Let $$Y\sim\operatorname{Expo}(1)$$. Integrate by parts with $$u=y$$ and $$dv=e^{-y}\,dy$$, so $$v=-e^{-y}$$:
+
+$$
+E(Y)=\int_0^\infty ye^{-y}\,dy=\Big[-ye^{-y}\Big]_0^\infty+\int_0^\infty e^{-y}\,dy=0+1=1.
+$$
+
+By LOTUS and integration by parts with $$u=y^2$$:
+
+$$
+E(Y^2)=\int_0^\infty y^2e^{-y}\,dy=\Big[-y^2e^{-y}\Big]_0^\infty+2\int_0^\infty ye^{-y}\,dy=2E(Y)=2.
+$$
+
+So $$\operatorname{Var}(Y)=2-1^2=1$$. The boundary terms vanish because $$e^{-y}$$ decays faster than any power of $$y$$ grows.
+
+#### General case
+
+Write $$X=Y/\lambda$$ and use $$E(cY)=cE(Y)$$ and $$\operatorname{Var}(cY)=c^2\operatorname{Var}(Y)$$:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{E(X)=\frac1\lambda,\qquad\operatorname{Var}(X)=\frac1{\lambda^2},\qquad\operatorname{SD}(X)=\frac1\lambda.}
+$$
+
+</div>
+
+The mean and standard deviation are equal. A faster rate gives a shorter and less variable wait.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Lifetime of a component <span class="ex-pill pill-ex">Worked example</span></div>
+
+A sensor has lifetime $$T\sim\operatorname{Expo}(\lambda)$$ with mean 1000 hours, so $$\lambda=0.001$$ per hour.
+
+**(a) Survival past 1500 hours.**
+
+$$
+P(T>1500)=e^{-0.001(1500)}=e^{-1.5}\approx0.223.
+$$
+
+**(b) Median lifetime.** Solve $$e^{-\lambda m}=\tfrac12$$:
+
+$$
+m=\frac{\ln2}{\lambda}\approx693\text{ hours}.
+$$
+
+The median is below the mean because the distribution is right-skewed: a few very long lifetimes pull the mean up.
+
+**(c) Probability of failing before the mean.** $$P(T<1000)=1-e^{-1}\approx0.632$$, not $$0.5$$.
+
+<div class="ex-lesson"><strong>Core idea:</strong> With the survival function $$e^{-\lambda t}$$, tail probabilities and quantiles are one-line calculations. For any Exponential, about 63% of waits are shorter than the mean.</div>
+</div>
+
+### Part 4 — The memoryless property
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Memoryless property <span class="ex-pill pill-defn">Definition</span></div>
+
+A distribution on $$(0,\infty)$$ is **memoryless** if a random variable $$X$$ with that distribution satisfies
+
+$$
+P(X\ge s+t\mid X\ge s)=P(X\ge t)\quad\text{for all }s,t>0.
+$$
+
+</div>
+
+Here $$s$$ is the time already waited and $$t$$ is an additional wait. The condition says that, given no event by time $$s$$, the remaining waiting time $$X-s$$ has the same distribution as a fresh wait $$X$$.
+
+**The Exponential is memoryless.** Since $$\{X\ge s+t\}\subseteq\{X\ge s\}$$, the intersection in the conditional probability is just $$\{X\ge s+t\}$$:
+
+$$
+P(X\ge s+t\mid X\ge s)=\frac{P(X\ge s+t)}{P(X\ge s)}=\frac{e^{-\lambda(s+t)}}{e^{-\lambda s}}=e^{-\lambda t}=P(X\ge t).
+$$
+
+The key step is $$e^{-\lambda(s+t)}=e^{-\lambda s}e^{-\lambda t}$$: the survival function turns sums of times into products of probabilities.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-16-memoryless-vs-uniform.svg" alt="Left: Exponential survival curve e to the minus t over 2, and the conditional survival curve given X greater than 2, which is the same curve shifted right by 2. Right: Uniform(0,20) survival line and the conditional survival given W greater than 12, which drops from 1 to 0 over 12 to 20, much more steeply than the original." style="display: block; width: 100%; max-width: 760px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes, illustrating Blitzstein and Hwang, <em>Introduction to Probability</em>, Definition 5.5.2. Left: given $$X>2$$, the Exponential's remaining life has the original survival curve. Right: a Uniform waiting time becomes more urgent the longer it lasts.</figcaption>
+</figure>
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Memoryless versus Uniform waiting <span class="ex-pill pill-ex">Worked example</span></div>
+
+**Exponential wait.** A server's next request arrives after $$X\sim\operatorname{Expo}(1/2)$$ seconds, mean 2 seconds. Given no request in the first 5 seconds, the probability that the next 2 seconds are also quiet is
+
+$$
+P(X\ge7\mid X\ge5)=e^{-(1/2)(2)}=e^{-1}\approx0.368,
+$$
+
+the same as for a fresh 2-second window. The 5 seconds already waited are irrelevant.
+
+**Uniform wait.** A shuttle arrives at a time $$W\sim\operatorname{Unif}(0,20)$$ minutes. Unconditionally, $$P(W>4)=16/20=0.8$$. Given that 12 minutes have passed, only 8 minutes remain possible, so
+
+$$
+P(W>16\mid W>12)=\frac{P(W>16)}{P(W>12)}=\frac{4/20}{8/20}=0.5.
+$$
+
+Waiting makes the shuttle more likely to arrive soon. The Uniform is not memoryless.
+
+<div class="ex-lesson">Memorylessness is a strong modeling assumption: the process has no notion of being “due.” It fits events with no build-up or wear, and fails for anything with a schedule or with ageing.</div>
+</div>
+
+**When the assumption fits.** Radioactive decay is well modeled as memoryless: an atom that has not decayed is physically identical to a fresh one. Machine and human lifetimes are not, because ageing makes failure more likely as time passes. The Exponential is still important for such problems, as a building block for more flexible lifetime models and because of its exact links to the Poisson.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** Memoryless means the total waiting time does not depend on how long one has already waited, so $$P(X\ge s+t\mid X\ge s)=P(X\ge s+t)$$.
+
+**Correction:** Memorylessness concerns the remaining wait. Given $$X\ge s$$, the remaining time $$X-s$$ is distributed like a fresh $$X$$. The total time $$X$$ is still at least $$s$$, so conditioning does change the distribution of $$X$$ itself.
+
+</div>
+
+### Part 5 — Conditional expectation from memorylessness
+
+Let $$X\sim\operatorname{Expo}(\lambda)$$ and $$a>0$$. Find $$E(X\mid X>a)$$.
+
+Write $$X=a+(X-a)$$. Given $$X>a$$, memorylessness says $$X-a\sim\operatorname{Expo}(\lambda)$$. Conditional expectation is linear, like ordinary expectation, so
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{E(X\mid X>a)=a+E(X-a\mid X>a)=a+\frac1\lambda.}
+$$
+
+</div>
+
+The time already spent is added to a fresh expected wait. For the sensor with mean life 1000 hours that has already run 500 hours, the expected total life is 1500 hours and the expected remaining life is still 1000 hours.
+
+Conditional expectation $$E(X\mid A)$$ is computed like $$E(X)$$, with the conditional distribution of $$X$$ given $$A$$ in place of the unconditional one. It is treated systematically later in the course.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Supplementary: Checking the formula directly <span class="ex-pill pill-num">Worked example</span></div>
+
+Given $$X>a$$, the conditional PDF is the original PDF restricted to $$(a,\infty)$$ and rescaled by $$P(X>a)$$:
+
+$$
+f(x\mid X>a)=\frac{\lambda e^{-\lambda x}}{e^{-\lambda a}}=\lambda e^{-\lambda(x-a)},\qquad x>a.
+$$
+
+This is an $$\operatorname{Expo}(\lambda)$$ PDF shifted to start at $$a$$. Substituting $$y=x-a$$,
+
+$$
+E(X\mid X>a)=\int_a^\infty x\lambda e^{-\lambda(x-a)}\,dx=\int_0^\infty(y+a)\lambda e^{-\lambda y}\,dy=\frac1\lambda+a.
+$$
+
+</div>
+
+### Part 6 — The Exponential is the only memoryless continuous distribution
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Characterization of the Exponential <span class="ex-pill pill-thm">Theorem</span></div>
+
+If $$X$$ is a positive continuous random variable with the memoryless property, then $$X\sim\operatorname{Expo}(\lambda)$$ for some $$\lambda>0$$.
+
+</div>
+
+**Proof.** Let $$G(x)=P(X>x)$$. For a continuous $$X$$, $$P(X\ge x)=P(X>x)$$, so memorylessness reads
+
+$$
+G(s+t)=G(s)G(t)\quad\text{for all }s,t>0.
+$$
+
+Since $$X$$ is continuous, $$G$$ is differentiable except possibly at finitely many points; assume differentiability for the argument. Differentiate with respect to $$s$$, then let $$s\to0$$:
+
+$$
+G'(t)=G'(0)G(t).
+$$
+
+Set $$c=G'(0)$$, a constant. The equation $$G'=cG$$ with $$G(0)=P(X>0)=1$$ has the unique solution $$G(t)=e^{ct}$$. Because $$G$$ decreases toward 0, $$c<0$$. Writing $$\lambda=-c>0$$ gives $$G(t)=e^{-\lambda t}$$, the Exponential survival function. $$\blacksquare$$
+
+Lecture 17 gives a second proof that uses only the equation $$G(s+t)=G(s)G(t)$$ and the continuity of $$G$$, with no differentiation.
+
+### Part 7 — The Geometric connection
+
+The Exponential is the continuous counterpart of the Geometric distribution.
+
+| Feature | $$\operatorname{Geom}(p)$$ | $$\operatorname{Expo}(\lambda)$$ |
+|---|---|---|
+| Waiting for | First success in discrete trials | First event in continuous time |
+| Support | $$\{0,1,2,\ldots\}$$ | $$(0,\infty)$$ |
+| Survival | $$P(X\ge k)=q^k$$ | $$P(X>x)=e^{-\lambda x}$$ |
+| Mean | $$q/p$$ | $$1/\lambda$$ |
+| Memoryless | Yes, among distributions on $$\{0,1,\ldots\}$$ | Yes, among continuous distributions on $$(0,\infty)$$ |
+
+**Discrete memorylessness.** For $$X\sim\operatorname{Geom}(p)$$, $$P(X\ge m+n\mid X\ge m)=q^{m+n}/q^m=q^n=P(X\ge n)$$. A run of failures does not make a success more likely: independent trials have no memory.
+
+**Supplementary: a limit.** Perform trials every $$1/n$$ time units with success probability $$\lambda/n$$. The number of failures before the first success is $$\operatorname{Geom}(\lambda/n)$$, and the waiting time in time units is that count divided by $$n$$. Its survival probability at time $$x$$ is approximately $$(1-\lambda/n)^{nx}\to e^{-\lambda x}$$, the same compound-interest limit as in the Poisson limit of the Binomial.
+
+### Part 8 — Original practice questions
+
+Try these before reading the answers.
+
+1. Let $$X\sim\operatorname{Expo}(4)$$. Find $$P(X>0.5)$$, the median, $$E(X)$$, and $$\operatorname{SD}(X)$$.
+2. If $$Y\sim\operatorname{Expo}(1)$$, what is the distribution of $$3Y$$?
+3. Use LOTUS to find $$E(e^{X/2})$$ for $$X\sim\operatorname{Expo}(1)$$. What happens to $$E(e^{X})$$?
+4. Calls arrive at a help desk with Exponential waiting times, 6 per hour on average. Given no call in the past 20 minutes, find the probability of no call in the next 10 minutes and the expected time until the next call.
+5. Is $$U\sim\operatorname{Unif}(0,1)$$ memoryless? Check with $$s=0.5$$ and $$t=0.25$$.
+6. Let $$X\sim\operatorname{Expo}(1)$$. Find $$E(X\mid X>2)$$, then use $$E(X)=P(X<2)E(X\mid X<2)+P(X>2)E(X\mid X>2)$$ to find $$E(X\mid X<2)$$. *(Supplementary: uses the law of total expectation.)*
+7. Carbon-14 has a half-life of about 5730 years. Treating the decay time of one atom as Exponential, find $$\lambda$$ and the mean lifetime.
+8. Show that $$P(X>2/\lambda)$$ is the same for every $$\lambda$$ when $$X\sim\operatorname{Expo}(\lambda)$$, and find it.
+9. A light bulb is advertised with “average life 1000 hours, Exponential.” A bulb has lasted 3000 hours. Why does memorylessness suggest that the Exponential model is unrealistic here?
+
+### Part 9 — Practice answers
+
+#### 1. A fast rate
+
+$$P(X>0.5)=e^{-2}\approx0.135$$. Median $$\ln2/4\approx0.173$$. $$E(X)=\operatorname{SD}(X)=0.25$$.
+
+#### 2. Rescaling
+
+$$P(3Y>x)=P(Y>x/3)=e^{-x/3}$$, so $$3Y\sim\operatorname{Expo}(1/3)$$, with mean 3.
+
+#### 3. Exponential moments
+
+$$E(e^{X/2})=\int_0^\infty e^{x/2}e^{-x}\,dx=\int_0^\infty e^{-x/2}\,dx=2$$. For $$E(e^X)$$ the integrand is $$e^{x}e^{-x}=1$$, and $$\int_0^\infty1\,dx=\infty$$: the expectation is infinite.
+
+#### 4. Help desk
+
+Rate $$\lambda=6$$ per hour, so 10 minutes is $$1/6$$ hour. By memorylessness the past 20 minutes are irrelevant: $$P=e^{-6/6}=e^{-1}\approx0.368$$. Expected time to the next call is $$1/6$$ hour, 10 minutes.
+
+#### 5. The Uniform is not memoryless
+
+$$P(U\ge0.75\mid U\ge0.5)=\frac{0.25}{0.5}=0.5$$, while $$P(U\ge0.25)=0.75$$. They differ.
+
+#### 6. Truncated means
+
+$$E(X\mid X>2)=3$$. With $$P(X>2)=e^{-2}$$ and $$E(X)=1$$:
+
+$$
+E(X\mid X<2)=\frac{1-3e^{-2}}{1-e^{-2}}\approx0.687.
+$$
+
+It lies between 0 and 2 and below 1, as it must.
+
+#### 7. Half-life
+
+$$e^{-5730\lambda}=\tfrac12$$ gives $$\lambda=\ln2/5730\approx1.21\times10^{-4}$$ per year. Mean lifetime $$1/\lambda=5730/\ln2\approx8267$$ years, longer than the half-life.
+
+#### 8. A rate-free probability
+
+$$P(X>2/\lambda)=e^{-\lambda\cdot2/\lambda}=e^{-2}\approx0.135$$. Any statement in units of the mean is the same for all Exponentials, by the scaling result.
+
+#### 9. Ageing
+
+Memorylessness would give the 3000-hour bulb another 1000 expected hours, exactly as for a new bulb. Real filaments degrade, so an old bulb is more likely to fail soon. A lifetime model with an increasing failure rate is more realistic.
+
+### Part 10 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| PDF | $$\lambda e^{-\lambda x}$$, $$x>0$$ |
+| CDF | $$1-e^{-\lambda x}$$ |
+| Survival | $$P(X>x)=e^{-\lambda x}$$ |
+| Rate vs. mean | Rate $$\lambda$$, mean $$1/\lambda$$ |
+| Scaling | $$\lambda X\sim\operatorname{Expo}(1)$$ |
+| $$\operatorname{Expo}(1)$$ moments | $$E(Y)=1$$, $$E(Y^2)=2$$, $$\operatorname{Var}(Y)=1$$ |
+| General moments | Mean $$1/\lambda$$, variance $$1/\lambda^2$$ |
+| Median | $$\ln2/\lambda$$ |
+| Memoryless | $$P(X\ge s+t\mid X\ge s)=P(X\ge t)$$ |
+| Remaining wait | Given $$X>s$$, $$X-s\sim\operatorname{Expo}(\lambda)$$ |
+| Conditional mean | $$E(X\mid X>a)=a+1/\lambda$$ |
+| Characterization | Only memoryless continuous distribution on $$(0,\infty)$$ |
+| Functional equation | $$G(s+t)=G(s)G(t)$$ |
+| Discrete analogue | Geometric, also memoryless |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Exponential distribution <span class="gcat cat-defn">Definition</span></div>
+
+The continuous distribution on $$(0,\infty)$$ with PDF $$\lambda e^{-\lambda x}$$, modeling the waiting time for an event occurring at constant rate $$\lambda$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Rate parameter <span class="gcat cat-notn">Notation</span></div>
+
+The parameter $$\lambda$$ of the Exponential, measured in events per unit time. It is the reciprocal of the mean waiting time.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Survival function <span class="gcat cat-defn">Definition</span></div>
+
+$$G(x)=P(X>x)=1-F(x)$$. For the Exponential it is $$e^{-\lambda x}$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Memoryless property <span class="gcat cat-prop">Property</span></div>
+
+$$P(X\ge s+t\mid X\ge s)=P(X\ge t)$$ for all $$s,t>0$$: the remaining wait does not depend on the time already waited.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Conditional expectation given an event <span class="gcat cat-defn">Definition</span></div>
+
+$$E(X\mid A)$$, the mean of $$X$$ computed with its conditional distribution given $$A$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Half-life <span class="gcat cat-meas">Measure</span></div>
+
+The median of an Exponential lifetime, $$\ln2/\lambda$$: the time by which half of a large population of independent items has decayed or failed.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 16</span>
+  <span class="ref-tag">Exponential</span>
+  <span class="ref-tag">Memoryless property</span>
+  <span class="ref-tag">Survival function</span>
+  <span class="ref-tag">Geometric</span>
+</div>
+
+  </div>
+</div>
+
+## Lecture 17 - Moment Generating Functions
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-17-toggle" onclick="toggleLecture('lecture-17')" aria-expanded="true" aria-controls="lecture-17-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 17</span>
+      <span>
+        <span class="chapter-title">Lecture 17 - Moment Generating Functions</span>
+        <span class="chapter-subtitle">Conditional life expectancy, the MGF and its three key properties, Bernoulli, Binomial, and Normal MGFs, and Laplace's rule of succession</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-17-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-17-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+Memorylessness is rarely true of lifetimes, but it clarifies what a life expectancy is: a conditional expectation given survival to a certain age, not one fixed number. The moment generating function $$M(t)=E(e^{tX})$$ packages every moment of a distribution into one function. Its derivatives at $$t=0$$ are the moments, it determines the distribution uniquely, and it turns sums of independent random variables into products. These properties give the Binomial MGF from the Bernoulli MGF in one line and the Normal MGF by completing the square. Laplace's rule of succession treats an unknown success probability as a Uniform random variable and updates it with data: after $$n$$ successes in $$n$$ trials, the probability of another success is $$(n+1)/(n+2)$$.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$M_X(t)=E(e^{tX})$$ | Moment generating function of $$X$$ |
+| $$t$$ | Dummy variable of the MGF; no physical meaning |
+| $$(-a,a)$$ | Open interval around 0 on which the MGF must be finite |
+| $$E(X^n)$$ | $$n$$th moment of $$X$$ |
+| $$M^{(n)}(0)$$ | $$n$$th derivative of $$M$$ evaluated at $$t=0$$ |
+| $$E(T\mid T>a)$$ | Expected lifetime given survival to age $$a$$ |
+| $$p\sim\operatorname{Unif}(0,1)$$ | Prior distribution for an unknown success probability |
+| $$S_n=X_1+\cdots+X_n$$ | Number of successes in the first $$n$$ trials |
+| $$f(p\mid S_n=k)$$ | Posterior density of $$p$$ given the data |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Interpret life expectancy as a conditional expectation and explain why it rises with age.
+- Define the MGF, state when it exists, and check $$M(0)=1$$.
+- Derive $$E(X^n)=M^{(n)}(0)$$ from the Taylor expansion of $$M$$.
+- State the uniqueness and sum properties of MGFs and use them to identify distributions.
+- Compute the Bernoulli, Binomial, and Normal MGFs.
+- Find the MGF of $$a+bX$$ from the MGF of $$X$$.
+- Derive Laplace's rule of succession using a Uniform prior and Bayes' rule with a density.
+
+### Part 1 — Memorylessness and life expectancy
+
+Lecture 16 showed that the Exponential is the only memoryless continuous distribution on $$(0,\infty)$$. For a memoryless lifetime $$T\sim\operatorname{Expo}(\lambda)$$, the expected remaining life at every age is $$1/\lambda$$, so
+
+$$
+E(T\mid T>a)=a+\frac1\lambda.
+$$
+
+#### Proof that only the Exponential is memoryless
+
+Let $$X$$ be a positive continuous random variable with survival function $$G(x)=P(X\ge x)$$. Memorylessness says $$P(X\ge s+t)=P(X\ge s)P(X\ge t)$$, that is,
+
+$$
+G(s+t)=G(s)G(t)\quad\text{for all }s,t>0.
+$$
+
+The strategy is to solve this equation for the unknown function $$G$$.
+
+1. **Integer multiples.** Taking $$s=t$$ gives $$G(2t)=G(t)^2$$. Repeating, $$G(kt)=G(t)^k$$ for every positive integer $$k$$.
+2. **Integer fractions.** Apply step 1 to $$t/n$$ with $$k=n$$: $$G(t)=G(t/n)^n$$, so $$G(t/n)=G(t)^{1/n}$$.
+3. **Rationals.** Combining, $$G\left(\tfrac mnt\right)=G(t)^{m/n}$$, so $$G(xt)=G(t)^x$$ for every positive rational $$x$$.
+4. **All reals.** Rationals are dense and $$G$$ is continuous (because $$X$$ is continuous), so $$G(xt)=G(t)^x$$ for all real $$x>0$$.
+5. **Identify the form.** Set $$t=1$$: $$G(x)=G(1)^x=e^{x\ln G(1)}$$. Since $$0<G(1)<1$$, $$\lambda=-\ln G(1)>0$$ and $$G(x)=e^{-\lambda x}$$.
+
+This is the $$\operatorname{Expo}(\lambda)$$ survival function. $$\blacksquare$$
+
+Lecture 16 reached the same conclusion by differentiating the functional equation; the argument here needs only continuity. (Step 5 also uses $$0<G(1)<1$$: $$G(1)=0$$ or $$G(1)=1$$ would put all probability at 0 or at infinity, impossible for a positive continuous random variable.)
+
+#### Lifetimes are not memoryless
+
+Human lifetimes are not memoryless: an 80-year-old does not have the remaining life expectancy of a newborn. But the same conditional quantity is what answers practical questions about life expectancy.
+
+**Life expectancy is conditional.** A single number such as “life expectancy at birth is 80 years” is $$E(T)$$, averaged over all lifetimes, including those that end early. Someone who has reached age $$a$$ has survived the early risks, so their expected lifetime is $$E(T\mid T>a)$$, which is at least $$a$$ and typically larger than $$E(T)$$.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Conditional life expectancy in a simple model <span class="ex-pill pill-ex">Worked example</span></div>
+
+Take a deliberately simple lifetime model $$T\sim\operatorname{Unif}(0,100)$$ years.
+
+- **At birth:** $$E(T)=50$$.
+- **Given survival to 60:** the conditional distribution is $$\operatorname{Unif}(60,100)$$, so $$E(T\mid T>60)=80$$. Expected remaining life is 20 years.
+- **Given survival to 90:** $$E(T\mid T>90)=95$$. Expected remaining life is 5 years.
+
+Conditional expected total life increases with age, while expected remaining life decreases. Under an Exponential model the expected remaining life would instead stay constant.
+
+<div class="ex-lesson"><strong>Core idea:</strong> Conditioning on survival removes the outcomes that ended earlier. A life expectancy is only meaningful once it says what it is conditioned on.</div>
+</div>
+
+**Censored data.** Estimating lifetimes from data has an extra difficulty: some subjects are still alive when a study ends, so only a lower bound $$T>c$$ is observed. Such observations are called censored. Ignoring them, or treating $$c$$ as the lifetime, biases estimates downward. Survival analysis develops methods for this; the conditional reasoning above is its starting point.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** If life expectancy at birth is 80, a 79-year-old should expect to live about one more year.
+
+**Correction:** That uses the unconditional mean for someone already known to have survived to 79. The relevant quantity is $$E(T\mid T>79)$$, which exceeds 80 by more than one year in realistic models.
+
+</div>
+
+### Part 2 — The moment generating function
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Moment generating function <span class="ex-pill pill-defn">Definition</span></div>
+
+The **moment generating function (MGF)** of a random variable $$X$$ is
+
+$$
+M_X(t)=E\left(e^{tX}\right),
+$$
+
+as a function of $$t$$, provided it is finite for all $$t$$ in some open interval $$(-a,a)$$ with $$a>0$$. Otherwise $$X$$ has no MGF.
+
+</div>
+
+**What $$t$$ is.** $$t$$ has no probabilistic meaning. It is a bookkeeping variable that lets calculus act on the whole sequence of moments at once.
+
+**Why the name.** Expand $$e^{tX}$$ as a power series and take expectations term by term (justified when the MGF exists on an interval around 0):
+
+$$
+M(t)=E\left(\sum_{n=0}^\infty\frac{X^nt^n}{n!}\right)=\sum_{n=0}^\infty E(X^n)\frac{t^n}{n!}.
+$$
+
+The MGF is a power series whose coefficients are the moments, each divided by $$n!$$.
+
+**A built-in check.** $$M(0)=E(e^0)=1$$ for every MGF.
+
+**The MGF is another description of the distribution.** Alongside the CDF and the PMF or PDF, it is a third way to encode a distribution. It is computed with LOTUS: $$M(t)=\sum_xe^{tx}P(X=x)$$ or $$\int e^{tx}f(x)\,dx$$.
+
+### Part 3 — Three reasons the MGF is useful
+
+#### 1. Moments are derivatives at zero
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{E(X^n)=M^{(n)}(0).}
+$$
+
+</div>
+
+**Proof.** A power series equals its own Taylor series, so the coefficient of $$t^n/n!$$ in $$M(t)$$ is $$M^{(n)}(0)$$. From the expansion in Part 2 the same coefficient is $$E(X^n)$$. Matching coefficients gives the result. $$\blacksquare$$
+
+Directly: $$M'(t)=E(Xe^{tX})$$, so $$M'(0)=E(X)$$; $$M''(t)=E(X^2e^{tX})$$, so $$M''(0)=E(X^2)$$. Differentiation replaces an integral or sum for each moment.
+
+#### 2. The MGF determines the distribution
+
+If $$X$$ and $$Y$$ have MGFs that agree on some open interval around 0, then $$X$$ and $$Y$$ have the same distribution. The proof is a difficult result in analysis and is not given here. Its use is identification: compute an MGF, recognize its form, and conclude the distribution.
+
+#### 3. Sums of independent random variables
+
+If $$X$$ and $$Y$$ are independent, then
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{M_{X+Y}(t)=E\left(e^{tX}e^{tY}\right)=E\left(e^{tX}\right)E\left(e^{tY}\right)=M_X(t)M_Y(t).}
+$$
+
+</div>
+
+The middle step uses that $$e^{tX}$$ and $$e^{tY}$$ are independent (functions of independent variables) and that the expectation of a product of independent random variables is the product of their expectations, proved later in the course. Finding the PMF or PDF of a sum directly requires a convolution sum or integral; with MGFs it is a multiplication.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** $$M_{X+Y}=M_X\,M_Y$$ for any $$X$$ and $$Y$$.
+
+**Correction:** Independence is required. For example, with $$Y=X$$, $$M_{2X}(t)=M_X(2t)$$, which generally differs from $$M_X(t)^2$$.
+
+</div>
+
+#### Supplementary: Location and scale
+
+For constants $$a,b$$,
+
+$$
+M_{a+bX}(t)=E\left(e^{t(a+bX)}\right)=e^{at}E\left(e^{(bt)X}\right)=e^{at}M_X(bt).
+$$
+
+A shift multiplies the MGF by $$e^{at}$$; a scale rescales its argument.
+
+### Part 4 — Bernoulli and Binomial MGFs
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Bernoulli and Binomial MGFs <span class="ex-pill pill-ex">Worked example</span></div>
+
+**Bernoulli.** If $$X\sim\operatorname{Bern}(p)$$, then $$e^{tX}$$ equals $$e^t$$ with probability $$p$$ and $$e^0=1$$ with probability $$q$$:
+
+$$
+M_X(t)=pe^t+q,\qquad t\in\mathbb R.
+$$
+
+Check: $$M(0)=p+q=1$$, and $$M'(0)=p=E(X)$$.
+
+**Binomial.** $$X\sim\operatorname{Bin}(n,p)$$ is a sum of $$n$$ i.i.d. $$\operatorname{Bern}(p)$$ variables. By the sum property,
+
+$$
+M_X(t)=\left(pe^t+q\right)^n.
+$$
+
+**Moments.** Differentiate once:
+
+$$
+M'(t)=n\left(pe^t+q\right)^{n-1}pe^t\implies M'(0)=np.
+$$
+
+Differentiate again with the product rule:
+
+$$
+M''(t)=n(n-1)\left(pe^t+q\right)^{n-2}p^2e^{2t}+n\left(pe^t+q\right)^{n-1}pe^t\implies M''(0)=n(n-1)p^2+np.
+$$
+
+So $$\operatorname{Var}(X)=n(n-1)p^2+np-n^2p^2=np(1-p)$$, matching Lecture 14.
+
+**A sum of Binomials.** If $$X\sim\operatorname{Bin}(n,p)$$ and $$Y\sim\operatorname{Bin}(m,p)$$ are independent, then $$M_{X+Y}(t)=(pe^t+q)^{n+m}$$, the $$\operatorname{Bin}(n+m,p)$$ MGF. By uniqueness, $$X+Y\sim\operatorname{Bin}(n+m,p)$$.
+
+<div class="ex-lesson"><strong>Core idea:</strong> Build complex MGFs from simple ones through the sum property, then read moments off derivatives and distributions off recognizable forms.</div>
+</div>
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-17-binomial-mgf.svg" alt="The MGF of Binomial(2, 1/2), an increasing convex curve through the point (0, 1). A dashed tangent line at 0 has slope 1, the mean, and a dotted quadratic approximation shows curvature 3/2, the second moment." style="display: block; width: 100%; max-width: 680px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes; compare Blitzstein and Hwang, <em>Introduction to Probability</em>, Figure 6.7. For $$\operatorname{Bin}(2,1/2)$$, the slope at 0 is $$E(X)=1$$ and the second derivative at 0 is $$E(X^2)=3/2$$, so $$\operatorname{Var}(X)=1/2$$.</figcaption>
+</figure>
+
+### Part 5 — The Normal MGF
+
+Let $$Z\sim\mathcal N(0,1)$$. By LOTUS,
+
+$$
+M_Z(t)=\frac1{\sqrt{2\pi}}\int_{-\infty}^\infty e^{tz}e^{-z^2/2}\,dz=\frac1{\sqrt{2\pi}}\int_{-\infty}^\infty e^{-(z^2-2tz)/2}\,dz.
+$$
+
+**Complete the square** in the exponent: $$z^2-2tz=(z-t)^2-t^2$$. Then
+
+$$
+M_Z(t)=e^{t^2/2}\int_{-\infty}^\infty\frac1{\sqrt{2\pi}}e^{-(z-t)^2/2}\,dz=e^{t^2/2}.
+$$
+
+The remaining integrand is the $$\mathcal N(t,1)$$ PDF, which integrates to 1.
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{M_Z(t)=e^{t^2/2},\qquad X=\mu+\sigma Z\sim\mathcal N(\mu,\sigma^2)\implies M_X(t)=e^{\mu t+\sigma^2t^2/2}.}
+$$
+
+</div>
+
+The general case follows from the location-scale rule: $$M_X(t)=e^{\mu t}M_Z(\sigma t)$$.
+
+**Checks.** $$M_X'(t)=(\mu+\sigma^2t)M_X(t)$$ gives $$M_X'(0)=\mu$$. $$M_X''(t)=\left(\sigma^2+(\mu+\sigma^2t)^2\right)M_X(t)$$ gives $$M_X''(0)=\sigma^2+\mu^2$$, so the variance is $$\sigma^2$$.
+
+**Sums of independent Normals.** If $$X_j\sim\mathcal N(\mu_j,\sigma_j^2)$$ are independent, then
+
+$$
+M_{X_1+X_2}(t)=e^{(\mu_1+\mu_2)t+(\sigma_1^2+\sigma_2^2)t^2/2},
+$$
+
+the $$\mathcal N(\mu_1+\mu_2,\sigma_1^2+\sigma_2^2)$$ MGF. This proves the result stated in Lecture 14.
+
+#### Supplementary: All standard Normal moments at once
+
+Expand $$e^{t^2/2}=\sum_{k=0}^\infty\frac{t^{2k}}{2^kk!}$$ and match with $$\sum_nE(Z^n)\frac{t^n}{n!}$$. Odd moments are 0, and
+
+$$
+E(Z^{2k})=\frac{(2k)!}{2^kk!}=1\cdot3\cdot5\cdots(2k-1).
+$$
+
+So $$E(Z^2)=1$$, $$E(Z^4)=3$$, $$E(Z^6)=15$$, with no further integration.
+
+#### Supplementary: Exponential and Poisson MGFs
+
+- **Exponential.** For $$X\sim\operatorname{Expo}(\lambda)$$ and $$t<\lambda$$, $$M(t)=\int_0^\infty e^{tx}\lambda e^{-\lambda x}\,dx=\frac{\lambda}{\lambda-t}$$. It is infinite for $$t\ge\lambda$$, but finite on an interval around 0, so the MGF exists. Expanding $$\frac1{1-t/\lambda}=\sum_n(t/\lambda)^n$$ gives $$E(X^n)=n!/\lambda^n$$.
+- **Poisson.** For $$X\sim\operatorname{Pois}(\lambda)$$, $$M(t)=\sum_ke^{tk}\frac{e^{-\lambda}\lambda^k}{k!}=e^{-\lambda}e^{\lambda e^t}=e^{\lambda(e^t-1)}$$. Multiplying two such MGFs shows that independent $$\operatorname{Pois}(\lambda_1)$$ and $$\operatorname{Pois}(\lambda_2)$$ variables sum to $$\operatorname{Pois}(\lambda_1+\lambda_2)$$.
+
+### Part 6 — Laplace's rule of succession
+
+An experiment has been repeated $$n$$ times with $$n$$ successes. What is the probability that the next trial is also a success? Laplace's example was the sun rising: given that the sun has risen on each of $$n$$ recorded days, how probable is a sunrise tomorrow?
+
+**Model.** The success probability $$p$$ is unknown, so treat it as a random variable.
+
+1. **Prior.** $$p\sim\operatorname{Unif}(0,1)$$, expressing no initial preference among values of $$p$$.
+2. **Likelihood.** Given $$p$$, the trials $$X_1,X_2,\ldots$$ are i.i.d. $$\operatorname{Bern}(p)$$. So $$S_n\mid p\sim\operatorname{Bin}(n,p)$$.
+
+The trials are **conditionally independent given $$p$$** but not unconditionally independent: each success raises the plausibility of large $$p$$ and hence of further successes.
+
+**Posterior.** Bayes' rule with a density for $$p$$ replaces the prior probability with the prior PDF. With $$k$$ successes in $$n$$ trials, the likelihood is $$\binom nkp^k(1-p)^{n-k}$$, so in general
+
+$$
+f(p\mid S_n=k)\propto p^k(1-p)^{n-k},\qquad0<p<1,
+$$
+
+where $$\propto$$ means “proportional to, as a function of $$p$$”: constants not involving $$p$$ are absorbed into the normalizing constant. For the sunrise case $$k=n$$:
+
+$$
+f(p\mid S_n=n)=\frac{P(S_n=n\mid p)\,f(p)}{P(S_n=n)}=\frac{p^n\cdot1}{P(S_n=n)},\qquad0<p<1.
+$$
+
+The denominator does not depend on $$p$$; it is the normalizing constant. By the law of total probability with a density,
+
+$$
+P(S_n=n)=\int_0^1p^n\,dp=\frac1{n+1}.
+$$
+
+So the posterior density is
+
+$$
+f(p\mid S_n=n)=(n+1)p^n,\qquad0<p<1.
+$$
+
+**Prediction.** Condition on $$p$$ and average over its posterior:
+
+$$
+P(X_{n+1}=1\mid S_n=n)=\int_0^1p\cdot(n+1)p^n\,dp=\frac{n+1}{n+2}.
+$$
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{P(\text{success on trial }n+1\mid n\text{ successes in }n\text{ trials})=\frac{n+1}{n+2}.}
+$$
+
+</div>
+
+The prediction is the mean of the posterior distribution of $$p$$. This is the fundamental bridge in conditional form: given $$p$$, the probability of success is $$p$$, so averaging over what is now believed about $$p$$ gives $$P(X_{n+1}=1\mid S_n=n)=E(p\mid S_n=n)$$.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-17-rule-of-succession.svg" alt="Posterior densities (n+1) p to the n on (0,1) for n equal to 0, 1, 3, and 10. The n equals 0 curve is flat at 1; larger n concentrate more mass near p equals 1. Legend gives posterior means 1/2, 2/3, 4/5, and 11/12." style="display: block; width: 100%; max-width: 680px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes, illustrating Laplace's law of succession as posed in an end-of-chapter exercise of Blitzstein and Hwang, <em>Introduction to Probability</em> (p. 420). Each success shifts the posterior toward $$p=1$$, and the predictive probability equals the posterior mean $$(n+1)/(n+2)$$.</figcaption>
+</figure>
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Reading the formula <span class="ex-pill pill-num">Worked example</span></div>
+
+| Observed | Prediction for next trial |
+|---|---|
+| No data ($$n=0$$) | $$1/2$$, the prior mean |
+| 1 success in 1 trial | $$2/3$$ |
+| 10 successes in 10 trials | $$11/12\approx0.917$$ |
+| 1000 successes in 1000 trials | $$1001/1002\approx0.999$$ |
+
+The prediction approaches 1 but never reaches it. Compare the naive estimate $$n/n=1$$, which would rule out failure entirely after any streak of successes.
+
+<div class="ex-lesson"><strong>Core idea:</strong> Treating an unknown parameter as random and updating it with Bayes' rule produces predictions that learn from data without becoming overconfident.</div>
+</div>
+
+**Limits of the model.** The rule assumes exchangeable trials with an unchanging $$p$$ and a Uniform prior. For sunrises, physics supplies far stronger information than a Uniform prior, and days are not repeated independent trials. The rule is a model of reasoning from repetition alone.
+
+#### Supplementary: The general predictive rule
+
+With $$k$$ successes in $$n$$ trials, the posterior is proportional to $$p^k(1-p)^{n-k}$$. Using the integral $$\int_0^1p^a(1-p)^b\,dp=\frac{a!\,b!}{(a+b+1)!}$$ (derived later in the course), the predictive probability of success is
+
+$$
+P(X_{n+1}=1\mid S_n=k)=\frac{k+1}{n+2}.
+$$
+
+It behaves like adding one imaginary success and one imaginary failure to the data.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** If $$X_1,X_2,\ldots$$ are i.i.d. given $$p$$, they are independent, so past successes cannot change the probability of the next success.
+
+**Correction:** Conditional independence given $$p$$ is not independence. When $$p$$ is unknown, observing successes changes the distribution of $$p$$, which changes the predictive probability of the next trial.
+
+</div>
+
+### Part 7 — Original practice questions
+
+Try these before reading the answers.
+
+1. $$X$$ is uniform on $$\{1,2,3\}$$. Find $$M_X(t)$$ and use it to find $$E(X)$$ and $$E(X^2)$$.
+2. A random variable has MGF $$M(t)=(0.3e^t+0.7)^8$$. Identify its distribution and its variance.
+3. $$X$$ has MGF $$e^{2t+8t^2}$$. Identify the distribution and find $$P(X>10)$$ in terms of $$\Phi$$.
+4. Let $$Z\sim\mathcal N(0,1)$$ and $$Y=3-2Z$$. Find $$M_Y(t)$$ and identify the distribution of $$Y$$.
+5. Use MGFs to show that if $$X\sim\operatorname{Bern}(p)$$, then $$1-X\sim\operatorname{Bern}(q)$$.
+6. Why does a random variable with $$P(X>x)=1/x^2$$ for $$x\ge1$$ have no MGF?
+7. For a lifetime $$T\sim\operatorname{Unif}(0,90)$$, find $$E(T\mid T>30)$$ and the expected remaining life at age 30.
+8. Using Laplace's rule, find the probability of success on the next trial after 20 successes in 20 trials, and after 0 successes in $$n$$ trials.
+9. Using the general rule (supplementary), find the predictive probability after 7 successes in 10 trials, and compare with $$7/10$$.
+
+### Part 8 — Practice answers
+
+#### 1. A discrete uniform MGF
+
+$$M(t)=\frac{e^t+e^{2t}+e^{3t}}3$$. Then $$M'(0)=\frac{1+2+3}3=2$$ and $$M''(0)=\frac{1+4+9}3=\frac{14}3$$, so $$\operatorname{Var}(X)=\frac{14}3-4=\frac23$$.
+
+#### 2. Recognizing a Binomial
+
+The form $$(pe^t+q)^n$$ with $$p=0.3$$, $$n=8$$ is the $$\operatorname{Bin}(8,0.3)$$ MGF. By uniqueness, $$X\sim\operatorname{Bin}(8,0.3)$$, with variance $$8(0.3)(0.7)=1.68$$.
+
+#### 3. Recognizing a Normal
+
+Match $$e^{\mu t+\sigma^2t^2/2}$$: $$\mu=2$$ and $$\sigma^2/2=8$$, so $$\sigma^2=16$$. $$X\sim\mathcal N(2,16)$$ and $$P(X>10)=1-\Phi(2)\approx0.0228$$.
+
+#### 4. A linear transformation
+
+$$M_Y(t)=e^{3t}M_Z(-2t)=e^{3t+2t^2}$$, the $$\mathcal N(3,4)$$ MGF.
+
+#### 5. Swapping outcomes
+
+$$M_{1-X}(t)=e^tM_X(-t)=e^t\left(pe^{-t}+q\right)=p+qe^t$$, the $$\operatorname{Bern}(q)$$ MGF.
+
+#### 6. A heavy tail
+
+$$E(X)$$ is finite, but for any $$t>0$$, $$e^{tx}f(x)=2e^{tx}x^{-3}\to\infty$$, so $$E(e^{tX})=\infty$$. The MGF is not finite on any interval around 0.
+
+#### 7. Conditional life expectancy
+
+Given $$T>30$$, $$T\sim\operatorname{Unif}(30,90)$$, so $$E(T\mid T>30)=60$$. Expected remaining life is 30 years, compared with $$E(T)=45$$ at birth.
+
+#### 8. Streaks
+
+After 20 successes: $$21/22\approx0.955$$. After 0 successes in $$n$$ trials, the posterior is $$(n+1)(1-p)^n$$ and the predictive probability is $$\int_0^1p(n+1)(1-p)^n\,dp=\frac1{n+2}$$.
+
+#### 9. Mixed data
+
+$$\frac{7+1}{10+2}=\frac23\approx0.667$$, pulled slightly from $$0.7$$ toward the prior mean $$1/2$$.
+
+### Part 9 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Life expectancy | $$E(T\mid T>a)$$ depends on current age $$a$$ |
+| Memoryless lifetime | $$E(T\mid T>a)=a+1/\lambda$$ |
+| MGF | $$M(t)=E(e^{tX})$$, finite near 0 |
+| Check | $$M(0)=1$$ |
+| Series form | $$M(t)=\sum_nE(X^n)t^n/n!$$ |
+| Moments | $$E(X^n)=M^{(n)}(0)$$ |
+| Uniqueness | Same MGF near 0 $$\implies$$ same distribution |
+| Independent sums | $$M_{X+Y}=M_XM_Y$$ |
+| Location-scale | $$M_{a+bX}(t)=e^{at}M_X(bt)$$ |
+| Bernoulli | $$pe^t+q$$ |
+| Binomial | $$(pe^t+q)^n$$ |
+| Standard Normal | $$e^{t^2/2}$$ |
+| Normal | $$e^{\mu t+\sigma^2t^2/2}$$ |
+| Exponential (supplementary) | $$\lambda/(\lambda-t)$$, $$t<\lambda$$ |
+| Poisson (supplementary) | $$e^{\lambda(e^t-1)}$$ |
+| Rule of succession | $$(n+1)/(n+2)$$; generally $$(k+1)/(n+2)$$ |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Conditional life expectancy <span class="gcat cat-meas">Measure</span></div>
+
+$$E(T\mid T>a)$$, the expected lifetime of someone known to have survived to age $$a$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Censored observation <span class="gcat cat-defn">Definition</span></div>
+
+An observation known only to exceed (or fall below) some value, such as a subject still alive at the end of a study.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Moment generating function <span class="gcat cat-defn">Definition</span></div>
+
+$$M_X(t)=E(e^{tX})$$, required to be finite on an open interval around 0. Its Taylor coefficients encode all moments of $$X$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Moment <span class="gcat cat-meas">Measure</span></div>
+
+$$E(X^n)$$ for a positive integer $$n$$. The first moment is the mean; the first two determine the variance.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Completing the square <span class="gcat cat-prop">Technique</span></div>
+
+Rewriting $$z^2-2tz$$ as $$(z-t)^2-t^2$$, which turns the Normal MGF integral into a Normal PDF times a constant.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Prior and posterior distributions <span class="gcat cat-defn">Definition</span></div>
+
+The distribution of an unknown parameter before observing data, and its conditional distribution after the data, linked by Bayes' rule.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Conditional independence <span class="gcat cat-defn">Definition</span></div>
+
+Independence that holds given the value of another random variable, such as Bernoulli trials given $$p$$. It does not imply unconditional independence.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Laplace's rule of succession <span class="gcat cat-thm">Theorem</span></div>
+
+Under a Uniform prior on $$p$$, the probability of success on the next trial after $$k$$ successes in $$n$$ trials is $$(k+1)/(n+2)$$.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 17</span>
+  <span class="ref-tag">MGF</span>
+  <span class="ref-tag">Moments</span>
+  <span class="ref-tag">Normal</span>
+  <span class="ref-tag">Rule of succession</span>
+  <span class="ref-tag">Bayes</span>
+</div>
+
+  </div>
+</div>
+
+## Lecture 18 - MGFs Continued and Joint Distributions
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-18-toggle" onclick="toggleLecture('lecture-18')" aria-expanded="true" aria-controls="lecture-18-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 18</span>
+      <span>
+        <span class="chapter-title">Lecture 18 - MGFs Continued and Joint Distributions</span>
+        <span class="chapter-subtitle">Exponential and Normal moments from series, sums of Poissons, and joint, marginal, and conditional distributions</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-18-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-18-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+When an MGF has a recognizable power series, every moment can be read off at once by matching coefficients. This gives $$E(X^n)=n!/\lambda^n$$ for the Exponential and $$E(Z^{2k})=(2k-1)(2k-3)\cdots1$$ for the standard Normal. The Poisson MGF $$e^{\lambda(e^t-1)}$$ shows in one line that independent Poissons add to a Poisson. The second half moves from one random variable to several. A joint distribution describes random variables together; marginal distributions are obtained by summing or integrating out the others; conditional distributions renormalize a slice of the joint. Independence means the joint factors into marginals everywhere. A Uniform point in a square has independent coordinates, while a Uniform point in a disk does not.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$M(t)=E(e^{tX})$$ | Moment generating function |
+| $$E(X^n)$$ | $$n$$th moment |
+| $$(2k-1)!!$$ | Double factorial $$(2k-1)(2k-3)\cdots3\cdot1$$ |
+| $$F_{X,Y}(x,y)=P(X\le x,Y\le y)$$ | Joint CDF |
+| $$P(X=x,Y=y)$$ | Joint PMF (discrete) |
+| $$f_{X,Y}(x,y)$$ | Joint PDF (continuous) |
+| $$P(X=x)=\sum_yP(X=x,Y=y)$$ | Marginal PMF |
+| $$f_X(x)=\int f_{X,Y}(x,y)\,dy$$ | Marginal PDF |
+| $$P(Y=y\mid X=x)$$, $$f_{Y\mid X}(y\mid x)$$ | Conditional PMF, conditional PDF |
+| $$\iint_Af_{X,Y}\,dx\,dy$$ | Probability that $$(X,Y)$$ falls in region $$A$$ |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Explain the physical origin of the word “moment”.
+- Find the MGF of the Exponential and read off all its moments from a geometric series.
+- Obtain every moment of the standard Normal from the series of $$e^{t^2/2}$$.
+- Derive the Poisson MGF and prove that independent Poissons sum to a Poisson.
+- Define joint, marginal, and conditional distributions in the discrete and continuous cases.
+- Test independence by factoring a joint PMF or PDF, paying attention to the support.
+- Compare a Uniform point in a square with a Uniform point in a disk.
+
+### Part 1 — Why “moments”
+
+The name comes from mechanics. Place mass $$P(X=x)$$ at each point $$x$$ of a rod, or spread mass with density $$f$$.
+
+- The **mean** $$E(X)$$ is the center of mass, the balancing point.
+- The **variance** $$E\left((X-\mu)^2\right)$$ is the moment of inertia about the center of mass: mass times squared distance from the axis.
+
+Higher moments $$E(X^n)$$ extend the same weighted-power idea. The MGF collects all of them in one function, $$M(t)=\sum_nE(X^n)t^n/n!$$, when it exists near 0.
+
+Two ways to extract moments from an MGF:
+
+1. **Differentiate:** $$E(X^n)=M^{(n)}(0)$$. Reliable but tedious for large $$n$$.
+2. **Expand:** if $$M(t)$$ has a known power series, the coefficient of $$t^n$$ times $$n!$$ is $$E(X^n)$$. This gives all moments at once.
+
+### Part 2 — Exponential moments in one step
+
+Let $$X\sim\operatorname{Expo}(1)$$. For $$t<1$$,
+
+$$
+M(t)=\int_0^\infty e^{tx}e^{-x}\,dx=\int_0^\infty e^{-(1-t)x}\,dx=\frac1{1-t}.
+$$
+
+For $$t\ge1$$ the integral diverges, but the MGF is finite on $$(-1,1)$$, which is all that is needed.
+
+**Match coefficients.** For $$\lvert t\rvert<1$$, the geometric series gives
+
+$$
+\frac1{1-t}=\sum_{n=0}^\infty t^n=\sum_{n=0}^\infty n!\,\frac{t^n}{n!}.
+$$
+
+Comparing with $$M(t)=\sum_nE(X^n)\frac{t^n}{n!}$$:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{X\sim\operatorname{Expo}(1)\implies E(X^n)=n!\quad\text{for all }n.}
+$$
+
+</div>
+
+**General rate.** If $$Y\sim\operatorname{Expo}(\lambda)$$, then $$Y=X/\lambda$$ with $$X\sim\operatorname{Expo}(1)$$, so
+
+$$
+E(Y^n)=\frac{E(X^n)}{\lambda^n}=\frac{n!}{\lambda^n},\qquad M_Y(t)=M_X(t/\lambda)=\frac{\lambda}{\lambda-t},\quad t<\lambda.
+$$
+
+In particular $$E(Y)=1/\lambda$$ and $$\operatorname{Var}(Y)=2/\lambda^2-1/\lambda^2=1/\lambda^2$$, confirming Lecture 16 without integration by parts.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">A tenth moment without ten derivatives <span class="ex-pill pill-num">Worked example</span></div>
+
+For $$Y\sim\operatorname{Expo}(2)$$, the third and tenth moments are
+
+$$
+E(Y^3)=\frac{3!}{2^3}=\frac68=0.75,\qquad E(Y^{10})=\frac{10!}{2^{10}}=\frac{3{,}628{,}800}{1024}\approx3543.75.
+$$
+
+Differentiating $$\frac{2}{2-t}$$ ten times would give the same answer with much more work.
+
+<div class="ex-lesson"><strong>Core idea:</strong> If an MGF is a familiar function with a known series, expand it instead of differentiating.</div>
+</div>
+
+### Part 3 — Normal moments in one step
+
+Let $$Z\sim\mathcal N(0,1)$$, with $$M(t)=e^{t^2/2}$$ (Lecture 17). Expand the exponential series with $$t^2/2$$ in place of the variable:
+
+$$
+e^{t^2/2}=\sum_{k=0}^\infty\frac{(t^2/2)^k}{k!}=\sum_{k=0}^\infty\frac{t^{2k}}{2^kk!}=\sum_{k=0}^\infty\frac{(2k)!}{2^kk!}\cdot\frac{t^{2k}}{(2k)!}.
+$$
+
+Only even powers of $$t$$ appear, so every odd moment is 0, as symmetry requires. The even moments are the coefficients of $$t^{2k}/(2k)!$$:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{E(Z^{2k})=\frac{(2k)!}{2^kk!}=(2k-1)(2k-3)\cdots3\cdot1,\qquad E(Z^{2k+1})=0.}
+$$
+
+</div>
+
+**Why the two forms agree.** $$(2k)!$$ is the product of the numbers $$1,\ldots,2k$$. Its even factors are $$2\cdot4\cdots2k=2^kk!$$; dividing them out leaves the odd factors.
+
+| $$n$$ | 2 | 4 | 6 | 8 |
+|---|---|---|---|---|
+| $$E(Z^n)$$ | 1 | 3 | 15 | 105 |
+
+The fourth moment 3 is the benchmark for tail heaviness: a distribution with standardized fourth moment above 3 has heavier tails than the Normal.
+
+### Part 4 — Sums of independent Poissons
+
+**Poisson MGF.** For $$X\sim\operatorname{Pois}(\lambda)$$, by LOTUS and the exponential series,
+
+$$
+M_X(t)=\sum_{k=0}^\infty e^{tk}\frac{e^{-\lambda}\lambda^k}{k!}=e^{-\lambda}\sum_{k=0}^\infty\frac{(\lambda e^t)^k}{k!}=e^{-\lambda}e^{\lambda e^t}=e^{\lambda(e^t-1)}.
+$$
+
+**Moments check.** $$M'(t)=\lambda e^tM(t)$$, so $$E(X)=\lambda$$. $$M''(t)=(\lambda e^t+\lambda^2e^{2t})M(t)$$, so $$E(X^2)=\lambda+\lambda^2$$ and $$\operatorname{Var}(X)=\lambda$$.
+
+**Sum.** If $$X\sim\operatorname{Pois}(\lambda)$$ and $$Y\sim\operatorname{Pois}(\mu)$$ are independent,
+
+$$
+M_{X+Y}(t)=e^{\lambda(e^t-1)}e^{\mu(e^t-1)}=e^{(\lambda+\mu)(e^t-1)},
+$$
+
+the $$\operatorname{Pois}(\lambda+\mu)$$ MGF. By uniqueness:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{X\sim\operatorname{Pois}(\lambda),\ Y\sim\operatorname{Pois}(\mu)\text{ independent}\implies X+Y\sim\operatorname{Pois}(\lambda+\mu).}
+$$
+
+</div>
+
+This matches the story: two independent streams of rare events, at rates $$\lambda$$ and $$\mu$$, merge into one stream at rate $$\lambda+\mu$$.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** If $$X$$ and $$Y$$ are each $$\operatorname{Pois}(\lambda)$$, then $$X+Y\sim\operatorname{Pois}(2\lambda)$$.
+
+**Correction:** Independence is essential. If $$Y=X$$, then $$X+Y=2X$$ takes only even values, so it cannot be Poisson. Its MGF is $$M_X(2t)=e^{\lambda(e^{2t}-1)}$$, not $$e^{2\lambda(e^t-1)}$$.
+
+</div>
+
+### Part 5 — Joint, marginal, and conditional distributions
+
+One random variable is described by its CDF, PMF, or PDF. Several random variables defined on the same experiment need a description of how they behave together.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Joint, marginal, and conditional distributions <span class="ex-pill pill-defn">Definition</span></div>
+
+For random variables $$X$$ and $$Y$$:
+
+- **Joint CDF:** $$F_{X,Y}(x,y)=P(X\le x,Y\le y)$$, valid for any types of variables.
+- **Joint PMF (discrete):** $$P(X=x,Y=y)$$, nonnegative and summing to 1 over all pairs.
+- **Joint PDF (continuous):** $$f_{X,Y}(x,y)\ge0$$ with $$\iint f_{X,Y}\,dx\,dy=1$$, and $$P\big((X,Y)\in A\big)=\iint_Af_{X,Y}(x,y)\,dx\,dy$$ for regions $$A$$.
+- **Marginal distribution:** the distribution of one variable alone, found by summing or integrating out the other:
+
+$$
+P(X=x)=\sum_yP(X=x,Y=y),\qquad f_X(x)=\int_{-\infty}^\infty f_{X,Y}(x,y)\,dy.
+$$
+
+- **Conditional distribution:** the distribution of $$Y$$ after learning $$X=x$$, obtained by renormalizing the slice of the joint at $$x$$:
+
+$$
+P(Y=y\mid X=x)=\frac{P(X=x,Y=y)}{P(X=x)},\qquad f_{Y\mid X}(y\mid x)=\frac{f_{X,Y}(x,y)}{f_X(x)}.
+$$
+
+</div>
+
+**How they relate.** The joint determines both marginals and all conditionals. The marginals alone do not determine the joint, because they discard how the variables move together. The joint can be rebuilt from a marginal and a conditional: $$f_{X,Y}(x,y)=f_{Y\mid X}(y\mid x)f_X(x)$$.
+
+**Independence.** $$X$$ and $$Y$$ are independent exactly when the joint factors into the marginals for all $$x,y$$:
+
+$$
+P(X=x,Y=y)=P(X=x)P(Y=y)\quad\text{or}\quad f_{X,Y}(x,y)=f_X(x)f_Y(y).
+$$
+
+Equivalently, every conditional distribution of $$Y$$ given $$X=x$$ equals the marginal distribution of $$Y$$.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">A joint PMF table <span class="ex-pill pill-ex">Worked example</span></div>
+
+Let $$X\in\{0,1\}$$ and $$Y\in\{0,1,2\}$$ have the joint PMF below.
+
+| | $$y=0$$ | $$y=1$$ | $$y=2$$ | $$P(X=x)$$ |
+|---|---|---|---|---|
+| $$x=0$$ | 0.10 | 0.20 | 0.10 | 0.40 |
+| $$x=1$$ | 0.20 | 0.30 | 0.10 | 0.60 |
+| $$P(Y=y)$$ | 0.30 | 0.50 | 0.20 | 1 |
+
+**Marginals.** Row sums give the PMF of $$X$$; column sums give the PMF of $$Y$$. They are written in the margins of the table, which is where the name comes from.
+
+**Independence check.** $$P(X=0,Y=0)=0.10$$, but $$P(X=0)P(Y=0)=0.4\times0.3=0.12$$. One failing cell is enough: $$X$$ and $$Y$$ are dependent.
+
+**Conditional distribution.** Given $$X=1$$, divide the second row by $$0.60$$:
+
+$$
+P(Y=0\mid X=1)=\frac13,\quad P(Y=1\mid X=1)=\frac12,\quad P(Y=2\mid X=1)=\frac16.
+$$
+
+Its mean is $$E(Y\mid X=1)=0\cdot\frac13+1\cdot\frac12+2\cdot\frac16=\frac56$$, compared with $$E(Y)=0.9$$ overall.
+
+**An independent table with the same marginals.** Filling each cell with the product of its margins, for example $$0.4\times0.3=0.12$$ in the top-left, gives a different joint PMF with identical marginals.
+
+<div class="ex-lesson"><strong>Core idea:</strong> Marginals are row and column totals. Many different joint tables share the same totals, so marginals cannot reveal dependence.</div>
+</div>
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-18-joint-pmf-table.svg" alt="A two-by-three table of joint probabilities, shaded by size, with row sums 0.40 and 0.60 on the right and column sums 0.30, 0.50, and 0.20 below." style="display: block; width: 100%; max-width: 520px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes. The joint PMF fills the table; the marginal PMFs are its row and column sums.</figcaption>
+</figure>
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Two Bernoulli tables: independent and dependent <span class="ex-pill pill-ex">Worked example</span></div>
+
+Both tables below describe a pair of Bernoulli random variables $$X$$ and $$Y$$.
+
+| Table A | $$y=0$$ | $$y=1$$ | $$P(X=x)$$ |
+|---|---|---|---|
+| $$x=0$$ | 1/3 | 1/6 | 1/2 |
+| $$x=1$$ | 1/3 | 1/6 | 1/2 |
+| $$P(Y=y)$$ | 2/3 | 1/3 | 1 |
+
+| Table B | $$y=0$$ | $$y=1$$ | $$P(X=x)$$ |
+|---|---|---|---|
+| $$x=0$$ | 1/3 | 0 | 1/3 |
+| $$x=1$$ | 1/3 | 1/3 | 2/3 |
+| $$P(Y=y)$$ | 2/3 | 1/3 | 1 |
+
+**Table A** is independent: every cell equals the product of its margins, for example $$\frac12\cdot\frac23=\frac13$$ and $$\frac12\cdot\frac13=\frac16$$. Both rows are the same, so learning $$X$$ does not change the distribution of $$Y$$.
+
+**Table B** is dependent: $$P(X=0,Y=1)=0$$ but $$P(X=0)P(Y=1)=\frac13\cdot\frac13=\frac19$$. Here $$Y=1$$ forces $$X=1$$. The marginal of $$Y$$ is the same in both tables; only the joint reveals the difference.
+
+<div class="ex-lesson">For a $$2\times2$$ table, independence is equivalent to the two rows being proportional. A single zero cell with positive margins rules it out.</div>
+</div>
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Continuous joint PDFs: one dependent, one independent <span class="ex-pill pill-ex">Worked example</span></div>
+
+**Dependent.** Let $$f(x,y)=x+y$$ on the unit square $$0<x,y<1$$.
+
+- *Validity:* $$\int_0^1\int_0^1(x+y)\,dx\,dy=\frac12+\frac12=1$$.
+- *Marginal:* $$f_X(x)=\int_0^1(x+y)\,dy=x+\frac12$$, and by symmetry $$f_Y(y)=y+\frac12$$.
+- *Dependence:* $$f_X(x)f_Y(y)=(x+\tfrac12)(y+\tfrac12)\ne x+y$$; for instance at $$(0,0)$$ the product is $$\tfrac14$$ while the joint is 0.
+- *A region probability:*
+
+$$
+P(X+Y<1)=\int_0^1\int_0^{1-x}(x+y)\,dy\,dx=\int_0^1\frac{1-x^2}2\,dx=\frac13.
+$$
+
+**Independent.** Let $$f(x,y)=6e^{-2x-3y}$$ for $$x,y>0$$. It factors as $$\left(2e^{-2x}\right)\left(3e^{-3y}\right)$$ on a product region, so $$X\sim\operatorname{Expo}(2)$$ and $$Y\sim\operatorname{Expo}(3)$$ are independent.
+
+</div>
+
+### Part 6 — Uniform on a square versus Uniform on a disk
+
+A **Uniform** point in a region $$R$$ of the plane has joint PDF equal to $$1/\text{area}(R)$$ on $$R$$ and 0 elsewhere. Probabilities are then proportional to area.
+
+**Square.** For the unit square, $$f_{X,Y}(x,y)=1$$ for $$0\le x,y\le1$$. This equals $$1\cdot1=f_X(x)f_Y(y)$$ with $$X,Y\sim\operatorname{Unif}(0,1)$$, everywhere in the plane. The coordinates are independent: learning $$X$$ leaves $$Y$$ Uniform on $$[0,1]$$.
+
+**Disk.** For the unit disk $$x^2+y^2\le1$$, $$f_{X,Y}(x,y)=1/\pi$$ inside and 0 outside.
+
+- *Marginal.* At a given $$x$$, $$y$$ ranges over $$\left[-\sqrt{1-x^2},\sqrt{1-x^2}\right]$$, so
+
+$$
+f_X(x)=\int_{-\sqrt{1-x^2}}^{\sqrt{1-x^2}}\frac1\pi\,dy=\frac2\pi\sqrt{1-x^2},\qquad-1\le x\le1.
+$$
+
+  The marginal is not Uniform: values near 0 are more likely because the disk is tallest there.
+- *Conditional.* Given $$X=x$$, $$f_{Y\mid X}(y\mid x)=\frac{1/\pi}{(2/\pi)\sqrt{1-x^2}}=\frac1{2\sqrt{1-x^2}}$$ on that interval, so $$Y\mid X=x$$ is Uniform on $$\left[-\sqrt{1-x^2},\sqrt{1-x^2}\right]$$. Its range depends on $$x$$.
+- *Dependence.* $$f_{X,Y}(0.9,0.9)=0$$ because $$(0.9,0.9)$$ lies outside the disk, but $$f_X(0.9)f_Y(0.9)>0$$. So $$X$$ and $$Y$$ are dependent.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-18-square-vs-disk.svg" alt="Three panels. Left: the unit square with a full-height vertical slice at x equals 0.7, showing Y is still Uniform on 0 to 1. Middle: the unit disk with a shorter slice at x equals 0.7 from about minus 0.71 to 0.71, and the point (0.9, 0.9) outside the disk marked with zero density. Right: the semicircular marginal density of X for the disk compared with a flat Uniform(-1,1) density." style="display: block; width: 100%; max-width: 800px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes, illustrating Blitzstein and Hwang, <em>Introduction to Probability</em>, Example 7.1.22. In the square every vertical slice is the same; in the disk the slice length depends on $$x$$, so $$X$$ carries information about $$Y$$.</figcaption>
+</figure>
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** Inside the disk the joint PDF is the constant $$\frac1\pi=\frac1\pi\cdot1$$, a function of $$x$$ times a function of $$y$$, so $$X$$ and $$Y$$ are independent.
+
+**Correction:** Factorization must hold everywhere, including the support. Writing the disk PDF over the whole plane requires the indicator $$I(x^2+y^2\le1)$$, which does not split into a function of $$x$$ times a function of $$y$$. A joint PDF that factors on a rectangle, like the square, does indicate independence.
+
+</div>
+
+### Part 7 — Original practice questions
+
+Try these before reading the answers.
+
+1. Let $$X\sim\operatorname{Expo}(1)$$. Find $$E(X^5)$$ and $$E\left((X/3)^3\right)$$.
+2. A random variable has MGF $$M(t)=(1-t)^{-2}$$ for $$t<1$$. Find $$E(X)$$ and $$\operatorname{Var}(X)$$, and describe $$X$$ as a sum of simpler variables.
+3. Find $$E(Z^8)$$ for $$Z\sim\mathcal N(0,1)$$, and $$E\left((X-\mu)^4\right)$$ for $$X\sim\mathcal N(\mu,\sigma^2)$$.
+4. Independent $$X_1\sim\operatorname{Pois}(2)$$, $$X_2\sim\operatorname{Pois}(3)$$, $$X_3\sim\operatorname{Pois}(5)$$. Find the distribution of $$X_1+X_2+X_3$$ and $$P(X_1+X_2+X_3=0)$$.
+5. Check $$P(X_1+X_2+X_3=0)$$ in question 4 directly, without MGFs.
+6. $$(X,Y)$$ is Uniform on the triangle $$0<y<x<1$$. Find the joint PDF, both marginals, and the conditional distribution of $$Y$$ given $$X=x$$. Are $$X$$ and $$Y$$ independent?
+7. $$(X,Y)$$ is Uniform on the unit disk. Find $$P(X>0.5)$$.
+8. Find $$c$$ so that $$f(x,y)=cxy$$ on the unit square is a joint PDF, and decide whether $$X$$ and $$Y$$ are independent.
+9. Using the joint PMF table in Part 5, find $$P(Y\ge1\mid X=0)$$ and $$P(X=1\mid Y=2)$$.
+
+### Part 8 — Practice answers
+
+#### 1. Exponential moments
+
+$$E(X^5)=5!=120$$. $$E\left((X/3)^3\right)=3!/27=2/9$$.
+
+#### 2. A squared geometric MGF
+
+$$(1-t)^{-2}=\sum_{n\ge0}(n+1)t^n$$, so $$E(X^n)=(n+1)\,n!$$: $$E(X)=2$$, $$E(X^2)=6$$, $$\operatorname{Var}(X)=2$$. It is the MGF of a sum of two independent $$\operatorname{Expo}(1)$$ variables, since $$(1-t)^{-1}(1-t)^{-1}=(1-t)^{-2}$$.
+
+#### 3. Normal fourth and eighth moments
+
+$$E(Z^8)=7\cdot5\cdot3\cdot1=105$$. Since $$X-\mu=\sigma Z$$, $$E\left((X-\mu)^4\right)=\sigma^4E(Z^4)=3\sigma^4$$.
+
+#### 4. Three Poisson streams
+
+The sum is $$\operatorname{Pois}(10)$$, so $$P(\text{sum}=0)=e^{-10}\approx4.54\times10^{-5}$$.
+
+#### 5. Direct check
+
+The sum is 0 only if all three are 0. By independence, $$e^{-2}e^{-3}e^{-5}=e^{-10}$$.
+
+#### 6. Uniform on a triangle
+
+The triangle has area $$1/2$$, so $$f(x,y)=2$$ on $$0<y<x<1$$. Then $$f_X(x)=\int_0^x2\,dy=2x$$ on $$(0,1)$$ and $$f_Y(y)=\int_y^12\,dx=2(1-y)$$ on $$(0,1)$$. Given $$X=x$$, $$f_{Y\mid X}(y\mid x)=2/(2x)=1/x$$ on $$(0,x)$$, so $$Y\mid X=x\sim\operatorname{Unif}(0,x)$$. They are dependent: the conditional range depends on $$x$$, and $$f(0.2,0.8)=0\ne f_X(0.2)f_Y(0.8)$$.
+
+#### 7. A cap of the disk
+
+The region $$x>0.5$$ inside the unit disk has area $$\cos^{-1}(0.5)-0.5\sqrt{1-0.25}=\frac\pi3-\frac{\sqrt3}4\approx0.614$$. Dividing by $$\pi$$ gives $$P(X>0.5)\approx0.196$$.
+
+#### 8. A product density
+
+$$\int_0^1\int_0^1xy\,dx\,dy=\frac14$$, so $$c=4$$. Then $$f(x,y)=(2x)(2y)$$ on a square, so $$X$$ and $$Y$$ are independent with marginal PDFs $$2x$$ and $$2y$$.
+
+#### 9. Conditioning in the table
+
+$$P(Y\ge1\mid X=0)=\frac{0.20+0.10}{0.40}=0.75$$. $$P(X=1\mid Y=2)=\frac{0.10}{0.20}=0.5$$.
+
+### Part 9 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| “Moment” | Mean = center of mass; variance = moment of inertia |
+| Moments from series | $$E(X^n)=n!\times$$ coefficient of $$t^n$$ in $$M(t)$$ |
+| $$\operatorname{Expo}(1)$$ MGF | $$1/(1-t)$$, $$t<1$$ |
+| $$\operatorname{Expo}(\lambda)$$ moments | $$E(X^n)=n!/\lambda^n$$ |
+| Normal moments | Odd 0; $$E(Z^{2k})=(2k-1)!!$$; $$E(Z^4)=3$$ |
+| Poisson MGF | $$e^{\lambda(e^t-1)}$$ |
+| Poisson sums | Independent $$\operatorname{Pois}(\lambda)+\operatorname{Pois}(\mu)=\operatorname{Pois}(\lambda+\mu)$$ |
+| Joint PMF/PDF | Describes $$(X,Y)$$ together; sums or integrates to 1 |
+| Marginal | Sum or integrate out the other variable |
+| Conditional | Joint divided by marginal of the conditioning variable |
+| Reconstruction | Joint = conditional × marginal |
+| Independence | Joint = product of marginals everywhere |
+| Marginals alone | Cannot detect dependence |
+| Uniform on square | Independent coordinates |
+| Uniform on disk | Dependent; marginal $$\frac2\pi\sqrt{1-x^2}$$ |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Moment of inertia analogy <span class="gcat cat-prop">Interpretation</span></div>
+
+Viewing probability as mass: the mean is the center of mass and the variance is the moment of inertia about it.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Double factorial <span class="gcat cat-notn">Notation</span></div>
+
+$$(2k-1)!!=(2k-1)(2k-3)\cdots3\cdot1$$, the even moments of the standard Normal.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Joint distribution <span class="gcat cat-defn">Definition</span></div>
+
+The distribution of several random variables considered together, given by a joint CDF, joint PMF, or joint PDF.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Marginal distribution <span class="gcat cat-defn">Definition</span></div>
+
+The distribution of one random variable on its own, obtained from the joint distribution by summing or integrating over the other variables.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Conditional distribution <span class="gcat cat-defn">Definition</span></div>
+
+The distribution of one variable given the value of another: the corresponding slice of the joint, renormalized to total probability 1.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Uniform distribution on a region <span class="gcat cat-defn">Definition</span></div>
+
+A joint PDF equal to $$1/\text{area}(R)$$ on a region $$R$$ and 0 elsewhere, so that probability is proportional to area.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Factorization criterion <span class="gcat cat-thm">Theorem</span></div>
+
+Random variables are independent exactly when their joint PMF or PDF equals the product of the marginals, or of some function of $$x$$ and some function of $$y$$, for all points in the plane.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 18</span>
+  <span class="ref-tag">MGF</span>
+  <span class="ref-tag">Moments</span>
+  <span class="ref-tag">Poisson</span>
+  <span class="ref-tag">Joint distributions</span>
+  <span class="ref-tag">Independence</span>
+</div>
+
+  </div>
+</div>
+
+## Lecture 19 - Joint, Conditional, and Marginal Distributions
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-19-toggle" onclick="toggleLecture('lecture-19')" aria-expanded="true" aria-controls="lecture-19-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 19</span>
+      <span>
+        <span class="chapter-title">Lecture 19 - Joint, Conditional, and Marginal Distributions</span>
+        <span class="chapter-subtitle">Joint PDFs, 2D LOTUS, E(XY) under independence, expected distance between Uniforms, and the chicken-egg problem</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-19-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-19-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+A joint PDF is the mixed partial derivative of the joint CDF, and probabilities of regions are double integrals of it. LOTUS extends to two variables: $$E(g(X,Y))$$ integrates $$g$$ against the joint PDF without finding the distribution of $$g(X,Y)$$. One consequence is that independent random variables satisfy $$E(XY)=E(X)E(Y)$$. Two-dimensional LOTUS also gives the expected distance between two independent Uniforms, $$E\lvert X-Y\rvert=1/3$$, which can be cross-checked through the maximum and minimum. Finally, when a Poisson number of eggs each hatch independently, the hatched and unhatched counts turn out to be independent Poissons, a fact special to the Poisson.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$F(x,y)=P(X\le x,Y\le y)$$ | Joint CDF |
+| $$f(x,y)=\dfrac{\partial^2F}{\partial x\,\partial y}$$ | Joint PDF |
+| $$f_X$$, $$f_Y$$ | Marginal PDFs |
+| $$f_{Y\mid X}(y\mid x)$$ | Conditional PDF of $$Y$$ given $$X=x$$ |
+| $$g(X,Y)$$ | A function of two random variables |
+| $$M=\max(X,Y)$$, $$L=\min(X,Y)$$ | Larger and smaller of $$X$$ and $$Y$$ |
+| $$N$$ | Number of eggs |
+| $$p$$, $$q=1-p$$ | Hatching and non-hatching probabilities |
+| $$X$$, $$Y=N-X$$ | Numbers of hatched and unhatched eggs |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Relate the joint CDF and joint PDF, and compute region probabilities with correct integration limits.
+- Obtain marginal and conditional PDFs and test independence.
+- State and apply LOTUS for functions of two random variables.
+- Prove $$E(XY)=E(X)E(Y)$$ for independent $$X,Y$$, and explain why the converse fails.
+- Compute $$E\lvert X-Y\rvert$$ for i.i.d. Uniforms by integration and by a max-min argument.
+- Derive the joint PMF in the chicken-egg problem and show the two counts are independent Poissons.
+
+### Part 1 — Joint CDF, joint PDF, and region probabilities
+
+Lecture 18 introduced joint, marginal, and conditional distributions. The continuous case is collected here.
+
+- **Joint CDF:** $$F(x,y)=P(X\le x,Y\le y)$$, defined for any pair of random variables.
+- **Joint PDF:** for continuous $$X,Y$$, the mixed partial derivative
+
+$$
+f(x,y)=\frac{\partial^2}{\partial x\,\partial y}F(x,y).
+$$
+
+- **Region probabilities:** $$P\big((X,Y)\in A\big)=\iint_Af(x,y)\,dx\,dy$$.
+- **Marginal:** $$f_X(x)=\int_{-\infty}^\infty f(x,y)\,dy$$.
+- **Conditional:** $$f_{Y\mid X}(y\mid x)=\dfrac{f(x,y)}{f_X(x)}$$, and by Bayes' rule $$f_{Y\mid X}(y\mid x)=\dfrac{f_{X\mid Y}(x\mid y)f_Y(y)}{f_X(x)}$$.
+- **Independence:** $$f(x,y)=f_X(x)f_Y(y)$$ for all $$x,y$$, equivalently $$F(x,y)=F_X(x)F_Y(y)$$ for all $$x,y$$. The PDF version is usually easier to check.
+
+**Setting integration limits.** For a region that is not a rectangle, fix the outer variable first and describe the range of the inner variable as a function of it. The Uniform point in the unit disk from Lecture 18 is an example: for fixed $$x$$, $$y$$ runs from $$-\sqrt{1-x^2}$$ to $$\sqrt{1-x^2}$$. Comparing its conditional distribution, Uniform on that interval, with its marginal, $$\frac2\pi\sqrt{1-y^2}$$, shows directly that the coordinates are dependent.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">A probability over a triangle <span class="ex-pill pill-ex">Worked example</span></div>
+
+Let $$X,Y$$ be i.i.d. $$\operatorname{Expo}(1)$$, so $$f(x,y)=e^{-x}e^{-y}$$ for $$x,y>0$$. Find $$P(X<Y)$$ and $$P(X+Y<1)$$.
+
+**$$P(X<Y)$$.** The region is above the diagonal. Fix $$y$$ outside, let $$x$$ run from 0 to $$y$$:
+
+$$
+P(X<Y)=\int_0^\infty\int_0^ye^{-x}e^{-y}\,dx\,dy=\int_0^\infty(1-e^{-y})e^{-y}\,dy=1-\frac12=\frac12,
+$$
+
+as symmetry predicts.
+
+**$$P(X+Y<1)$$.** Fix $$x\in(0,1)$$; then $$y$$ runs from 0 to $$1-x$$:
+
+$$
+\int_0^1\int_0^{1-x}e^{-x}e^{-y}\,dy\,dx=\int_0^1e^{-x}\left(1-e^{-(1-x)}\right)dx=(1-e^{-1})-e^{-1}=1-2e^{-1}\approx0.264.
+$$
+
+<div class="ex-lesson"><strong>Core idea:</strong> Sketch the region, choose which variable is outer, and express the inner limits in terms of it. Errors in double integrals are usually errors in the limits.</div>
+</div>
+
+### Part 2 — LOTUS in two dimensions
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Two-dimensional LOTUS <span class="ex-pill pill-thm">Theorem</span></div>
+
+For a function $$g:\mathbb R^2\to\mathbb R$$,
+
+$$
+E\big(g(X,Y)\big)=\iint g(x,y)f(x,y)\,dx\,dy\quad\text{(continuous)},\qquad
+E\big(g(X,Y)\big)=\sum_x\sum_yg(x,y)P(X=x,Y=y)\quad\text{(discrete)}.
+$$
+
+</div>
+
+As in one dimension, the probabilities stay those of the pair $$(X,Y)$$; only the values change from $$(x,y)$$ to $$g(x,y)$$. There is no need to find the distribution of $$g(X,Y)$$ first.
+
+#### Independence implies $$E(XY)=E(X)E(Y)$$
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Expectation of a product <span class="ex-pill pill-thm">Theorem</span></div>
+
+If $$X$$ and $$Y$$ are independent with finite means, then $$E(XY)=E(X)E(Y)$$.
+
+</div>
+
+**Proof (continuous case).** Apply 2D LOTUS with $$g(x,y)=xy$$, factor the joint PDF, and separate the double integral:
+
+$$
+E(XY)=\iint xy\,f_X(x)f_Y(y)\,dx\,dy=\left(\int xf_X(x)\,dx\right)\left(\int yf_Y(y)\,dy\right)=E(X)E(Y).
+$$
+
+The discrete case is identical with sums. $$\blacksquare$$
+
+More generally, $$E\big(g(X)h(Y)\big)=E\big(g(X)\big)E\big(h(Y)\big)$$ for independent $$X,Y$$. This justifies the MGF product rule used in Lectures 17 and 18: $$E(e^{tX}e^{tY})=E(e^{tX})E(e^{tY})$$.
+
+Random variables with $$E(XY)=E(X)E(Y)$$ are called **uncorrelated**. Independence implies uncorrelated, but not conversely.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** If $$E(XY)=E(X)E(Y)$$, then $$X$$ and $$Y$$ are independent.
+
+**Correction:** Let $$X$$ be uniform on $$\{-1,0,1\}$$ and $$Y=X^2$$. Then $$E(XY)=E(X^3)=0=E(X)E(Y)$$, yet $$Y$$ is a function of $$X$$. A product condition on means captures only one kind of linear association, not all dependence.
+
+</div>
+
+### Part 3 — Expected distance between two Uniforms
+
+Let $$X,Y$$ be i.i.d. $$\operatorname{Unif}(0,1)$$, two random points on a unit stick. Find $$E\lvert X-Y\rvert$$.
+
+**By 2D LOTUS.** The joint PDF is 1 on the unit square. Split at the diagonal, where $$\lvert x-y\rvert$$ changes formula, and use symmetry between the two triangles:
+
+$$
+E\lvert X-Y\rvert=\int_0^1\int_0^1\lvert x-y\rvert\,dx\,dy=2\int_0^1\int_y^1(x-y)\,dx\,dy.
+$$
+
+The inner integral is $$\int_y^1(x-y)\,dx=\frac{(1-y)^2}2$$. Then
+
+$$
+2\int_0^1\frac{(1-y)^2}2\,dy=\int_0^1(1-y)^2\,dy=\frac13.
+$$
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{X,Y\overset{\text{i.i.d.}}{\sim}\operatorname{Unif}(0,1)\implies E\lvert X-Y\rvert=\frac13.}
+$$
+
+</div>
+
+**By the maximum and minimum.** Let $$M=\max(X,Y)$$ and $$L=\min(X,Y)$$. Then:
+
+1. $$\lvert X-Y\rvert=M-L$$, since subtracting the smaller from the larger gives the distance.
+2. $$M+L=X+Y$$, since the pair $$\{M,L\}$$ is the pair $$\{X,Y\}$$ in some order. By linearity, $$E(M)+E(L)=1$$.
+3. The CDF of $$M$$ is $$P(M\le m)=P(X\le m,Y\le m)=m^2$$ on $$(0,1)$$, so $$f_M(m)=2m$$ and $$E(M)=\int_0^12m^2\,dm=\frac23$$.
+4. Hence $$E(L)=1-\frac23=\frac13$$ and $$E\lvert X-Y\rvert=E(M)-E(L)=\frac13$$.
+
+The two points split the stick into three pieces with expected lengths $$E(L)=\frac13$$, $$E(M-L)=\frac13$$, and $$E(1-M)=\frac13$$. By symmetry each piece has the same expected length.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-19-expected-distance.svg" alt="Left: heat map of the absolute difference of x and y on the unit square, zero along the diagonal and largest at the corners (1,0) and (0,1), with the diagonal drawn to show where the integral is split. Right: histograms of simulated minimum and maximum of two independent Uniform(0,1) variables, with densities 2(1 minus x) and 2x and dashed lines at their means 1/3 and 2/3." style="display: block; width: 100%; max-width: 780px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes, illustrating Blitzstein and Hwang, <em>Introduction to Probability</em>, Example 7.2.2. Left: the integrand of 2D LOTUS. Right: simulated minimum and maximum, whose means differ by $$1/3$$.</figcaption>
+</figure>
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** $$E\lvert X-Y\rvert=\lvert E(X)-E(Y)\rvert=0$$.
+
+**Correction:** The absolute value is nonlinear, and $$\lvert X-Y\rvert$$ is positive with probability 1, so its mean cannot be 0. Expectation can be moved inside only linear functions.
+
+</div>
+
+### Part 4 — The chicken-egg problem
+
+A hen lays $$N\sim\operatorname{Pois}(\lambda)$$ eggs. Each egg hatches with probability $$p$$, independently of the other eggs and of $$N$$. Let $$X$$ be the number that hatch and $$Y=N-X$$ the number that do not. Find the joint distribution of $$X$$ and $$Y$$.
+
+**Structure.** Conditional on $$N=n$$, $$X\mid N=n\sim\operatorname{Bin}(n,p)$$. Since $$N=X+Y$$, the event $$\{X=i,Y=j\}$$ is the same as $$\{N=i+j,X=i\}$$.
+
+**Joint PMF.** Multiply the marginal of $$N$$ by the conditional of $$X$$:
+
+$$
+P(X=i,Y=j)=P(N=i+j)\,P(X=i\mid N=i+j)=\frac{e^{-\lambda}\lambda^{i+j}}{(i+j)!}\cdot\frac{(i+j)!}{i!\,j!}p^iq^j.
+$$
+
+The factorials $$(i+j)!$$ cancel. Write $$e^{-\lambda}=e^{-\lambda p}e^{-\lambda q}$$ and $$\lambda^{i+j}p^iq^j=(\lambda p)^i(\lambda q)^j$$:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{P(X=i,Y=j)=\frac{e^{-\lambda p}(\lambda p)^i}{i!}\cdot\frac{e^{-\lambda q}(\lambda q)^j}{j!}.}
+$$
+
+</div>
+
+The joint PMF is the product of a $$\operatorname{Pois}(\lambda p)$$ PMF in $$i$$ and a $$\operatorname{Pois}(\lambda q)$$ PMF in $$j$$, on the full product of their supports. Therefore:
+
+- $$X\sim\operatorname{Pois}(\lambda p)$$ and $$Y\sim\operatorname{Pois}(\lambda q)$$;
+- $$X$$ and $$Y$$ are **independent**.
+
+**Why this is surprising.** $$X$$ and $$Y$$ are built from the same total $$N$$, so one might expect a large hatched count to signal a large total and hence a large unhatched count. That reasoning would hold for a fixed or non-Poisson total. With a Poisson total, the information about $$N$$ carried by $$X$$ exactly cancels in its effect on $$Y$$. Conversely, if $$N=n$$ were fixed, then $$Y=n-X$$ would be completely determined by $$X$$.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Splitting a stream of customers <span class="ex-pill pill-ex">Worked example</span></div>
+
+A shop receives $$N\sim\operatorname{Pois}(10)$$ customers in an hour, and each independently makes a purchase with probability $$0.3$$.
+
+- **Buyers:** $$X\sim\operatorname{Pois}(3)$$, so $$P(\text{no purchase this hour})=e^{-3}\approx0.0498$$.
+- **Browsers:** $$Y\sim\operatorname{Pois}(7)$$, independent of $$X$$.
+- **Learning about browsers from buyers:** given $$X=2$$, $$Y$$ is still $$\operatorname{Pois}(7)$$, so $$E(N\mid X=2)=2+7=9$$, below the unconditional $$E(N)=10$$ because fewer buyers than average were seen.
+
+<div class="ex-lesson"><strong>Core idea:</strong> Independently classifying the points of a Poisson count splits it into independent Poisson counts. This is called Poisson thinning or splitting.</div>
+</div>
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-19-chicken-egg.svg" alt="Left: bar chart comparing the simulated distribution of hatched eggs with the Poisson(3) PMF; the bars match closely. Right: simulated average number of unhatched eggs given each number of hatched eggs from 0 to 8, flat at 7." style="display: block; width: 100%; max-width: 780px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes, illustrating Blitzstein and Hwang, <em>Introduction to Probability</em>, Example 7.1.9 (chicken-egg). Simulation with $$\lambda=10$$, $$p=0.3$$: the hatched count is $$\operatorname{Pois}(3)$$, and the unhatched count averages 7 whatever the hatched count.</figcaption>
+</figure>
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** Since $$X$$ and $$Y$$ add to $$N$$, they must be negatively dependent.
+
+**Correction:** That holds when $$N$$ is fixed. When $$N$$ is Poisson, the joint PMF factors, so $$X$$ and $$Y$$ are independent. The conclusion depends on the distribution of the total, not only on the sum relation.
+
+</div>
+
+### Part 5 — Original practice questions
+
+Try these before reading the answers.
+
+1. Let $$X,Y$$ be i.i.d. $$\operatorname{Unif}(0,1)$$. Find $$E(XY)$$ and $$E\left((X-Y)^2\right)$$.
+2. Let $$(X,Y)$$ have joint PDF $$x+y$$ on the unit square. Use 2D LOTUS to compute $$E(XY)$$, and compare with $$E(X)E(Y)$$.
+3. Let $$(X,Y)$$ be Uniform on the unit disk. Find $$E(X^2+Y^2)$$ using polar coordinates, and $$E(XY)$$ by symmetry. Are $$X$$ and $$Y$$ independent?
+4. Let $$X,Y$$ be i.i.d. $$\operatorname{Unif}(0,1)$$. Find the PDF of $$L=\min(X,Y)$$ and verify $$E(L)=1/3$$ directly.
+5. Three points are chosen independently and uniformly on $$(0,1)$$. Find the expected value of the largest.
+6. In the chicken-egg problem with $$\lambda=12$$ and $$p=1/4$$, find $$P(X=0,Y=0)$$ and $$P(X=2\mid N=8)$$.
+7. In the chicken-egg setup, suppose instead $$N=n$$ is fixed. Find $$P(X=n,Y=n)$$ and explain why $$X$$ and $$Y$$ are dependent.
+8. Let $$X,Y$$ be i.i.d. $$\operatorname{Expo}(1)$$. Find $$E\lvert X-Y\rvert$$. *(Supplementary: use that $$\min(X,Y)\sim\operatorname{Expo}(2)$$.)*
+9. Show that $$E(X+Y)^2=E(X^2)+2E(X)E(Y)+E(Y^2)$$ for independent $$X,Y$$, and deduce $$\operatorname{Var}(X+Y)=\operatorname{Var}(X)+\operatorname{Var}(Y)$$.
+
+### Part 6 — Practice answers
+
+#### 1. Products and squared distance
+
+$$E(XY)=E(X)E(Y)=\frac14$$. $$E\left((X-Y)^2\right)=E(X^2)-2E(X)E(Y)+E(Y^2)=\frac13-\frac12+\frac13=\frac16$$.
+
+#### 2. A dependent pair
+
+$$E(XY)=\int_0^1\int_0^1xy(x+y)\,dx\,dy=2\int_0^1\int_0^1x^2y\,dx\,dy=2\cdot\frac13\cdot\frac12=\frac13$$. From $$f_X(x)=x+\tfrac12$$, $$E(X)=\frac13+\frac14=\frac7{12}=E(Y)$$, so $$E(X)E(Y)=\frac{49}{144}\approx0.340\ne\frac13$$. They are dependent, consistent with Lecture 18.
+
+#### 3. Moments on the disk
+
+$$E(X^2+Y^2)=\frac1\pi\int_0^{2\pi}\int_0^1r^2\cdot r\,dr\,d\theta=\frac1\pi\cdot2\pi\cdot\frac14=\frac12$$. The disk is symmetric under $$x\mapsto-x$$, so $$E(XY)=0=E(X)E(Y)$$. Yet $$X$$ and $$Y$$ are dependent: another uncorrelated but dependent pair.
+
+#### 4. The minimum directly
+
+$$P(L>l)=P(X>l)P(Y>l)=(1-l)^2$$, so $$f_L(l)=2(1-l)$$ on $$(0,1)$$ and $$E(L)=\int_0^12l(1-l)\,dl=1-\frac23=\frac13$$.
+
+#### 5. Maximum of three
+
+$$P(\max\le m)=m^3$$, so the PDF is $$3m^2$$ and the mean is $$\int_0^13m^3\,dm=\frac34$$.
+
+#### 6. Chicken-egg numbers
+
+$$X\sim\operatorname{Pois}(3)$$ and $$Y\sim\operatorname{Pois}(9)$$ independently, so $$P(X=0,Y=0)=e^{-3}e^{-9}=e^{-12}$$, which is also $$P(N=0)$$. Given $$N=8$$, $$X\sim\operatorname{Bin}(8,1/4)$$: $$P(X=2\mid N=8)=\binom82(1/4)^2(3/4)^6\approx0.311$$.
+
+#### 7. A fixed total
+
+$$X+Y=n$$ always, so $$P(X=n,Y=n)=0$$ for $$n\ge1$$, while $$P(X=n)P(Y=n)=p^nq^n>0$$. The joint does not factor; $$Y$$ is determined by $$X$$.
+
+#### 8. Distance between Exponentials
+
+$$\lvert X-Y\rvert=M-L$$ and $$M+L=X+Y$$, so $$E(M)=2-E(L)$$. With $$L\sim\operatorname{Expo}(2)$$, $$E(L)=\frac12$$, so $$E(M)=\frac32$$ and $$E\lvert X-Y\rvert=1$$. By memorylessness, after the first of the two occurs, the remaining wait for the other is a fresh $$\operatorname{Expo}(1)$$, which also gives 1.
+
+#### 9. Variances add under independence
+
+Expanding and using $$E(XY)=E(X)E(Y)$$ gives the identity. Subtracting $$(E(X)+E(Y))^2=E(X)^2+2E(X)E(Y)+E(Y)^2$$ leaves $$\operatorname{Var}(X)+\operatorname{Var}(Y)$$. This proves the additivity used in Lecture 14.
+
+### Part 7 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Joint PDF | $$\partial^2F/\partial x\,\partial y$$; integrate over regions |
+| Limits | Fix the outer variable; inner limits depend on it |
+| Marginal | $$f_X=\int f(x,y)\,dy$$ |
+| Conditional | $$f_{Y\mid X}=f/f_X$$ |
+| Independence | $$f=f_Xf_Y$$ everywhere, or $$F=F_XF_Y$$ |
+| 2D LOTUS | $$E(g(X,Y))=\iint g\,f\,dx\,dy$$ |
+| Product of independents | $$E(XY)=E(X)E(Y)$$; more generally $$E(g(X)h(Y))=E(g(X))E(h(Y))$$ |
+| Uncorrelated | $$E(XY)=E(X)E(Y)$$; does not imply independence |
+| Expected distance | $$E\lvert X-Y\rvert=1/3$$ for i.i.d. $$\operatorname{Unif}(0,1)$$ |
+| Max and min of two Uniforms | Means $$2/3$$ and $$1/3$$ |
+| Chicken-egg joint PMF | Product of $$\operatorname{Pois}(\lambda p)$$ and $$\operatorname{Pois}(\lambda q)$$ PMFs |
+| Poisson splitting | Hatched and unhatched counts are independent Poissons |
+| Fixed total | Splitting a fixed $$n$$ gives dependent counts |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Joint PDF <span class="gcat cat-defn">Definition</span></div>
+
+The mixed partial derivative of the joint CDF of continuous random variables; its integral over a region is the probability of that region.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Two-dimensional LOTUS <span class="gcat cat-thm">Theorem</span></div>
+
+$$E(g(X,Y))=\iint g(x,y)f(x,y)\,dx\,dy$$, or the corresponding double sum for discrete variables.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Uncorrelated <span class="gcat cat-defn">Definition</span></div>
+
+Random variables with $$E(XY)=E(X)E(Y)$$. Independent variables are uncorrelated; uncorrelated variables need not be independent.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Order statistics (max and min) <span class="gcat cat-defn">Definition</span></div>
+
+The largest and smallest of a collection of random variables. For two variables, their difference is the distance and their sum is the total.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Poisson thinning (splitting) <span class="gcat cat-prop">Property</span></div>
+
+If each of $$N\sim\operatorname{Pois}(\lambda)$$ items is independently classified as type 1 with probability $$p$$, the type counts are independent $$\operatorname{Pois}(\lambda p)$$ and $$\operatorname{Pois}(\lambda q)$$ variables.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 19</span>
+  <span class="ref-tag">Joint distributions</span>
+  <span class="ref-tag">2D LOTUS</span>
+  <span class="ref-tag">Independence</span>
+  <span class="ref-tag">Chicken-egg</span>
+  <span class="ref-tag">Poisson</span>
+</div>
+
+  </div>
+</div>
+
+## Lecture 20 - Multinomial and Cauchy
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-20-toggle" onclick="toggleLecture('lecture-20')" aria-expanded="true" aria-controls="lecture-20-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 20</span>
+      <span>
+        <span class="chapter-title">Lecture 20 - Multinomial and Cauchy</span>
+        <span class="chapter-subtitle">Expected distance between Normals, the Multinomial distribution with its marginals, lumping, and conditioning, and the Cauchy distribution</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-20-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-20-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+The expected distance between two independent standard Normals needs no double integral: their difference is $$\mathcal N(0,2)$$, so $$E\lvert Z_1-Z_2\rvert=\sqrt2\,E\lvert Z\rvert=2/\sqrt\pi$$. The Multinomial distribution extends the Binomial from two categories to $$k$$. It counts how many of $$n$$ independent objects fall in each category. Each count is Binomial, merging categories gives another Multinomial, and conditioning on one count leaves a Multinomial on the rest with renormalized probabilities. The Cauchy distribution is the ratio of two independent standard Normals. Its PDF $$\frac1{\pi(1+t^2)}$$ follows from a CDF calculation, and its tails are so heavy that its mean does not exist.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$Z_1,Z_2$$ | i.i.d. $$\mathcal N(0,1)$$ |
+| $$\mathbf X=(X_1,\ldots,X_k)$$ | Category counts |
+| $$\mathbf p=(p_1,\ldots,p_k)$$ | Category probabilities, $$p_j\ge0$$, $$\sum_jp_j=1$$ |
+| $$\mathbf X\sim\operatorname{Mult}_k(n,\mathbf p)$$ | Multinomial with $$n$$ objects and $$k$$ categories |
+| $$\dfrac{n!}{n_1!\cdots n_k!}$$ | Multinomial coefficient |
+| $$p_j'=p_j/(1-p_1)$$ | Renormalized probability after conditioning on $$X_1$$ |
+| $$T=X/Y$$ | Ratio of i.i.d. $$\mathcal N(0,1)$$ variables |
+| $$\operatorname{Cauchy}$$ | Distribution of $$T$$ |
+| $$\Phi$$, $$\varphi$$ | Standard Normal CDF and PDF |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Compute $$E\lvert Z_1-Z_2\rvert$$ using the distribution of a difference of independent Normals.
+- State the Multinomial story and derive its joint PMF.
+- Show that each Multinomial count is Binomial.
+- Merge Multinomial categories and condition on one count.
+- Derive the Cauchy CDF and PDF from the ratio of two Normals.
+- Explain why the Cauchy distribution has no mean.
+
+### Part 1 — Expected distance between two Normals
+
+Let $$Z_1,Z_2$$ be i.i.d. $$\mathcal N(0,1)$$. Find $$E\lvert Z_1-Z_2\rvert$$.
+
+Two-dimensional LOTUS would require integrating $$\lvert z_1-z_2\rvert\varphi(z_1)\varphi(z_2)$$ over the plane. A shorter route uses facts already proved.
+
+1. **The difference is Normal.** Independent Normals add to a Normal (Lecture 17), and $$-Z_2\sim\mathcal N(0,1)$$. So $$Z_1-Z_2\sim\mathcal N(0,1+1)=\mathcal N(0,2)$$.
+2. **Rescale.** Then $$Z_1-Z_2$$ has the same distribution as $$\sqrt2\,Z$$ with $$Z\sim\mathcal N(0,1)$$.
+3. **Use $$E\lvert Z\rvert$$.** By symmetry and LOTUS,
+
+$$
+E\lvert Z\rvert=2\int_0^\infty z\frac{e^{-z^2/2}}{\sqrt{2\pi}}\,dz=\frac2{\sqrt{2\pi}}=\sqrt{\frac2\pi}.
+$$
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{E\lvert Z_1-Z_2\rvert=\sqrt2\cdot\sqrt{\frac2\pi}=\frac2{\sqrt\pi}\approx1.128.}
+$$
+
+</div>
+
+For i.i.d. $$\mathcal N(\mu,\sigma^2)$$ variables, the mean cancels and the scale multiplies, giving $$2\sigma/\sqrt\pi$$.
+
+**Core idea:** An expectation depends only on the distribution of the quantity inside. Identify that distribution first, and the integral may become one-dimensional or already known.
+
+### Part 2 — The Multinomial distribution
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Multinomial distribution <span class="ex-pill pill-defn">Definition</span></div>
+
+Each of $$n$$ objects is placed independently into one of $$k$$ categories, landing in category $$j$$ with probability $$p_j$$, where $$p_j\ge0$$ and $$p_1+\cdots+p_k=1$$. Let $$X_j$$ be the number of objects in category $$j$$. Then
+
+$$
+\mathbf X=(X_1,\ldots,X_k)\sim\operatorname{Mult}_k(n,\mathbf p).
+$$
+
+</div>
+
+The counts are always dependent: they add to $$n$$, so the last count is determined by the others. With $$k=2$$, $$X_1\sim\operatorname{Bin}(n,p_1)$$ and $$X_2=n-X_1$$.
+
+**Joint PMF.** Fix counts $$n_1,\ldots,n_k$$ with $$n_1+\cdots+n_k=n$$.
+
+1. Any particular assignment of objects to categories with these counts has probability $$p_1^{n_1}\cdots p_k^{n_k}$$, by independence.
+2. The number of such assignments is the number of ways to choose which $$n_1$$ objects go to category 1, which $$n_2$$ of the rest go to category 2, and so on:
+
+$$
+\binom{n}{n_1}\binom{n-n_1}{n_2}\cdots\binom{n_k}{n_k}=\frac{n!}{n_1!\,n_2!\cdots n_k!}.
+$$
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{P(X_1=n_1,\ldots,X_k=n_k)=\frac{n!}{n_1!\cdots n_k!}\,p_1^{n_1}\cdots p_k^{n_k},\qquad n_1+\cdots+n_k=n,}
+$$
+
+</div>
+
+and 0 otherwise.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Rolling a die twelve times <span class="ex-pill pill-num">Worked example</span></div>
+
+Roll a fair die 12 times and record how many times each face appears. The counts are $$\operatorname{Mult}_6(12,(1/6,\ldots,1/6))$$. The probability that each face appears exactly twice is
+
+$$
+\frac{12!}{(2!)^6}\left(\frac16\right)^{12}=\frac{7{,}484{,}400}{2{,}176{,}782{,}336}\approx0.0034.
+$$
+
+Perfectly balanced outcomes are rare, even though each face is equally likely.
+
+</div>
+
+### Part 3 — Marginals, lumping, and conditioning
+
+#### Each count is Binomial
+
+To study category $$j$$ alone, call it “success” and every other category “failure”. Each object succeeds independently with probability $$p_j$$, so
+
+$$
+X_j\sim\operatorname{Bin}(n,p_j),\qquad E(X_j)=np_j,\qquad\operatorname{Var}(X_j)=np_j(1-p_j).
+$$
+
+No summation over the joint PMF is needed: the story gives the marginal directly.
+
+#### Lumping categories
+
+Merging categories produces another Multinomial, with the merged probabilities added. For example, if the last $$k-2$$ categories are combined,
+
+$$
+(X_1,X_2,X_3+\cdots+X_k)\sim\operatorname{Mult}_3\big(n,(p_1,p_2,p_3+\cdots+p_k)\big).
+$$
+
+Each object lands in the merged category exactly when it lands in one of its parts, with probability the sum of their probabilities, and objects remain independent.
+
+#### Conditioning on one count
+
+Given $$X_1=n_1$$, the other $$n-n_1$$ objects are known not to be in category 1. Each of them is in category $$j\ge2$$ with conditional probability
+
+$$
+p_j'=P(\text{category }j\mid\text{not category }1)=\frac{p_j}{1-p_1}=\frac{p_j}{p_2+\cdots+p_k}.
+$$
+
+These objects are still independent of each other, so
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{(X_2,\ldots,X_k)\mid X_1=n_1\ \sim\ \operatorname{Mult}_{k-1}\left(n-n_1,(p_2',\ldots,p_k')\right).}
+$$
+
+</div>
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Blood types in a sample <span class="ex-pill pill-ex">Worked example</span></div>
+
+Suppose blood types O, A, B, AB occur with probabilities $$0.45,0.40,0.11,0.04$$, and 10 unrelated people are typed. Let $$\mathbf X=(X_O,X_A,X_B,X_{AB})\sim\operatorname{Mult}_4(10,\mathbf p)$$.
+
+**(a) A specific outcome.**
+
+$$
+P(4,4,1,1)=\frac{10!}{4!\,4!\,1!\,1!}(0.45)^4(0.40)^4(0.11)(0.04)\approx0.0291.
+$$
+
+**(b) A marginal.** $$X_A\sim\operatorname{Bin}(10,0.40)$$, so $$P(X_A=4)=\binom{10}4(0.4)^4(0.6)^6\approx0.251$$ and $$E(X_A)=4$$.
+
+**(c) Lumping.** Combining B and AB gives $$(X_O,X_A,X_B+X_{AB})\sim\operatorname{Mult}_3(10,(0.45,0.40,0.15))$$.
+
+**(d) Conditioning.** Given $$X_O=4$$, the other 6 people are typed among A, B, AB with probabilities $$\frac{0.40}{0.55},\frac{0.11}{0.55},\frac{0.04}{0.55}\approx(0.727,0.200,0.073)$$. So $$E(X_A\mid X_O=4)=6(0.727)\approx4.36$$, compared with $$E(X_A)=4$$.
+
+<div class="ex-lesson"><strong>Core idea:</strong> Multinomial questions are usually answered by redefining the categories, not by summing the joint PMF. Single out one category for a marginal, merge categories for lumping, and drop a category and renormalize for conditioning.</div>
+</div>
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** Given $$X_1=n_1$$, the remaining counts are $$\operatorname{Mult}_{k-1}(n-n_1,(p_2,\ldots,p_k))$$.
+
+**Correction:** The probabilities $$p_2,\ldots,p_k$$ sum to $$1-p_1$$, not 1, so they are not a valid probability vector. Each must be divided by $$1-p_1$$.
+
+</div>
+
+### Part 4 — The Cauchy distribution
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Cauchy distribution <span class="ex-pill pill-defn">Definition</span></div>
+
+Let $$X,Y$$ be i.i.d. $$\mathcal N(0,1)$$. The distribution of $$T=X/Y$$ is the **Cauchy distribution**.
+
+</div>
+
+The ratio is defined with probability 1, since $$P(Y=0)=0$$. The plan is to find the CDF and then differentiate.
+
+#### The CDF
+
+The sign of $$Y$$ complicates the inequality $$X/Y\le t$$. Symmetry removes it: $$(X,Y)$$ and $$(X\cdot\text{sign}(Y),\lvert Y\rvert)$$ give the same ratio, and $$X\cdot\text{sign}(Y)$$ is still $$\mathcal N(0,1)$$ and independent of $$\lvert Y\rvert$$. So $$T$$ has the same distribution as $$X/\lvert Y\rvert$$, and
+
+$$
+P(T\le t)=P\left(X\le t\lvert Y\rvert\right).
+$$
+
+Condition on $$Y=y$$ and use independence: given $$Y=y$$, the probability is $$\Phi(t\lvert y\rvert)$$. Averaging over $$Y$$ (the continuous law of total probability):
+
+$$
+F(t)=\int_{-\infty}^\infty\Phi(t\lvert y\rvert)\varphi(y)\,dy=2\int_0^\infty\Phi(ty)\varphi(y)\,dy.
+$$
+
+The last step uses that the integrand is even in $$y$$. This integral has no elementary antiderivative in $$y$$, but its derivative in $$t$$ is easy.
+
+#### The PDF
+
+Differentiate under the integral sign, using $$\frac{d}{dt}\Phi(ty)=y\varphi(ty)$$:
+
+$$
+f(t)=2\int_0^\infty y\varphi(ty)\varphi(y)\,dy=\frac2{2\pi}\int_0^\infty ye^{-(1+t^2)y^2/2}\,dy.
+$$
+
+Substitute $$u=(1+t^2)y^2/2$$, so $$du=(1+t^2)y\,dy$$:
+
+$$
+f(t)=\frac1\pi\cdot\frac1{1+t^2}\int_0^\infty e^{-u}\,du=\frac1{\pi(1+t^2)}.
+$$
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{f(t)=\frac1{\pi(1+t^2)},\qquad F(t)=\frac12+\frac1\pi\arctan t,\qquad t\in\mathbb R.}
+$$
+
+</div>
+
+The CDF follows by integrating the PDF, since $$\frac{d}{dt}\arctan t=\frac1{1+t^2}$$, with the constant $$\frac12$$ fixed by $$F(-\infty)=0$$. Checks: $$F(0)=\frac12$$ by symmetry, and $$F(1)=\frac34$$, so the quartiles are $$\pm1$$.
+
+#### No mean
+
+By LOTUS,
+
+$$
+E\lvert T\rvert=\frac2\pi\int_0^\infty\frac{t}{1+t^2}\,dt=\frac1\pi\Big[\ln(1+t^2)\Big]_0^\infty=\infty.
+$$
+
+So $$E(T)$$ does not exist, even though the PDF is symmetric about 0. The two half-integrals are $$+\infty$$ and $$-\infty$$, and $$\infty-\infty$$ is undefined. The variance and all higher moments are also infinite or undefined, and the MGF does not exist.
+
+The reason is the tail. $$P(\lvert T\rvert>t)\approx\frac2{\pi t}$$ for large $$t$$, which decays only like $$1/t$$. For the Normal, the tail decays like $$e^{-t^2/2}$$.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-20-cauchy-vs-normal.svg" alt="Left: Cauchy and standard Normal densities; the Cauchy is lower at the center and much higher in the tails. Right: tail probabilities on a log scale for t from 2 to 30; the Cauchy tail stays above 0.02 while the Normal tail falls below one in a trillion before t equals 8." style="display: block; width: 100%; max-width: 760px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes, illustrating Blitzstein and Hwang, <em>Introduction to Probability</em>, Example 7.1.24. Near the center the shapes look similar; in the tails the Cauchy assigns vastly more probability.</figcaption>
+</figure>
+
+<div class="example-block" markdown="1">
+<div class="ex-title">How heavy is the tail? <span class="ex-pill pill-num">Worked example</span></div>
+
+$$
+P(\lvert T\rvert>10)=1-\frac2\pi\arctan10\approx0.0635.
+$$
+
+About one Cauchy draw in 16 exceeds 10 in absolute value. For a standard Normal, $$P(\lvert Z\rvert>10)\approx1.5\times10^{-23}$$.
+
+</div>
+
+#### Supplementary: Averages do not settle
+
+If $$T_1,\ldots,T_n$$ are i.i.d. Cauchy, their average is again Cauchy, with the same distribution as a single $$T_j$$ (a result proved with tools beyond this lecture). Averaging more Cauchy observations therefore gives no more precision. The occasional enormous value keeps dragging the average away.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-20-cauchy-running-mean.svg" alt="Running averages of up to 20,000 draws on a log-scaled sample-size axis. Three Normal running averages converge to 0; three Cauchy running averages jump erratically, with sudden large shifts even after thousands of draws." style="display: block; width: 100%; max-width: 720px; height: auto; margin: 0 auto;">
+  <figcaption>Original simulation for these notes (supplementary). Normal running means converge to 0; Cauchy running means keep jumping after single extreme draws.</figcaption>
+</figure>
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** The Cauchy PDF is symmetric about 0, so its mean is 0.
+
+**Correction:** Symmetry gives a mean of 0 only when the mean exists, that is, when $$E\lvert T\rvert<\infty$$. For the Cauchy, $$E\lvert T\rvert=\infty$$. The median is 0; the mean is undefined.
+
+</div>
+
+### Part 5 — Original practice questions
+
+Try these before reading the answers.
+
+1. Let $$X,Y$$ be i.i.d. $$\mathcal N(3,4)$$. Find $$E\lvert X-Y\rvert$$.
+2. Let $$Z_1,Z_2,Z_3$$ be i.i.d. $$\mathcal N(0,1)$$. Find $$E\lvert Z_1+Z_2+Z_3\rvert$$.
+3. Survey responses fall into “agree”, “neutral”, “disagree” with probabilities $$0.5,0.3,0.2$$. For 8 independent responses, find $$P(4,3,1)$$ and $$E(\text{number neutral})$$.
+4. In question 3, find the distribution of the number of responses that are not “agree”.
+5. In question 3, given that exactly 5 responses agree, find the distribution of the number of neutral responses.
+6. Show that the multinomial coefficients sum to $$k^n$$ over all $$(n_1,\ldots,n_k)$$ with $$\sum n_j=n$$. *(Hint: set every $$p_j=1/k$$.)*
+7. For $$T\sim\operatorname{Cauchy}$$, find $$P(-1<T<\sqrt3)$$.
+8. Show that $$1/T$$ is also Cauchy when $$T$$ is Cauchy.
+9. Let $$U\sim\operatorname{Unif}(0,1)$$. Show that $$\tan\left(\pi(U-\tfrac12)\right)$$ is Cauchy. *(Supplementary: universality of the Uniform.)*
+
+### Part 6 — Practice answers
+
+#### 1. Non-standard Normals
+
+$$X-Y\sim\mathcal N(0,8)$$, so $$E\lvert X-Y\rvert=\sqrt8\sqrt{2/\pi}=4/\sqrt\pi\approx2.257$$, matching $$2\sigma/\sqrt\pi$$ with $$\sigma=2$$.
+
+#### 2. A sum of three
+
+$$Z_1+Z_2+Z_3\sim\mathcal N(0,3)$$, so the answer is $$\sqrt3\sqrt{2/\pi}=\sqrt{6/\pi}\approx1.382$$.
+
+#### 3. A survey
+
+$$P(4,3,1)=\frac{8!}{4!\,3!\,1!}(0.5)^4(0.3)^3(0.2)=280(0.0625)(0.027)(0.2)\approx0.0945$$. The neutral count is $$\operatorname{Bin}(8,0.3)$$ with mean $$2.4$$.
+
+#### 4. Lumping
+
+“Not agree” merges two categories with total probability $$0.5$$, so the count is $$\operatorname{Bin}(8,0.5)$$.
+
+#### 5. Conditioning
+
+The other 3 responses are neutral or disagree with probabilities $$0.3/0.5=0.6$$ and $$0.4$$. So the neutral count given 5 agrees is $$\operatorname{Bin}(3,0.6)$$.
+
+#### 6. Counting assignments
+
+With $$p_j=1/k$$, the PMF values are $$\frac{n!}{n_1!\cdots n_k!}k^{-n}$$ and must sum to 1. Multiplying by $$k^n$$ gives the identity. Directly: each of $$n$$ objects has $$k$$ choices.
+
+#### 7. A Cauchy interval
+
+$$F(\sqrt3)-F(-1)=\frac1\pi\left(\arctan\sqrt3-\arctan(-1)\right)=\frac1\pi\left(\frac\pi3+\frac\pi4\right)=\frac7{12}$$.
+
+#### 8. Reciprocal
+
+$$1/T=Y/X$$, the ratio of the same two i.i.d. Normals in the other order, which has the same distribution as $$X/Y$$.
+
+#### 9. Simulation by inverse CDF
+
+Solving $$u=\frac12+\frac1\pi\arctan t$$ gives $$t=\tan\left(\pi(u-\tfrac12)\right)=F^{-1}(u)$$. By universality, $$F^{-1}(U)$$ has the Cauchy CDF.
+
+### Part 7 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Difference of i.i.d. $$\mathcal N(0,1)$$ | $$Z_1-Z_2\sim\mathcal N(0,2)$$ |
+| $$E\lvert Z\rvert$$ | $$\sqrt{2/\pi}$$ |
+| Expected Normal distance | $$2/\sqrt\pi$$, or $$2\sigma/\sqrt\pi$$ |
+| Multinomial story | $$n$$ independent objects into $$k$$ categories |
+| Multinomial PMF | $$\frac{n!}{n_1!\cdots n_k!}p_1^{n_1}\cdots p_k^{n_k}$$ |
+| Marginal | $$X_j\sim\operatorname{Bin}(n,p_j)$$ |
+| Lumping | Merge categories; add their probabilities |
+| Conditioning | Remaining counts Multinomial with $$p_j/(1-p_1)$$ |
+| Cauchy definition | $$X/Y$$ for i.i.d. $$\mathcal N(0,1)$$ |
+| Cauchy PDF | $$\frac1{\pi(1+t^2)}$$ |
+| Cauchy CDF | $$\frac12+\frac1\pi\arctan t$$ |
+| Cauchy mean | Does not exist; median 0 |
+| Tail | $$P(\lvert T\rvert>t)\approx2/(\pi t)$$ |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Multinomial distribution <span class="gcat cat-defn">Definition</span></div>
+
+The joint distribution of category counts when $$n$$ objects are independently assigned to $$k$$ categories with fixed probabilities.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Multinomial coefficient <span class="gcat cat-notn">Notation</span></div>
+
+$$\frac{n!}{n_1!\cdots n_k!}$$, the number of ways to divide $$n$$ labeled objects into groups of sizes $$n_1,\ldots,n_k$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Lumping property <span class="gcat cat-prop">Property</span></div>
+
+Merging Multinomial categories yields a Multinomial whose probabilities are sums of the merged probabilities.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Cauchy distribution <span class="gcat cat-defn">Definition</span></div>
+
+The distribution of the ratio of two i.i.d. standard Normals, with PDF $$\frac1{\pi(1+t^2)}$$. It has no mean.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Heavy tail <span class="gcat cat-meas">Measure</span></div>
+
+A tail probability that decays slowly, such as like a power of $$t$$ rather than exponentially, so that extreme values remain non-negligible and moments may fail to exist.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 20</span>
+  <span class="ref-tag">Normal</span>
+  <span class="ref-tag">Multinomial</span>
+  <span class="ref-tag">Cauchy</span>
+  <span class="ref-tag">Heavy tails</span>
 </div>
 
   </div>
