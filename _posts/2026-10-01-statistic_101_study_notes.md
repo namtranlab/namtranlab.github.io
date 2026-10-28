@@ -26,6 +26,7 @@ toc:
   - name: Lecture 9 - Expectation, Indicator Random Variables, and Linearity
   - name: Lecture 10 - Expectation Continued
   - name: Lecture 11 - The Poisson Distribution
+  - name: Lecture 12 - Discrete vs. Continuous Distributions and the Uniform
 
 _styles: >
   /* ── Collapsible chapter blocks ── */
@@ -6956,6 +6957,669 @@ Data whose values are nonnegative integers, such as numbers of arrivals or occur
   <span class="ref-tag">Binomial limit</span>
   <span class="ref-tag">Birthday problem</span>
   <span class="ref-tag">Sympathetic magic</span>
+</div>
+
+  </div>
+</div>
+
+## Lecture 12 - Discrete vs. Continuous Distributions and the Uniform
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-12-toggle" onclick="toggleLecture('lecture-12')" aria-expanded="true" aria-controls="lecture-12-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 12</span>
+      <span>
+        <span class="chapter-title">Lecture 12 - Discrete vs. Continuous Distributions and the Uniform</span>
+        <span class="chapter-subtitle">PDFs, CDFs, continuous expectation, variance and standard deviation, LOTUS, and the Uniform distribution</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-12-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-12-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+A continuous random variable can take any value in an interval, and every single value has probability 0. Its distribution is described by a probability density function (PDF), whose integral over a region gives the probability of that region. The PDF is the derivative of the CDF, and the CDF is the accumulated area under the PDF. Expectation replaces sums with integrals. Variance measures spread as the average squared distance from the mean, and the standard deviation returns it to the original units. LOTUS computes $$E(g(X))$$ directly from the distribution of $$X$$. The Uniform distribution, a completely random point in an interval, is the simplest continuous model: probability is proportional to length.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$F(x)=P(X\le x)$$ | Cumulative distribution function (CDF) |
+| $$f(x)$$ | Probability density function (PDF) of a continuous random variable |
+| $$F'(x)=f(x)$$ | The PDF is the derivative of the CDF |
+| $$\int_a^bf(x)\,dx$$ | Probability that $$X$$ lies between $$a$$ and $$b$$ |
+| $$\mu=E(X)$$ | Mean of $$X$$ |
+| $$\operatorname{Var}(X)=E\left((X-\mu)^2\right)$$ | Variance of $$X$$ |
+| $$\operatorname{SD}(X)=\sqrt{\operatorname{Var}(X)}$$ | Standard deviation of $$X$$ |
+| $$EX^2$$ | Shorthand for $$E(X^2)$$, not $$(EX)^2$$ |
+| $$g(X)$$ | A function of the random variable $$X$$ |
+| $$U\sim\operatorname{Unif}(a,b)$$ | $$U$$ is Uniform on the interval $$(a,b)$$ |
+| $$\varepsilon$$ | Length of a small interval |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Contrast discrete and continuous random variables through their PMFs, PDFs, and CDFs.
+- State the two conditions for a valid PDF and find a normalizing constant.
+- Convert between a PDF and a CDF and compute interval probabilities.
+- Explain why $$P(X=x)=0$$ for a continuous random variable while $$f(x)$$ can exceed 1.
+- Compute expectations of continuous random variables.
+- Define variance and standard deviation and prove $$\operatorname{Var}(X)=E(X^2)-(EX)^2$$.
+- Use LOTUS to compute $$E(g(X))$$ in the discrete and continuous cases.
+- Derive the PDF, CDF, mean, and variance of the Uniform distribution.
+
+### Part 1 — Discrete versus continuous random variables
+
+A discrete random variable takes values in a list, finite or countably infinite, such as $$\{0,1,2,\ldots\}$$. A continuous random variable takes values in an interval of the real line, such as $$(0,1)$$ or $$(-\infty,\infty)$$. The two cases share the CDF but differ in how probability is assigned to individual values.
+
+| Object | Discrete random variable | Continuous random variable |
+|---|---|---|
+| CDF | $$F(x)=P(X\le x)$$, a step function | $$F(x)=P(X\le x)$$, continuous, differentiable except at finitely many points |
+| Mass at one point | $$P(X=x)$$ is the PMF, the jump of $$F$$ at $$x$$ | $$P(X=x)=0$$ for every $$x$$ |
+| Description | PMF, nonnegative and summing to 1 | PDF $$f=F'$$, nonnegative and integrating to 1 |
+| Probability of a set | Sum the PMF over the set | Integrate the PDF over the set |
+| Expectation | $$\sum_xxP(X=x)$$ | $$\int_{-\infty}^{\infty}xf(x)\,dx$$ |
+| LOTUS | $$\sum_xg(x)P(X=x)$$ | $$\int_{-\infty}^{\infty}g(x)f(x)\,dx$$ |
+
+The rule of translation is simple: sums become integrals and the PMF becomes the PDF.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-12-discrete-vs-continuous-cdf.svg" alt="Left: the CDF of a Binomial(4, 1/2) random variable, a step function with jumps at 0, 1, 2, 3, and 4. Right: the CDF x cubed over 8 on (0, 2), which rises smoothly from 0 to 1." style="display: block; width: 100%; max-width: 760px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes; compare Blitzstein and Hwang, <em>Introduction to Probability</em>, Figure 5.1. A discrete CDF jumps at each value in the support. A continuous CDF has no jumps.</figcaption>
+</figure>
+
+### Part 2 — Probability density functions
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Continuous random variable and PDF <span class="ex-pill pill-defn">Definition</span></div>
+
+A random variable $$X$$ is **continuous** if its CDF $$F$$ is differentiable, allowing finitely many points (such as endpoints of the support) where $$F$$ is continuous but not differentiable. Its **probability density function** is
+
+$$
+f(x)=F'(x).
+$$
+
+The **support** of $$X$$ is the set where $$f(x)>0$$.
+
+</div>
+
+#### Validity of a PDF
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{f(x)\ge0\ \text{for all }x,\qquad\int_{-\infty}^{\infty}f(x)\,dx=1.}
+$$
+
+</div>
+
+- **Nonnegativity.** The CDF never decreases, so its slope cannot be negative.
+- **Total area 1.** The integral over the whole line is the probability that $$X$$ takes some real value.
+
+Conversely, every function with these two properties is the PDF of some continuous random variable.
+
+#### Points have probability 0
+
+For a continuous $$X$$ and any number $$a$$,
+
+$$
+P(X=a)\le P(a-\varepsilon<X\le a)=F(a)-F(a-\varepsilon)\to0\quad\text{as }\varepsilon\to0,
+$$
+
+because $$F$$ is continuous. Hence $$P(X=a)=0$$. Two consequences follow:
+
+1. **Endpoints do not matter.** $$P(a<X<b)=P(a\le X\le b)=P(a<X\le b)=P(a\le X<b)$$. For discrete random variables they do matter.
+2. **Probability 0 does not mean impossible.** Every value is possible, yet each individual value has probability 0. Positive probability belongs to intervals, not points.
+
+#### What the density measures
+
+The value $$f(x)$$ is not a probability. It is probability per unit length near $$x$$. For a short interval of length $$\varepsilon$$ centered at $$x$$, where $$f$$ is roughly constant,
+
+$$
+P\left(x-\tfrac{\varepsilon}{2}<X<x+\tfrac{\varepsilon}{2}\right)=\int_{x-\varepsilon/2}^{x+\varepsilon/2}f(t)\,dt\approx f(x)\,\varepsilon.
+$$
+
+If $$X$$ is measured in centimeters, $$f(x)$$ has units of $$\text{cm}^{-1}$$; multiplying by the length $$dx$$ in an integral returns a dimensionless probability. A density can exceed 1 as long as the region where it is large is short. For example, the $$\operatorname{Unif}(0,1/2)$$ density equals 2 on its support.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** $$f(x)$$ is the probability that $$X=x$$, so it must lie between 0 and 1.
+
+**Correction:** For a continuous random variable, $$P(X=x)=0$$. The density $$f(x)$$ is a rate: probability per unit length. It can be larger than 1. Only areas under $$f$$ are probabilities.
+
+</div>
+
+### Part 3 — From PDF to CDF and back
+
+Because $$f=F'$$ and $$F(-\infty)=0$$, the fundamental theorem of calculus gives
+
+$$
+F(x)=\int_{-\infty}^{x}f(t)\,dt.
+$$
+
+The CDF is the area under the PDF to the left of $$x$$. The variable $$t$$ is a dummy variable, renamed to avoid a clash with the upper limit $$x$$. For an interval,
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{P(a<X\le b)=F(b)-F(a)=\int_a^bf(x)\,dx.}
+$$
+
+</div>
+
+The same probability appears as an **area** under the PDF and as a **rise** in the CDF.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Normalizing a density and computing probabilities <span class="ex-pill pill-ex">Worked example</span></div>
+
+Let $$f(x)=cx^2$$ for $$0<x<2$$ and $$f(x)=0$$ otherwise. Find $$c$$, the CDF, and $$P(0.5<X<1.5)$$.
+
+**Step 1: Normalize.** Nonnegativity holds for $$c>0$$. The total area must be 1:
+
+$$
+\int_0^2cx^2\,dx=c\frac{x^3}{3}\Big|_0^2=\frac{8c}{3}=1\implies c=\frac38.
+$$
+
+**Step 2: CDF.** For $$0<x<2$$,
+
+$$
+F(x)=\int_0^x\frac38t^2\,dt=\frac{x^3}{8},
+$$
+
+with $$F(x)=0$$ for $$x\le0$$ and $$F(x)=1$$ for $$x\ge2$$. Check: $$F'(x)=3x^2/8=f(x)$$.
+
+**Step 3: Probability.**
+
+$$
+P(0.5<X<1.5)=F(1.5)-F(0.5)=\frac{3.375-0.125}{8}=\frac{13}{32}\approx0.406.
+$$
+
+**Observation.** The density at $$x=2$$ is $$f(2)=3/2>1$$, which is allowed.
+
+<div class="ex-lesson"><strong>Core idea:</strong> Find the constant from total area 1, integrate once to get the CDF, then read off any interval probability as a difference of CDF values.</div>
+</div>
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-12-pdf-area-cdf-height.svg" alt="Left: the PDF 3 x squared over 8 on (0, 2), with the area between 0.5 and 1.5 shaded and labelled 13 over 32; a dashed line at height 1 shows the density exceeds 1 near 2. Right: the CDF x cubed over 8, with an arrow showing the rise from F(0.5) to F(1.5)." style="display: block; width: 100%; max-width: 760px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes, in the style of Blitzstein and Hwang, <em>Introduction to Probability</em>, Figures 5.2–5.3. The shaded area under the PDF equals the rise of the CDF.</figcaption>
+</figure>
+
+### Part 4 — Expectation of a continuous random variable
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Continuous expectation <span class="ex-pill pill-defn">Definition</span></div>
+
+For a continuous random variable $$X$$ with PDF $$f$$,
+
+$$
+E(X)=\int_{-\infty}^{\infty}xf(x)\,dx,
+$$
+
+provided the integral converges absolutely. In practice, integrate over the support only.
+
+</div>
+
+The integrand weights each value $$x$$ by the probability $$f(x)\,dx$$ of a short interval near it, exactly as $$xP(X=x)$$ does in the discrete case. The mean is the balancing point of the PDF. Linearity of expectation holds for continuous random variables as well.
+
+For the density $$f(x)=3x^2/8$$ on $$(0,2)$$:
+
+$$
+E(X)=\int_0^2x\cdot\frac38x^2\,dx=\frac38\cdot\frac{x^4}{4}\Big|_0^2=\frac38\cdot4=\frac32.
+$$
+
+The mean lies to the right of the midpoint 1, because the density puts more weight near 2.
+
+### Part 5 — Variance and standard deviation
+
+The mean locates a distribution but says nothing about its spread. Two random variables can share a mean and differ greatly in how far they typically fall from it.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Variance and standard deviation <span class="ex-pill pill-defn">Definition</span></div>
+
+Let $$\mu=E(X)$$. The **variance** of $$X$$ is
+
+$$
+\operatorname{Var}(X)=E\left((X-\mu)^2\right),
+$$
+
+and the **standard deviation** is $$\operatorname{SD}(X)=\sqrt{\operatorname{Var}(X)}$$.
+
+</div>
+
+Each part of the definition has a reason:
+
+1. **Why not $$E(X-\mu)$$?** By linearity it always equals $$\mu-\mu=0$$. Positive and negative deviations cancel.
+2. **Why square?** Squaring makes every deviation count positively. The alternative $$E\lvert X-\mu\rvert$$ also does this, but the absolute value is not differentiable at 0 and lacks the algebraic and geometric properties of squares (expansion, the Pythagorean structure behind adding variances).
+3. **Why take a square root?** Variance is in squared units, such as square dollars. The standard deviation is back in the units of $$X$$.
+
+#### The computational formula
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{\operatorname{Var}(X)=E(X^2)-(EX)^2.}
+$$
+
+</div>
+
+**Proof.** Expand the square and use linearity, treating $$\mu$$ as a constant:
+
+$$
+\begin{aligned}
+\operatorname{Var}(X)
+&=E\left(X^2-2\mu X+\mu^2\right)\\
+&=E(X^2)-2\mu E(X)+\mu^2\\
+&=E(X^2)-2\mu^2+\mu^2=E(X^2)-\mu^2.
+\end{aligned}
+$$
+
+$$\blacksquare$$
+
+Since $$\operatorname{Var}(X)\ge0$$, the formula also shows $$E(X^2)\ge(EX)^2$$. The notation $$EX^2$$ means $$E(X^2)$$: square first, then average.
+
+#### Properties of variance
+
+For constants $$a$$ and $$c$$:
+
+| Property | Reason |
+|---|---|
+| $$\operatorname{Var}(X+c)=\operatorname{Var}(X)$$ | Shifting moves the mean by the same amount, leaving every deviation unchanged |
+| $$\operatorname{Var}(aX)=a^2\operatorname{Var}(X)$$ | Every deviation is multiplied by $$a$$, so squared deviations are multiplied by $$a^2$$ |
+| $$\operatorname{Var}(X)\ge0$$, with equality only if $$X$$ is constant with probability 1 | Average of a nonnegative quantity |
+| $$\operatorname{Var}(X+Y)=\operatorname{Var}(X)+\operatorname{Var}(Y)$$ if $$X,Y$$ independent | Proved later; fails in general without independence |
+
+Variance is not linear. For example, $$\operatorname{Var}(X+X)=\operatorname{Var}(2X)=4\operatorname{Var}(X)$$, not $$2\operatorname{Var}(X)$$, unless $$\operatorname{Var}(X)=0$$.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Variance of a fair die and of the cubic density <span class="ex-pill pill-num">Worked example</span></div>
+
+**Fair die.** Let $$X$$ be uniform on $$\{1,\ldots,6\}$$. Then $$E(X)=3.5$$ and
+
+$$
+E(X^2)=\frac{1^2+2^2+\cdots+6^2}{6}=\frac{91}{6}.
+$$
+
+So $$\operatorname{Var}(X)=\frac{91}{6}-\frac{49}{4}=\frac{182-147}{12}=\frac{35}{12}\approx2.917$$ and $$\operatorname{SD}(X)\approx1.708$$.
+
+**Continuous density.** For $$f(x)=3x^2/8$$ on $$(0,2)$$, with $$E(X)=3/2$$,
+
+$$
+E(X^2)=\int_0^2x^2\cdot\frac38x^2\,dx=\frac38\cdot\frac{32}{5}=\frac{12}{5},
+\qquad
+\operatorname{Var}(X)=\frac{12}{5}-\frac94=\frac{3}{20}.
+$$
+
+So $$\operatorname{SD}(X)=\sqrt{0.15}\approx0.387$$.
+
+<div class="ex-lesson">The same two-step recipe applies in both cases: compute $$E(X)$$ and $$E(X^2)$$, then subtract.</div>
+</div>
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** $$E(X^2)=(EX)^2$$, so the variance formula is always 0.
+
+**Correction:** Squaring is nonlinear. $$E(X^2)$$ averages the squares, while $$(EX)^2$$ squares the average. Their difference is exactly the variance, which is positive unless $$X$$ is constant.
+
+</div>
+
+### Part 6 — LOTUS: The law of the unconscious statistician
+
+Computing $$E(X^2)$$ raises a question. $$X^2$$ is a new random variable, so the definition of expectation asks for the distribution of $$X^2$$. LOTUS avoids that step.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">LOTUS <span class="ex-pill pill-thm">Theorem</span></div>
+
+For a function $$g:\mathbb R\to\mathbb R$$,
+
+$$
+E(g(X))=\sum_xg(x)P(X=x)\quad\text{(discrete)},\qquad
+E(g(X))=\int_{-\infty}^{\infty}g(x)f(x)\,dx\quad\text{(continuous)}.
+$$
+
+</div>
+
+The weights stay those of $$X$$; only the values change from $$x$$ to $$g(x)$$.
+
+**Why it holds in the discrete case.** Group the values $$x$$ by the value $$y=g(x)$$ they produce. Then $$P(g(X)=y)=\sum_{x:\,g(x)=y}P(X=x)$$, so
+
+$$
+\sum_yyP(g(X)=y)=\sum_y\sum_{x:\,g(x)=y}g(x)P(X=x)=\sum_xg(x)P(X=x).
+$$
+
+Grouping or not grouping gives the same total. The continuous version replaces sums with integrals; its proof is deferred in the textbook.
+
+The name refers to how easily it is used without thinking: it looks like substituting $$g(x)$$ for $$x$$ in the definition, which is correct, but it is a theorem, not a definition.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** $$E(g(X))=g(E(X))$$, so LOTUS is unnecessary.
+
+**Correction:** This equality holds for linear $$g$$ but generally fails otherwise. For example, $$E(X^2)\ne(EX)^2$$ unless the variance is 0. LOTUS applies $$g$$ to each value before averaging.
+
+</div>
+
+### Part 7 — The Uniform distribution
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Uniform distribution <span class="ex-pill pill-defn">Definition</span></div>
+
+A continuous random variable $$U$$ is **Uniform on $$(a,b)$$**, written $$U\sim\operatorname{Unif}(a,b)$$, if its PDF is constant on $$(a,b)$$ and 0 elsewhere:
+
+$$
+f(x)=\begin{cases}\dfrac1{b-a}, & a<x<b,\\[4pt] 0, & \text{otherwise.}\end{cases}
+$$
+
+</div>
+
+**Why the constant is $$1/(b-a)$$.** Constant density $$c$$ on an interval of length $$b-a$$ gives total area $$c(b-a)$$, which must equal 1.
+
+**CDF.** Integrating the constant density gives a linear ramp:
+
+$$
+F(x)=\begin{cases}0, & x\le a,\\[2pt] \dfrac{x-a}{b-a}, & a<x<b,\\[6pt] 1, & x\ge b.\end{cases}
+$$
+
+The **standard Uniform** $$\operatorname{Unif}(0,1)$$ has $$f(x)=1$$ and $$F(x)=x$$ on $$(0,1)$$.
+
+#### Probability is proportional to length
+
+For a subinterval $$(c,d)\subseteq(a,b)$$,
+
+$$
+P(c<U<d)=\frac{d-c}{b-a}.
+$$
+
+Only the length of the subinterval matters, not its location. This is what “completely random point” means, and among continuous distributions it characterizes the Uniform.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-12-uniform-pdf-cdf.svg" alt="Left: the Uniform(2, 6) PDF, a rectangle of height 1/4 between 2 and 6, with the region from 3 to 4.5 shaded. Right: the Uniform(2, 6) CDF, zero up to 2, rising linearly to 1 at 6, and constant afterwards." style="display: block; width: 100%; max-width: 760px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes; compare Blitzstein and Hwang, <em>Introduction to Probability</em>, Figure 5.5. A Uniform PDF is flat and its CDF is a linear ramp.</figcaption>
+</figure>
+
+### Part 8 — Mean and variance of the Uniform
+
+#### Standard Uniform
+
+Let $$U\sim\operatorname{Unif}(0,1)$$. Using the definition and LOTUS with $$f(x)=1$$ on $$(0,1)$$:
+
+$$
+E(U)=\int_0^1x\,dx=\frac12,\qquad
+E(U^2)=\int_0^1x^2\,dx=\frac13,
+$$
+
+so
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{\operatorname{Var}(U)=\frac13-\frac14=\frac1{12},\qquad\operatorname{SD}(U)=\frac1{\sqrt{12}}\approx0.289.}
+$$
+
+</div>
+
+#### General Uniform on $$(a,b)$$
+
+Direct integration gives
+
+$$
+E(U)=\int_a^b\frac{x}{b-a}\,dx=\frac{b^2-a^2}{2(b-a)}=\frac{a+b}{2},
+$$
+
+the midpoint of the interval, as symmetry requires. By LOTUS,
+
+$$
+E(U^2)=\int_a^b\frac{x^2}{b-a}\,dx=\frac{b^3-a^3}{3(b-a)}=\frac{a^2+ab+b^2}{3}.
+$$
+
+Therefore
+
+$$
+\operatorname{Var}(U)=\frac{a^2+ab+b^2}{3}-\frac{(a+b)^2}{4}
+=\frac{4a^2+4ab+4b^2-3a^2-6ab-3b^2}{12}
+=\frac{(b-a)^2}{12}.
+$$
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{U\sim\operatorname{Unif}(a,b)\implies E(U)=\frac{a+b}{2},\qquad\operatorname{Var}(U)=\frac{(b-a)^2}{12}.}
+$$
+
+</div>
+
+The variance depends only on the length of the interval, consistent with the fact that shifting does not change spread.
+
+#### Supplementary: The location-scale shortcut
+
+Textbook Section 5.2 obtains the general result from the standard case. If $$U\sim\operatorname{Unif}(0,1)$$, then $$a+(b-a)U\sim\operatorname{Unif}(a,b)$$: scaling by $$b-a$$ stretches the interval to length $$b-a$$ and adding $$a$$ shifts it. Then
+
+$$
+E(a+(b-a)U)=a+\frac{b-a}2=\frac{a+b}2,\qquad
+\operatorname{Var}(a+(b-a)U)=(b-a)^2\cdot\frac1{12}.
+$$
+
+This avoids the algebra above and uses only the variance properties in Part 5. The trick does not work for nonlinear transformations: $$U^2$$ is not Uniform on $$(0,1)$$.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">A Uniform waiting time <span class="ex-pill pill-ex">Worked example</span></div>
+
+A shuttle departs at a time Uniform between 2 and 6 minutes after you reach the stop, so the wait is $$W\sim\operatorname{Unif}(2,6)$$.
+
+**Interval probability.** The interval $$(3,4.5)$$ has length 1.5 out of 4:
+
+$$
+P(3<W<4.5)=\frac{1.5}{4}=0.375.
+$$
+
+**Mean and spread.**
+
+$$
+E(W)=\frac{2+6}{2}=4,\qquad\operatorname{Var}(W)=\frac{4^2}{12}=\frac43,\qquad\operatorname{SD}(W)=\frac{2}{\sqrt3}\approx1.155.
+$$
+
+**A LOTUS calculation.** The expected squared wait is
+
+$$
+E(W^2)=\operatorname{Var}(W)+(EW)^2=\frac43+16=\frac{52}{3}\approx17.33,
+$$
+
+which differs from $$(EW)^2=16$$.
+
+<div class="ex-lesson"><strong>Core idea:</strong> For a Uniform, probabilities are length ratios; the mean is the midpoint and the variance is the squared length over 12.</div>
+</div>
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** Since every point of $$(a,b)$$ is equally likely, $$P(U=x)=1/(b-a)$$.
+
+**Correction:** $$1/(b-a)$$ is the density, not a probability, and $$P(U=x)=0$$. “Equally likely” for a continuous Uniform means that intervals of equal length have equal probability.
+
+</div>
+
+### Part 9 — Original practice questions
+
+Try these before reading the answers.
+
+1. Let $$f(x)=c(1-x^2)$$ for $$-1<x<1$$ and $$0$$ otherwise. Find $$c$$, $$P(X>1/2)$$, $$E(X)$$, and $$\operatorname{Var}(X)$$.
+2. Is $$f(x)=2$$ for $$0<x<1/2$$ (and 0 otherwise) a valid PDF? What distribution is it?
+3. A random variable has CDF $$F(x)=1-1/x^2$$ for $$x\ge1$$ and $$0$$ for $$x<1$$. Find its PDF, its mean, and $$E(X^2)$$. What does this say about its variance?
+4. If $$\operatorname{Var}(X)=4$$, find $$\operatorname{Var}(3X+2)$$ and $$\operatorname{SD}(3X+2)$$.
+5. Let $$X\sim\operatorname{Bern}(p)$$. Find $$\operatorname{Var}(X)$$ and the value of $$p$$ that maximizes it.
+6. Let $$U\sim\operatorname{Unif}(0,1)$$. Use LOTUS to find $$E(\sqrt U)$$ and $$E(U^3)$$. Compare $$E(\sqrt U)$$ with $$\sqrt{E(U)}$$.
+7. Let $$U\sim\operatorname{Unif}(0,1)$$. Find $$P(0.2<U<0.5\mid U<0.6)$$. *(Supplementary: conditional Uniform.)*
+8. Explain why $$P(X=0.5)=0$$ for $$X\sim\operatorname{Unif}(0,1)$$ does not make the value $$0.5$$ impossible.
+9. Show that $$\operatorname{Var}(X+c)=\operatorname{Var}(X)$$ from the definition of variance.
+
+### Part 10 — Practice answers
+
+#### 1. A parabolic density
+
+Normalize: $$\int_{-1}^1(1-x^2)\,dx=2-\frac23=\frac43$$, so $$c=\frac34$$. Then
+
+$$
+P(X>\tfrac12)=\frac34\int_{1/2}^1(1-x^2)\,dx=\frac34\left[\left(1-\frac13\right)-\left(\frac12-\frac1{24}\right)\right]=\frac34\cdot\frac5{24}=\frac5{32}.
+$$
+
+The density is symmetric about 0, so $$E(X)=0$$. By LOTUS,
+
+$$
+E(X^2)=\frac34\int_{-1}^1(x^2-x^4)\,dx=\frac34\left(\frac23-\frac25\right)=\frac15,
+$$
+
+so $$\operatorname{Var}(X)=\frac15$$.
+
+#### 2. A density larger than 1
+
+Yes. It is nonnegative and its area is $$2\times\frac12=1$$. It is the $$\operatorname{Unif}(0,1/2)$$ PDF. The density value 2 is not a probability.
+
+#### 3. A heavy-tailed variable
+
+Differentiate: $$f(x)=2x^{-3}$$ for $$x>1$$. Then
+
+$$
+E(X)=\int_1^\infty x\cdot2x^{-3}\,dx=\int_1^\infty2x^{-2}\,dx=2,
+\qquad
+E(X^2)=\int_1^\infty2x^{-1}\,dx=\infty.
+$$
+
+The mean is finite but the second moment diverges, so the variance is infinite. A finite mean does not guarantee a finite variance.
+
+#### 4. Linear transformation
+
+$$\operatorname{Var}(3X+2)=9\cdot4=36$$ and $$\operatorname{SD}(3X+2)=6$$. The shift by 2 has no effect; the scale factor 3 is squared in the variance.
+
+#### 5. Bernoulli variance
+
+$$X^2=X$$ because $$X\in\{0,1\}$$, so $$E(X^2)=p$$ and $$\operatorname{Var}(X)=p-p^2=p(1-p)$$. This is maximized at $$p=1/2$$, where it equals $$1/4$$.
+
+#### 6. LOTUS with the standard Uniform
+
+$$
+E(\sqrt U)=\int_0^1x^{1/2}\,dx=\frac23,\qquad E(U^3)=\int_0^1x^3\,dx=\frac14.
+$$
+
+Here $$\sqrt{E(U)}=\sqrt{1/2}\approx0.707>2/3$$. Applying a nonlinear function before or after averaging gives different results.
+
+#### 7. Conditional Uniform
+
+$$
+P(0.2<U<0.5\mid U<0.6)=\frac{P(0.2<U<0.5)}{P(U<0.6)}=\frac{0.3}{0.6}=\frac12.
+$$
+
+Given $$U<0.6$$, the variable is $$\operatorname{Unif}(0,0.6)$$, and probability is still proportional to length.
+
+#### 8. Probability zero versus impossible
+
+Every outcome of $$U$$ is some specific number, and each specific number has probability 0. An event of probability 0 can still occur. Impossible events are those outside the sample space or support; $$0.5$$ is inside $$(0,1)$$.
+
+#### 9. Shift invariance
+
+$$E(X+c)=\mu+c$$, so $$(X+c)-E(X+c)=X-\mu$$. Hence $$\operatorname{Var}(X+c)=E\left((X-\mu)^2\right)=\operatorname{Var}(X)$$.
+
+### Part 11 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Continuous random variable | Differentiable CDF; $$P(X=x)=0$$ for every $$x$$ |
+| PDF | $$f=F'$$; probability per unit length |
+| Valid PDF | $$f\ge0$$ and $$\int f=1$$ |
+| PDF to CDF | $$F(x)=\int_{-\infty}^xf(t)\,dt$$ |
+| Interval probability | $$P(a<X\le b)=F(b)-F(a)=\int_a^bf$$ |
+| Endpoints | Irrelevant for continuous, relevant for discrete |
+| Density above 1 | Allowed; only areas are probabilities |
+| Continuous mean | $$E(X)=\int xf(x)\,dx$$ |
+| Variance | $$E((X-\mu)^2)=E(X^2)-(EX)^2$$ |
+| Standard deviation | $$\sqrt{\operatorname{Var}(X)}$$, in the units of $$X$$ |
+| Shift and scale | $$\operatorname{Var}(aX+c)=a^2\operatorname{Var}(X)$$ |
+| LOTUS | $$E(g(X))=\int g(x)f(x)\,dx$$ or $$\sum g(x)P(X=x)$$ |
+| Nonlinear $$g$$ | Generally $$E(g(X))\ne g(EX)$$ |
+| Uniform PDF | $$1/(b-a)$$ on $$(a,b)$$ |
+| Uniform CDF | $$(x-a)/(b-a)$$ on $$(a,b)$$ |
+| Uniform probability | Length of interval divided by $$b-a$$ |
+| Uniform mean and variance | $$(a+b)/2$$ and $$(b-a)^2/12$$ |
+| Standard Uniform | Mean $$1/2$$, variance $$1/12$$ |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Continuous random variable <span class="gcat cat-defn">Definition</span></div>
+
+A random variable whose CDF is differentiable, except possibly at finitely many points where it is still continuous. It assigns probability 0 to each single value.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Probability density function (PDF) <span class="gcat cat-defn">Definition</span></div>
+
+The derivative $$f=F'$$ of the CDF of a continuous random variable. Integrating it over a region gives the probability of that region.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Support <span class="gcat cat-defn">Definition</span></div>
+
+The set of values where the PMF or PDF is positive.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Variance <span class="gcat cat-meas">Measure</span></div>
+
+The expected squared deviation from the mean, $$E((X-\mu)^2)$$, equivalently $$E(X^2)-(EX)^2$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Standard deviation <span class="gcat cat-meas">Measure</span></div>
+
+The square root of the variance, measuring spread in the units of the random variable.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">$$EX^2$$ <span class="gcat cat-notn">Notation</span></div>
+
+The expectation of $$X^2$$, also called the second moment. It is not $$(EX)^2$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">LOTUS <span class="gcat cat-thm">Theorem</span></div>
+
+The law of the unconscious statistician: $$E(g(X))$$ is computed by weighting $$g(x)$$ with the PMF or PDF of $$X$$, without finding the distribution of $$g(X)$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Uniform distribution <span class="gcat cat-defn">Definition</span></div>
+
+The distribution of a completely random point in an interval $$(a,b)$$, with constant density $$1/(b-a)$$, so that probability is proportional to length.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Location-scale transformation <span class="gcat cat-prop">Technique</span></div>
+
+A transformation $$Y=\sigma X+\mu$$ with $$\sigma>0$$, which shifts and rescales a distribution. It preserves the Uniform family.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 12</span>
+  <span class="ref-tag">Continuous random variables</span>
+  <span class="ref-tag">PDF</span>
+  <span class="ref-tag">Variance</span>
+  <span class="ref-tag">LOTUS</span>
+  <span class="ref-tag">Uniform</span>
 </div>
 
   </div>
