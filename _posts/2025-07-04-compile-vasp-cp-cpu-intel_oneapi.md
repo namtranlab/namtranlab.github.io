@@ -6,7 +6,7 @@ tags: Tutorial
 giscus_comments: true
 date: 2025-05-4
 featured: true
-thumbnail: https://cmp.univie.ac.at/fileadmin/_processed_/csm_vasp_logo_3956c6ee63.png
+thumbnail: https://github.com/yuanyue-liu-group/CP-VASP/blob/main/CP-VASP.jpg
 images:
   lightbox2: true
   photoswipe: true
