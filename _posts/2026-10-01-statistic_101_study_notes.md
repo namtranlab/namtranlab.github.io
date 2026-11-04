@@ -781,11 +781,6 @@ A five-card hand with three cards of one rank and two cards of a different rank.
   </div>
 </div>
 
-<!-- Future lectures: add a matching entry to the front-matter toc, then append
-     a new H2 heading and chapter-block here. Use "Lecture 2 - Topic" (and so on),
-     unique lecture-2-toggle/body/arrow IDs, and toggleLecture('lecture-2').
-     Keep the shared styles and toggleLecture function defined only once. -->
-
 
 ## Lecture 2 - Story Proofs and Axioms of Probability
 
