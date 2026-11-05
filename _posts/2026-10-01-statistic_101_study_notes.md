@@ -35,6 +35,20 @@ toc:
   - name: Lecture 18 - MGFs Continued and Joint Distributions
   - name: Lecture 19 - Joint, Conditional, and Marginal Distributions
   - name: Lecture 20 - Multinomial and Cauchy
+  - name: Lecture 21 - Covariance and Correlation
+  - name: Lecture 22 - Transformations and Convolutions
+  - name: Lecture 23 - Beta Distribution
+  - name: Lecture 24 - Gamma Distribution and Poisson Process
+  - name: Lecture 25 - Order Statistics and Conditional Expectation
+  - name: Lecture 26 - Conditional Expectation Continued
+  - name: Lecture 27 - Conditional Expectation Given a Random Variable
+  - name: Lecture 28 - Inequalities
+  - name: Lecture 29 - Law of Large Numbers and Central Limit Theorem
+  - name: Lecture 30 - Chi-Square, Student-t, and Multivariate Normal
+  - name: Lecture 31 - Markov Chains
+  - name: Lecture 32 - Markov Chains Continued
+  - name: Lecture 33 - Markov Chains Continued Further
+  - name: Lecture 34 - A Look Ahead
 
 _styles: >
   /* ── Collapsible chapter blocks ── */
@@ -188,7 +202,7 @@ Frederick Mosteller and David Wallace investigated whether Alexander Hamilton or
 
 Games involving dice, coins, and cards have clearly defined outcomes, making them useful for developing probability models. In their 1654 correspondence, Pierre de Fermat and Blaise Pascal explored games of chance, including how to divide a prize fairly when a contest stops before either player wins. Their letters helped establish the foundations of modern probability.
 
-For a simplified example, suppose Alice and Bob have equal chances of winning each independent round. The first to win three rounds receives a $100 prize, but play stops with Alice leading two wins to one. Alice needs one more win; Bob needs two.
+**Supplementary illustration:** For a simplified example, suppose Alice and Bob have equal chances of winning each independent round. The first to win three rounds receives a $100 prize, but play stops with Alice leading two wins to one. Alice needs one more win; Bob needs two.
 
 Imagine two further rounds, including an unused round if Alice wins immediately. The four equally likely sequences of round winners are:
 
@@ -2297,7 +2311,8 @@ After studying these notes, you should be able to:
 - Explain why independence also holds when either or both events are complemented.
 - Distinguish pairwise independence from mutual independence.
 - Count outcomes with exactly a specified number of sixes and solve the Newton–Pepys problem.
-- Interpret conditional probability as restriction and renormalization.
+- Interpret conditional probability as restriction and renormalization, and as a long-run frequency among repetitions where the evidence occurred.
+- Apply the chain rule to the intersection of $$n$$ events in a convenient order.
 - Calculate conditional probabilities with the correct conditioning event in the denominator.
 - Derive the multiplication rule for probabilities and Bayes’ rule.
 - Distinguish a likelihood from a posterior probability and explain why reversing the conditioning bar generally changes the answer.
@@ -2512,7 +2527,11 @@ The six-dice game has the largest winning probability, about 66.51%, compared wi
 
 </div>
 
-#### Supplementary clarification: Fairness matters to the ranking
+#### History: Pepys, Newton, and a wrong intuition
+
+In 1693 the diarist Samuel Pepys asked Isaac Newton this question. Pepys strongly believed that game $$C$$ was the most likely, but could not support it with mathematics. Newton's calculation showed that game $$A$$ is the most likely. Newton computed the probabilities correctly, but the intuitive explanation he offered alongside the calculation was wrong.
+
+The statistician Stephen Stigler gave a neat way to see that Newton's intuitive argument had to be wrong, even without following it in detail. Nothing in Newton's argument used the fact that the dice are fair. An argument that never uses the probability of a six would give the same ranking for any die. But the ranking does depend on that probability.
 
 Suppose rolls remain independent but each has probability $$p$$ of showing six. The exactly-$$r$$ formula becomes:
 
@@ -2520,7 +2539,9 @@ $$
 \binom nr p^r(1-p)^{n-r}.
 $$
 
-For $$p=1/2$$, the winning probabilities are approximately $$0.984375$$, $$0.996826$$, and $$0.999344$$ for the three games. Their ordering reverses. Thus an argument claiming the fair-dice ordering without using the value $$p=1/6$$ cannot establish the general result.
+For $$p=1/2$$, the winning probabilities are approximately $$0.984375$$, $$0.996826$$, and $$0.999344$$ for the three games. Their ordering reverses: now $$C$$ is the most likely. Thus an argument claiming the fair-dice ordering without using the value $$p=1/6$$ cannot establish the result.
+
+**Core idea:** Even Newton's intuition failed on this problem, while the calculation succeeded. A check that an argument actually uses every assumption the answer depends on can expose a flawed intuition.
 
 ### Part 4 — Conditional probability: restrict and renormalize
 
@@ -2553,6 +2574,26 @@ P(A\mid B)=\frac{1/9}{4/9}=\frac14.
 $$
 
 With unequal outcome probabilities, sum the masses instead of simply counting pebbles. Conditioning preserves the relative probabilities of the surviving outcomes.
+
+#### A second intuition: long-run frequencies
+
+Instead of performing the experiment once, imagine repeating it many times under the same conditions. In this frequentist view, a probability is the long-run fraction of repetitions in which an event occurs. For example, if a coin lands heads 612 times in 1000 tosses, $$P(\text{Heads})$$ is about $$612/1000$$.
+
+To find $$P(A\mid B)$$ from this point of view:
+
+1. List the outcomes of many repetitions.
+2. Circle the repetitions in which $$B$$ occurred, and ignore the rest.
+3. Among the circled repetitions, find the fraction in which $$A$$ also occurred.
+
+That fraction is approximately
+
+$$
+\frac{\#\{\text{repetitions with }A\text{ and }B\}}{\#\{\text{repetitions with }B\}}
+=\frac{\#(A\cap B)/\#\text{total}}{\#B/\#\text{total}}
+\approx\frac{P(A\cap B)}{P(B)}.
+$$
+
+Restricting attention to the repetitions where $$B$$ happened plays the role of removing pebbles outside $$B$$. Dividing by the number of circled repetitions plays the role of renormalizing.
 
 #### Supplementary example: A die result known to be even
 
@@ -2650,15 +2691,30 @@ With replacement and independent draws, the second factor would be $$13/52$$, gi
 
 **Core idea:** The first result changes the composition of the remaining deck. The multiplication rule accounts for that change through a conditional probability.
 
-#### Supplementary extension: Three events
+#### The chain rule for $$n$$ events
 
-Repeated application gives:
+Applying the two-event rule repeatedly gives the probability that all of $$A_1,\ldots,A_n$$ occur:
+
+<div class="result-box" markdown="1">
 
 $$
-P(A\cap B\cap C)=P(A)P(B\mid A)P(C\mid A\cap B),
+\boxed{P(A_1\cap\cdots\cap A_n)
+=P(A_1)\,P(A_2\mid A_1)\,P(A_3\mid A_1,A_2)\cdots P(A_n\mid A_1,\ldots,A_{n-1}),}
 $$
 
-provided $$P(A)>0$$ and $$P(A\cap B)>0$$. The left-hand side is unchanged by reordering the events, but the conditioning events on the right must change with the chosen order.
+provided $$P(A_1\cap\cdots\cap A_{n-1})>0$$.
+
+</div>
+
+Each new factor conditions on all the events already included. For example, with three events:
+
+$$
+P(A\cap B\cap C)=P(A)P(B\mid A)P(C\mid A\cap B).
+$$
+
+The events can be introduced in any order, since the intersection does not depend on the order. There are $$n!$$ orders, so this is really $$n!$$ versions of the theorem. The left side stays the same, but the conditioning events on the right change with the order chosen. For some problems one order gives easy factors while another gives hard ones, so it is worth choosing the order deliberately.
+
+If the events are independent, every conditional factor equals the unconditional probability, and the rule reduces to $$P(A_1)P(A_2)\cdots P(A_n)$$.
 
 ### Part 7 — Bayes’ rule: reversing the direction of conditioning
 
@@ -2894,11 +2950,14 @@ Given that the younger child is a boy, only $$BB,GB$$ remain. The probability of
 | Mutual independence | The intersection product rule must hold for every subset of events |
 | Exactly $$r$$ sixes in $$n$$ fair independent rolls | $$\binom nr5^{n-r}/6^n$$ |
 | Newton–Pepys ranking | One six in six rolls is more likely than two in twelve or three in eighteen |
+| Stigler's check | Newton's intuition ignored fairness, but with $$p=1/2$$ the ranking reverses |
 | Conditional probability | $$P(A\mid B)=P(A\cap B)/P(B)$$, with $$P(B)>0$$ |
 | Conditioning intuition | Remove outcomes outside the evidence, then renormalize |
+| Frequentist intuition | Among many repetitions where $$B$$ occurred, the fraction where $$A$$ occurred |
 | Conditional complement | $$P(A^c\mid B)=1-P(A\mid B)$$ |
 | Independence as no update | For $$P(B)>0$$, $$P(A\mid B)=P(A)$$ |
 | Multiplication rule | $$P(A\cap B)=P(B)P(A\mid B)$$ |
+| Chain rule | $$P(A_1\cdots A_n)=P(A_1)P(A_2\mid A_1)\cdots P(A_n\mid A_1,\ldots,A_{n-1})$$, in any of $$n!$$ orders |
 | Bayes’ rule | $$P(A\mid B)=P(B\mid A)P(A)/P(B)$$ |
 | Direction of conditioning | $$P(A\mid B)$$ and $$P(B\mid A)$$ generally differ |
 
@@ -3029,9 +3088,10 @@ After studying these notes, you should be able to:
 - Define a partition and derive the law of total probability from disjoint additivity.
 - Combine Bayes’ rule with a partition to calculate posterior probabilities.
 - Explain why a test's sensitivity is different from the probability of a condition given a positive result.
-- Keep background conditioning consistent throughout a calculation.
+- Identify the prosecutor's fallacy and the prior–posterior confusion, using the Sally Clark case.
+- Keep background conditioning consistent throughout a calculation, and explain why sequential Bayesian updating is coherent.
 - Define conditional independence and distinguish it from unconditional independence.
-- Explain how an unknown shared factor or selected evidence can make two outcomes dependent.
+- Explain how an unknown shared factor or selected evidence can make two outcomes dependent, including explaining away.
 
 ### Part 1 — Conditional examples: the exact evidence matters
 
@@ -3072,7 +3132,7 @@ $$
 
 The evidence identifies a particular card. The remaining card is uniformly distributed among the 51 other cards.
 
-#### Case 3: The first card drawn is an ace
+#### Supplementary case: The first card drawn is an ace
 
 This evidence refers to draw order, so now use ordered outcomes. Given that the first card is an ace, three aces remain among 51 cards:
 
@@ -3233,9 +3293,9 @@ $$
 
 The denominator includes both ways of getting a positive result: a true positive and a false positive.
 
-#### Supplementary textbook example: Prevalence of 1%
+#### Worked example: Prevalence of 1%
 
-For $$p=0.01$$:
+Suppose 1% of patients similar to this one have the condition, so $$p=0.01$$:
 
 $$
 P(T)=0.95(0.01)+0.05(0.99)=0.0095+0.0495=0.059,
@@ -3263,6 +3323,10 @@ For 10,000 people under these proportions:
 
 Among positive results, the expected fraction with the condition is $$95/590=19/118$$. A small false-positive rate applied to a large condition-free group can produce more positives than a high true-positive rate applied to a small group.
 
+**A rough frequency check.** Imagine 1000 such patients. About 10 have the condition, and nearly all of them test positive. About 990 do not, and 5% of those, roughly 50, also test positive. So about 10 of roughly 60 positive results come from patients with the condition, a ratio near $$1/6\approx0.16$$. The rarity of the condition competes with the rarity of a test error; intuition that focuses only on the 95% ignores the 1%.
+
+If the patient already has symptoms, the starting probability is no longer 1%. The method is unchanged: start from the probability that reflects the evidence already available, and update it with Bayes’ rule.
+
 #### Supplementary comparison: A rarer condition
 
 Keeping the same test assumptions but changing the prevalence to $$1/1000$$ gives:
@@ -3278,7 +3342,44 @@ The sensitivity and specificity are unchanged, but the posterior is now about 1.
 
 #### The same reversal error in reasoning about evidence
 
-A small probability of evidence given innocence, $$P(E\mid I)$$, does not equal a small probability of innocence given the evidence, $$P(I\mid E)$$. Bayes’ rule also requires the prior probabilities and the probability of the evidence under alternatives. Confusing these directions is called the **prosecutor's fallacy**.
+A small probability of evidence given innocence, $$P(E\mid I)$$, does not equal a small probability of innocence given the evidence, $$P(I\mid E)$$. Bayes’ rule also requires the prior probabilities and the probability of the evidence under alternatives. Confusing these directions is called the **prosecutor's fallacy**. The name is unfair to prosecutors: defense attorneys, doctors, and everyone else make the same error.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">The Sally Clark case <span class="ex-pill pill-ex">Worked example</span></div>
+
+Sally Clark, a British woman, lost two infants to sudden, unexplained deaths and was convicted of murdering them. The central statistical testimony claimed that, for an innocent family, the chance of one such death is about $$1/8500$$. Multiplying for two deaths gave
+
+$$
+\left(\frac1{8500}\right)^2\approx\frac1{72{,}000{,}000},
+$$
+
+reported as about 1 in 73 million. The argument contains two separate errors.
+
+1. **Unjustified independence.** Squaring assumes the two deaths are independent. A shared genetic or environmental factor could make a second death far more likely after a first, so multiplication has no justification here.
+2. **The prosecutor's fallacy.** Even granting the number, it is $$P(\text{evidence}\mid\text{innocence})$$. The court needed $$P(\text{innocence}\mid\text{evidence})$$. By Bayes’ rule,
+
+$$
+P(I\mid E)=\frac{P(E\mid I)P(I)}{P(E)}.
+$$
+
+The prior $$P(I)$$ is extremely close to 1, because the vast majority of mothers do not murder their children. The denominator must also account for the probability of two deaths under the alternative explanation, which is itself extremely small. Treating $$1/73$$ million as the probability of innocence ignores both.
+
+The conviction was later overturned, but only after she had spent years in prison.
+
+<div class="ex-lesson">A tiny probability of the evidence under one hypothesis is not the probability of that hypothesis. Bayes’ rule weighs it against the prior and against how probable the evidence is under the alternatives.</div>
+</div>
+
+#### Prior versus posterior
+
+The probability $$P(A)$$ before observing evidence is the **prior** probability of $$A$$. After observing $$B$$, the updated probability $$P(A\mid B)$$ is the **posterior** probability.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** The problem says that $$A$$ occurred, so write $$P(A)=1$$.
+
+**Correction:** What is true is $$P(A\mid A)=1$$. The symbol $$P(A)$$ still means the probability of $$A$$ before that information. Put observed evidence to the right of the conditioning bar, and keep $$P(A)$$ for the prior.
+
+</div>
 
 ### Part 5 — Keeping background conditioning consistent
 
@@ -3306,7 +3407,21 @@ $$
 
 The same background evidence $$E$$ appears in every probability. Commas to the right of the bar denote joint evidence, so $$P(B\mid A,E)=P(B\mid A\cap E)$$.
 
-**Core idea:** Once a calculation is conditional on a context, both the case probabilities and within-case probabilities must use that context.
+#### Updating one piece of evidence at a time
+
+Bayes’ rule is **coherent**: updating on two pieces of evidence at once gives the same answer as updating on one, then using that posterior as the new prior and updating on the other.
+
+Suppose clues $$B_1$$ and $$B_2$$ arrive with $$P(B_1\cap B_2)>0$$. After the first clue, the current probability function is $$Q(\cdot)=P(\cdot\mid B_1)$$. Updating $$Q$$ on the second clue gives:
+
+$$
+Q(A\mid B_2)=\frac{Q(A\cap B_2)}{Q(B_2)}
+=\frac{P(A\cap B_1\cap B_2)/P(B_1)}{P(B_1\cap B_2)/P(B_1)}
+=P(A\mid B_1\cap B_2).
+$$
+
+This is exactly the all-at-once update. Since $$B_1\cap B_2=B_2\cap B_1$$, the order of the clues does not matter either. Whether the evidence comes all at once, one piece at a time, or in any order, the result is the probability of $$A$$ given all the evidence.
+
+**Core idea:** Once a calculation is conditional on a context, both the case probabilities and within-case probabilities must use that context. Sequential updating is the same principle applied repeatedly.
 
 ### Part 6 — Conditional independence
 
@@ -3382,6 +3497,41 @@ This is the same structure as the shared-coin example: one unknown factor affect
 
 ### Part 7 — Conditioning can also create dependence
 
+Independent events need not be conditionally independent. This is common whenever one outcome has several possible causes.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Fire alarm and popcorn <span class="ex-pill pill-ex">Worked example</span></div>
+
+Suppose a fire alarm sounds exactly when there is a fire or someone is making popcorn, and nothing else sets it off. Let $$F$$ mean there is a fire, $$C$$ mean someone is making popcorn, and $$A=F\cup C$$ mean the alarm sounds. Assume $$F$$ and $$C$$ are independent, with positive probabilities less than 1.
+
+Given that the alarm sounds and no one is making popcorn, the only remaining explanation is a fire:
+
+$$
+P(F\mid A,C^c)=1.
+$$
+
+Given only that the alarm sounds, a fire is not certain, because popcorn could explain it:
+
+$$
+P(F\mid A)=\frac{P(F)}{P(F\cup C)}<1.
+$$
+
+So, given $$A$$, learning whether $$C$$ occurred changes the probability of $$F$$. The events $$F$$ and $$C$$ are independent, but not conditionally independent given $$A$$.
+
+For illustration, take $$P(F)=0.1$$ and $$P(C)=0.3$$. Then $$P(A)=1-(0.9)(0.7)=0.37$$ and:
+
+| Information | Probability of fire |
+|---|---:|
+| None | $$0.1$$ |
+| Alarm sounds | $$0.1/0.37\approx0.270$$ |
+| Alarm sounds and popcorn is being made | $$0.1$$ |
+| Alarm sounds and no popcorn | $$1$$ |
+
+Learning that popcorn is being made “explains away” the alarm: it accounts for the alarm, so the probability of fire falls back to 0.1. Learning that there is no popcorn removes the other explanation, so fire becomes certain.
+
+<div class="ex-lesson">When an observed event has several independent causes, conditioning on it makes the causes dependent: ruling out one cause makes the others more likely.</div>
+</div>
+
 #### Supplementary worked example: At least one head
 
 Toss two independent fair coins. Let $$A$$ mean first heads, $$B$$ mean second heads, and $$E=A\cup B$$ mean at least one head.
@@ -3436,6 +3586,7 @@ Try these before reading the answers.
 7. Suppose $$P(A\mid E)=0.40$$ and $$P(B\mid E)=0.50$$, with conditional independence given $$E$$. Find $$P(A\cap B\mid E)$$ and $$P(A\cup B\mid E)$$. Can you infer unconditional independence?
 8. For the shared-coin example, compute $$P(B\mid A)$$ and compare it with $$P(B)$$. Explain what information the first head provides.
 9. Toss two independent fair coins and condition on at least one head. Find the probability of second heads given first heads and the same evidence. Compare with the probability of second heads given only the at-least-one-head evidence.
+10. A lawn is wet exactly when it rained or the sprinkler ran. Rain and the sprinkler are independent, with probabilities $$0.2$$ and $$0.5$$. Find the probability of rain given a wet lawn, and given a wet lawn and that the sprinkler ran.
 
 ### Part 9 — Practice answers
 
@@ -3538,6 +3689,16 @@ $$
 
 Given only $$E$$, the three outcomes $$HH,HT,TH$$ survive, giving $$P(B\mid E)=2/3$$. The difference shows that $$A$$ and $$B$$ are not conditionally independent given $$E$$.
 
+#### 10. Explaining away
+
+Let $$R$$ be rain, $$S$$ the sprinkler, and $$W=R\cup S$$ a wet lawn. Then $$P(W)=1-(0.8)(0.5)=0.6$$, and since $$R\subseteq W$$:
+
+$$
+P(R\mid W)=\frac{0.2}{0.6}=\frac13.
+$$
+
+Given $$W$$ and $$S$$, the lawn is wet regardless of rain, so the wet lawn adds nothing: $$P(R\mid W,S)=P(R\mid S)=P(R)=0.2$$. Learning that the sprinkler ran lowers the probability of rain from $$1/3$$ to $$0.2$$, so $$R$$ and $$S$$ are dependent given $$W$$.
+
 ### Part 10 — Quick revision sheet
 
 | Concept | Essential fact |
@@ -3551,10 +3712,15 @@ Given only $$E$$, the three outcomes $$HH,HT,TH$$ survive, giving $$P(B\mid E)=2
 | Specificity | $$P(T^c\mid D^c)$$ |
 | False-positive rate | $$P(T\mid D^c)=1-\text{specificity}$$ |
 | Positive-result posterior | $$P(D\mid T)$$ depends on prevalence as well as test rates |
+| 1% prevalence, 95% accurate test | $$P(D\mid T)\approx0.16$$: about 10 true positives against 50 false ones per 1000 |
+| Prosecutor's fallacy | $$P(E\mid I)$$ is not $$P(I\mid E)$$; Sally Clark also assumed unjustified independence |
+| Prior and posterior | $$P(A)$$ before evidence, $$P(A\mid B)$$ after; observing $$A$$ gives $$P(A\mid A)=1$$, not $$P(A)=1$$ |
+| Coherence of Bayes | Updating all at once or one clue at a time, in any order, gives $$P(A\mid B_1,B_2)$$ |
 | Background evidence | Keep the same context to the right of the bar throughout a calculation |
 | Conditional independence | $$P(A\cap B\mid E)=P(A\mid E)P(B\mid E)$$ |
 | Unknown shared factor | Independence within each case can become dependence after mixing cases |
 | Selected evidence | Unconditional independence can disappear after conditioning |
+| Explaining away | Independent causes $$F,C$$ of an alarm become dependent given the alarm |
 
 ### Term Glossary
 
@@ -3597,6 +3763,20 @@ The probability of a negative test result given that the condition is absent, $$
 <div class="gterm">Prosecutor's fallacy <span class="gcat cat-defn">Misconception</span></div>
 
 Confusing the probability of evidence under innocence with the probability of innocence given that evidence.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Prior and posterior <span class="gcat cat-defn">Definition</span></div>
+
+The probability of an event before observing specified evidence, $$P(A)$$, and after observing it, $$P(A\mid B)$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Explaining away <span class="gcat cat-defn">Definition</span></div>
+
+The dependence created between independent causes when conditioning on an effect they can each produce: ruling out one cause raises the probability of the others.
 
 </div>
 
@@ -3677,7 +3857,8 @@ After studying these notes, you should be able to:
 - Explain why two remaining doors need not be equally likely.
 - Distinguish a deliberate goat reveal from a random reveal that happens to show a goat.
 - Calculate subgroup and overall rates in a Simpson reversal.
-- Express overall rates as conditional weighted averages using LOTP.
+- Express overall rates as conditional weighted averages using LOTP, and identify the confounder.
+- Recognize the same reversal in batting averages, admissions data, and combined jars.
 - Explain why comparing groups under common weights prevents this reversal when one group has the higher rate in every stratum.
 
 ### Part 1 — Monty Hall: specify the experiment
@@ -3790,6 +3971,21 @@ Thus switching to door 3 wins with conditional probability $$2/3$$. If Monty ins
 
 **Core idea:** Monty is not eliminating an arbitrary possibility. His choice is constrained by the hidden car location, so the reveal carries information.
 
+#### An extreme case: a million doors
+
+Checking an extreme case helps. Suppose there are a million doors, you pick one, and Monty, who knows where the car is, opens 999,998 of the others, all goats, leaving one closed door besides yours. Almost no one would stay. Your first pick was almost certainly wrong, and Monty had to avoid the car when choosing which door to leave closed.
+
+Yet the “two closed doors, so 50–50” argument applies just as well here as with three doors. Since it is clearly wrong for a million doors, it is wrong for three.
+
+**Supplementary generalization.** With $$N\ge3$$ doors, a uniformly placed car, and a host who always reveals $$N-2$$ unchosen goats, the contestant's first pick is a goat with probability $$(N-1)/N$$, and in every such case the surviving alternative holds the car:
+
+$$
+P(\text{win by switching})=\frac{N-1}{N},\qquad
+P(\text{win by staying})=\frac1N.
+$$
+
+For a million doors, switching wins with probability $$999999/1000000$$.
+
 ### Part 4 — Supplementary variations: changing the protocol
 
 #### A host who prefers opening door 2
@@ -3840,26 +4036,13 @@ Switching and staying are equally likely to win under this conditional experimen
 
 **Core idea:** The visible outcome may look identical—a goat behind an opened door—but different selection mechanisms give different likelihoods and posteriors.
 
-#### Supplementary extension: Many doors
-
-With $$N\ge3$$ doors and a uniformly placed car, the contestant first chooses one door. A knowledgeable host then always reveals $$N-2$$ unchosen goats and offers a switch to the sole remaining unchosen door.
-
-The contestant initially selects a goat with probability $$(N-1)/N$$. In every such case, the surviving alternative must contain the car. Thus:
-
-$$
-P(\text{win by switching})=\frac{N-1}{N},\qquad
-P(\text{win by staying})=\frac1N.
-$$
-
-For a million doors, switching wins with probability $$999999/1000000$$. The host's deliberate elimination of goats is especially clear in this large version.
-
 ### Part 5 — Simpson’s paradox: better in every subgroup, worse overall
 
 A comparison can reverse when data from different subgroups are combined. This phenomenon is called **Simpson’s paradox**.
 
-#### Supplementary textbook example: Two doctors and two procedure types
+#### Worked example: Two doctors and two procedure types
 
-Consider the following hypothetical records. Heart procedures are harder than Band-Aid removals. The numbers are an illustration of aggregation, not evidence about actual clinical practice.
+Is it possible for one doctor to have a higher success rate than another for every type of surgery, yet a lower success rate overall? Consider Dr. Hibbert and Dr. Nick, the two doctors from *The Simpsons*, with made-up records of 100 procedures each. Heart procedures are harder than Band-Aid removals. The numbers are an illustration of aggregation, not evidence about actual clinical practice.
 
 | Procedure | Dr. Hibbert: successes / total | Dr. Hibbert: success rate | Dr. Nick: successes / total | Dr. Nick: success rate |
 |---|---|---|---|---|
@@ -3934,6 +4117,66 @@ $$
 
 All conditioning events must have positive probability. The reversal is possible because the overall probabilities use different subgroup weights, $$P(C\mid B)$$ and $$P(C\mid B^c)$$.
 
+The variable $$C$$ is called a **confounder**: a variable related to both the group and the outcome, which should be controlled for. In the doctor example, $$A$$ is success, $$B$$ is treatment by Dr. Nick, and $$C$$ is a heart procedure. Without conditioning on $$C$$, learning that Dr. Nick operated tells us the procedure was probably an easy one, and that information, not his skill, raises his aggregate rate. Here the more relevant comparison is the one that conditions on the procedure type.
+
+#### Why aggregation can flip: adding fractions
+
+Aggregating records adds the successes and adds the totals. That is the “wrong” way to add fractions:
+
+$$
+\frac13+\frac25\ne\frac{1+2}{3+5}=\frac38.
+$$
+
+The combined rate $$(a+c)/(b+d)$$ is not determined by $$a/b$$ and $$c/d$$ alone:
+
+$$
+\frac{a+c}{b+d}=\frac{b}{b+d}\cdot\frac ab+\frac{d}{b+d}\cdot\frac cd,
+$$
+
+a weighted average whose weights depend on the group sizes $$b$$ and $$d$$. Two doctors with different case mixes are averaged with different weights, so being better within every group does not guarantee being better after aggregation.
+
+#### More examples of the same structure
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Batting averages <span class="ex-pill pill-num">Worked example</span></div>
+
+A batting average is the fraction of at-bats that produce a hit. With illustrative numbers:
+
+| Player | First half | Second half | Whole season |
+|---|---:|---:|---:|
+| A | $$4/10=0.400$$ | $$25/100=0.250$$ | $$29/110\approx0.264$$ |
+| B | $$35/100=0.350$$ | $$2/10=0.200$$ | $$37/110\approx0.336$$ |
+
+Player A has the higher average in each half, but Player B has the higher average for the season. Most of A's at-bats fall in the weaker second half, and most of B's fall in the stronger first half.
+
+<div class="ex-lesson">The half-season plays the role of the confounder: it is associated with both the player's number of at-bats and the hit rate.</div>
+</div>
+
+**Graduate admissions.** A lawsuit against UC Berkeley alleged discrimination against women in graduate admissions, because the overall admission rate was higher for men. Within individual departments, there was no clear evidence of discrimination against women. Women applied more often to departments that were harder to get into, so aggregating across departments produced the apparent gap. The department is the confounder.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Jelly-bean jars <span class="ex-pill pill-num">Worked example</span></div>
+
+Each of four jars holds jelly beans of a liked flavor and a disliked flavor, and you draw one at random from a jar of your choice. With illustrative counts of liked beans out of total beans:
+
+| Jar | Liked / total | Rate |
+|---|---:|---:|
+| $$A_1$$ | $$2/3$$ | $$0.667$$ |
+| $$B_1$$ | $$6/10$$ | $$0.600$$ |
+| $$A_2$$ | $$1/10$$ | $$0.100$$ |
+| $$B_2$$ | $$0/3$$ | $$0$$ |
+
+Jar $$A_1$$ beats $$B_1$$, and $$A_2$$ beats $$B_2$$. Now pour $$A_1$$ and $$A_2$$ into one big jar $$A$$, and $$B_1$$ and $$B_2$$ into jar $$B$$:
+
+$$
+A:\ \frac{3}{13}\approx0.231,\qquad B:\ \frac{6}{13}\approx0.462.
+$$
+
+Combining the two better jars produces the worse jar.
+
+<div class="ex-lesson">Try making up your own numbers. A reversal needs the jars being combined to have very different sizes, so the two combined rates are weighted toward different jars.</div>
+</div>
+
 <div class="misconception-block" markdown="1">
 
 **Incorrect:** If one doctor has the higher success rate in each type, adding the records must preserve that advantage.
@@ -3993,6 +4236,7 @@ Try these before reading the answers.
 6. Using the hypothetical doctors' records, verify each within-type rate and each overall rate. Identify the weights causing the reversal.
 7. Evaluate both doctors with a common mix of 25% heart procedures and 75% Band-Aid removals. Which standardized rate is higher?
 8. Can an aggregate reversal occur if one group has a strictly higher success rate in every subgroup and both groups use identical subgroup weights? Explain algebraically.
+9. Player A hits $$3/10$$ in April and $$20/100$$ in May; Player B hits $$28/100$$ in April and $$1/10$$ in May. Who is better in each month, and who is better over both months combined?
 
 ### Part 9 — Practice answers
 
@@ -4079,6 +4323,10 @@ $$
 
 At least one weight is positive, and every positively weighted difference is positive. The common weighted average preserves the ordering, so a reversal cannot occur under these assumptions.
 
+#### 9. A batting reversal
+
+April: $$0.300>0.280$$. May: $$0.200>0.100$$. Player A is better in both months. Combined, A has $$23/110\approx0.209$$ and B has $$29/110\approx0.264$$, so B is better overall. Most of A's at-bats came in A's weaker month, and most of B's in B's stronger month.
+
 ### Part 10 — Quick revision sheet
 
 | Concept | Essential fact |
@@ -4089,9 +4337,11 @@ At least one weight is positive, and every positively weighted difference is pos
 | Particular reveal | Equal tie-breaking gives $$1/3$$ for the original door and $$2/3$$ for the alternative |
 | Unequal tie-breaking | Changes reveal-specific posteriors; overall always-switch success remains $$2/3$$ |
 | Blind reveal | A randomly opened door that happens to show a goat can yield $$1/2$$–$$1/2$$ |
-| $$N$$-door extension | With deliberate elimination of all but one alternative, switching wins $$(N-1)/N$$ |
+| Million doors | Extreme case that exposes the 50–50 argument; switching wins $$(N-1)/N$$ in general |
 | Simpson reversal | Within-subgroup comparisons and aggregate comparison point in opposite directions |
-| Aggregate rate | Weighted average of subgroup rates, using each group's own case mix |
+| Confounder | Variable $$C$$ tied to both group and outcome; here the procedure type |
+| Aggregate rate | Weighted average of subgroup rates, using each group's own case mix: $$\frac{a+c}{b+d}$$, not $$\frac ab+\frac cd$$ |
+| Other reversals | Batting averages by half-season, Berkeley admissions by department, mixed jelly-bean jars |
 | Common-weight comparison | Preserves an advantage present in every positively weighted subgroup |
 | Interpretation | Observed rates, standardized rates, and causal effects answer different questions |
 
@@ -4122,6 +4372,13 @@ A reversal of a comparison after subgroup data are aggregated, despite the subgr
 <div class="gterm">Stratum <span class="gcat cat-defn">Definition</span></div>
 
 A subgroup defined by a conditioning variable, such as procedure type. Comparing within strata keeps that variable fixed.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Confounder <span class="gcat cat-defn">Definition</span></div>
+
+A variable associated with both the group being compared and the outcome, such as procedure type for the two doctors. Failing to condition on it can produce a misleading or reversed comparison.
 
 </div>
 
@@ -4199,12 +4456,13 @@ After studying these notes, you should be able to:
 
 - Translate gambler’s ruin into a random walk with absorbing boundaries.
 - Derive a recurrence by conditioning on the first round.
-- Solve the fair and biased cases using neighboring differences and boundary conditions.
-- Explain why winning one round and winning the whole game have different probabilities.
+- Solve the fair and biased cases using neighboring differences, or by guessing a power, together with boundary conditions.
+- Explain why winning one round and winning the whole game have different probabilities, and why a slight per-round edge ruins the gambler.
+- Show that the game ends with probability 1.
 - Define a random variable as a function and interpret events such as $$X=x$$.
 - Distinguish a random variable, its observed value, and its distribution.
 - Recognize Bernoulli indicators and the assumptions of a Binomial count.
-- Derive the Binomial probability formula by counting success positions.
+- Derive the Binomial probability formula by counting success positions, and add independent Binomials with a common $$p$$ by a story proof.
 
 ### Part 1 — Gambler’s ruin as a random walk
 
@@ -4362,8 +4620,74 @@ For an interior starting state, $$p=0$$ gives $$u_i=0$$ and $$p=1$$ gives $$u_i=
 
 The geometric-sum form stays meaningful as $$r\to1$$: its numerator approaches $$i$$ and denominator approaches $$N$$. Thus the biased formula approaches $$i/N$$. The apparent $$0/0$$ in the power formula at $$p=1/2$$ reflects its algebraic form, not an undefined winning probability.
 
+#### Alternative method: guess a power
+
+A standard way to solve a linear difference equation with constant coefficients is to guess a power and see what it requires. Try $$u_i=x^i$$ with $$x\ne0$$:
+
+$$
+x^i=px^{i+1}+qx^{i-1}
+\quad\Longrightarrow\quad
+px^2-x+q=0.
+$$
+
+The quadratic formula gives $$x=\dfrac{1\pm\sqrt{1-4pq}}{2p}$$. This simplifies nicely, because $$q=1-p$$ gives
+
+$$
+1-4pq=1-4p+4p^2=(2p-1)^2.
+$$
+
+So the two roots are
+
+$$
+x=\frac{1+(2p-1)}{2p}=1,\qquad x=\frac{1-(2p-1)}{2p}=\frac qp.
+$$
+
+When $$p\ne q$$ the roots are distinct, and the general solution is a linear combination of their powers:
+
+$$
+u_i=a\cdot1^i+b\left(\frac qp\right)^i=a+b\,r^i.
+$$
+
+The boundary conditions fix the constants. From $$u_0=0$$, $$b=-a$$. From $$u_N=1$$, $$a(1-r^N)=1$$. Hence
+
+$$
+u_i=\frac{1-r^i}{1-r^N},
+$$
+
+agreeing with the result above. When $$p=q$$, the root 1 is repeated and the guess alone does not give a second solution. Instead, let $$x=q/p\to1$$ and use L'Hôpital's rule:
+
+$$
+\lim_{x\to1}\frac{1-x^i}{1-x^N}=\lim_{x\to1}\frac{ix^{i-1}}{Nx^{N-1}}=\frac iN.
+$$
+
+Substituting $$u_i=i/N$$ back into $$2u_i=u_{i+1}+u_{i-1}$$ confirms that it satisfies the fair-game equation.
+
+**Core idea:** Guessing $$x^i$$ turns a difference equation into a polynomial equation. With distinct roots, the general solution is a combination of root powers, and the boundary conditions pick the particular solution.
+
 <div class="example-block" markdown="1">
-<div class="ex-title">Equal starting fortunes with biased rounds <span class="ex-pill pill-num">Worked example</span></div>
+<div class="ex-title">A slightly unfair game <span class="ex-pill pill-num">Worked example</span></div>
+
+Let A and B start with equal fortunes, $$i=N/2$$, and let each round be only slightly unfavorable to A: $$p=0.49$$. Then $$r=0.51/0.49\approx1.0408$$, and
+
+$$
+u_{N/2}=\frac{1-r^{N/2}}{1-r^N}=\frac1{1+r^{N/2}}.
+$$
+
+| Total fortune $$N$$ | Each player starts with | $$P(\text{A wins the game})$$ |
+|---:|---:|---:|
+| 20 | 10 | $$\approx0.401$$ |
+| 100 | 50 | $$\approx0.119$$ |
+| 200 | 100 | $$\approx0.018$$ |
+
+A disadvantage of only 0.01 per round becomes overwhelming over a long game. With 100 dollars each, B ends up with all the money about 98% of the time.
+
+A casino is in an even stronger position than B. Its games range from slightly to very unfavorable to the gambler, and it nearly always has far more money than the gambler. This is why the problem is called gambler's ruin.
+
+<div class="ex-lesson">A small per-round edge, repeated over many rounds, turns into a large advantage in the eventual outcome.</div>
+</div>
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Supplementary: Equal starting fortunes with biased rounds <span class="ex-pill pill-num">Worked example</span></div>
 
 Let $$N=4$$ and $$i=2$$. If $$p=2/3$$, then $$q=1/3$$ and $$r=1/2$$. Hence:
 
@@ -4383,9 +4707,43 @@ The negative numerator and denominator cancel; the probability is positive.
 <div class="ex-lesson">Repeated opportunities and absorbing boundaries transform a per-round advantage into a different eventual winning probability.</div>
 </div>
 
-### Part 5 — Supplementary clarification: Why the finite game ends
+### Part 5 — Why the game ends
 
-An arbitrarily long game is possible, but the probability of continuing forever is zero.
+Nothing in the rules prevents the game from going on forever. The probability of that is zero, and the formulas already show it.
+
+The probability that **B** wins comes from the same calculation with the roles exchanged. B wins each round with probability $$q$$ and starts with $$N-i$$, so swap $$p$$ with $$q$$ and $$i$$ with $$N-i$$.
+
+**Fair game.** B wins with probability $$(N-i)/N$$, so
+
+$$
+P(\text{A wins})+P(\text{B wins})=\frac iN+\frac{N-i}N=1.
+$$
+
+**Biased game.** With $$r=q/p$$, B's ratio is $$p/q=1/r$$:
+
+$$
+P(\text{B wins})=\frac{1-r^{-(N-i)}}{1-r^{-N}}
+=\frac{r^N-r^i}{r^N-1}
+=\frac{r^i-r^N}{1-r^N},
+$$
+
+after multiplying numerator and denominator by $$r^N$$. Adding A's probability:
+
+$$
+\frac{1-r^i}{1-r^N}+\frac{r^i-r^N}{1-r^N}=1.
+$$
+
+In both cases the two ways for the game to end already have total probability 1, leaving no probability for endless play.
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{P(\text{A wins})+P(\text{B wins})=1,\qquad P(\text{the game never ends})=0.}
+$$
+
+</div>
+
+#### Supplementary: a direct argument
 
 For $$0<p<1$$, from any interior state, $$N$$ consecutive wins would force absorption at $$N$$ within those rounds. The probability of that run of potential round outcomes is $$p^N>0$$. Thus, conditional on any history that has not yet ended, the probability of surviving the next $$N$$ rounds is at most $$1-p^N$$.
 
@@ -4395,13 +4753,7 @@ $$
 P(\text{not absorbed after }mN\text{ rounds})\le(1-p^N)^m\longrightarrow0.
 $$
 
-At $$p=0$$ or $$p=1$$, absorption occurs deterministically within $$N$$ rounds. Consequently, in this finite game:
-
-$$
-P(\text{A wins})+P(\text{B wins})=1.
-$$
-
-This argument establishes eventual absorption; it does not calculate the expected duration.
+At $$p=0$$ or $$p=1$$, absorption occurs deterministically within $$N$$ rounds. This argument establishes eventual absorption without solving for the winning probabilities; it does not calculate the expected duration.
 
 ### Part 6 — A random variable is a numerical function
 
@@ -4533,6 +4885,22 @@ $$
 
 This is the probability formula needed for the Binomial story; a broader treatment of PMFs and CDFs follows in the next lecture.
 
+#### Adding independent Binomials with the same $$p$$
+
+<div class="result-box" markdown="1">
+
+If $$X\sim\operatorname{Bin}(n,p)$$ and $$Y\sim\operatorname{Bin}(m,p)$$ are independent, then
+
+$$
+\boxed{X+Y\sim\operatorname{Bin}(n+m,p).}
+$$
+
+</div>
+
+**Story proof.** Let $$X$$ count successes in $$n$$ independent Bernoulli($$p$$) trials, and let $$Y$$ count successes in $$m$$ further trials, independent of the first $$n$$. Together these are $$n+m$$ independent trials, each with success probability $$p$$. The total number of successes is $$X+Y$$, which by definition is $$\operatorname{Bin}(n+m,p)$$. No equations are needed.
+
+The same $$p$$ is essential. If $$X\sim\operatorname{Bin}(n,1/2)$$ and $$Y\sim\operatorname{Bin}(m,1/3)$$, the combined trials do not share one success probability, and $$X+Y$$ is not Binomial in general. Algebraic proofs follow in the next lecture.
+
 <div class="example-block" markdown="1">
 <div class="ex-title">Supplementary numerical example: Four independent attempts <span class="ex-pill pill-num">Worked example</span></div>
 
@@ -4589,6 +4957,7 @@ Try these before reading the answers.
 7. For $$X\sim\operatorname{Bin}(5,1/2)$$, find $$P(X=2)$$ and $$P(X\ge1)$$. Explain the counting factor in the first calculation.
 8. Two records copy the same fair coin toss. Is their success count $$\operatorname{Bin}(2,1/2)$$? Give its actual distribution.
 9. A game ends when a player goes broke. Explain why the number of rounds won before the game ends does not automatically follow a fixed-$$n$$ Binomial distribution.
+10. Solve $$u_i=\frac23u_{i+1}+\frac13u_{i-1}$$ with $$u_0=0$$ and $$u_3=1$$ by guessing $$u_i=x^i$$. Then verify that A's and B's winning probabilities from $$i=1$$ sum to 1.
 
 ### Part 11 — Practice answers
 
@@ -4653,6 +5022,16 @@ The records are dependent. Their count has probabilities $$P(X=0)=1/2$$, $$P(X=2
 
 The number of trials is determined by the game’s outcomes, rather than fixed in advance. Independence of potential round outcomes alone does not supply the fixed-trial Binomial story for a count taken up to that stopping time.
 
+#### 10. Characteristic roots
+
+The guess gives $$\frac23x^2-x+\frac13=0$$, or $$2x^2-3x+1=0$$, with roots $$x=1$$ and $$x=\frac12=q/p$$. So $$u_i=a+b(1/2)^i$$. Then $$u_0=0$$ gives $$b=-a$$, and $$u_3=1$$ gives $$a(1-1/8)=1$$, so $$a=8/7$$ and
+
+$$
+u_i=\frac87\left(1-2^{-i}\right),\qquad u_1=\frac47.
+$$
+
+B wins each round with probability $$1/3$$ and starts with 2, so B's ratio is $$p/q=2$$ and B wins with probability $$\dfrac{1-2^2}{1-2^3}=\dfrac37$$. Indeed $$\frac47+\frac37=1$$.
+
 ### Part 12 — Quick revision sheet
 
 | Concept | Essential fact |
@@ -4664,13 +5043,16 @@ The number of trials is determined by the game’s outcomes, rather than fixed i
 | Fair game | $$u_i=i/N$$ |
 | Biased game | $$u_i=[1-(q/p)^i]/[1-(q/p)^N]$$ for $$0<p<1$$, $$p\ne1/2$$ |
 | Neighboring differences | $$d_{i+1}=(q/p)d_i$$ |
-| Finite-game termination | Absorption occurs with probability 1 |
+| Characteristic roots | Guess $$u_i=x^i$$: $$px^2-x+q=0$$ has roots 1 and $$q/p$$, so $$u_i=a+b(q/p)^i$$ |
+| Slightly unfair game | $$p=0.49$$, equal fortunes: A wins $$\approx0.40,0.12,0.02$$ for $$N=20,100,200$$ |
+| Finite-game termination | $$P(\text{A wins})+P(\text{B wins})=1$$, so the game ends with probability 1 |
 | Random variable | A fixed function $$X:S\to\mathbb R$$ |
 | Numerical event | $$\{X=x\}=\{s:X(s)=x\}$$ |
 | Same distribution | Same value probabilities; functions may differ |
 | Bernoulli | Indicator with probabilities $$p$$ at 1 and $$1-p$$ at 0 |
 | Binomial story | Fixed $$n$$, independent binary trials, common $$p$$ |
 | Binomial formula | $$P(X=k)=\binom nk p^k(1-p)^{n-k}$$ |
+| Sum of Binomials | Independent $$\operatorname{Bin}(n,p)+\operatorname{Bin}(m,p)\sim\operatorname{Bin}(n+m,p)$$ by the story |
 
 ### Term Glossary
 
@@ -4802,7 +5184,8 @@ After studying these notes, you should be able to:
 - Use the correct CDF formulas for strict and non-strict inequalities.
 - Explain the difference between discrete mass and continuous probability.
 - Derive the Hypergeometric PMF, including its feasible range.
-- Recognize sampling without replacement and distinguish it from the Binomial story.
+- Recognize sampling without replacement and distinguish it from the Binomial story, and explain when the Hypergeometric is approximately Binomial.
+- Define i.i.d. random variables and prove that independent Binomials with a common $$p$$ add, in three ways.
 
 ### Part 1 — Outcomes, random variables, and distributions
 
@@ -5013,17 +5396,30 @@ $$
 
 The story, indicator sum, and PMF are three descriptions of the same model.
 
-#### Supplementary connection: Add independent Binomial counts
+#### Independent and identically distributed
+
+The indicators $$I_1,\ldots,I_n$$ are **i.i.d.**, short for **independent and identically distributed**:
+
+- *Independent*: they come from independent trials, so learning some of them tells us nothing about the others.
+- *Identically distributed*: each has the same distribution, $$\operatorname{Bern}(p)$$.
+
+Identically distributed does not mean equal. $$I_1$$ indicates success on the first trial and $$I_2$$ on the second; they are different random variables, and in a given experiment one may be 1 while the other is 0. They share only their distribution: the same probabilities of taking each value. Many different random variables can have the same distribution, just as many houses can be built from one blueprint.
+
+#### Adding independent Binomial counts: three proofs
 
 If $$X\sim\operatorname{Bin}(n,p)$$ and $$Y\sim\operatorname{Bin}(m,p)$$ are independent, then:
 
 $$
-X+Y\sim\operatorname{Bin}(n+m,p).
+\boxed{X+Y\sim\operatorname{Bin}(n+m,p).}
 $$
 
-Construct the two independent counts using separate blocks of independent Bernoulli trials. Combining the blocks gives $$n+m$$ trials with the same success probability.
+Here $$X+Y$$ is a sum of two functions on the same sample space: for each outcome, compute both and add.
 
-Conditioning on $$X=j$$ gives the same result algebraically. With impossible terms interpreted as zero:
+**1. Story.** Let $$X$$ count successes in $$n$$ independent trials and $$Y$$ count successes in $$m$$ further independent trials, all with success probability $$p$$. Then $$X+Y$$ counts the successes in $$n+m$$ such trials, so it is $$\operatorname{Bin}(n+m,p)$$.
+
+**2. Indicator sums.** Write $$X=X_1+\cdots+X_n$$ and $$Y=Y_1+\cdots+Y_m$$, where all the $$X_j$$ and $$Y_j$$ are i.i.d. $$\operatorname{Bern}(p)$$. Then $$X+Y$$ is a sum of $$n+m$$ i.i.d. $$\operatorname{Bern}(p)$$ indicators, which is $$\operatorname{Bin}(n+m,p)$$.
+
+**3. PMF.** Condition on $$X=j$$ by LOTP. Given $$X=j$$, the event $$X+Y=k$$ is the event $$Y=k-j$$, and by independence conditioning on $$X$$ does not change the distribution of $$Y$$. With impossible terms interpreted as zero:
 
 $$
 \begin{aligned}
@@ -5034,7 +5430,11 @@ P(X+Y=k)
 \end{aligned}
 $$
 
-The last step uses Vandermonde’s identity. Independence and a common $$p$$ are essential for this conclusion; two Binomial marginal distributions alone do not establish it.
+The last step uses Vandermonde’s identity. A sum of this kind, the distribution of a sum of independent random variables, is called a **convolution**. This route takes the most work, and it would get stuck without Vandermonde. Read the other way, since the story proof already guarantees the answer, the calculation is a second proof of Vandermonde’s identity.
+
+Independence and a common $$p$$ are essential for this conclusion; two Binomial marginal distributions alone do not establish it.
+
+**Core idea:** Thinking of a Binomial as a story or as a sum of indicators often replaces a hard calculation with one line.
 
 ### Part 7 — Hypergeometric: sampling without replacement
 
@@ -5142,9 +5542,31 @@ The second draw’s unconditional white probability is still $$4/6$$ by symmetry
 
 </div>
 
-### Part 9 — Supplementary textbook applications
+#### Large populations: Hypergeometric is approximately Binomial
+
+If the population is huge compared with the sample, for example 10 marbles drawn from a billion, it is extremely unlikely that the same item would be picked twice even with replacement. Sampling with and without replacement then behave almost identically, so
+
+$$
+\operatorname{HGeom}(w,b,n)\approx\operatorname{Bin}\left(n,\frac{w}{w+b}\right)
+\quad\text{when }w+b\text{ is much larger than }n.
+$$
+
+For example, keep the white fraction at $$0.6$$ and draw $$n=5$$. The probability that all five are white is:
+
+| Population size $$w+b$$ | Hypergeometric | $$\operatorname{Bin}(5,0.6)$$ |
+|---:|---:|---:|
+| 10 | $$0.0238$$ | $$0.0778$$ |
+| 100 | $$0.0725$$ | $$0.0778$$ |
+| 1000 | $$0.0772$$ | $$0.0778$$ |
+| 1,000,000 | $$0.07776$$ | $$0.07776$$ |
+
+In a small population, each white draw noticeably depletes the white balls. In a large one, it hardly matters.
+
+### Part 9 — Applications: aces and tagged animals
 
 #### Aces in a five-card hand
+
+The number of aces in a hand is a natural count that is **not** Binomial. Think of each card as a trial: the trials are not independent, because each ace dealt makes later aces less likely, and if the first four cards are aces the fifth cannot be. The possible values are 0, 1, 2, 3, and 4.
 
 A uniformly chosen five-card hand from a standard 52-card deck contains four possible aces and 48 non-aces. If $$X$$ counts aces, then:
 
@@ -5274,6 +5696,9 @@ $$
 | Hypergeometric PMF | $$\binom wk\binom b{n-k}/\binom{w+b}n$$ |
 | Hypergeometric support | $$\max(0,n-b)\le k\le\min(n,w)$$, integer $$k$$ |
 | Binomial comparison | Independent trials versus dependent finite-population draws |
+| Large population | $$\operatorname{HGeom}(w,b,n)\approx\operatorname{Bin}(n,w/(w+b))$$ when $$w+b\gg n$$ |
+| i.i.d. | Independent and identically distributed; same distribution, not the same random variable |
+| Sum of Binomials | Independent $$\operatorname{Bin}(n,p)+\operatorname{Bin}(m,p)\sim\operatorname{Bin}(n+m,p)$$: story, indicators, or convolution with Vandermonde |
 
 ### Term Glossary
 
@@ -5323,6 +5748,20 @@ The distribution of a success count in a uniform sample of fixed size drawn with
 <div class="gterm">Sampling without replacement <span class="gcat cat-defn">Definition</span></div>
 
 Selecting distinct population items so a selected item cannot be drawn again. The remaining composition depends on earlier draws.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">i.i.d. <span class="gcat cat-defn">Definition</span></div>
+
+Independent and identically distributed: random variables that are independent and all have the same distribution, such as the success indicators of Binomial trials.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Convolution <span class="gcat cat-defn">Definition</span></div>
+
+The distribution of a sum of independent random variables, computed by conditioning on one of them and summing (or integrating) over its values.
 
 </div>
 
@@ -5614,6 +6053,24 @@ $$
 
 For ten independent trials with success probability $$0.3$$, the expected success count is 3. The observed count remains random; it need not equal 3.
 
+#### Compare: the mean directly from the definition
+
+The same answer follows from $$E(X)=\sum_k kP(X=k)$$, at the cost of more work:
+
+$$
+E(X)=\sum_{k=0}^{n}k\binom nk p^kq^{n-k},\qquad q=1-p.
+$$
+
+Without the factor $$k$$ this would be the binomial theorem. To remove the $$k$$, use the committee-with-president identity $$k\binom nk=n\binom{n-1}{k-1}$$. The $$k=0$$ term is zero, so start at $$k=1$$, and take out $$np$$:
+
+$$
+E(X)=np\sum_{k=1}^{n}\binom{n-1}{k-1}p^{k-1}q^{n-k}.
+$$
+
+With $$j=k-1$$, the sum becomes $$\sum_{j=0}^{n-1}\binom{n-1}{j}p^jq^{n-1-j}=(p+q)^{n-1}=1$$ by the binomial theorem. Hence $$E(X)=np$$.
+
+**Core idea:** The definition works, but only with the right identity at hand. Linearity with indicators gives the answer in one line, and still works if the indicators are dependent.
+
 The calculation of the mean uses only the individual success probabilities. Independence is needed for the Binomial distribution story, but a count of dependent indicators, each with success probability $$p$$, still has mean $$np$$ even when its distribution is not Binomial.
 
 #### Supplementary counterexample: A mean does not identify a model
@@ -5698,9 +6155,9 @@ $$
 
 For independent fair die rolls until a six, $$E(G)=5$$ non-sixes and $$E(T)=6$$ total rolls. Neither mean specifies an exact stopping time in a particular experiment.
 
-#### Supplementary story proof: Restart after a failure
+#### Story proof: Restart after a failure
 
-The series calculation establishes finiteness of the mean. Let $$\mu=E(G)$$. A first-trial success contributes zero failures; a first-trial failure contributes one failure plus a fresh waiting problem with the same distribution. Averaging these cases:
+This argument avoids the series and the derivative; it uses only the story and the fact, shown above, that the mean is finite. Think of flipping a coin with heads probability $$p$$ until the first heads, and let $$\mu=E(G)$$. A first-trial success contributes zero failures. A first-trial failure contributes one failure, and then the problem starts over: the coin has no memory of the failure, so the remaining wait has the same distribution as before. Averaging these cases:
 
 $$
 \mu=p\cdot0+q(1+\mu).
@@ -5824,9 +6281,9 @@ The sum takes only the even values $$2,4,6,8,10,12$$, each with probability $$1/
 | Fundamental bridge | $$E(I_A)=P(A)$$ |
 | Linearity | $$E(\sum_j a_jX_j+c)=\sum_j a_jE(X_j)+c$$ for finite expectations |
 | Dependence | Does not invalidate linearity |
-| Binomial mean | $$np$$ |
+| Binomial mean | $$np$$, by indicators; directly via $$k\binom nk=n\binom{n-1}{k-1}$$ and the binomial theorem |
 | Hypergeometric mean | $$nw/(w+b)$$ |
-| Geometric mean | $$(1-p)/p$$ failures |
+| Geometric mean | $$(1-p)/p$$ failures, by differentiating a series or by restarting: $$\mu=p\cdot0+q(1+\mu)$$ |
 | First Success mean | $$1/p$$ total trials |
 | Nonlinear transformations | Generally $$E(g(X))\ne g(E(X))$$ |
 
@@ -6730,7 +7187,7 @@ Computing with $$\binom nk$$ for astronomically large $$n$$ is also numerically 
 
 Assume 365 equally likely birthdays, independent across people, and ignore February 29.
 
-#### Matching pairs
+#### Supplementary: Matching pairs
 
 With $$m$$ people there are $$\binom m2$$ pairs. Let $$A_{ij}$$ be the event that persons $$i<j$$ share a birthday. Each has probability $$1/365$$. The events are weakly dependent: for example, if persons 1 and 2 match and persons 2 and 3 match, then persons 1 and 3 must match. The Poisson paradigm gives
 
@@ -6739,7 +7196,7 @@ X=\#\{\text{matching pairs}\}\ \dot\sim\ \operatorname{Pois}(\lambda),\qquad \la
 $$
 
 <div class="example-block" markdown="1">
-<div class="ex-title">Twenty-three people <span class="ex-pill pill-ex">Worked example</span></div>
+<div class="ex-title">Supplementary: Twenty-three people <span class="ex-pill pill-ex">Worked example</span></div>
 
 For $$m=23$$, there are $$\binom{23}2=253$$ pairs, so $$\lambda=253/365\approx0.6932$$. Then
 
@@ -7804,7 +8261,7 @@ Infinitely many random variables are independent if every finite subcollection i
 **i.i.d.** Random variables are **independent and identically distributed** when they are independent and share one distribution. The two properties are unrelated: independence concerns information, identical distribution concerns the shape of the PMF or CDF.
 
 <div class="example-block" markdown="1">
-<div class="ex-title">Maximum and minimum of two dice <span class="ex-pill pill-ex">Worked example</span></div>
+<div class="ex-title">Supplementary: Maximum and minimum of two dice <span class="ex-pill pill-ex">Worked example</span></div>
 
 Roll two fair dice. Let $$M$$ be the larger value and $$L$$ the smaller. Are $$M$$ and $$L$$ independent?
 
@@ -8975,7 +9432,7 @@ If $$X$$ is a positive continuous random variable with the memoryless property, 
 
 </div>
 
-**Proof.** Let $$G(x)=P(X>x)$$. For a continuous $$X$$, $$P(X\ge x)=P(X>x)$$, so memorylessness reads
+**Supplementary proof by differentiation.** The main proof, which needs only continuity, is in Lecture 17. A shorter argument, assuming differentiability, runs as follows. Let $$G(x)=P(X>x)$$. For a continuous $$X$$, $$P(X\ge x)=P(X>x)$$, so memorylessness reads
 
 $$
 G(s+t)=G(s)G(t)\quad\text{for all }s,t>0.
@@ -8989,9 +9446,7 @@ $$
 
 Set $$c=G'(0)$$, a constant. The equation $$G'=cG$$ with $$G(0)=P(X>0)=1$$ has the unique solution $$G(t)=e^{ct}$$. Because $$G$$ decreases toward 0, $$c<0$$. Writing $$\lambda=-c>0$$ gives $$G(t)=e^{-\lambda t}$$, the Exponential survival function. $$\blacksquare$$
 
-Lecture 17 gives a second proof that uses only the equation $$G(s+t)=G(s)G(t)$$ and the continuity of $$G$$, with no differentiation.
-
-### Part 7 — The Geometric connection
+### Part 7 — Supplementary: The Geometric connection
 
 The Exponential is the continuous counterpart of the Geometric distribution.
 
@@ -9217,7 +9672,7 @@ The strategy is to solve this equation for the unknown function $$G$$.
 
 This is the $$\operatorname{Expo}(\lambda)$$ survival function. $$\blacksquare$$
 
-Lecture 16 reached the same conclusion by differentiating the functional equation; the argument here needs only continuity. (Step 5 also uses $$0<G(1)<1$$: $$G(1)=0$$ or $$G(1)=1$$ would put all probability at 0 or at infinity, impossible for a positive continuous random variable.)
+This argument needs only the continuity of $$G$$, not differentiability; a shorter supplementary proof that assumes differentiability is included in Lecture 16. (Step 5 also uses $$0<G(1)<1$$: $$G(1)=0$$ or $$G(1)=1$$ would put all probability at 0 or at infinity, impossible for a positive continuous random variable.)
 
 #### Lifetimes are not memoryless
 
@@ -9929,7 +10384,7 @@ Both tables below describe a pair of Bernoulli random variables $$X$$ and $$Y$$.
 </div>
 
 <div class="example-block" markdown="1">
-<div class="ex-title">Continuous joint PDFs: one dependent, one independent <span class="ex-pill pill-ex">Worked example</span></div>
+<div class="ex-title">Supplementary: Continuous joint PDFs, one dependent and one independent <span class="ex-pill pill-ex">Worked example</span></div>
 
 **Dependent.** Let $$f(x,y)=x+y$$ on the unit square $$0<x,y<1$$.
 
@@ -10869,6 +11324,5042 @@ A tail probability that decays slowly, such as like a power of $$t$$ rather than
   <span class="ref-tag">Multinomial</span>
   <span class="ref-tag">Cauchy</span>
   <span class="ref-tag">Heavy tails</span>
+</div>
+
+  </div>
+</div>
+
+
+## Lecture 21 - Covariance and Correlation
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-21-toggle" onclick="toggleLecture('lecture-21')" aria-expanded="true" aria-controls="lecture-21-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 21</span>
+      <span>
+        <span class="chapter-title">Lecture 21 - Covariance and Correlation</span>
+        <span class="chapter-subtitle">Covariance and its bilinearity, the variance of a sum, uncorrelated versus independent, correlation bounds, and covariances in the Multinomial, Binomial, and Hypergeometric</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-21-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-21-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+Variance is not linear, so the variance of a sum needs a new tool: covariance, which measures how two random variables vary together. Covariance is symmetric, ignores added constants, and is bilinear, so it expands like a product of sums. With it, $$\operatorname{Var}(X+Y)=\operatorname{Var}(X)+\operatorname{Var}(Y)+2\operatorname{Cov}(X,Y)$$. Independent random variables are uncorrelated, but uncorrelated ones need not be independent. Correlation is covariance after standardizing, so it has no units and always lies between $$-1$$ and $$1$$. These tools give the negative covariance of two Multinomial counts, the Binomial variance in one line, and the first step of the Hypergeometric variance.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$\operatorname{Cov}(X,Y)$$ | Covariance, $$E\big((X-EX)(Y-EY)\big)$$ |
+| $$\operatorname{Corr}(X,Y)$$, $$\rho$$ | Correlation, the covariance of the standardized variables |
+| $$\operatorname{SD}(X)$$ | Standard deviation, $$\sqrt{\operatorname{Var}(X)}$$ |
+| $$\dfrac{X-EX}{\operatorname{SD}(X)}$$ | Standardized $$X$$: mean 0, variance 1 |
+| $$I_A$$ | Indicator random variable of event $$A$$ |
+| $$\mathbf X\sim\operatorname{Mult}_k(n,\mathbf p)$$ | Multinomial category counts |
+| $$X\sim\operatorname{HGeom}(w,b,n)$$ | White balls in a sample of $$n$$ drawn without replacement from $$w$$ white and $$b$$ black |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Define covariance, interpret its sign, and compute it with $$E(XY)-E(X)E(Y)$$.
+- Use symmetry, constants, and bilinearity to expand the covariance of sums.
+- Compute the variance of a sum of possibly dependent random variables.
+- Explain why independence implies zero covariance, and give an uncorrelated pair that is dependent.
+- Define correlation as the covariance of standardized variables and prove that it lies in $$[-1,1]$$.
+- Find the covariance of two Multinomial counts using the lumping property.
+- Use indicator facts to find the Binomial variance and to set up the Hypergeometric variance.
+
+### Part 1 — Covariance: how two random variables vary together
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Covariance <span class="ex-pill pill-defn">Definition</span></div>
+
+For random variables $$X$$ and $$Y$$ on the same sample space,
+
+$$
+\boxed{\operatorname{Cov}(X,Y)=E\big((X-EX)(Y-EY)\big).}
+$$
+
+</div>
+
+The product brings the two variables together. If $$X$$ tends to be above its mean when $$Y$$ is above its mean, and below when $$Y$$ is below, the two deviations usually have the same sign, so the product is usually positive and the covariance is positive: $$X$$ and $$Y$$ are **positively correlated**. If being above the mean in one tends to go with being below the mean in the other, the product is usually negative, and they are **negatively correlated**.
+
+Expanding the product and using linearity gives the formula used most often in practice:
+
+$$
+\begin{aligned}
+\operatorname{Cov}(X,Y)
+&=E\big(XY-X\,EY-Y\,EX+EX\,EY\big)\\
+&=E(XY)-EX\,EY-EX\,EY+EX\,EY\\
+&=E(XY)-E(X)E(Y).
+\end{aligned}
+$$
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{\operatorname{Cov}(X,Y)=E(XY)-E(X)E(Y).}
+$$
+
+</div>
+
+The definition is better for intuition; the second form is usually easier to compute. With $$Y=X$$, it becomes $$E(X^2)-(EX)^2$$, the familiar variance formula.
+
+### Part 2 — Properties and bilinearity
+
+Each property follows by substituting into the definition, or into $$E(XY)-E(X)E(Y)$$, and using linearity of expectation.
+
+| Property | Statement |
+|---|---|
+| 1. Variance | $$\operatorname{Cov}(X,X)=\operatorname{Var}(X)$$ |
+| 2. Symmetry | $$\operatorname{Cov}(X,Y)=\operatorname{Cov}(Y,X)$$ |
+| 3. Constants | $$\operatorname{Cov}(X,c)=0$$ for any constant $$c$$ |
+| 4. Scaling | $$\operatorname{Cov}(cX,Y)=c\operatorname{Cov}(X,Y)$$ |
+| 5. Sums | $$\operatorname{Cov}(X,Y+Z)=\operatorname{Cov}(X,Y)+\operatorname{Cov}(X,Z)$$ |
+
+For property 3, $$c-E(c)=0$$, so the product inside the expectation is 0. For property 5, replace $$Y$$ by $$Y+Z$$: $$E(X(Y+Z))=E(XY)+E(XZ)$$ and $$E(Y+Z)=EY+EZ$$, and the terms regroup into the two covariances.
+
+Properties 4 and 5 together are called **bilinearity**: holding one argument fixed, covariance is linear in the other. Adding a constant changes nothing either, since $$\operatorname{Cov}(X+c,Y)=\operatorname{Cov}(X,Y)+\operatorname{Cov}(c,Y)=\operatorname{Cov}(X,Y)$$.
+
+Bilinearity works like the distributive law. For example,
+
+$$
+\operatorname{Cov}(X+Y,Z+W)=\operatorname{Cov}(X,Z)+\operatorname{Cov}(X,W)+\operatorname{Cov}(Y,Z)+\operatorname{Cov}(Y,W).
+$$
+
+In general, for constants $$a_i,b_j$$,
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{\operatorname{Cov}\left(\sum_{i=1}^m a_iX_i,\ \sum_{j=1}^n b_jY_j\right)=\sum_{i=1}^m\sum_{j=1}^n a_ib_j\operatorname{Cov}(X_i,Y_j).}
+$$
+
+</div>
+
+Every term on the left is paired with every term on the right, and constants come out. Using these rules directly is usually much easier than returning to the definition.
+
+### Part 3 — The variance of a sum
+
+By property 1 and bilinearity,
+
+$$
+\operatorname{Var}(X_1+X_2)=\operatorname{Cov}(X_1+X_2,X_1+X_2)
+=\operatorname{Var}(X_1)+\operatorname{Var}(X_2)+\operatorname{Cov}(X_1,X_2)+\operatorname{Cov}(X_2,X_1).
+$$
+
+The two cross terms are equal by symmetry, so
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{\operatorname{Var}(X_1+X_2)=\operatorname{Var}(X_1)+\operatorname{Var}(X_2)+2\operatorname{Cov}(X_1,X_2).}
+$$
+
+For $$n$$ terms,
+
+$$
+\boxed{\operatorname{Var}\left(\sum_{j=1}^n X_j\right)=\sum_{j=1}^n\operatorname{Var}(X_j)+2\sum_{i<j}\operatorname{Cov}(X_i,X_j).}
+$$
+
+</div>
+
+The factor 2 is there because the sum runs over $$i<j$$, so each pair appears once although $$\operatorname{Cov}(X_i,X_j)$$ and $$\operatorname{Cov}(X_j,X_i)$$ both occur. Summing over all $$i\ne j$$ instead would need no factor 2.
+
+The variance of a sum equals the sum of the variances exactly when the covariance terms add to zero. Independence is one way for this to happen, but not the only way.
+
+For a difference, write $$X-Y=X+(-Y)$$:
+
+$$
+\operatorname{Var}(X-Y)=\operatorname{Var}(X)+\operatorname{Var}(Y)-2\operatorname{Cov}(X,Y).
+$$
+
+The variances still add; only the covariance term changes sign.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">A die and the sum of two dice <span class="ex-pill pill-num">Worked example</span></div>
+
+Roll two fair dice independently. Let $$X$$ be the first die and $$S=X+Y$$ the total, where $$Y$$ is the second die. Each die has variance $$35/12$$.
+
+By bilinearity and independence of $$X$$ and $$Y$$,
+
+$$
+\operatorname{Cov}(X,S)=\operatorname{Cov}(X,X)+\operatorname{Cov}(X,Y)=\frac{35}{12}+0=\frac{35}{12},
+$$
+
+$$
+\operatorname{Var}(S)=\frac{35}{12}+\frac{35}{12}=\frac{35}{6}.
+$$
+
+The covariance is positive: a high first die tends to make the total high. Correlation (Part 5) puts this on a fixed scale:
+
+$$
+\operatorname{Corr}(X,S)=\frac{35/12}{\sqrt{(35/12)(35/6)}}=\frac1{\sqrt2}\approx0.707.
+$$
+
+<div class="ex-lesson">Expanding covariances with bilinearity avoids computing $$E(XS)$$ from the joint distribution.</div>
+</div>
+
+### Part 4 — Uncorrelated versus independent
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Independent implies uncorrelated <span class="ex-pill pill-thm">Theorem</span></div>
+
+If $$X$$ and $$Y$$ are independent, then $$\operatorname{Cov}(X,Y)=0$$. Random variables with zero covariance are called **uncorrelated**.
+
+</div>
+
+**Proof.** Independence gives $$E(XY)=E(X)E(Y)$$, shown in Lecture 19 with two-dimensional LOTUS. So $$\operatorname{Cov}(X,Y)=E(XY)-E(X)E(Y)=0$$.
+
+The converse is false.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">A Normal and its square <span class="ex-pill pill-ex">Worked example</span></div>
+
+Let $$Z\sim\mathcal N(0,1)$$, $$X=Z$$, and $$Y=Z^2$$. The odd moments of a standard Normal are 0, so
+
+$$
+\operatorname{Cov}(X,Y)=E(Z^3)-E(Z)E(Z^2)=0-0\cdot1=0.
+$$
+
+So $$X$$ and $$Y$$ are uncorrelated. They are extremely dependent: $$Y$$ is a function of $$X$$, so knowing $$X$$ determines $$Y$$ completely. Knowing $$Y$$ also gives information about $$X$$: it determines $$\lvert X\rvert=\sqrt Y$$, leaving only the sign unknown.
+
+<div class="ex-lesson">Correlation measures linear association. Here the relationship is a perfect parabola, with no linear trend at all.</div>
+</div>
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-21-correlation-scatter.svg" alt="Four scatter plots. The first three show Normal pairs with correlation minus 0.8, 0, and 0.8: a downward cloud, a round cloud, and an upward cloud. The fourth shows points lying exactly on the parabola Y equals Z squared, which has correlation 0 despite complete dependence." style="display: block; width: 100%; max-width: 780px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes. Correlation measures the linear trend of a cloud of points. The last panel is uncorrelated yet completely dependent.</figcaption>
+</figure>
+
+A stronger statement is true but beyond these notes: if every function of $$X$$ is uncorrelated with every function of $$Y$$, then $$X$$ and $$Y$$ are independent. Zero correlation between $$X$$ and $$Y$$ themselves is not enough.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** The covariance is 0, so $$X$$ and $$Y$$ are independent.
+
+**Correction:** Zero covariance rules out a linear trend only. $$X=Z$$ and $$Y=Z^2$$ are uncorrelated but completely dependent. Independence implies uncorrelated; the reverse direction fails.
+
+</div>
+
+### Part 5 — Correlation
+
+Covariance depends on units. If $$X$$ and $$Y$$ are lengths, measuring them in nanometers instead of light-years changes the covariance by an enormous factor, so a covariance of 42 says little by itself. Correlation removes the units by standardizing first.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Correlation <span class="ex-pill pill-defn">Definition</span></div>
+
+$$
+\boxed{\operatorname{Corr}(X,Y)=\operatorname{Cov}\left(\frac{X-EX}{\operatorname{SD}(X)},\frac{Y-EY}{\operatorname{SD}(Y)}\right)=\frac{\operatorname{Cov}(X,Y)}{\operatorname{SD}(X)\operatorname{SD}(Y)}.}
+$$
+
+</div>
+
+The two forms agree: subtracting the means is adding constants, which does not change covariance, and the standard deviations come out as constants by property 4. The standardized variables have mean 0 and variance 1 and are unitless, since a measurement in nanometers minus nanometers, divided by nanometers, has no units.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Correlation bounds <span class="ex-pill pill-thm">Theorem</span></div>
+
+For any $$X$$ and $$Y$$ with positive finite variances,
+
+$$
+\boxed{-1\le\operatorname{Corr}(X,Y)\le1.}
+$$
+
+</div>
+
+**Proof.** Standardizing does not change the correlation, so assume without loss of generality that $$X$$ and $$Y$$ already have mean 0 and variance 1. Then $$\operatorname{Cov}(X,Y)=\operatorname{Corr}(X,Y)=\rho$$, and
+
+$$
+\operatorname{Var}(X+Y)=1+1+2\rho=2+2\rho,\qquad
+\operatorname{Var}(X-Y)=1+1-2\rho=2-2\rho.
+$$
+
+Variances are nonnegative, so $$2+2\rho\ge0$$ and $$2-2\rho\ge0$$, which gives $$-1\le\rho\le1$$. $$\blacksquare$$
+
+The proof also shows when the extremes occur: $$\rho=1$$ exactly when $$\operatorname{Var}(X-Y)=0$$, so the standardized variables are equal with probability 1, and $$\rho=-1$$ exactly when they are negatives of each other. A correlation of $$0.9$$ is therefore high, because the largest possible value is 1. This inequality is a form of the Cauchy–Schwarz inequality.
+
+### Part 6 — Covariance in a Multinomial
+
+Let $$\mathbf X=(X_1,\ldots,X_k)\sim\operatorname{Mult}_k(n,\mathbf p)$$. Each count is Binomial, so $$\operatorname{Cov}(X_i,X_i)=\operatorname{Var}(X_i)=np_i(1-p_i)$$. For two different categories, the covariance should be negative: the $$n$$ objects are fixed in number, so more objects in category 1 leaves fewer for category 2.
+
+Find $$c=\operatorname{Cov}(X_1,X_2)$$ by computing $$\operatorname{Var}(X_1+X_2)$$ in two ways. By the variance of a sum,
+
+$$
+\operatorname{Var}(X_1+X_2)=np_1(1-p_1)+np_2(1-p_2)+2c.
+$$
+
+By the lumping property, merging categories 1 and 2 gives a Binomial count with success probability $$p_1+p_2$$:
+
+$$
+\operatorname{Var}(X_1+X_2)=n(p_1+p_2)(1-p_1-p_2).
+$$
+
+Setting these equal and expanding, the terms $$np_1-np_1^2+np_2-np_2^2$$ cancel from both sides, leaving $$2c=-2np_1p_2$$. Relabeling gives the general result:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{\operatorname{Cov}(X_i,X_j)=-np_ip_j,\qquad i\ne j.}
+$$
+
+</div>
+
+The covariance is negative, as predicted.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Counting ones and twos <span class="ex-pill pill-num">Worked example</span></div>
+
+Roll a fair die 12 times. Let $$X_1$$ and $$X_2$$ be the numbers of ones and twos. Then
+
+$$
+\operatorname{Cov}(X_1,X_2)=-12\cdot\frac16\cdot\frac16=-\frac13,\qquad
+\operatorname{Var}(X_1)=\operatorname{Var}(X_2)=12\cdot\frac16\cdot\frac56=\frac53,
+$$
+
+$$
+\operatorname{Corr}(X_1,X_2)=\frac{-1/3}{5/3}=-\frac15.
+$$
+
+<div class="ex-lesson">The categories compete for a fixed number of objects, so their counts are negatively correlated.</div>
+</div>
+
+### Part 7 — Indicators: the Binomial variance
+
+Two facts about indicator random variables are simple but often overlooked.
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{I_A^k=I_A\ \text{for any positive integer }k,\qquad I_AI_B=I_{A\cap B}.}
+$$
+
+</div>
+
+Powers of 0 and 1 are 0 and 1, and a product of two 0/1 values is 1 exactly when both are 1.
+
+**Bernoulli variance.** If $$I\sim\operatorname{Bern}(p)$$, then $$I^2=I$$, so
+
+$$
+\operatorname{Var}(I)=E(I^2)-(EI)^2=p-p^2=p(1-p)=pq.
+$$
+
+**Binomial variance.** Write $$X\sim\operatorname{Bin}(n,p)$$ as $$X=I_1+\cdots+I_n$$ with $$I_j$$ i.i.d. $$\operatorname{Bern}(p)$$. The indicators are independent, so every covariance term is 0, and
+
+$$
+\boxed{\operatorname{Var}(X)=npq.}
+$$
+
+This agrees with the indicator calculation in Lecture 14, now in one line.
+
+### Part 8 — Setting up the Hypergeometric variance
+
+Let $$X\sim\operatorname{HGeom}(w,b,n)$$: draw $$n$$ balls without replacement from an urn with $$w$$ white and $$b$$ black balls, and count the white ones. Write $$X=I_1+\cdots+I_n$$, where $$I_j$$ indicates that the $$j$$th ball drawn is white. Now the indicators are **dependent**, so the covariance terms remain:
+
+$$
+\operatorname{Var}(X)=\sum_{j=1}^n\operatorname{Var}(I_j)+2\sum_{i<j}\operatorname{Cov}(I_i,I_j).
+$$
+
+**Symmetry.** Before any ball is drawn, the $$j$$th ball is equally likely to be any of the $$w+b$$ balls, so each $$I_j\sim\operatorname{Bern}(p)$$ with $$p=w/(w+b)$$. These are unconditional statements: no earlier draw is being observed. Likewise every pair of positions has the same joint distribution, so all $$\binom n2$$ covariances equal $$\operatorname{Cov}(I_1,I_2)$$:
+
+$$
+\operatorname{Var}(X)=np(1-p)+2\binom n2\operatorname{Cov}(I_1,I_2).
+$$
+
+**The covariance.** By $$I_1I_2=I_{A_1\cap A_2}$$ and the fundamental bridge,
+
+$$
+\operatorname{Cov}(I_1,I_2)=P(\text{first two balls white})-p^2=\frac{w}{w+b}\cdot\frac{w-1}{w+b-1}-p^2.
+$$
+
+Everything is now known; the remaining step is algebra, completed in Lecture 22.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** To find $$P(I_2=1)$$, the second ball's color must be conditioned on the first ball's color.
+
+**Correction:** Without observing the first ball, the second ball is equally likely to be any ball in the urn, so $$P(I_2=1)=w/(w+b)$$ by symmetry. Conditioning on the first ball is needed only for joint events such as both balls being white.
+
+</div>
+
+### Part 9 — Original practice questions
+
+Try these before reading the answers.
+
+1. Suppose $$\operatorname{Var}(X)=4$$, $$\operatorname{Var}(Y)=9$$, and $$\operatorname{Cov}(X,Y)=-2$$. Find $$\operatorname{Var}(X+Y)$$ and $$\operatorname{Var}(X-Y)$$.
+2. With $$\operatorname{Var}(X)=1$$, $$\operatorname{Var}(Y)=4$$, and $$\operatorname{Cov}(X,Y)=0.5$$, find $$\operatorname{Cov}(2X+3,\,Y-X)$$.
+3. Let $$X\sim\operatorname{Unif}(-1,1)$$ and $$Y=X^2$$. Show that $$X$$ and $$Y$$ are uncorrelated but dependent.
+4. Let $$X$$ and $$Y$$ be i.i.d. with variance $$\sigma^2>0$$. Find $$\operatorname{Corr}(X,X+Y)$$.
+5. For constants $$a,c\ne0$$ and $$b,d$$, express $$\operatorname{Corr}(aX+b,\,cY+d)$$ in terms of $$\operatorname{Corr}(X,Y)$$.
+6. Ten people answer a survey with three categories of probabilities $$0.5,0.3,0.2$$. Find $$\operatorname{Cov}(X_1,X_2)$$, and check $$\operatorname{Var}(X_1+X_2)$$ by lumping.
+7. Show that $$\operatorname{Corr}(X,Y)=1$$ implies that the standardized versions of $$X$$ and $$Y$$ are equal with probability 1.
+8. A deck of $$n\ge2$$ cards labeled $$1,\ldots,n$$ is shuffled. Let $$M$$ be the number of cards in their own position. Find $$\operatorname{Var}(M)$$.
+9. Explain why $$\operatorname{Var}(X_1+\cdots+X_n)=n\operatorname{Var}(X_1)$$ for i.i.d. variables but not for $$X_1=\cdots=X_n$$.
+
+### Part 10 — Practice answers
+
+#### 1. Sums and differences
+
+$$\operatorname{Var}(X+Y)=4+9+2(-2)=9$$ and $$\operatorname{Var}(X-Y)=4+9-2(-2)=17$$.
+
+#### 2. Bilinearity
+
+The constant 3 drops out. Then $$\operatorname{Cov}(2X,Y-X)=2\operatorname{Cov}(X,Y)-2\operatorname{Var}(X)=1-2=-1$$.
+
+#### 3. A symmetric parabola
+
+$$E(X)=0$$ and $$E(X^3)=0$$ by symmetry, so $$\operatorname{Cov}(X,X^2)=E(X^3)-E(X)E(X^2)=0$$. They are dependent: for example, $$P(Y>1/4)=1/2$$, but given $$X=0.9$$, $$Y=0.81>1/4$$ with certainty.
+
+#### 4. A variable and a sum containing it
+
+$$\operatorname{Cov}(X,X+Y)=\operatorname{Var}(X)+\operatorname{Cov}(X,Y)=\sigma^2$$, and $$\operatorname{Var}(X+Y)=2\sigma^2$$. So $$\operatorname{Corr}=\sigma^2/(\sigma\cdot\sqrt2\,\sigma)=1/\sqrt2$$, matching the dice example.
+
+#### 5. Changing units
+
+$$\operatorname{Cov}(aX+b,cY+d)=ac\operatorname{Cov}(X,Y)$$ and $$\operatorname{SD}(aX+b)\operatorname{SD}(cY+d)=\lvert a\rvert\lvert c\rvert\operatorname{SD}(X)\operatorname{SD}(Y)$$. So the correlation is $$\operatorname{Corr}(X,Y)$$ if $$ac>0$$ and $$-\operatorname{Corr}(X,Y)$$ if $$ac<0$$. Changing units does not change correlation.
+
+#### 6. Survey counts
+
+$$\operatorname{Cov}(X_1,X_2)=-10(0.5)(0.3)=-1.5$$. Then $$\operatorname{Var}(X_1)+\operatorname{Var}(X_2)+2\operatorname{Cov}=2.5+2.1-3=1.6$$. By lumping, $$X_1+X_2\sim\operatorname{Bin}(10,0.8)$$ with variance $$10(0.8)(0.2)=1.6$$. They agree.
+
+#### 7. The extreme case
+
+For standardized $$\tilde X,\tilde Y$$ with correlation 1, $$\operatorname{Var}(\tilde X-\tilde Y)=2-2(1)=0$$. A variable with variance 0 equals its mean with probability 1, and $$E(\tilde X-\tilde Y)=0$$, so $$\tilde X=\tilde Y$$ with probability 1. Equivalently, $$Y$$ is an increasing linear function of $$X$$.
+
+#### 8. Matches in a shuffled deck
+
+Let $$I_j$$ indicate a match at position $$j$$, so $$P(I_j=1)=1/n$$ and, for $$i\ne j$$, $$P(I_i=I_j=1)=\frac1{n(n-1)}$$. Then
+
+$$
+\operatorname{Var}(M)=n\cdot\frac1n\left(1-\frac1n\right)+2\binom n2\left(\frac1{n(n-1)}-\frac1{n^2}\right)
+=\left(1-\frac1n\right)+\frac1n=1.
+$$
+
+The mean and variance of the number of matches are both 1.
+
+#### 9. Independent copies versus one variable repeated
+
+For i.i.d. variables all covariances are 0, giving $$n\operatorname{Var}(X_1)$$. If all $$X_j$$ equal $$X_1$$, every covariance equals $$\operatorname{Var}(X_1)$$, and the sum is $$nX_1$$ with variance $$n^2\operatorname{Var}(X_1)$$.
+
+### Part 11 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Covariance | $$E((X-EX)(Y-EY))=E(XY)-E(X)E(Y)$$ |
+| Sign | Positive: tend to be above or below their means together |
+| Basic properties | $$\operatorname{Cov}(X,X)=\operatorname{Var}(X)$$; symmetric; $$\operatorname{Cov}(X,c)=0$$ |
+| Bilinearity | $$\operatorname{Cov}(\sum a_iX_i,\sum b_jY_j)=\sum\sum a_ib_j\operatorname{Cov}(X_i,Y_j)$$ |
+| Variance of a sum | $$\sum\operatorname{Var}(X_j)+2\sum_{i<j}\operatorname{Cov}(X_i,X_j)$$ |
+| Difference | $$\operatorname{Var}(X-Y)=\operatorname{Var}X+\operatorname{Var}Y-2\operatorname{Cov}(X,Y)$$ |
+| Independence | Implies uncorrelated; not conversely ($$Z$$ and $$Z^2$$) |
+| Correlation | Covariance of standardized variables; unitless |
+| Bounds | $$-1\le\operatorname{Corr}\le1$$, from $$\operatorname{Var}(X\pm Y)\ge0$$ |
+| Multinomial | $$\operatorname{Cov}(X_i,X_j)=-np_ip_j$$ for $$i\ne j$$ |
+| Indicators | $$I_A^k=I_A$$, $$I_AI_B=I_{A\cap B}$$ |
+| Binomial | $$\operatorname{Var}=npq$$ by adding independent Bernoulli variances |
+| Hypergeometric setup | $$np(1-p)+2\binom n2\operatorname{Cov}(I_1,I_2)$$, with dependent indicators |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Covariance <span class="gcat cat-meas">Measure</span></div>
+
+$$E((X-EX)(Y-EY))$$, a measure of how two random variables vary together. Its sign indicates the direction of their linear association.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Bilinearity <span class="gcat cat-prop">Property</span></div>
+
+Covariance is linear in each argument when the other is held fixed, so the covariance of two sums expands into covariances of all pairs of terms.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Uncorrelated <span class="gcat cat-defn">Definition</span></div>
+
+Having covariance 0. Independent random variables are uncorrelated, but uncorrelated ones may be dependent.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Correlation <span class="gcat cat-meas">Measure</span></div>
+
+The covariance of the standardized variables, $$\operatorname{Cov}(X,Y)/(\operatorname{SD}(X)\operatorname{SD}(Y))$$. It is unitless and lies between $$-1$$ and $$1$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Standardization <span class="gcat cat-defn">Definition</span></div>
+
+Replacing $$X$$ by $$(X-EX)/\operatorname{SD}(X)$$, which has mean 0, variance 1, and no units.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Indicator product rule <span class="gcat cat-prop">Property</span></div>
+
+$$I_AI_B=I_{A\cap B}$$ and $$I_A^k=I_A$$, which turn expectations of products of indicators into probabilities of intersections.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 21</span>
+  <span class="ref-tag">Covariance</span>
+  <span class="ref-tag">Correlation</span>
+  <span class="ref-tag">Variance of a sum</span>
+  <span class="ref-tag">Multinomial</span>
+  <span class="ref-tag">Indicators</span>
+</div>
+
+  </div>
+</div>
+
+
+## Lecture 22 - Transformations and Convolutions
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-22-toggle" onclick="toggleLecture('lecture-22')" aria-expanded="true" aria-controls="lecture-22-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 22</span>
+      <span>
+        <span class="chapter-title">Lecture 22 - Transformations and Convolutions</span>
+        <span class="chapter-subtitle">The Hypergeometric variance and finite population correction, change of variables in one and several dimensions, the Log-Normal, convolutions, and the probabilistic method</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-22-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-22-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+The Hypergeometric variance is the Binomial variance times a finite population correction, $$\frac{N-n}{N-1}$$. LOTUS gives the mean of a transformed random variable; the change-of-variables formula gives its whole distribution. For a smooth, strictly increasing $$g$$ and $$Y=g(X)$$, the PDF is $$f_Y(y)=f_X(x)\,dx/dy$$, written as a function of $$y$$. The Log-Normal shows the method. In several dimensions the derivative becomes the absolute value of a Jacobian determinant. A convolution is the distribution of a sum of independent random variables, found by conditioning on one of them. Finally, probability can prove that an object exists: if a random object has a property with positive probability, or if the average score is high, some object must have that property or score.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$N=w+b$$, $$p=w/N$$ | Population size and fraction of white balls |
+| $$\dfrac{N-n}{N-1}$$ | Finite population correction |
+| $$Y=g(X)$$, $$y=g(x)$$ | A transformation and its counterpart for values |
+| $$\dfrac{dx}{dy}$$ | Derivative of $$x=g^{-1}(y)$$ with respect to $$y$$ |
+| $$\dfrac{\partial\mathbf x}{\partial\mathbf y}$$ | Jacobian matrix of partial derivatives $$\partial x_i/\partial y_j$$ |
+| $$\left\lvert\det\dfrac{\partial\mathbf x}{\partial\mathbf y}\right\rvert$$ | Absolute value of the Jacobian determinant |
+| $$T=X+Y$$ | A sum whose distribution is a convolution |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Derive the Hypergeometric variance and interpret the finite population correction through extreme cases.
+- State and prove the one-dimensional change-of-variables formula, and check its assumptions.
+- Derive the Log-Normal PDF.
+- Apply the multivariate change-of-variables formula with a Jacobian determinant.
+- Write convolution sums and integrals for independent random variables, and justify the continuous case through the CDF.
+- Use the probabilistic method to prove that an object with a desired property exists.
+
+### Part 1 — Finishing the Hypergeometric variance
+
+Lecture 21 reduced the variance of $$X\sim\operatorname{HGeom}(w,b,n)$$ to
+
+$$
+\operatorname{Var}(X)=np(1-p)+2\binom n2\operatorname{Cov}(I_1,I_2),\qquad
+\operatorname{Cov}(I_1,I_2)=p\cdot\frac{w-1}{N-1}-p^2,
+$$
+
+where $$N=w+b$$ is the population size and $$p=w/N$$. Simplify the covariance:
+
+$$
+\operatorname{Cov}(I_1,I_2)=p\left(\frac{w-1}{N-1}-\frac wN\right)
+=p\cdot\frac{N(w-1)-w(N-1)}{N(N-1)}
+=p\cdot\frac{w-N}{N(N-1)}
+=-\frac{p(1-p)}{N-1}.
+$$
+
+It is negative: drawing a white ball first leaves fewer white balls for the second draw. Then
+
+$$
+\operatorname{Var}(X)=np(1-p)-n(n-1)\frac{p(1-p)}{N-1}
+=np(1-p)\left(1-\frac{n-1}{N-1}\right).
+$$
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{\operatorname{Var}(X)=\frac{N-n}{N-1}\,np(1-p),\qquad N=w+b,\ p=\frac wN.}
+$$
+
+</div>
+
+This is the Binomial variance $$np(1-p)$$ times a factor called the **finite population correction**. Sampling without replacement varies less than sampling with replacement.
+
+**Checking extreme cases.**
+
+- If $$n=1$$, the factor is 1 and the variance is $$p(1-p)$$. With one draw, replacement cannot matter.
+- If $$N$$ is much larger than $$n$$, say $$n=20$$ and $$N=100{,}000$$, the factor is nearly 1 and the variance is nearly Binomial. In a huge population, drawing the same individual twice is very unlikely even with replacement, so the two schemes behave alike.
+- If $$n=N$$, the factor is 0. The whole urn is drawn, so $$X=w$$ with certainty.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Aces in a poker hand <span class="ex-pill pill-num">Worked example</span></div>
+
+Let $$X$$ be the number of aces in a five-card hand: $$X\sim\operatorname{HGeom}(4,48,5)$$, with $$N=52$$ and $$p=1/13$$.
+
+$$
+np(1-p)=5\cdot\frac1{13}\cdot\frac{12}{13}=\frac{60}{169}\approx0.355,\qquad
+\frac{N-n}{N-1}=\frac{47}{51}\approx0.922,
+$$
+
+$$
+\operatorname{Var}(X)=\frac{47}{51}\cdot\frac{60}{169}=\frac{940}{2873}\approx0.327.
+$$
+
+<div class="ex-lesson">Five cards is a small sample from 52, so the correction is modest; the variance is about 8% below the Binomial value.</div>
+</div>
+
+### Part 2 — Change of variables in one dimension
+
+LOTUS gives $$E(g(X))$$ without finding the distribution of $$g(X)$$. Often the whole distribution is needed.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Change of variables in one dimension <span class="ex-pill pill-thm">Theorem</span></div>
+
+Let $$X$$ be continuous with PDF $$f_X$$, and let $$Y=g(X)$$, where $$g$$ is differentiable and strictly increasing on the support of $$X$$. Then
+
+$$
+\boxed{f_Y(y)=f_X(x)\frac{dx}{dy},}
+$$
+
+where $$y=g(x)$$, so $$x=g^{-1}(y)$$, and the right side is written as a function of $$y$$.
+
+</div>
+
+**Reading the formula.** The right side contains $$x$$. Substitute $$x=g^{-1}(y)$$ so that the answer is a function of $$y$$. By the chain rule, $$\frac{dx}{dy}=1\Big/\frac{dy}{dx}$$, so either derivative can be computed, whichever is easier. A mnemonic is $$f_Y(y)\,dy=f_X(x)\,dx$$: probability in a tiny interval is preserved.
+
+**Proof.** Find the CDF and differentiate. Since $$g$$ is strictly increasing, the events $$\{g(X)\le y\}$$ and $$\{X\le g^{-1}(y)\}$$ are the same:
+
+$$
+F_Y(y)=P(g(X)\le y)=P(X\le g^{-1}(y))=F_X(g^{-1}(y))=F_X(x).
+$$
+
+Differentiating with respect to $$y$$ by the chain rule gives $$f_Y(y)=f_X(x)\frac{dx}{dy}$$. $$\blacksquare$$
+
+If $$g$$ is strictly decreasing instead, the same argument gives $$f_Y(y)=f_X(x)\left\lvert\frac{dx}{dy}\right\rvert$$. The absolute value keeps the density positive.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** For $$Z\sim\mathcal N(0,1)$$ and $$Y=Z^2$$, plug $$g(z)=z^2$$ into the formula.
+
+**Correction:** $$z^2$$ decreases on the negative half-line and increases on the positive half-line, so it is not strictly increasing. Go back to the CDF instead. On a positive support, such as $$X\sim\operatorname{Expo}(1)$$, the function $$x^2$$ is strictly increasing and the formula applies.
+
+</div>
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Supplementary: The square of a standard Normal <span class="ex-pill pill-ex">Worked example</span></div>
+
+For $$y>0$$, use the CDF directly:
+
+$$
+F_Y(y)=P(-\sqrt y\le Z\le\sqrt y)=2\Phi(\sqrt y)-1.
+$$
+
+Differentiating, $$f_Y(y)=2\varphi(\sqrt y)\cdot\frac1{2\sqrt y}=\frac1{\sqrt{2\pi y}}e^{-y/2}$$ for $$y>0$$. This distribution is called the Chi-Square with one degree of freedom.
+
+<div class="ex-lesson">When $$g$$ is not one-to-one, add up the probability from every piece of the support that maps to a given $$y$$; the CDF does this automatically.</div>
+</div>
+
+### Part 3 — The Log-Normal distribution
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Log-Normal PDF <span class="ex-pill pill-ex">Worked example</span></div>
+
+Let $$Z\sim\mathcal N(0,1)$$ and $$Y=e^Z$$. The name means that $$\log Y=Z$$ is Normal. It does not mean the log of a Normal, which would be undefined for negative values.
+
+The function $$y=e^z$$ is strictly increasing and differentiable, so the theorem applies.
+
+1. Write $$z$$ in terms of $$y$$: $$z=\log y$$.
+2. Find the derivative: $$\frac{dy}{dz}=e^z=y$$, so $$\frac{dz}{dy}=\frac1y$$.
+3. Substitute into $$f_Y(y)=\varphi(z)\frac{dz}{dy}$$:
+
+$$
+\boxed{f_Y(y)=\frac1{y\sqrt{2\pi}}\,e^{-(\log y)^2/2},\qquad y>0.}
+$$
+
+Since $$P(Y\le1)=P(Z\le0)=\frac12$$, the median is 1. The mean, found from the Normal MGF, is $$E(Y)=E(e^Z)=e^{1/2}\approx1.65$$, larger than the median because of the long right tail.
+
+<div class="ex-lesson">The derivative factor $$1/y$$ reflects how the exponential stretches the right half of the line and compresses the left half.</div>
+</div>
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-22-log-normal-pdf.svg" alt="Left: the symmetric standard Normal density. Right: the Log-Normal density of e to the Z, which is zero at zero, peaks below 1, and has a long right tail; dotted and dashed lines mark the median 1 and the mean square root of e." style="display: block; width: 100%; max-width: 720px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes, illustrating Blitzstein and Hwang, <em>Introduction to Probability</em>, Example 8.1.2. Exponentiating a Normal produces a right-skewed distribution on the positive half-line.</figcaption>
+</figure>
+
+### Part 4 — Change of variables in several dimensions
+
+Now let $$\mathbf X=(X_1,\ldots,X_n)$$ be a continuous random vector with joint PDF $$f_{\mathbf X}$$, and $$\mathbf Y=g(\mathbf X)$$, where $$g$$ maps $$\mathbb R^n$$ to $$\mathbb R^n$$, is invertible, and has continuous partial derivatives. The analogous formula holds:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{f_{\mathbf Y}(\mathbf y)=f_{\mathbf X}(\mathbf x)\left\lvert\det\frac{\partial\mathbf x}{\partial\mathbf y}\right\rvert,}
+$$
+
+</div>
+
+again written as a function of $$\mathbf y$$. The **Jacobian matrix** collects every partial derivative of the $$x$$'s with respect to the $$y$$'s:
+
+$$
+\frac{\partial\mathbf x}{\partial\mathbf y}=
+\begin{pmatrix}
+\dfrac{\partial x_1}{\partial y_1}&\cdots&\dfrac{\partial x_1}{\partial y_n}\\
+\vdots&\ddots&\vdots\\
+\dfrac{\partial x_n}{\partial y_1}&\cdots&\dfrac{\partial x_n}{\partial y_n}
+\end{pmatrix}.
+$$
+
+The bars mean the absolute value of the determinant: the determinant compresses the matrix to one number, and the absolute value keeps the density positive. As in one dimension, $$\left\lvert\det\frac{\partial\mathbf x}{\partial\mathbf y}\right\rvert=1\Big/\left\lvert\det\frac{\partial\mathbf y}{\partial\mathbf x}\right\rvert$$, so compute whichever direction is easier. Writing $$\partial\mathbf x/\partial\mathbf y$$ rather than a bare $$J$$ makes the direction clear. The proof is an exercise in multivariable calculus.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Supplementary: Sum and difference of two Normals <span class="ex-pill pill-ex">Worked example</span></div>
+
+Let $$X,Y$$ be i.i.d. $$\mathcal N(0,1)$$, $$U=X+Y$$, and $$V=X-Y$$. Invert: $$x=\frac{u+v}2$$, $$y=\frac{u-v}2$$. The Jacobian determinant is
+
+$$
+\det\begin{pmatrix}1/2&1/2\\1/2&-1/2\end{pmatrix}=-\frac12,\qquad\text{absolute value }\frac12.
+$$
+
+Since $$x^2+y^2=\frac{u^2+v^2}{2}$$,
+
+$$
+f_{U,V}(u,v)=\frac1{2\pi}e^{-(u^2+v^2)/4}\cdot\frac12
+=\left(\frac1{\sqrt{4\pi}}e^{-u^2/4}\right)\left(\frac1{\sqrt{4\pi}}e^{-v^2/4}\right).
+$$
+
+The joint PDF factors into two $$\mathcal N(0,2)$$ densities, so $$U$$ and $$V$$ are independent $$\mathcal N(0,2)$$.
+
+<div class="ex-lesson">A Jacobian calculation can reveal independence: if the new joint PDF factors, the new variables are independent.</div>
+</div>
+
+### Part 5 — Convolutions
+
+A **convolution** is the distribution of a sum of independent random variables. Stories (the Binomial) and MGFs (the Poisson and Normal) have handled some sums already. When neither helps, compute directly. Let $$T=X+Y$$ with $$X$$ and $$Y$$ independent.
+
+**Discrete case.** For $$T=t$$, $$X$$ must take some value $$x$$ and $$Y$$ must make up the rest. These are disjoint cases, and independence splits each probability:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{P(T=t)=\sum_xP(X=x)P(Y=t-x).}
+$$
+
+**Continuous case.**
+
+$$
+\boxed{f_T(t)=\int_{-\infty}^{\infty}f_X(x)f_Y(t-x)\,dx.}
+$$
+
+</div>
+
+The continuous formula looks like the discrete one with PMFs replaced by PDFs, but an analogy is not a proof. **Justification.** Condition on $$X$$ with the continuous law of total probability, then use independence to drop the condition:
+
+$$
+F_T(t)=\int_{-\infty}^{\infty}P(X+Y\le t\mid X=x)f_X(x)\,dx=\int_{-\infty}^{\infty}F_Y(t-x)f_X(x)\,dx.
+$$
+
+Differentiating with respect to $$t$$, and exchanging the derivative and the integral, gives the formula, since $$F_Y'=f_Y$$.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** By analogy with sums, the PDF of a product $$XY$$ is $$\int f_X(x)f_Y(t/x)\,dx$$.
+
+**Correction:** Reasoning by analogy fails here. Conditioning on $$X=x$$ and differentiating $$P(Y\le t/x)$$ (for $$x>0$$) produces an extra factor $$1/\lvert x\rvert$$, so the correct formula is $$\int f_X(x)f_Y(t/x)\frac1{\lvert x\rvert}\,dx$$. Derive such formulas through the CDF.
+
+</div>
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Supplementary: Sum of two Exponentials <span class="ex-pill pill-num">Worked example</span></div>
+
+Let $$X,Y$$ be i.i.d. $$\operatorname{Expo}(\lambda)$$. For $$t>0$$, the integrand is nonzero only when $$0<x<t$$:
+
+$$
+f_T(t)=\int_0^t\lambda e^{-\lambda x}\,\lambda e^{-\lambda(t-x)}\,dx=\lambda^2e^{-\lambda t}\int_0^t dx=\lambda^2te^{-\lambda t}.
+$$
+
+<div class="ex-lesson">The limits of integration come from where both densities are positive. This density reappears in Lecture 24 as a Gamma distribution.</div>
+</div>
+
+When possible, prefer a story or an MGF to a convolution integral; use the integral when nothing else works.
+
+### Part 6 — The probabilistic method: proving existence
+
+Probability can prove that an object with a desired property exists, even when the problem mentions no randomness.
+
+**Strategy 1.** Choose an object at random, for example uniformly from a finite collection. Let $$A$$ be the event that the chosen object has the property. If $$P(A)>0$$, then some object has the property, since otherwise $$P(A)$$ would be 0. Only a lower bound on $$P(A)$$ is needed, not its exact value.
+
+**Strategy 2.** Suppose each object has a numerical score. Choose an object at random and let $$X$$ be its score. Then
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{\text{some object has score at least }E(X).}
+$$
+
+</div>
+
+Not every object can be below average. If $$E(X)$$ is good, a good object exists, even if none can be exhibited.
+
+**Shannon's theorem.** This method underlies information theory. In 1948 Claude Shannon showed that a noisy channel has a capacity, and that messages can be sent at any rate below it with an arbitrarily small probability of error. He proved that good codes exist by showing that a randomly chosen code performs well on average. Explicit codes achieving this were found only decades later. Modern communication, including cell phones, rests on this work.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Overlapping committees <span class="ex-pill pill-ex">Worked example</span></div>
+
+There are 100 people and 15 committees of 20 people each. Each person is on exactly 3 committees, consistent with $$15\cdot20=300=100\cdot3$$. Show that some two committees share at least 3 members.
+
+Searching every pair of committees directly would be hopeless in general. Instead, choose 2 of the 15 committees at random, all $$\binom{15}2$$ pairs equally likely, and find the expected overlap.
+
+1. **Indicators.** For each person $$i$$, let $$I_i$$ indicate that person $$i$$ is on both chosen committees. The overlap is $$I_1+\cdots+I_{100}$$.
+2. **Probability.** Person $$i$$ is on 3 committees, so the chosen pair must be one of the $$\binom32$$ pairs among those three:
+
+$$
+P(I_i=1)=\frac{\binom32}{\binom{15}2}=\frac3{105}=\frac1{35}.
+$$
+
+3. **Linearity.** The expected overlap is $$100\cdot\frac1{35}=\frac{20}7\approx2.86$$.
+
+Some pair of committees has overlap at least $$20/7$$. An overlap is an integer, so that pair shares at least 3 members.
+
+<div class="ex-lesson">An average of $$20/7$$ guarantees some value at least $$20/7$$, and integer values round this up to 3.</div>
+</div>
+
+### Part 7 — Original practice questions
+
+Try these before reading the answers.
+
+1. An urn has 6 white and 4 black balls. Draw 5 without replacement. Find the variance of the number of white balls, and compare with drawing with replacement.
+2. Let $$X\sim\operatorname{Unif}(0,1)$$ and $$Y=X^3$$. Find the PDF of $$Y$$.
+3. Let $$U\sim\operatorname{Unif}(0,1)$$ and $$Y=-\log U$$. Use the change-of-variables formula to identify the distribution of $$Y$$.
+4. Let $$Y=e^{\mu+\sigma Z}$$ with $$Z\sim\mathcal N(0,1)$$ and $$\sigma>0$$. Find the PDF of $$Y$$.
+5. Let $$X\sim\operatorname{Expo}(1)$$ and $$Y=X^2$$. Find the PDF of $$Y$$.
+6. Let $$X,Y$$ be i.i.d. $$\operatorname{Unif}(0,1)$$. Find the PDF of $$X+Y$$ by a convolution integral.
+7. Let $$X\sim\operatorname{Pois}(\lambda)$$ and $$Y\sim\operatorname{Pois}(\mu)$$ be independent. Use the convolution sum to show $$X+Y\sim\operatorname{Pois}(\lambda+\mu)$$.
+8. Thirty people form 10 committees of 9, and each person is on exactly 3 committees. What does the probabilistic method guarantee about the largest overlap of two committees?
+9. Explain why the probabilistic method can prove existence without producing an example.
+
+### Part 8 — Practice answers
+
+#### 1. Finite population correction
+
+$$N=10$$, $$p=0.6$$, and $$np(1-p)=1.2$$. The correction is $$\frac{10-5}{10-1}=\frac59$$, so $$\operatorname{Var}(X)=\frac59(1.2)=\frac23$$. With replacement the variance would be $$1.2$$.
+
+#### 2. A cube
+
+$$y=x^3$$ is increasing on $$(0,1)$$, with $$x=y^{1/3}$$ and $$\frac{dx}{dy}=\frac13y^{-2/3}$$. So $$f_Y(y)=\frac13y^{-2/3}$$ for $$0<y<1$$.
+
+#### 3. Back to the Exponential
+
+$$y=-\log u$$ is decreasing, with $$u=e^{-y}$$ and $$\left\lvert\frac{du}{dy}\right\rvert=e^{-y}$$. So $$f_Y(y)=1\cdot e^{-y}$$ for $$y>0$$: $$Y\sim\operatorname{Expo}(1)$$, matching universality of the Uniform.
+
+#### 4. General Log-Normal
+
+$$z=\frac{\log y-\mu}\sigma$$ and $$\frac{dz}{dy}=\frac1{\sigma y}$$. So
+
+$$
+f_Y(y)=\frac1{\sigma y\sqrt{2\pi}}\exp\left(-\frac{(\log y-\mu)^2}{2\sigma^2}\right),\qquad y>0.
+$$
+
+#### 5. Square of an Exponential
+
+On $$x>0$$, $$y=x^2$$ is increasing, $$x=\sqrt y$$, and $$\frac{dx}{dy}=\frac1{2\sqrt y}$$. So $$f_Y(y)=\frac{e^{-\sqrt y}}{2\sqrt y}$$ for $$y>0$$.
+
+#### 6. The triangle
+
+$$f_T(t)=\int_0^1f_Y(t-x)\,dx$$, where $$f_Y(t-x)=1$$ when $$0<t-x<1$$. For $$0<t\le1$$, $$x$$ ranges over $$(0,t)$$, giving $$t$$. For $$1<t<2$$, $$x$$ ranges over $$(t-1,1)$$, giving $$2-t$$. The density is a triangle peaking at $$t=1$$.
+
+#### 7. Poisson convolution
+
+$$
+P(X+Y=k)=\sum_{j=0}^k\frac{e^{-\lambda}\lambda^j}{j!}\cdot\frac{e^{-\mu}\mu^{k-j}}{(k-j)!}
+=\frac{e^{-(\lambda+\mu)}}{k!}\sum_{j=0}^k\binom kj\lambda^j\mu^{k-j}
+=\frac{e^{-(\lambda+\mu)}(\lambda+\mu)^k}{k!},
+$$
+
+by the binomial theorem. This confirms the MGF result from Lecture 18.
+
+#### 8. Smaller committees
+
+$$10\cdot9=90=30\cdot3$$, so the counts are consistent. For a random pair of committees, $$P(\text{person on both})=\binom32\big/\binom{10}2=\frac3{45}$$, so the expected overlap is $$30\cdot\frac3{45}=2$$. Some pair shares at least 2 members.
+
+#### 9. Existence without construction
+
+If no object had the property, the probability that a random object has it would be exactly 0. A positive probability, or an average that some object must reach, rules this out, so an object exists without being identified.
+
+### Part 9 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Hypergeometric covariance | $$\operatorname{Cov}(I_1,I_2)=-p(1-p)/(N-1)$$ |
+| Hypergeometric variance | $$\frac{N-n}{N-1}np(1-p)$$ |
+| Finite population correction | 1 when $$n=1$$; near 1 when $$N\gg n$$; 0 when $$n=N$$ |
+| One-dimensional change of variables | $$f_Y(y)=f_X(x)\lvert dx/dy\rvert$$ for strictly monotone smooth $$g$$ |
+| Check assumptions | Not one-to-one, such as $$Z^2$$: return to the CDF |
+| Log-Normal | $$Y=e^Z$$: $$f_Y(y)=\frac1{y\sqrt{2\pi}}e^{-(\log y)^2/2}$$, $$y>0$$ |
+| Multivariate | $$f_{\mathbf Y}(\mathbf y)=f_{\mathbf X}(\mathbf x)\lvert\det\partial\mathbf x/\partial\mathbf y\rvert$$ |
+| Either direction | $$\lvert\det\partial\mathbf x/\partial\mathbf y\rvert=1/\lvert\det\partial\mathbf y/\partial\mathbf x\rvert$$ |
+| Discrete convolution | $$P(T=t)=\sum_xP(X=x)P(Y=t-x)$$ |
+| Continuous convolution | $$f_T(t)=\int f_X(x)f_Y(t-x)\,dx$$, justified via the CDF |
+| Preference order | Story, then MGF, then convolution sum or integral |
+| Probabilistic method | $$P(A)>0$$ for a random object, or some object scores at least $$E(X)$$ |
+| Committees | Expected overlap $$20/7$$, so some pair shares at least 3 |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Finite population correction <span class="gcat cat-meas">Measure</span></div>
+
+The factor $$\frac{N-n}{N-1}$$ by which the Hypergeometric variance falls below the corresponding Binomial variance.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Change of variables <span class="gcat cat-thm">Theorem</span></div>
+
+For a smooth invertible transformation, the PDF of the new variable is the old PDF times the absolute derivative, or absolute Jacobian determinant, of the inverse map.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Jacobian <span class="gcat cat-notn">Notation</span></div>
+
+The matrix of all partial derivatives of one set of variables with respect to another. The absolute value of its determinant rescales densities in a multivariate transformation.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Log-Normal distribution <span class="gcat cat-defn">Definition</span></div>
+
+The distribution of $$e^Z$$ with $$Z$$ Normal, so that its logarithm is Normal.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Convolution <span class="gcat cat-defn">Definition</span></div>
+
+The distribution of a sum of independent random variables, given by $$\sum_xP(X=x)P(Y=t-x)$$ or $$\int f_X(x)f_Y(t-x)\,dx$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Probabilistic method <span class="gcat cat-thm">Theorem</span></div>
+
+Proving that an object with a property exists by showing that a randomly chosen object has the property with positive probability, or that the average score is high enough.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 22</span>
+  <span class="ref-tag">Hypergeometric</span>
+  <span class="ref-tag">Change of variables</span>
+  <span class="ref-tag">Log-Normal</span>
+  <span class="ref-tag">Jacobian</span>
+  <span class="ref-tag">Convolution</span>
+  <span class="ref-tag">Probabilistic method</span>
+</div>
+
+  </div>
+</div>
+
+
+## Lecture 23 - Beta Distribution
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-23-toggle" onclick="toggleLecture('lecture-23')" aria-expanded="true" aria-controls="lecture-23-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 23</span>
+      <span>
+        <span class="chapter-title">Lecture 23 - Beta Distribution</span>
+        <span class="chapter-subtitle">The Beta family on (0,1), Beta–Binomial conjugacy, Bayes’ billiards, and a guest segment on probability in finance</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-23-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-23-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+The Beta distribution generalizes the Uniform: it lives on $$(0,1)$$, but its density $$x^{a-1}(1-x)^{b-1}$$ can be flat, sloped, U-shaped, or hump-shaped depending on the parameters $$a,b>0$$. Its main use is as a distribution for an unknown probability. It is the conjugate prior for the Binomial: a $$\operatorname{Beta}(a,b)$$ prior and $$X$$ successes in $$n$$ trials give a $$\operatorname{Beta}(a+X,\,b+n-X)$$ posterior, found without computing any normalizing constant. Bayes’ billiards evaluates $$\int_0^1\binom nk x^k(1-x)^{n-k}\,dx=\frac1{n+1}$$ without calculus, which gives the Beta normalizing constant for integer parameters. A guest segment shows expectation at work in finance.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$X\sim\operatorname{Beta}(a,b)$$ | Beta distribution with parameters $$a,b>0$$ |
+| $$\beta(a,b)$$ | Beta function, $$\int_0^1x^{a-1}(1-x)^{b-1}\,dx$$ |
+| $$p\sim\operatorname{Beta}(a,b)$$ | Prior distribution for an unknown probability |
+| $$X\mid p\sim\operatorname{Bin}(n,p)$$ | Data: successes in $$n$$ trials, given $$p$$ |
+| $$f(p\mid X=k)$$ | Posterior PDF of $$p$$ |
+| $$\propto$$ | Proportional to, as a function of the variable of interest |
+| $$S_T$$, $$K$$ | Asset price at a future time $$T$$ and an option's strike price |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Write the Beta PDF and describe how $$a$$ and $$b$$ control its shape.
+- Explain why the Beta is a natural prior for an unknown probability.
+- Derive the posterior distribution in the Beta–Binomial model using proportionality.
+- Interpret the conjugate update as adding observed successes and failures to the parameters.
+- Use Bayes’ billiards to evaluate $$\int_0^1x^k(1-x)^{n-k}\,dx$$ without calculus.
+- Describe a financial derivative and express its price as an expectation computed by LOTUS.
+
+### Part 1 — The Beta distribution
+
+So far the Uniform is the only named continuous distribution that is bounded, and its density is flat. The Normal lives on the whole line and the Exponential on the positive half-line. The Beta stays on $$(0,1)$$ but allows other shapes.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Beta distribution <span class="ex-pill pill-defn">Definition</span></div>
+
+A random variable $$X$$ has the **Beta distribution** with parameters $$a>0$$ and $$b>0$$, written $$X\sim\operatorname{Beta}(a,b)$$, if its PDF is
+
+$$
+\boxed{f(x)=c\,x^{a-1}(1-x)^{b-1},\qquad0<x<1,}
+$$
+
+and 0 otherwise. The normalizing constant is $$c=1/\beta(a,b)$$, where $$\beta(a,b)=\int_0^1x^{a-1}(1-x)^{b-1}\,dx$$ is the **beta function**.
+
+</div>
+
+It is a whole family, one distribution for each choice of $$a$$ and $$b$$, and the parameters need not be integers. Much can be done without knowing $$c$$; its general value is found in Lecture 25.
+
+**A flexible family.** Varying the parameters changes the shape:
+
+| Parameters | Density | Shape |
+|---|---|---|
+| $$a=b=1$$ | $$1$$ | Flat: $$\operatorname{Beta}(1,1)=\operatorname{Unif}(0,1)$$ |
+| $$a=2,\ b=1$$ | $$2x$$ | Increases linearly; the triangle has area 1 |
+| $$a=b=\tfrac12$$ | $$\propto x^{-1/2}(1-x)^{-1/2}$$ | U-shaped, blowing up at both ends |
+| $$a=b=2$$ | $$6x(1-x)$$ | An upside-down U, symmetric about $$1/2$$ |
+
+In general, $$a$$ pushes mass toward 1 and $$b$$ pushes it toward 0. When $$a=b$$ the density is symmetric about $$1/2$$.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-23-beta-shapes-and-update.svg" alt="Left: Beta densities for parameters (1,1) flat, (2,1) a rising line, (0.5,0.5) U-shaped, (2,2) a symmetric hump, and (5,2) a hump skewed toward 1. Right: a Beta(2,2) prior shown dashed and the much narrower Beta(9,5) posterior after 7 successes in 10 trials, peaking near 0.7." style="display: block; width: 100%; max-width: 760px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes, illustrating Blitzstein and Hwang, <em>Introduction to Probability</em>, Definition 8.3.1 and Story 8.3.3. Left: the shapes available in the Beta family. Right: a prior updated by Binomial data.</figcaption>
+</figure>
+
+**Why the Beta matters.**
+
+- It is the most widely used distribution for a quantity between 0 and 1, especially an unknown probability.
+- It is the conjugate prior for the Binomial (Part 2).
+- It connects to the Uniform, Gamma, and order statistics, as Lectures 24 and 25 show.
+
+### Part 2 — Beta–Binomial conjugacy
+
+Laplace's rule of succession (Lecture 17) treated an unknown probability $$p$$ as Uniform. Replace the Uniform prior with any Beta prior.
+
+**The model.**
+
+$$
+p\sim\operatorname{Beta}(a,b),\qquad X\mid p\sim\operatorname{Bin}(n,p).
+$$
+
+Here $$p$$ is treated as a random variable to reflect uncertainty about it, the Bayesian approach. The **prior** $$\operatorname{Beta}(a,b)$$ describes beliefs about $$p$$ before the data. $$X$$ is the data. The goal is the **posterior**, the distribution of $$p$$ given $$X$$.
+
+**Bayes’ rule with a density.**
+
+$$
+f(p\mid X=k)=\frac{P(X=k\mid p)\,f(p)}{P(X=k)}.
+$$
+
+The denominator is a probability that does not depend on $$p$$: it averages over all values of $$p$$. As a function of $$p$$, it is a constant. Constants such as $$\binom nk$$ and $$c$$ can be dropped too:
+
+$$
+f(p\mid X=k)\propto p^k(1-p)^{n-k}\cdot p^{a-1}(1-p)^{b-1}=p^{a+k-1}(1-p)^{b+n-k-1}.
+$$
+
+This is the shape of a Beta density. The missing constant is whatever makes it integrate to 1, so the posterior must be a Beta:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{p\mid X\sim\operatorname{Beta}(a+X,\ b+n-X).}
+$$
+
+</div>
+
+**Conjugacy.** A family of priors is **conjugate** for a model if every prior in the family produces a posterior in the same family. Starting from a Beta, the data only update the parameters. This is computationally convenient: no new distribution has to be studied. Whether a conjugate prior is the right description of one's uncertainty is a separate, debated question.
+
+**Interpretation.** Read $$a$$ and $$b$$ as earlier, imagined data: $$a$$ prior successes and $$b$$ prior failures. The new data add $$X$$ successes and $$n-X$$ failures. Laplace's rule is the case $$a=b=1$$.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Updating a belief about a success rate <span class="ex-pill pill-num">Worked example</span></div>
+
+Suppose a prior $$p\sim\operatorname{Beta}(2,2)$$, symmetric about $$1/2$$ and mildly favoring middle values. In 10 independent trials there are 7 successes.
+
+The posterior is $$\operatorname{Beta}(2+7,\ 2+3)=\operatorname{Beta}(9,5)$$, with density proportional to $$p^8(1-p)^4$$. It is concentrated near $$0.7$$ and much narrower than the prior: the data have both moved and sharpened the belief.
+
+If the same 10 trials are split into two batches, say 4 successes in 5 trials, then 3 in 5, the sequential updates give $$\operatorname{Beta}(6,3)$$ and then $$\operatorname{Beta}(9,5)$$, the same answer. This is the coherence of Bayes' rule from Lecture 5.
+
+<div class="ex-lesson">The posterior parameters are the prior parameters plus the observed successes and failures.</div>
+</div>
+
+**Looking ahead.** Moments of the Beta are easy once the normalizing constant is known: $$x\cdot x^{a-1}=x^{(a+1)-1}$$, so $$E(X)$$ is an integral of the same Beta form with $$a$$ raised by 1, and $$E(X^2)$$ raises $$a$$ by 2. Lecture 25 finds the constant and the mean.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** To find the posterior, the denominator $$P(X=k)$$ must be computed first.
+
+**Correction:** $$P(X=k)$$ does not depend on $$p$$. Work up to proportionality in $$p$$, recognize the Beta shape, and the normalizing constant takes care of itself.
+
+</div>
+
+### Part 3 — Bayes’ billiards
+
+For integer parameters, Bayes found the needed integral without calculus. For integers $$0\le k\le n$$, the goal is
+
+$$
+\int_0^1\binom nk x^k(1-x)^{n-k}\,dx.
+$$
+
+Expanding by the binomial theorem and integrating term by term would be tedious. Instead, compare two ways of producing the same random picture.
+
+**Story 1.** Take $$n+1$$ white billiard balls and paint one pink. Throw all of them independently and uniformly onto $$(0,1)$$.
+
+**Story 2.** Throw all $$n+1$$ white balls independently and uniformly onto $$(0,1)$$, then choose one at random and paint it pink.
+
+The two stories produce the same distribution of pictures: it does not matter whether the pink ball was chosen before or after the throw. Let $$X$$ be the number of white balls to the left of the pink ball.
+
+**From Story 1.** Throw the pink ball first and condition on its position $$p$$. Each of the $$n$$ white balls independently lands left of the pink ball with probability $$p$$, so $$X\mid p\sim\operatorname{Bin}(n,p)$$. The pink ball's position is Uniform, with density 1. By the continuous law of total probability,
+
+$$
+P(X=k)=\int_0^1\binom nk p^k(1-p)^{n-k}\,dp.
+$$
+
+**From Story 2.** The pink ball is a uniformly random one of the $$n+1$$ thrown balls, so its rank among them is equally likely to be any of $$1,\ldots,n+1$$. The number of white balls to its left is therefore equally likely to be any of $$0,1,\ldots,n$$:
+
+$$
+P(X=k)=\frac1{n+1}.
+$$
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{\int_0^1\binom nk x^k(1-x)^{n-k}\,dx=\frac1{n+1},\qquad k=0,1,\ldots,n.}
+$$
+
+</div>
+
+Equivalently, $$\beta(k+1,\,n-k+1)=\dfrac{k!\,(n-k)!}{(n+1)!}$$. This is the Beta normalizing constant whenever both parameters are positive integers.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">A Beta integral without calculus <span class="ex-pill pill-num">Worked example</span></div>
+
+Find $$\int_0^1x^2(1-x)^3\,dx$$. Here $$k=2$$ and $$n=5$$, so
+
+$$
+\int_0^1x^2(1-x)^3\,dx=\frac1{\binom52\cdot6}=\frac1{60}.
+$$
+
+So the $$\operatorname{Beta}(3,4)$$ density is $$60x^2(1-x)^3$$.
+
+<div class="ex-lesson">Matching the integrand to a Binomial probability turns the integral into the probability that the pink ball has a given rank.</div>
+</div>
+
+### Part 4 — Guest segment: probability in finance
+
+This part summarizes a guest presentation on Statistics 123, Applied Quantitative Finance, a course whose only prerequisite is Statistics 110. It shows how expectation and LOTUS appear in quantitative finance.
+
+**Financial derivatives.** A financial **derivative** is a contract whose payoff at a future date is a function of another random quantity, usually an asset price $$S_T$$ at time $$T$$. A contract paying $1 if Boston gets more than 80 inches of snow this winter is a weather derivative. In finance the payoff is a random variable $$g(S_T)$$, and a key result says that, with the distribution of $$S_T$$ chosen appropriately, the fair price is an expectation:
+
+$$
+\text{price}=E\big(g(S_T)\big)=\int g(s)f(s)\,ds,
+$$
+
+which is LOTUS.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">A puzzle about exchange rates <span class="ex-pill pill-ex">Worked example</span></div>
+
+Suppose one euro is worth $1 today, and in a year it will be worth either $1.25 or $0.80, each with probability $$1/2$$. The expected value of a euro in a year is
+
+$$
+\frac12(1.25)+\frac12(0.80)=1.025\text{ dollars},
+$$
+
+so the euro is expected to appreciate. Now describe the same model from the dollar's side. A dollar will be worth either $$1/1.25=0.80$$ euros or $$1/0.80=1.25$$ euros, each with probability $$1/2$$, so its expected value is also $$1.025$$ euros. The dollar is expected to appreciate against the euro too.
+
+Both calculations are correct. They concern different random variables, $$S$$ and $$1/S$$, and $$E(1/S)\ne1/E(S)$$ because $$1/s$$ is not linear. Expectation does not commute with nonlinear functions, as the St. Petersburg paradox showed with $$E(2^X)\ne2^{E(X)}$$. Deciding which expectation should be used to price currency contracts is a deeper question, taken up in Statistics 123.
+
+<div class="ex-lesson">A model can predict that each of two currencies will appreciate against the other on average, because the exchange rate and its reciprocal have different expectations.</div>
+</div>
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Warrants in the 2008 bailout <span class="ex-pill pill-ex">Worked example</span></div>
+
+In October 2008, as part of the government's response to the financial crisis, the US government paid Goldman Sachs about $450 million. In return it received warrants: the right, but not the obligation, to buy 10 million Goldman Sachs shares at $125 each within ten years. The shares were then trading at about $95.
+
+A warrant of this kind works like a **call option** with **strike price** $$K=125$$. At maturity, it is used only if the share price is above $125, so its value is
+
+$$
+g(S_T)=\max(S_T-K,\,0).
+$$
+
+If the price is $150, it is worth $25; at $100, it is worth $0. The implied price was $$450\text{ million}/10\text{ million}=\$45$$ per option. With a density $$f$$ for $$S_T$$, LOTUS gives
+
+$$
+E\big(\max(S_T-K,0)\big)=\int_K^\infty(s-K)f(s)\,ds.
+$$
+
+Under a particular Log-Normal model for $$S_T$$, this integral is the Black–Scholes formula.
+
+<div class="ex-lesson">Option pricing reduces to computing the expectation of a function of a random price.</div>
+</div>
+
+### Part 5 — Original practice questions
+
+Try these before reading the answers.
+
+1. For $$X\sim\operatorname{Beta}(3,1)$$, find the normalizing constant and $$P(X>1/2)$$.
+2. For $$X\sim\operatorname{Beta}(2,2)$$, find $$P(X<1/3)$$.
+3. With a Uniform prior on $$p$$, you observe 3 successes in 4 trials. What is the posterior distribution?
+4. Starting from a $$\operatorname{Beta}(1,1)$$ prior, you observe a success, a success, then a failure. Find the posterior after each step, and check that the final posterior does not depend on the order.
+5. Use Bayes’ billiards to evaluate $$\int_0^1x^3(1-x)^2\,dx$$.
+6. Show that if $$X\sim\operatorname{Beta}(a,b)$$ then $$1-X\sim\operatorname{Beta}(b,a)$$.
+7. For $$a,b>1$$, find the mode of the $$\operatorname{Beta}(a,b)$$ density.
+8. In the exchange-rate model, compute $$E(S)$$ and $$1/E(S)$$ for the euro's dollar value $$S$$, and compare $$1/E(S)$$ with $$E(1/S)$$.
+9. Suppose a share price in a year is $$\operatorname{Unif}(100,150)$$. Find the expected payoff of a call option with strike $$K=125$$.
+
+### Part 6 — Practice answers
+
+#### 1. A rising density
+
+$$\int_0^1x^2\,dx=\frac13$$, so $$f(x)=3x^2$$. Then $$P(X>1/2)=1-(1/2)^3=\frac78$$.
+
+#### 2. A symmetric hump
+
+$$f(x)=6x(1-x)$$, with CDF $$3x^2-2x^3$$. So $$P(X<1/3)=\frac13-\frac2{27}=\frac7{27}$$.
+
+#### 3. Laplace's case
+
+The prior is $$\operatorname{Beta}(1,1)$$, so the posterior is $$\operatorname{Beta}(1+3,\,1+1)=\operatorname{Beta}(4,2)$$.
+
+#### 4. Sequential updates
+
+After a success: $$\operatorname{Beta}(2,1)$$. After another success: $$\operatorname{Beta}(3,1)$$. After a failure: $$\operatorname{Beta}(3,2)$$. Any order gives 2 successes and 1 failure, hence $$\operatorname{Beta}(3,2)$$.
+
+#### 5. Bayes’ billiards
+
+With $$k=3$$ and $$n=5$$, $$\binom53\int_0^1x^3(1-x)^2\,dx=\frac16$$, so the integral is $$\frac1{60}$$, matching $$\frac{3!\,2!}{6!}$$.
+
+#### 6. Reflection
+
+Let $$Y=1-X$$, a decreasing map with $$\lvert dx/dy\rvert=1$$. Then $$f_Y(y)=c(1-y)^{a-1}y^{b-1}$$, the $$\operatorname{Beta}(b,a)$$ shape.
+
+#### 7. Mode
+
+Maximize $$(a-1)\log x+(b-1)\log(1-x)$$. Setting the derivative $$\frac{a-1}x-\frac{b-1}{1-x}$$ to 0 gives $$x=\frac{a-1}{a+b-2}$$. For the posterior $$\operatorname{Beta}(9,5)$$ in the worked example, the mode is $$8/12=2/3$$.
+
+#### 8. Reciprocals
+
+$$E(S)=1.025$$, so $$1/E(S)\approx0.976$$. But $$E(1/S)=\frac12(0.80)+\frac12(1.25)=1.025$$. They differ because $$1/s$$ is not linear.
+
+#### 9. A call payoff
+
+$$E(\max(S-125,0))=\int_{125}^{150}(s-125)\frac1{50}\,ds=\frac{25^2/2}{50}=6.25$$ dollars.
+
+### Part 7 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Beta PDF | $$c\,x^{a-1}(1-x)^{b-1}$$ on $$(0,1)$$, with $$a,b>0$$ |
+| Special cases | $$\operatorname{Beta}(1,1)=\operatorname{Unif}(0,1)$$; $$\operatorname{Beta}(2,1)$$ has density $$2x$$ |
+| Shapes | U-shaped if $$a,b<1$$; hump-shaped if $$a,b>1$$; symmetric if $$a=b$$ |
+| Main use | Prior for an unknown probability |
+| Model | $$p\sim\operatorname{Beta}(a,b)$$, $$X\mid p\sim\operatorname{Bin}(n,p)$$ |
+| Posterior | $$p\mid X\sim\operatorname{Beta}(a+X,\,b+n-X)$$ |
+| Method | Work up to proportionality in $$p$$; the denominator is a constant |
+| Conjugacy | Beta prior gives Beta posterior; parameters act as prior successes and failures |
+| Bayes’ billiards | $$\int_0^1\binom nk x^k(1-x)^{n-k}dx=\frac1{n+1}$$ |
+| Integer constant | $$\beta(k+1,n-k+1)=\frac{k!(n-k)!}{(n+1)!}$$ |
+| Derivative price | Expectation of the payoff $$g(S_T)$$, by LOTUS |
+| Call option | Payoff $$\max(S_T-K,0)$$ |
+| Exchange-rate puzzle | $$E(1/S)\ne1/E(S)$$ |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Beta distribution <span class="gcat cat-defn">Definition</span></div>
+
+A continuous distribution on $$(0,1)$$ with density proportional to $$x^{a-1}(1-x)^{b-1}$$, generalizing the Uniform.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Beta function <span class="gcat cat-notn">Notation</span></div>
+
+$$\beta(a,b)=\int_0^1x^{a-1}(1-x)^{b-1}\,dx$$, the reciprocal of the Beta normalizing constant.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Prior and posterior distributions <span class="gcat cat-defn">Definition</span></div>
+
+The distribution of an unknown parameter before observing data, and its updated distribution after observing the data via Bayes’ rule.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Conjugate prior <span class="gcat cat-defn">Definition</span></div>
+
+A family of prior distributions for which the posterior, after observing data from a given model, stays in the same family. The Beta is conjugate for the Binomial.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Bayes’ billiards <span class="gcat cat-prop">Story</span></div>
+
+The argument that painting one of $$n+1$$ uniformly thrown balls before or after the throw gives the same picture, which evaluates $$\int_0^1\binom nk x^k(1-x)^{n-k}dx=\frac1{n+1}$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Financial derivative <span class="gcat cat-defn">Definition</span></div>
+
+A contract whose payoff is a function of another random quantity, such as an asset price. A call option pays $$\max(S_T-K,0)$$.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 23</span>
+  <span class="ref-tag">Beta</span>
+  <span class="ref-tag">Conjugate prior</span>
+  <span class="ref-tag">Bayesian updating</span>
+  <span class="ref-tag">Bayes’ billiards</span>
+  <span class="ref-tag">Finance</span>
+</div>
+
+  </div>
+</div>
+
+
+## Lecture 24 - Gamma Distribution and Poisson Process
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-24-toggle" onclick="toggleLecture('lecture-24')" aria-expanded="true" aria-controls="lecture-24-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 24</span>
+      <span>
+        <span class="chapter-title">Lecture 24 - Gamma Distribution and Poisson Process</span>
+        <span class="chapter-subtitle">Stirling's formula, the gamma function, the Gamma distribution, arrival times in a Poisson process, the Gamma MGF, and Gamma moments</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-24-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-24-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+Factorials grow roughly like $$(n/e)^n$$, made precise by Stirling's formula. The gamma function $$\Gamma(a)=\int_0^\infty x^ae^{-x}\frac{dx}x$$ extends the factorial to all positive reals, with $$\Gamma(n)=(n-1)!$$, $$\Gamma(a+1)=a\Gamma(a)$$, and $$\Gamma(\tfrac12)=\sqrt\pi$$. Dividing its integrand by $$\Gamma(a)$$ gives the $$\operatorname{Gamma}(a,1)$$ PDF, and rescaling gives $$\operatorname{Gamma}(a,\lambda)$$. In a Poisson process of rate $$\lambda$$, the gaps between arrivals are i.i.d. $$\operatorname{Expo}(\lambda)$$, and the time of the $$n$$th arrival, a sum of $$n$$ such gaps, is $$\operatorname{Gamma}(n,\lambda)$$, proved by matching MGFs. The Gamma is to the Exponential what the Negative Binomial is to the Geometric. Its moments come straight from the gamma function: a $$\operatorname{Gamma}(a,\lambda)$$ variable has mean $$a/\lambda$$ and variance $$a/\lambda^2$$.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$\Gamma(a)$$ | Gamma function, $$\int_0^\infty x^ae^{-x}\frac{dx}x$$ for $$a>0$$ |
+| $$X\sim\operatorname{Gamma}(a,1)$$ | PDF $$\frac1{\Gamma(a)}x^ae^{-x}\frac1x$$, $$x>0$$ |
+| $$Y\sim\operatorname{Gamma}(a,\lambda)$$ | $$Y=X/\lambda$$ with $$X\sim\operatorname{Gamma}(a,1)$$ |
+| $$N_t$$ | Number of arrivals in $$[0,t]$$ in a Poisson process, $$N_t\sim\operatorname{Pois}(\lambda t)$$ |
+| $$T_n$$ | Time of the $$n$$th arrival |
+| $$X_j$$ | Gap between arrivals $$j-1$$ and $$j$$, with $$T_0=0$$ |
+| $$M(t)$$ | Moment generating function |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- State Stirling's formula and use it to describe how fast $$n!$$ grows.
+- Define the gamma function and use $$\Gamma(n)=(n-1)!$$, $$\Gamma(a+1)=a\Gamma(a)$$, and $$\Gamma(\tfrac12)=\sqrt\pi$$.
+- Write the $$\operatorname{Gamma}(a,1)$$ and $$\operatorname{Gamma}(a,\lambda)$$ PDFs.
+- Describe a Poisson process through counts and through i.i.d. Exponential gaps.
+- Prove with MGFs that a sum of $$n$$ i.i.d. $$\operatorname{Expo}(\lambda)$$ variables is $$\operatorname{Gamma}(n,\lambda)$$.
+- Compute Gamma moments with the gamma function, including the mean and variance.
+
+### Part 1 — How fast do factorials grow?
+
+A sequence such as $$0,1,2,\ldots$$ can be continued in many ways. The next term could be 3, or it could be $$3!!!$$ if the pattern is $$0$$, $$1!$$, $$2!!$$ with repeated factorials. Without a principle for choosing, such puzzles have no single answer. The same problem arises in extending the factorial beyond the integers: many smooth curves pass through the points $$(n,n!)$$. The gamma function (Part 2) is the standard choice.
+
+First, the size of $$n!$$. The values $$1,1,2,6,24,120,720,\ldots$$ start small and then grow extremely fast. **Stirling's formula** describes the growth:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{n!\approx\sqrt{2\pi n}\left(\frac ne\right)^n,}
+$$
+
+in the sense that the ratio of the two sides tends to 1 as $$n\to\infty$$.
+
+</div>
+
+The dominant part is $$n^n$$, discounted by $$e^n$$; the square root is a smaller correction. The approximation is accurate even for modest $$n$$: for $$n=10$$, it gives about $$3{,}598{,}696$$, against $$10!=3{,}628{,}800$$, a ratio of about $$0.992$$. Stirling's formula can be proved with probability, using the Poisson distribution, but that proof is beyond this lecture.
+
+### Part 2 — The gamma function
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Gamma function <span class="ex-pill pill-defn">Definition</span></div>
+
+For real $$a>0$$,
+
+$$
+\boxed{\Gamma(a)=\int_0^\infty x^ae^{-x}\,\frac{dx}x.}
+$$
+
+</div>
+
+This is the same as $$\int_0^\infty x^{a-1}e^{-x}\,dx$$. Keeping $$\frac{dx}x$$ separate is convenient: under a rescaling $$u=cx$$, $$\frac{du}u=\frac{dx}x$$, so it is unchanged.
+
+**Why $$a>0$$.** Near $$x=0$$, $$e^{-x}\approx1$$, so the integrand behaves like $$x^{a-1}$$, which is integrable near 0 exactly when $$a>0$$. With $$a=0$$, the integrand near 0 is about $$1/x$$, whose integral $$\log x$$ diverges. As $$x\to\infty$$, exponential decay beats any power, so that end is always fine.
+
+**Key properties.**
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{\Gamma(a+1)=a\,\Gamma(a),\qquad\Gamma(n)=(n-1)!\ \text{for positive integers }n,\qquad\Gamma\left(\tfrac12\right)=\sqrt\pi.}
+$$
+
+</div>
+
+- **Recursion.** $$\Gamma(a+1)=a\Gamma(a)$$ follows from one integration by parts, which returns a gamma integral again.
+- **Factorials.** $$\Gamma(1)=\int_0^\infty e^{-x}\,dx=1$$. Factorials satisfy the same recursion, $$n!=n\,(n-1)!$$, from the same starting point, so $$\Gamma(n)=(n-1)!$$ for every positive integer $$n$$. The shift by one is a historical convention.
+- **Half-integers.** Substituting $$u=x^2/2$$ in the Normal integral $$\int e^{-x^2/2}dx=\sqrt{2\pi}$$ turns it into a multiple of $$\Gamma(\tfrac12)$$, which gives $$\Gamma(\tfrac12)=\sqrt\pi$$. The recursion then gives $$\Gamma(\tfrac32)=\tfrac12\sqrt\pi$$, $$\Gamma(\tfrac52)=\tfrac34\sqrt\pi$$, and so on.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** $$\Gamma(n)=n!$$.
+
+**Correction:** $$\Gamma(n)=(n-1)!$$. For example, $$\Gamma(1)=0!=1$$ and $$\Gamma(5)=4!=24$$.
+
+</div>
+
+### Part 3 — The Gamma distribution
+
+Dividing the definition of $$\Gamma(a)$$ by $$\Gamma(a)$$ gives an integrand that is nonnegative and integrates to 1, so it is a PDF:
+
+$$
+1=\int_0^\infty\frac1{\Gamma(a)}x^ae^{-x}\frac{dx}x.
+$$
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Gamma distribution <span class="ex-pill pill-defn">Definition</span></div>
+
+$$X\sim\operatorname{Gamma}(a,1)$$ if its PDF is
+
+$$
+\boxed{f_X(x)=\frac1{\Gamma(a)}x^ae^{-x}\frac1x,\qquad x>0.}
+$$
+
+For $$\lambda>0$$, $$Y\sim\operatorname{Gamma}(a,\lambda)$$ if $$Y=X/\lambda$$ with $$X\sim\operatorname{Gamma}(a,1)$$.
+
+</div>
+
+**The $$\operatorname{Gamma}(a,\lambda)$$ PDF.** This is a rescaling, as with the Exponential. With $$y=x/\lambda$$, $$x=\lambda y$$ and $$\frac{dx}{dy}=\lambda$$:
+
+$$
+f_Y(y)=f_X(\lambda y)\cdot\lambda=\frac1{\Gamma(a)}(\lambda y)^ae^{-\lambda y}\frac1{\lambda y}\cdot\lambda
+=\boxed{\frac1{\Gamma(a)}(\lambda y)^ae^{-\lambda y}\frac1y,\qquad y>0.}
+$$
+
+With $$a=1$$, this is $$\lambda e^{-\lambda y}$$, so $$\operatorname{Gamma}(1,\lambda)=\operatorname{Expo}(\lambda)$$. It is easy to forget the factor $$\frac1y$$; writing $$y^{a-1}$$ instead of $$y^a\cdot\frac1y$$ is equivalent.
+
+So far the Gamma is only a convenient normalization of a famous integral. Its importance comes from its stories.
+
+### Part 4 — The Poisson process and Gamma arrival times
+
+Imagine emails arriving in an inbox. A **Poisson process** of rate $$\lambda$$ satisfies two conditions:
+
+1. The number of arrivals in any interval of length $$t$$ is $$\operatorname{Pois}(\lambda t)$$. In particular, $$N_t\sim\operatorname{Pois}(\lambda t)$$ counts arrivals in $$[0,t]$$.
+2. The numbers of arrivals in disjoint intervals are independent.
+
+**The first arrival.** Waiting longer than $$t$$ for the first email means no emails arrived by time $$t$$:
+
+$$
+P(T_1>t)=P(N_t=0)=e^{-\lambda t}.
+$$
+
+This is the survival function of $$\operatorname{Expo}(\lambda)$$, so $$T_1\sim\operatorname{Expo}(\lambda)$$.
+
+**The later gaps.** By the memoryless property and independence over disjoint intervals, after each arrival the process starts afresh. The gap from the first arrival to the second is again $$\operatorname{Expo}(\lambda)$$, independent of the first, and so on.
+
+<div class="result-box" markdown="1">
+
+The **interarrival times** $$X_1,X_2,\ldots$$ are i.i.d. $$\operatorname{Expo}(\lambda)$$, and the time of the $$n$$th arrival is
+
+$$
+\boxed{T_n=X_1+\cdots+X_n\sim\operatorname{Gamma}(n,\lambda).}
+$$
+
+</div>
+
+The i.i.d. Exponential gaps are an equivalent way to define a Poisson process. The Gamma claim is proved in Part 5.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-24-poisson-process-gamma.svg" alt="Left: a timeline with arrivals marked T1 through T5, and the gaps between consecutive arrivals labeled X1 through X4. Right: Gamma(n,1) densities for n equal to 1, 2, 3, and 5; the Gamma(1,1) density is the decreasing Exponential, and larger n gives humps that move right and spread out." style="display: block; width: 100%; max-width: 760px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes, illustrating Blitzstein and Hwang, <em>Introduction to Probability</em>, Theorem 8.4.3. Arrival times are sums of i.i.d. Exponential gaps, so the $$n$$th arrival time is $$\operatorname{Gamma}(n,\lambda)$$.</figcaption>
+</figure>
+
+**An analogy.**
+
+| Discrete time | Continuous time |
+|---|---|
+| Geometric: wait for the first success | Exponential: wait for the first arrival |
+| Negative Binomial: sum of i.i.d. Geometrics | Gamma: sum of i.i.d. Exponentials |
+
+The Exponential is the continuous analog of the Geometric, and the Gamma is the continuous analog of the Negative Binomial: how long to wait for $$n$$ "successes", here $$n$$ arrivals.
+
+### Part 5 — Proof with MGFs
+
+Sums of i.i.d. variables could be handled with repeated convolution integrals, but MGFs are much easier. Rescaling by $$\lambda$$ can be done at the end, so take $$\lambda=1$$.
+
+**The sum of Exponentials.** In Lecture 18, the $$\operatorname{Expo}(1)$$ MGF was found to be $$\frac1{1-t}$$ for $$t<1$$. For independent variables, MGFs multiply, so
+
+$$
+M_{T_n}(t)=\left(\frac1{1-t}\right)^n,\qquad t<1.
+$$
+
+**The Gamma MGF.** Let $$Y\sim\operatorname{Gamma}(a,1)$$. By LOTUS,
+
+$$
+M_Y(t)=E(e^{tY})=\frac1{\Gamma(a)}\int_0^\infty e^{ty}y^ae^{-y}\frac{dy}y
+=\frac1{\Gamma(a)}\int_0^\infty y^ae^{-(1-t)y}\frac{dy}y.
+$$
+
+For $$t<1$$, substitute $$x=(1-t)y$$. The limits stay $$0$$ to $$\infty$$, $$y^a=(1-t)^{-a}x^a$$, and $$\frac{dy}y=\frac{dx}x$$:
+
+$$
+M_Y(t)=(1-t)^{-a}\cdot\frac1{\Gamma(a)}\int_0^\infty x^ae^{-x}\frac{dx}x=\left(\frac1{1-t}\right)^a.
+$$
+
+With $$a=n$$, this matches the MGF of $$T_n$$. Since an MGF determines the distribution, $$T_n\sim\operatorname{Gamma}(n,1)$$. Dividing by $$\lambda$$ gives the general result. $$\blacksquare$$
+
+The Gamma MGF calculation never used that $$a$$ is an integer: $$\left(\frac1{1-t}\right)^a$$ is the $$\operatorname{Gamma}(a,1)$$ MGF for every $$a>0$$. Only the sum-of-Exponentials story needs an integer.
+
+**Core idea:** Recognizing an integral as a gamma function, after a change of variable, replaces integration by pattern matching.
+
+### Part 6 — Gamma moments
+
+Let $$X\sim\operatorname{Gamma}(a,1)$$ and let $$c$$ be any real number with $$a+c>0$$. By LOTUS,
+
+$$
+E(X^c)=\frac1{\Gamma(a)}\int_0^\infty x^cx^ae^{-x}\frac{dx}x=\frac1{\Gamma(a)}\int_0^\infty x^{a+c}e^{-x}\frac{dx}x.
+$$
+
+The last integral is $$\Gamma(a+c)$$, so
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{E(X^c)=\frac{\Gamma(a+c)}{\Gamma(a)},\qquad a+c>0.}
+$$
+
+</div>
+
+If $$a+c\le0$$, the moment does not exist.
+
+**Mean and variance.** With $$c=1$$ and the recursion,
+
+$$
+E(X)=\frac{\Gamma(a+1)}{\Gamma(a)}=a,\qquad
+E(X^2)=\frac{\Gamma(a+2)}{\Gamma(a)}=(a+1)a,
+$$
+
+so $$\operatorname{Var}(X)=a^2+a-a^2=a$$. For integer $$a$$, the mean also follows from linearity: a sum of $$a$$ i.i.d. $$\operatorname{Expo}(1)$$ variables has mean $$a$$.
+
+Rescaling by $$1/\lambda$$ divides the mean by $$\lambda$$ and the variance by $$\lambda^2$$:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{Y\sim\operatorname{Gamma}(a,\lambda):\qquad E(Y)=\frac a\lambda,\qquad\operatorname{Var}(Y)=\frac a{\lambda^2}.}
+$$
+
+</div>
+
+The equal mean and variance of $$\operatorname{Gamma}(a,1)$$ come from setting $$\lambda=1$$; unlike for the Poisson, they differ in general.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Waiting for the third email <span class="ex-pill pill-num">Worked example</span></div>
+
+Emails arrive as a Poisson process at $$\lambda=2$$ per hour. The time of the third email is $$T_3\sim\operatorname{Gamma}(3,2)$$, so
+
+$$
+E(T_3)=\frac32\text{ hours},\qquad\operatorname{Var}(T_3)=\frac3{4}.
+$$
+
+**Supplementary connection.** Waiting more than one hour for the third email means at most two emails arrived in the first hour, and $$N_1\sim\operatorname{Pois}(2)$$:
+
+$$
+P(T_3>1)=P(N_1\le2)=e^{-2}\left(1+2+\frac{2^2}{2!}\right)=5e^{-2}\approx0.677.
+$$
+
+<div class="ex-lesson">Questions about arrival times can be turned into questions about counts: $$T_n>t$$ exactly when $$N_t<n$$.</div>
+</div>
+
+### Part 7 — Original practice questions
+
+Try these before reading the answers.
+
+1. Find $$\Gamma(5)$$ and $$\Gamma(7/2)$$.
+2. Prove $$\Gamma(a+1)=a\Gamma(a)$$ by integration by parts.
+3. Find the mean and variance of $$\operatorname{Gamma}(4,2)$$.
+4. For $$X\sim\operatorname{Gamma}(a,1)$$ with $$a>1$$, find $$E(1/X)$$.
+5. Let $$X\sim\operatorname{Gamma}(a,\lambda)$$ and $$Y\sim\operatorname{Gamma}(b,\lambda)$$ be independent. Use MGFs to find the distribution of $$X+Y$$.
+6. Customers arrive as a Poisson process at 3 per minute. Find the distribution of the second arrival time and $$P(T_2\le1)$$.
+7. Compare Stirling's approximation with $$5!$$.
+8. Explain why $$\int_0^\infty x^ae^{-x}\frac{dx}x$$ diverges when $$a\le0$$.
+9. Use the Gamma moment formula to find $$E(X^n)$$ for $$X\sim\operatorname{Expo}(1)$$, and compare with Lecture 18.
+
+### Part 8 — Practice answers
+
+#### 1. Values of the gamma function
+
+$$\Gamma(5)=4!=24$$. $$\Gamma(7/2)=\frac52\cdot\frac32\cdot\frac12\sqrt\pi=\frac{15\sqrt\pi}8\approx3.323$$.
+
+#### 2. The recursion
+
+With $$u=x^a$$ and $$dv=e^{-x}dx$$, $$\Gamma(a+1)=\int_0^\infty x^ae^{-x}dx=\big[-x^ae^{-x}\big]_0^\infty+a\int_0^\infty x^{a-1}e^{-x}dx=0+a\Gamma(a)$$.
+
+#### 3. A rescaled Gamma
+
+Mean $$a/\lambda=4/2=2$$, variance $$a/\lambda^2=4/4=1$$.
+
+#### 4. A negative moment
+
+With $$c=-1$$, $$E(X^{-1})=\frac{\Gamma(a-1)}{\Gamma(a)}=\frac{\Gamma(a-1)}{(a-1)\Gamma(a-1)}=\frac1{a-1}$$. It requires $$a-1>0$$.
+
+#### 5. Adding Gammas
+
+The $$\operatorname{Gamma}(a,\lambda)$$ MGF is $$\left(\frac{\lambda}{\lambda-t}\right)^a$$ for $$t<\lambda$$, from rescaling. The product is $$\left(\frac\lambda{\lambda-t}\right)^{a+b}$$, so $$X+Y\sim\operatorname{Gamma}(a+b,\lambda)$$. For integers, this is $$a$$ gaps followed by $$b$$ more.
+
+#### 6. The second customer
+
+$$T_2\sim\operatorname{Gamma}(2,3)$$. The second customer arrives within a minute exactly when $$N_1\ge2$$, with $$N_1\sim\operatorname{Pois}(3)$$: $$P(T_2\le1)=1-e^{-3}(1+3)=1-4e^{-3}\approx0.801$$.
+
+#### 7. Stirling for $$n=5$$
+
+$$\sqrt{10\pi}(5/e)^5\approx118.0$$, against $$5!=120$$, a relative error under 2%.
+
+#### 8. Divergence at 0
+
+For $$a\le0$$ and $$0<x<1$$, the integrand is at least $$e^{-1}x^{a-1}\ge e^{-1}x^{-1}$$, and $$\int_0^1x^{-1}dx=\infty$$.
+
+#### 9. Exponential moments
+
+$$\operatorname{Expo}(1)=\operatorname{Gamma}(1,1)$$, so $$E(X^n)=\Gamma(n+1)/\Gamma(1)=n!$$, the same answer as reading off the geometric series in Lecture 18.
+
+### Part 9 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Stirling | $$n!\approx\sqrt{2\pi n}(n/e)^n$$, with ratio tending to 1 |
+| Gamma function | $$\Gamma(a)=\int_0^\infty x^ae^{-x}dx/x$$, $$a>0$$ |
+| Recursion | $$\Gamma(a+1)=a\Gamma(a)$$ |
+| Factorials | $$\Gamma(n)=(n-1)!$$ |
+| Half | $$\Gamma(1/2)=\sqrt\pi$$ |
+| $$\operatorname{Gamma}(a,1)$$ PDF | $$\frac1{\Gamma(a)}x^ae^{-x}\frac1x$$, $$x>0$$ |
+| $$\operatorname{Gamma}(a,\lambda)$$ PDF | $$\frac1{\Gamma(a)}(\lambda y)^ae^{-\lambda y}\frac1y$$, $$y>0$$ |
+| Exponential | $$\operatorname{Gamma}(1,\lambda)=\operatorname{Expo}(\lambda)$$ |
+| Poisson process | $$N_t\sim\operatorname{Pois}(\lambda t)$$; disjoint intervals independent |
+| Gaps | i.i.d. $$\operatorname{Expo}(\lambda)$$ |
+| Arrival times | $$T_n\sim\operatorname{Gamma}(n,\lambda)$$ |
+| MGF | $$\operatorname{Gamma}(a,1)$$: $$(1-t)^{-a}$$ for $$t<1$$ |
+| Moments | $$E(X^c)=\Gamma(a+c)/\Gamma(a)$$ for $$\operatorname{Gamma}(a,1)$$ |
+| Mean and variance | $$a/\lambda$$ and $$a/\lambda^2$$ |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Stirling's formula <span class="gcat cat-thm">Theorem</span></div>
+
+The approximation $$n!\approx\sqrt{2\pi n}(n/e)^n$$, whose ratio to $$n!$$ tends to 1.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Gamma function <span class="gcat cat-defn">Definition</span></div>
+
+$$\Gamma(a)=\int_0^\infty x^ae^{-x}\frac{dx}x$$ for $$a>0$$, extending the factorial through $$\Gamma(n)=(n-1)!$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Gamma distribution <span class="gcat cat-defn">Definition</span></div>
+
+The continuous distribution on $$(0,\infty)$$ with PDF $$\frac1{\Gamma(a)}(\lambda y)^ae^{-\lambda y}\frac1y$$. For integer $$a$$, it is the distribution of a sum of $$a$$ i.i.d. $$\operatorname{Expo}(\lambda)$$ variables.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Poisson process <span class="gcat cat-defn">Definition</span></div>
+
+A model of arrivals in time in which counts in an interval of length $$t$$ are $$\operatorname{Pois}(\lambda t)$$ and counts in disjoint intervals are independent.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Interarrival time <span class="gcat cat-defn">Definition</span></div>
+
+The time between consecutive arrivals. In a Poisson process of rate $$\lambda$$, these are i.i.d. $$\operatorname{Expo}(\lambda)$$.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 24</span>
+  <span class="ref-tag">Stirling's formula</span>
+  <span class="ref-tag">Gamma function</span>
+  <span class="ref-tag">Gamma</span>
+  <span class="ref-tag">Poisson process</span>
+  <span class="ref-tag">MGF</span>
+</div>
+
+  </div>
+</div>
+
+
+## Lecture 25 - Order Statistics and Conditional Expectation
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-25-toggle" onclick="toggleLecture('lecture-25')" aria-expanded="true" aria-controls="lecture-25-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 25</span>
+      <span>
+        <span class="chapter-title">Lecture 25 - Order Statistics and Conditional Expectation</span>
+        <span class="chapter-subtitle">The bank–post office story linking Beta and Gamma, the Beta normalizing constant and mean, order statistics and their distributions, and a first look at conditional expectation</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-25-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-25-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+If $$X\sim\operatorname{Gamma}(a,\lambda)$$ and $$Y\sim\operatorname{Gamma}(b,\lambda)$$ are independent waiting times at a bank and a post office, then the total $$X+Y$$ and the fraction $$X/(X+Y)$$ spent at the bank are independent, with distributions $$\operatorname{Gamma}(a+b,\lambda)$$ and $$\operatorname{Beta}(a,b)$$. A Jacobian calculation proves this and, as a by-product, gives the Beta normalizing constant $$\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}$$. The same independence gives the Beta mean $$\frac a{a+b}$$ in one line. Order statistics, the sample sorted from smallest to largest, are dependent even for i.i.d. data; a Binomial argument gives the CDF of the $$j$$th one, and a picture gives its PDF. Uniform order statistics are Beta. Conditional expectation extends the law of total probability to averages, and the two-envelope paradox shows why it needs care.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$X\sim\operatorname{Gamma}(a,\lambda)$$, $$Y\sim\operatorname{Gamma}(b,\lambda)$$ | Independent waits at the bank and the post office |
+| $$T=X+Y$$ | Total waiting time |
+| $$W=\dfrac X{X+Y}$$ | Fraction of the total spent at the bank |
+| $$\beta(a,b)=\dfrac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}$$ | Beta function, in terms of gamma functions |
+| $$X_{(1)}\le X_{(2)}\le\cdots\le X_{(n)}$$ | Order statistics: minimum to maximum |
+| $$F$$, $$f$$ | Common CDF and PDF of i.i.d. continuous $$X_1,\ldots,X_n$$ |
+| $$E(X\mid A)$$ | Expectation of $$X$$ computed with probabilities conditional on event $$A$$ |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Use a Jacobian to find the joint distribution of the total and the fraction in the bank–post office story.
+- Explain why the total and the fraction are independent, and derive the Beta normalizing constant.
+- Find the Beta mean in two ways, and explain why $$E(X/(X+Y))=E(X)/E(X+Y)$$ holds here but not in general.
+- Define order statistics and explain why they are dependent.
+- Derive the CDF and PDF of the $$j$$th order statistic of i.i.d. continuous random variables.
+- Identify Uniform order statistics as Beta random variables and use them to find expected values.
+- State the conditional form of the law of total expectation and describe the two-envelope paradox.
+
+### Part 1 — The bank–post office story
+
+You wait $$X$$ minutes at the bank and then $$Y$$ minutes at the post office, with
+
+$$
+X\sim\operatorname{Gamma}(a,\lambda),\qquad Y\sim\operatorname{Gamma}(b,\lambda),\qquad X,Y\text{ independent}.
+$$
+
+For integer $$a$$, a natural interpretation is that $$a$$ people are ahead of you in line, each served in an independent $$\operatorname{Expo}(\lambda)$$ time. Consider
+
+$$
+T=X+Y\ \text{(total wait)},\qquad W=\frac X{X+Y}\ \text{(fraction at the bank)}.
+$$
+
+The marginal distribution of $$T$$ is already known: $$a$$ Exponential gaps plus $$b$$ more is $$a+b$$ gaps, so $$T\sim\operatorname{Gamma}(a+b,\lambda)$$, and MGFs give the same for non-integer parameters. Are $$T$$ and $$W$$ independent? The formula $$W=X/(X+Y)$$ contains $$T$$, which suggests dependence, but it is not obvious that knowing the total says anything about the fraction. A calculation settles it.
+
+**Set $$\lambda=1$$.** Rescaling all times by $$1/\lambda$$ leaves $$W$$ unchanged and turns $$\operatorname{Gamma}(a+b,1)$$ into $$\operatorname{Gamma}(a+b,\lambda)$$, so nothing is lost.
+
+**Invert the transformation.** With $$t=x+y$$ and $$w=x/(x+y)$$, we have $$w=x/t$$, so $$x=tw$$. Also $$1-w=y/t$$, so $$y=t(1-w)$$.
+
+**The Jacobian.**
+
+$$
+\frac{\partial(x,y)}{\partial(t,w)}=
+\begin{pmatrix}w&t\\1-w&-t\end{pmatrix},\qquad
+\det=-tw-t(1-w)=-t,\qquad\lvert\det\rvert=t.
+$$
+
+**The joint PDF.** Independence gives $$f_{X,Y}(x,y)=\frac1{\Gamma(a)\Gamma(b)}x^ae^{-x}y^be^{-y}\frac1{xy}$$. Substitute $$x=tw$$, $$y=t(1-w)$$, $$x+y=t$$, and multiply by $$t$$:
+
+$$
+f_{T,W}(t,w)=\frac1{\Gamma(a)\Gamma(b)}\,w^{a-1}(1-w)^{b-1}\cdot t^{a+b}e^{-t}\frac1t,
+\qquad t>0,\ 0<w<1.
+$$
+
+Multiplying and dividing by $$\Gamma(a+b)$$ to make the $$t$$ part a familiar density:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{f_{T,W}(t,w)=\left(\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}w^{a-1}(1-w)^{b-1}\right)\left(\frac1{\Gamma(a+b)}t^{a+b}e^{-t}\frac1t\right).}
+$$
+
+</div>
+
+The joint PDF factors into a function of $$w$$ times a function of $$t$$ on a product region, so **$$T$$ and $$W$$ are independent**. The second factor is the $$\operatorname{Gamma}(a+b,1)$$ PDF. Integrating out $$t$$ removes it, since it integrates to 1, leaving the marginal PDF of $$W$$.
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{T\sim\operatorname{Gamma}(a+b,\lambda),\qquad W\sim\operatorname{Beta}(a,b),\qquad T,W\text{ independent}.}
+$$
+
+</div>
+
+**The Beta normalizing constant.** The marginal of $$W$$ must integrate to 1, so its constant is the Beta normalizing constant:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{\frac1{\beta(a,b)}=\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)},\qquad\text{equivalently}\qquad\int_0^1x^{a-1}(1-x)^{b-1}\,dx=\frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}.}
+$$
+
+</div>
+
+For integers this agrees with Bayes’ billiards: $$\beta(k+1,n-k+1)=\frac{k!\,(n-k)!}{(n+1)!}$$. The constant came out of a different question, without directly attacking the Beta integral. This independence is special: it is a theorem, beyond these notes, that replacing the Gamma by other distributions breaks it.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-25-order-statistics-and-bank-post-office.svg" alt="Left: densities of the five order statistics of five i.i.d. Uniforms, Beta(1,5) through Beta(5,1), peaking at 0, 0.25, 0.5, 0.75 and 1. Right: a scatter plot of simulated total waiting time T against bank fraction W for a equals 2 and b equals 3, showing no trend in W as T changes." style="display: block; width: 100%; max-width: 760px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes, illustrating Blitzstein and Hwang, <em>Introduction to Probability</em>, Story 8.5.1 and Example 8.6.5. Right: in 1500 simulated pairs, the fraction spent at the bank shows no relationship with the total wait.</figcaption>
+</figure>
+
+### Part 2 — The Beta mean
+
+Let $$W\sim\operatorname{Beta}(a,b)$$.
+
+**Method 1: LOTUS.** Multiplying the density by $$w$$ raises $$a$$ by 1, leaving a Beta integral:
+
+$$
+E(W)=\frac{\beta(a+1,b)}{\beta(a,b)}=\frac{\Gamma(a+1)\Gamma(b)}{\Gamma(a+b+1)}\cdot\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}=\frac a{a+b}.
+$$
+
+Higher moments work the same way: $$E(W^c)$$ raises $$a$$ by $$c$$.
+
+**Method 2: the bank–post office story.** The mean depends only on the distribution, so any construction of a $$\operatorname{Beta}(a,b)$$ variable may be used. Take $$W=X/(X+Y)$$ as in Part 1. Since $$W$$ and $$T=X+Y$$ are independent, they are uncorrelated, so $$E(WT)=E(W)E(T)$$. But $$WT=X$$, so
+
+$$
+E(X)=E(W)E(X+Y),\qquad\text{so}\qquad E(W)=\frac{E(X)}{E(X+Y)}=\frac a{a+b}.
+$$
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{W\sim\operatorname{Beta}(a,b):\qquad E(W)=\frac a{a+b}.}
+$$
+
+</div>
+
+The variance follows from LOTUS in the same way: $$E(W^2)=\frac{a(a+1)}{(a+b)(a+b+1)}$$ and $$\operatorname{Var}(W)=\frac{ab}{(a+b)^2(a+b+1)}$$.
+
+In the Beta–Binomial model of Lecture 23, the posterior mean is $$\frac{a+X}{a+b+n}$$. With $$a=b=1$$ and $$X=n$$, this is $$\frac{n+1}{n+2}$$, Laplace's rule of succession.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** $$E\left(\dfrac X{X+Y}\right)=\dfrac{E(X)}{E(X+Y)}$$ by linearity.
+
+**Correction:** Linearity does not apply to ratios, and this equation is usually false. It holds for independent Gammas only because the fraction is independent of the total. For example, if $$X\sim\operatorname{Unif}(0,1)$$ and $$Y=1$$, then $$E\left(\frac X{X+1}\right)=1-\log2\approx0.307$$, but $$\frac{E(X)}{E(X+1)}=\frac13$$.
+
+</div>
+
+### Part 3 — Order statistics
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Order statistics <span class="ex-pill pill-defn">Definition</span></div>
+
+For random variables $$X_1,\ldots,X_n$$, the **order statistics** are the same values sorted in increasing order:
+
+$$
+X_{(1)}\le X_{(2)}\le\cdots\le X_{(n)}.
+$$
+
+</div>
+
+So $$X_{(1)}=\min(X_1,\ldots,X_n)$$, $$X_{(n)}=\max(X_1,\ldots,X_n)$$, and $$X_{(j)}$$ is the $$j$$th smallest. Each $$X_{(j)}$$ is a random variable: for each outcome of the experiment, compute the values and sort them.
+
+Many statistics are built from order statistics:
+
+- The **median**: for odd $$n$$, $$X_{((n+1)/2)}$$. For even $$n$$, a common convention averages the two middle values.
+- **Quantiles**, such as the value with about 75% of the observations below it.
+- The **interquartile range**: the 75th percentile minus the 25th percentile.
+
+**Why they are hard.** Even when $$X_1,\ldots,X_n$$ are i.i.d., the order statistics are dependent. The maximum is at least the minimum, so learning that the minimum is large forces the maximum to be large. In the same way, $$X_{(7)}\ge X_{(3)}$$ always. Order statistics are positively correlated.
+
+**Ties.** For discrete variables, two observations can be equal, which complicates the ordering. For continuous variables, ties have probability 0. From here on, $$X_1,\ldots,X_n$$ are i.i.d. continuous with CDF $$F$$ and PDF $$f$$.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** The minimum and maximum of two i.i.d. variables are just $$X$$ and $$Y$$ under different names, so $$\operatorname{Cov}(\min,\max)=\operatorname{Cov}(X,Y)=0$$.
+
+**Correction:** Which variable is the minimum changes from outcome to outcome. The minimum and maximum are new random variables, and they are positively correlated.
+
+</div>
+
+### Part 4 — The CDF and PDF of an order statistic
+
+**The CDF.** Draw a number line and mark a point $$x$$. The event $$X_{(j)}\le x$$ means that the $$j$$th smallest value lies to the left of $$x$$. Then the $$j-1$$ smaller ones do too, and possibly more. In words:
+
+$$
+X_{(j)}\le x\quad\Longleftrightarrow\quad\text{at least }j\text{ of the }X_i\text{ are }\le x.
+$$
+
+Call $$X_i\le x$$ a success. The $$n$$ observations are independent, each succeeding with probability $$F(x)$$, so the number of successes is $$\operatorname{Bin}(n,F(x))$$. Adding the disjoint cases of exactly $$k$$ successes:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{P(X_{(j)}\le x)=\sum_{k=j}^n\binom nk F(x)^k\big(1-F(x)\big)^{n-k}.}
+$$
+
+</div>
+
+**The PDF.** Differentiating this sum works but is messy. Think directly instead. $$f_{X_{(j)}}(x)\,dx$$ is approximately the probability that $$X_{(j)}$$ falls in a tiny interval of length $$dx$$ at $$x$$. For that to happen:
+
+1. One observation lands in the tiny interval. There are $$n$$ choices for which one, and it lands there with probability about $$f(x)\,dx$$.
+2. Of the remaining $$n-1$$ observations, exactly $$j-1$$ land to the left of $$x$$ and $$n-j$$ to the right. There are $$\binom{n-1}{j-1}$$ choices for which ones go left, and each such arrangement has probability $$F(x)^{j-1}(1-F(x))^{n-j}$$.
+
+Multiplying and dropping $$dx$$ from both sides:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{f_{X_{(j)}}(x)=n\binom{n-1}{j-1}f(x)\,F(x)^{j-1}\big(1-F(x)\big)^{n-j}.}
+$$
+
+</div>
+
+The formula combines the PDF, a power of the CDF, and a power of one minus the CDF. Joint PDFs of two order statistics, such as $$X_{(3)}$$ and $$X_{(7)}$$, can be found with the same picture using two tiny intervals.
+
+### Part 5 — Uniform order statistics are Beta
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Order statistics of Uniforms <span class="ex-pill pill-ex">Worked example</span></div>
+
+Let $$U_1,\ldots,U_n$$ be i.i.d. $$\operatorname{Unif}(0,1)$$. Then $$f(x)=1$$ and $$F(x)=x$$ on $$(0,1)$$, so
+
+$$
+f_{U_{(j)}}(x)=n\binom{n-1}{j-1}x^{j-1}(1-x)^{n-j},\qquad0<x<1.
+$$
+
+This has the Beta shape with parameters $$j$$ and $$n-j+1$$, so
+
+$$
+\boxed{U_{(j)}\sim\operatorname{Beta}(j,\,n-j+1),\qquad E(U_{(j)})=\frac j{n+1}.}
+$$
+
+On average, the $$n$$ points split $$(0,1)$$ into $$n+1$$ pieces of equal expected length.
+
+**A check with $$n=2$$.** The maximum is $$\operatorname{Beta}(2,1)$$ with mean $$2/3$$, and the minimum is $$\operatorname{Beta}(1,2)$$ with mean $$1/3$$. Since $$\lvert U_1-U_2\rvert=\max-\min$$, linearity gives
+
+$$
+E\lvert U_1-U_2\rvert=\frac23-\frac13=\frac13,
+$$
+
+matching the two-dimensional LOTUS calculation in Lecture 19. The maximum and minimum are dependent, but linearity holds regardless.
+
+<div class="ex-lesson">Recognizing a Beta density gives the distribution and moments of every Uniform order statistic at once.</div>
+</div>
+
+### Part 6 — A first look at conditional expectation
+
+The **conditional expectation** $$E(X\mid A)$$ of $$X$$ given an event $$A$$ is computed exactly like $$E(X)$$, but with conditional probabilities given $$A$$. In the discrete case, $$E(X\mid A)=\sum_xxP(X=x\mid A)$$.
+
+Splitting each $$P(X=x)$$ by the law of total probability gives the analogous rule for expectations:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{E(X)=E(X\mid A)P(A)+E(X\mid A^c)P(A^c).}
+$$
+
+</div>
+
+<div class="example-block" markdown="1">
+<div class="ex-title">A die roll in two cases <span class="ex-pill pill-num">Worked example</span></div>
+
+Roll a fair die. Given an even result, the values $$2,4,6$$ are equally likely, so $$E(X\mid\text{even})=4$$. Given an odd result, $$E(X\mid\text{odd})=3$$. Then
+
+$$
+E(X)=4\cdot\frac12+3\cdot\frac12=3.5.
+$$
+
+<div class="ex-lesson">The overall mean is a weighted average of the conditional means, weighted by the probabilities of the cases.</div>
+</div>
+
+**The two-envelope paradox.** Two identical-looking envelopes contain positive amounts of money, one exactly twice the other. You pick one at random and may switch. Suppose you open yours and find $100. The other holds $50 or $200, which seem equally likely, so switching seems to give an average of $125. The argument did not use the number 100: whatever amount $$x$$ is in your envelope, the other appears to average $$\frac12\cdot\frac x2+\frac12\cdot2x=\frac54x$$. Then you should switch without opening anything, and by the same reasoning switch back, forever. By symmetry, though, the two envelopes are equally good. Something in the switching argument is wrong; finding the flaw requires conditional expectation, developed in the next lecture.
+
+### Part 7 — Original practice questions
+
+Try these before reading the answers.
+
+1. Find the normalizing constant of $$\operatorname{Beta}(3,5)$$.
+2. Find the mean and variance of $$\operatorname{Beta}(3,5)$$.
+3. Two people are ahead of you at the bank and three at the post office, all with i.i.d. $$\operatorname{Expo}(1)$$ service times. Find the probability that less than half of your total wait is spent at the bank.
+4. For $$n$$ i.i.d. $$\operatorname{Unif}(0,1)$$ variables, find the expected minimum and expected maximum.
+5. Find the probability that the median of five i.i.d. $$\operatorname{Unif}(0,1)$$ variables is below $$1/4$$.
+6. Let $$X_1,\ldots,X_n$$ be i.i.d. $$\operatorname{Expo}(1)$$. Use the order statistic PDF to find the distribution of the minimum.
+7. Use the CDF formula to show that $$P(X_{(n)}\le x)=F(x)^n$$, and explain it directly.
+8. For a fair die, compute $$E(X)$$ by conditioning on whether $$X\le2$$.
+9. Give an example where $$E\left(\frac X{X+Y}\right)\ne\frac{E(X)}{E(X+Y)}$$.
+
+### Part 8 — Practice answers
+
+#### 1. A Beta constant
+
+$$\frac{\Gamma(8)}{\Gamma(3)\Gamma(5)}=\frac{7!}{2!\,4!}=\frac{5040}{48}=105$$. So the PDF is $$105x^2(1-x)^4$$.
+
+#### 2. Beta mean and variance
+
+$$E=\frac3{3+5}=\frac38$$. $$\operatorname{Var}=\frac{3\cdot5}{8^2\cdot9}=\frac{15}{576}=\frac5{192}$$.
+
+#### 3. Bank and post office
+
+$$X\sim\operatorname{Gamma}(2,1)$$ and $$Y\sim\operatorname{Gamma}(3,1)$$, so $$W\sim\operatorname{Beta}(2,3)$$ with PDF $$12w(1-w)^2$$. Then
+
+$$
+P(W<\tfrac12)=12\int_0^{1/2}(w-2w^2+w^3)\,dw=12\left(\frac18-\frac1{12}+\frac1{64}\right)=\frac{11}{16}.
+$$
+
+#### 4. Extreme Uniforms
+
+$$U_{(1)}\sim\operatorname{Beta}(1,n)$$ with mean $$\frac1{n+1}$$, and $$U_{(n)}\sim\operatorname{Beta}(n,1)$$ with mean $$\frac n{n+1}$$.
+
+#### 5. A median
+
+The median is $$U_{(3)}\sim\operatorname{Beta}(3,3)$$ with PDF $$30x^2(1-x)^2$$. Integrating from 0 to $$1/4$$ gives $$30\left(\frac{x^3}3-\frac{x^4}2+\frac{x^5}5\right)\Big|_0^{1/4}=\frac{53}{512}\approx0.104$$.
+
+#### 6. Minimum of Exponentials
+
+With $$j=1$$: $$f(x)=n\,e^{-x}\left(e^{-x}\right)^{n-1}=ne^{-nx}$$, so the minimum is $$\operatorname{Expo}(n)$$.
+
+#### 7. The maximum
+
+With $$j=n$$, only the $$k=n$$ term remains: $$F(x)^n$$. Directly, the maximum is at most $$x$$ exactly when every observation is at most $$x$$, and independence multiplies the probabilities.
+
+#### 8. Conditioning a die
+
+$$E(X\mid X\le2)=1.5$$ with probability $$\frac13$$, and $$E(X\mid X>2)=4.5$$ with probability $$\frac23$$. So $$E(X)=1.5\cdot\frac13+4.5\cdot\frac23=3.5$$.
+
+#### 9. A ratio
+
+With $$X\sim\operatorname{Unif}(0,1)$$ and $$Y=1$$: $$E\left(\frac X{X+1}\right)=\int_0^1\left(1-\frac1{x+1}\right)dx=1-\log2\approx0.307$$, while $$\frac{E(X)}{E(X+1)}=\frac{1/2}{3/2}=\frac13$$.
+
+### Part 9 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Bank–post office | $$X\sim\operatorname{Gamma}(a,\lambda)$$, $$Y\sim\operatorname{Gamma}(b,\lambda)$$ independent |
+| Total and fraction | $$T\sim\operatorname{Gamma}(a+b,\lambda)$$, $$W\sim\operatorname{Beta}(a,b)$$, independent |
+| Jacobian | $$x=tw$$, $$y=t(1-w)$$, $$\lvert\det\rvert=t$$ |
+| Beta constant | $$\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}$$ |
+| Beta mean | $$\frac a{a+b}$$, by LOTUS or by independence of $$W$$ and $$T$$ |
+| Beta variance | $$\frac{ab}{(a+b)^2(a+b+1)}$$ |
+| Ratio warning | $$E(X/(X+Y))=E(X)/E(X+Y)$$ only with special structure |
+| Order statistics | Sorted values; dependent, positively correlated |
+| CDF | $$P(X_{(j)}\le x)=\sum_{k=j}^n\binom nkF(x)^k(1-F(x))^{n-k}$$ |
+| PDF | $$n\binom{n-1}{j-1}f(x)F(x)^{j-1}(1-F(x))^{n-j}$$ |
+| Uniform case | $$U_{(j)}\sim\operatorname{Beta}(j,n-j+1)$$, mean $$\frac j{n+1}$$ |
+| Conditional expectation | $$E(X)=E(X\mid A)P(A)+E(X\mid A^c)P(A^c)$$ |
+| Two envelopes | A switching argument that conflicts with symmetry |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Bank–post office story <span class="gcat cat-prop">Story</span></div>
+
+For independent $$\operatorname{Gamma}(a,\lambda)$$ and $$\operatorname{Gamma}(b,\lambda)$$ waiting times, the total is $$\operatorname{Gamma}(a+b,\lambda)$$, the fraction of the first is $$\operatorname{Beta}(a,b)$$, and the two are independent.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Order statistics <span class="gcat cat-defn">Definition</span></div>
+
+The values of $$X_1,\ldots,X_n$$ sorted in increasing order, $$X_{(1)}\le\cdots\le X_{(n)}$$, from the minimum to the maximum.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Median <span class="gcat cat-meas">Measure</span></div>
+
+The middle order statistic $$X_{((n+1)/2)}$$ for odd $$n$$; for even $$n$$, commonly the average of the two middle values.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Interquartile range <span class="gcat cat-meas">Measure</span></div>
+
+The 75th percentile minus the 25th percentile, a measure of spread built from order statistics.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Conditional expectation given an event <span class="gcat cat-defn">Definition</span></div>
+
+$$E(X\mid A)$$, the expectation of $$X$$ computed with probabilities conditional on $$A$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Two-envelope paradox <span class="gcat cat-defn">Misconception</span></div>
+
+An argument that always switching between two symmetric envelopes increases the expected amount, contradicting symmetry.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 25</span>
+  <span class="ref-tag">Beta</span>
+  <span class="ref-tag">Gamma</span>
+  <span class="ref-tag">Bank–post office</span>
+  <span class="ref-tag">Order statistics</span>
+  <span class="ref-tag">Conditional expectation</span>
+</div>
+
+  </div>
+</div>
+
+
+## Lecture 26 - Conditional Expectation Continued
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-26-toggle" onclick="toggleLecture('lecture-26')" aria-expanded="true" aria-controls="lecture-26-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 26</span>
+      <span>
+        <span class="chapter-title">Lecture 26 - Conditional Expectation Continued</span>
+        <span class="chapter-subtitle">Resolving the two-envelope paradox, waiting for HH versus HT, conditioning on a random variable, and a first statement of Adam's law</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-26-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-26-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+The two-envelope paradox comes from a single conditioning error: plugging in the information $$Y=2X$$ and then forgetting that it was given. Conditioning on a pattern's first tosses shows that a fair coin takes 4 tosses on average to produce HT but 6 to produce HH, because HH overlaps with itself and HT does not. Conditional expectation given an event, $$E(Y\mid X=x)$$, is a number that depends on $$x$$; replacing $$x$$ by $$X$$ gives $$E(Y\mid X)$$, a random variable that is a function of $$X$$. For i.i.d. $$X$$ and $$Y$$, symmetry and linearity give $$E(X\mid X+Y)=\frac{X+Y}2$$. Adam's law, $$E(E(Y\mid X))=E(Y)$$, is the expectation form of the law of total probability.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$E(Y\mid A)$$ | Expectation of $$Y$$ using conditional probabilities given event $$A$$ |
+| $$g(x)=E(Y\mid X=x)$$ | Conditional expectation given the event $$X=x$$, a function of $$x$$ |
+| $$E(Y\mid X)=g(X)$$ | Conditional expectation given the random variable $$X$$ |
+| $$f_{Y\mid X}(y\mid x)$$ | Conditional PDF, $$f_{X,Y}(x,y)/f_X(x)$$ |
+| $$W_{HT}$$, $$W_{HH}$$ | Number of tosses until the pattern HT or HH first appears |
+| $$I$$ | Indicator that the second envelope holds the larger amount |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Identify the flaw in the two-envelope argument and explain why the amount in an envelope and the indicator of the larger envelope are dependent.
+- Compute the expected waiting time for HT by linearity and for HH by conditioning on the first tosses.
+- Explain why symmetry between heads and tails does not make $$E(W_{HH})=E(W_{HT})$$.
+- Distinguish $$E(Y\mid X=x)$$, a function of $$x$$, from $$E(Y\mid X)$$, a random variable.
+- Compute conditional expectations using linearity, independence, and symmetry.
+- State Adam's law.
+
+### Part 1 — Resolving the two-envelope paradox
+
+Two identical-looking envelopes hold amounts $$X$$ and $$Y$$, one twice the other. Two arguments conflict.
+
+**Argument 1: symmetry.** Nothing distinguishes the envelopes, so $$E(Y)=E(X)$$.
+
+**Argument 2: conditioning.** The other envelope holds either twice or half the amount in yours, apparently with probability $$\frac12$$ each:
+
+$$
+E(Y)=E(Y\mid Y=2X)\frac12+E\left(Y\mid Y=\tfrac X2\right)\frac12\overset{?}{=}E(2X)\frac12+E\left(\tfrac X2\right)\frac12=\frac54E(X).
+$$
+
+The two conclusions agree only if $$E(X)$$ is 0 or infinite. For positive amounts with a finite mean, one argument must be wrong, and symmetry is hard to dispute.
+
+**The flaw.** The first line of Argument 2 is correct: it is the law of total probability in expectation form. The error is the next step. Substituting $$Y=2X$$ inside $$E(Y\mid Y=2X)$$ is fine, but the condition cannot then be dropped:
+
+$$
+E(Y\mid Y=2X)=E(2X\mid Y=2X),\qquad\text{which need not equal }E(2X).
+$$
+
+A condition can be removed only when what is inside is independent of the condition.
+
+**Dependence.** Let $$I$$ indicate that $$Y=2X$$, that is, the second envelope is the larger. Symmetry forces $$E(2X\mid I=1)\ne E(2X)$$, so $$X$$ and $$I$$ are dependent: seeing the amount in your envelope carries information about whether it is the smaller one. That is surprising, since no amount, even a trillion dollars, seems large or small without knowing the scale. But if $$E(X)$$ is finite, the distribution of the amounts provides a scale, and the dependence is forced.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** Having substituted the given information, the condition can be crossed out.
+
+**Correction:** Substituting is allowed; forgetting is not. $$E(Y\mid Y=2X)=E(2X\mid Y=2X)$$, and the condition may be dropped only if $$X$$ is independent of the event $$Y=2X$$, which is false here.
+
+</div>
+
+**A related surprise.** If the two envelopes simply hold different unknown positive amounts, with no doubling, there is a strategy that picks the larger one with probability strictly greater than $$\frac12$$. Generate your own random threshold $$T$$, for example $$T\sim\operatorname{Expo}(1)$$, open one envelope, and switch exactly when its amount is below $$T$$.
+
+### Part 2 — Waiting for HH versus HT
+
+Toss a fair coin repeatedly. Let $$W_{HT}$$ and $$W_{HH}$$ be the numbers of tosses, including the final two, until HT and HH first appear.
+
+**Symmetry gives less than it seems.** Swapping the labels heads and tails shows $$E(W_{HH})=E(W_{TT})$$ and $$E(W_{HT})=E(W_{TH})$$. It says nothing about $$E(W_{HH})$$ versus $$E(W_{HT})$$, since that comparison would need heads and tails swapped in only one place.
+
+**HT by linearity.** Wait for the first H; call that time $$W_1$$. After that H, the pattern is complete at the first T, since any further H's leave you still one T away. Call that additional wait $$W_2$$. Each wait counts tosses up to and including a success with probability $$\frac12$$, so $$W_j-1\sim\operatorname{Geom}(\tfrac12)$$ and $$E(W_j)=2$$. By linearity,
+
+$$
+E(W_{HT})=E(W_1)+E(W_2)=2+2=4.
+$$
+
+**HH by conditioning.** Here a T after the first H destroys the progress. Let $$\mu=E(W_{HH})$$ and condition on the first tosses:
+
+- First toss T, probability $$\frac12$$: one toss wasted, and the problem restarts. Contribution $$1+\mu$$.
+- First two tosses HH, probability $$\frac14$$: done in 2 tosses.
+- First two tosses HT, probability $$\frac14$$: two tosses wasted, and the problem restarts. Contribution $$2+\mu$$.
+
+$$
+\mu=\frac12(1+\mu)+\frac14\cdot2+\frac14(2+\mu)\quad\Longrightarrow\quad\frac14\mu=\frac32\quad\Longrightarrow\quad\boxed{E(W_{HH})=6.}
+$$
+
+Check: $$\frac12(7)+\frac14(2)+\frac14(8)=3.5+0.5+2=6$$.
+
+**Why the answers differ.** Any two fixed positions are equally likely to read HH or HT, each with probability $$\frac14$$, so in a long sequence the two patterns occur equally often on average. But HH overlaps with itself: a run HHHHH contains four HH's. HT cannot overlap with itself this way. So the HH occurrences come in clumps, and since the average number of occurrences is the same, the clumps must be farther apart, which makes the first one later on average. The same question about patterns, called motifs, arises in DNA sequences.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-26-waiting-time-hh-vs-ht.svg" alt="Bar chart of the exact probabilities that HT or HH first appears on toss k, for k from 2 to 20. The HT bars peak at 3 and 4 tosses and fall quickly; the HH bars are lower near the start and decay more slowly, giving a longer tail." style="display: block; width: 100%; max-width: 680px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes, illustrating Blitzstein and Hwang, <em>Introduction to Probability</em>, Example 9.1.9. The HH waiting time has a heavier right tail, which raises its mean from 4 to 6.</figcaption>
+</figure>
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** HH and HT are equally likely in any two tosses, so they take equally long to appear.
+
+**Correction:** Equal frequencies in the long run do not give equal first-appearance times. HH overlaps with itself, so its occurrences cluster, and a tail after an H wastes the progress made.
+
+</div>
+
+### Part 3 — Conditioning on a random variable
+
+**Given an event.** $$E(Y\mid X=x)$$ is ordinary expectation computed with the conditional distribution given the event $$X=x$$:
+
+$$
+E(Y\mid X=x)=\sum_yy\,P(Y=y\mid X=x)\quad\text{(discrete)},\qquad
+E(Y\mid X=x)=\int_{-\infty}^{\infty}y\,f_{Y\mid X}(y\mid x)\,dy\quad\text{(continuous)},
+$$
+
+where $$f_{Y\mid X}(y\mid x)=f_{X,Y}(x,y)/f_X(x)$$. The result is a number for each $$x$$: write $$g(x)=E(Y\mid X=x)$$. It cannot involve $$Y$$, which has been averaged over, nor $$X$$ as a random variable. If $$X$$ and $$Y$$ are independent, $$g(x)=E(Y)$$, a constant function.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Conditional expectation given a random variable <span class="ex-pill pill-defn">Definition</span></div>
+
+With $$g(x)=E(Y\mid X=x)$$,
+
+$$
+\boxed{E(Y\mid X)=g(X).}
+$$
+
+</div>
+
+First compute $$g$$ as a function of $$x$$, then replace $$x$$ by $$X$$. If $$g(x)=x^2$$, then $$E(Y\mid X)=X^2$$. So $$E(Y\mid X)$$ is a **random variable**, and a function of $$X$$.
+
+**Interpretation.** $$E(Y\mid X)$$ is the best prediction of $$Y$$ when $$X$$ is treated as known, best in the sense of minimizing the expected squared error. Any problem written this way can be translated back to conditioning on $$X=x$$, which is the thing to do when the notation becomes confusing.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** Replace every $$x$$ in $$E(Y\mid X=x)$$ by $$X$$, giving $$E(Y\mid X=X)=E(Y)$$.
+
+**Correction:** The substitution happens after $$g(x)$$ has been computed as a function. $$E(Y\mid X)$$ means $$g(X)$$, not the expectation given the trivially true event $$X=X$$.
+
+</div>
+
+### Part 4 — Examples with i.i.d. Poissons
+
+Let $$X,Y$$ be i.i.d. $$\operatorname{Pois}(\lambda)$$. Conditional expectations are expectations, so linearity still holds.
+
+**Example 1: $$E(X+Y\mid X)$$.** Treating $$X$$ as known:
+
+$$
+E(X+Y\mid X)=E(X\mid X)+E(Y\mid X)=X+E(Y)=X+\lambda.
+$$
+
+Two general facts were used: a known quantity predicts itself, $$E(h(X)\mid X)=h(X)$$ for any function $$h$$; and if $$Y$$ is independent of $$X$$, conditioning on $$X$$ does not change it, so $$E(Y\mid X)=E(Y)$$. Neither fact used the Poisson.
+
+**Example 2: $$E(X\mid X+Y)$$.** There is no linearity rule for what follows the bar: this is not $$E(X\mid X)+E(X\mid Y)$$.
+
+*Method 1: the conditional distribution.* Let $$T=X+Y\sim\operatorname{Pois}(2\lambda)$$. By Bayes' rule and independence,
+
+$$
+P(X=k\mid T=n)=\frac{P(Y=n-k)P(X=k)}{P(T=n)}
+=\frac{\frac{e^{-\lambda}\lambda^{n-k}}{(n-k)!}\cdot\frac{e^{-\lambda}\lambda^k}{k!}}{\frac{e^{-2\lambda}(2\lambda)^n}{n!}}
+=\binom nk\left(\frac12\right)^n.
+$$
+
+So $$X\mid T=n\sim\operatorname{Bin}(n,\tfrac12)$$, with mean $$\frac n2$$, and therefore $$E(X\mid T)=\frac T2$$.
+
+*Method 2: symmetry.* Since $$X,Y$$ are i.i.d., $$E(X\mid X+Y)=E(Y\mid X+Y)$$. Adding and using linearity,
+
+$$
+2E(X\mid X+Y)=E(X+Y\mid X+Y)=X+Y,\qquad\boxed{E(X\mid X+Y)=\frac{X+Y}2.}
+$$
+
+This argument holds for any i.i.d. pair, not just Poissons. It also matches intuition: if the total of two i.i.d. quantities is 100, the best guess for each is 50.
+
+### Part 5 — Adam's law
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Adam's law (iterated expectation) <span class="ex-pill pill-thm">Theorem</span></div>
+
+For any random variables $$X$$ and $$Y$$ with $$E\lvert Y\rvert<\infty$$,
+
+$$
+\boxed{E\big(E(Y\mid X)\big)=E(Y).}
+$$
+
+</div>
+
+$$E(Y\mid X)$$ is a random variable, so it has an expectation, and that expectation is the unconditional mean. This is a compact form of the law of total probability: averaging the conditional means over the distribution of $$X$$ recovers the overall mean. The proof and many uses come in Lecture 27.
+
+**Quick check.** In Example 2, $$E\left(\frac{X+Y}2\right)=\frac{2\lambda}2=\lambda=E(X)$$.
+
+### Part 6 — Original practice questions
+
+Try these before reading the answers.
+
+1. Find the expected number of tosses of a fair coin until TH appears.
+2. Find the expected number of tosses of a fair coin until HHH appears.
+3. For a coin with heads probability $$p$$, find the expected number of tosses until HT.
+4. Let $$X_1,\ldots,X_n$$ be i.i.d. with finite mean and $$S_n=X_1+\cdots+X_n$$. Find $$E(X_1\mid S_n)$$.
+5. Let $$X\sim\operatorname{Unif}(0,1)$$ and, given $$X=x$$, let $$Y\sim\operatorname{Bin}(10,x)$$. Find $$E(Y\mid X)$$ and $$E(Y)$$.
+6. Two fair dice are rolled. Let $$S$$ be the total and $$D$$ the first die. Find $$E(S\mid D)$$.
+7. Let $$X,Y$$ be i.i.d. $$\operatorname{Expo}(\lambda)$$. Find $$E(\max(X,Y)\mid X+Y)$$ if it is known that $$E(\min(X,Y)\mid X+Y)=\frac{X+Y}4$$.
+8. Explain why the two-envelope switching argument does not show that switching is beneficial.
+9. Let $$X,Y$$ be i.i.d. $$\operatorname{Pois}(\lambda)$$. Find $$P(X=0\mid X+Y=3)$$.
+
+### Part 7 — Practice answers
+
+#### 1. Waiting for TH
+
+By symmetry between heads and tails, $$E(W_{TH})=E(W_{HT})=4$$.
+
+#### 2. Waiting for HHH
+
+Condition on how the first run of H's ends. With $$\mu=E(W_{HHH})$$: a T first wastes 1 toss; HT wastes 2; HHT wastes 3; HHH finishes in 3.
+
+$$
+\mu=\frac12(1+\mu)+\frac14(2+\mu)+\frac18(3+\mu)+\frac18\cdot3\quad\Longrightarrow\quad\frac18\mu=\frac74,\quad\mu=14.
+$$
+
+#### 3. A biased coin
+
+Wait for an H, then for a T: $$E(W_{HT})=\frac1p+\frac1{1-p}$$. For $$p=\frac12$$ this is 4.
+
+#### 4. One term given the sum
+
+By symmetry all $$E(X_j\mid S_n)$$ are equal, and they add to $$E(S_n\mid S_n)=S_n$$. So $$E(X_1\mid S_n)=\frac{S_n}n$$.
+
+#### 5. A random success probability
+
+Given $$X$$, $$Y$$ is Binomial with mean $$10X$$, so $$E(Y\mid X)=10X$$. By Adam's law, $$E(Y)=10E(X)=5$$.
+
+#### 6. Total given the first die
+
+$$E(S\mid D)=D+E(\text{second die})=D+3.5$$, using independence of the dice.
+
+#### 7. Max given the sum
+
+$$\max+\min=X+Y$$, so $$E(\max\mid X+Y)=(X+Y)-\frac{X+Y}4=\frac34(X+Y)$$.
+
+#### 8. The switching argument
+
+It replaces $$E(Y\mid Y=2X)$$ by $$E(2X)$$ and $$E(Y\mid Y=X/2)$$ by $$E(X/2)$$, dropping the conditions. They cannot be dropped because $$X$$ is not independent of which envelope is larger.
+
+#### 9. A Binomial conditional
+
+$$X\mid X+Y=3\sim\operatorname{Bin}(3,\tfrac12)$$, so $$P(X=0\mid X+Y=3)=\frac18$$.
+
+### Part 8 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Two-envelope flaw | $$E(Y\mid Y=2X)=E(2X\mid Y=2X)\ne E(2X)$$ in general |
+| Dropping a condition | Allowed only with independence |
+| HT | $$E(W_{HT})=2+2=4$$ by linearity |
+| HH | $$E(W_{HH})=6$$ by conditioning on the first tosses |
+| Why they differ | HH overlaps with itself, so its occurrences clump |
+| $$E(Y\mid X=x)$$ | A number for each $$x$$: $$g(x)$$ |
+| $$E(Y\mid X)$$ | The random variable $$g(X)$$, a function of $$X$$ |
+| Known quantities | $$E(h(X)\mid X)=h(X)$$ |
+| Independence | $$E(Y\mid X)=E(Y)$$ |
+| Poisson example | $$X\mid X+Y=n\sim\operatorname{Bin}(n,\frac12)$$ |
+| Symmetry | i.i.d. $$X,Y$$: $$E(X\mid X+Y)=\frac{X+Y}2$$ |
+| Adam's law | $$E(E(Y\mid X))=E(Y)$$ |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Two-envelope paradox <span class="gcat cat-defn">Misconception</span></div>
+
+An argument that switching between two symmetric envelopes always raises the expected amount. Its flaw is dropping the condition $$Y=2X$$ after substituting it.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Conditional expectation given an event <span class="gcat cat-defn">Definition</span></div>
+
+$$E(Y\mid X=x)$$, the expectation of $$Y$$ computed with the conditional distribution given $$X=x$$; a function of $$x$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Conditional expectation given a random variable <span class="gcat cat-defn">Definition</span></div>
+
+$$E(Y\mid X)=g(X)$$, where $$g(x)=E(Y\mid X=x)$$. It is a random variable and the best prediction of $$Y$$ from $$X$$ in mean squared error.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Adam's law <span class="gcat cat-thm">Theorem</span></div>
+
+$$E(E(Y\mid X))=E(Y)$$, also called iterated expectation or the law of total expectation.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Self-overlapping pattern <span class="gcat cat-prop">Property</span></div>
+
+A pattern, such as HH, whose ending can begin another copy of itself. Its occurrences cluster, which lengthens the expected wait for the first one.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 26</span>
+  <span class="ref-tag">Two-envelope paradox</span>
+  <span class="ref-tag">Coin patterns</span>
+  <span class="ref-tag">Conditional expectation</span>
+  <span class="ref-tag">Adam's law</span>
+</div>
+
+  </div>
+</div>
+
+
+## Lecture 27 - Conditional Expectation Given a Random Variable
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-27-toggle" onclick="toggleLecture('lecture-27')" aria-expanded="true" aria-controls="lecture-27-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 27</span>
+      <span>
+        <span class="chapter-title">Lecture 27 - Conditional Expectation Given a Random Variable</span>
+        <span class="chapter-subtitle">Properties of conditional expectation, the projection picture, a proof of Adam's law, conditional variance, Eve's law, and a random sample from a random city</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-27-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-27-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+Conditional expectation given a random variable obeys a short list of rules: take out what is known, drop what is independent, Adam's law $$E(E(Y\mid X))=E(Y)$$, and the residual $$Y-E(Y\mid X)$$ is uncorrelated with every function of $$X$$. Geometrically, $$E(Y\mid X)$$ is the projection of $$Y$$ onto the space of functions of $$X$$. Adam's law is proved by swapping the order of a double sum. Conditional variance is variance computed with everything given $$X$$, and Eve's law splits total variance into the average within-group variance plus the variance between group means: $$\operatorname{Var}(Y)=E(\operatorname{Var}(Y\mid X))+\operatorname{Var}(E(Y\mid X))$$. A random sample from a randomly chosen city shows both laws at work.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$E(Y\mid X)$$ | Best prediction of $$Y$$ from $$X$$; a function of $$X$$ |
+| $$h(X)$$ | Any function of $$X$$ |
+| $$Y-E(Y\mid X)$$ | Residual: the prediction error |
+| $$\operatorname{Var}(Y\mid X)$$ | Conditional variance, $$E\big((Y-E(Y\mid X))^2\mid X\big)$$ |
+| $$Q\sim\operatorname{Beta}(a,b)$$ | Random proportion of infected people in a random city |
+| $$X\mid Q\sim\operatorname{Bin}(n,Q)$$ | Number infected in a sample of $$n$$ from that city |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Compute simple conditional expectations such as $$E(Z^2\mid Z)$$ and $$E(Z\mid Z^2)$$.
+- Use taking out what's known, dropping what's independent, Adam's law, and the residual property.
+- Describe $$E(Y\mid X)$$ as a projection onto functions of $$X$$.
+- Prove Adam's law in the discrete case and derive the residual property from it.
+- Define conditional variance and state Eve's law with its within-group and between-group interpretation.
+- Use Adam's and Eve's laws to find the mean and variance of a hierarchical model.
+
+### Part 1 — Two quick examples
+
+**A Normal and its square.** Let $$Z\sim\mathcal N(0,1)$$ and $$Y=Z^2$$.
+
+- $$E(Y\mid Z)=E(Z^2\mid Z)=Z^2=Y$$. Knowing $$Z$$ means knowing $$Z^2$$.
+- $$E(Z\mid Y)=E(Z\mid Z^2)=0$$. Given $$Z^2=a$$, $$Z$$ is $$\sqrt a$$ or $$-\sqrt a$$, equally likely by symmetry, so the average is 0. Knowing $$Z^2$$ gives the size of $$Z$$ but not its sign.
+
+So $$E(Z\mid Z^2)=E(Z)$$, even though $$Z$$ and $$Z^2$$ are dependent. A conditional expectation equal to the unconditional one does not imply independence.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Breaking a stick twice <span class="ex-pill pill-num">Worked example</span></div>
+
+Break a stick of length 1 at a uniformly random point $$X\sim\operatorname{Unif}(0,1)$$, keep the left piece of length $$X$$, and break it at a uniform point $$Y$$:
+
+$$
+Y\mid X\sim\operatorname{Unif}(0,X).
+$$
+
+This is shorthand for: given $$X=x$$, $$Y\sim\operatorname{Unif}(0,x)$$. Then $$E(Y\mid X=x)=\frac x2$$, so $$E(Y\mid X)=\frac X2$$, a random variable. By Adam's law,
+
+$$
+E(Y)=E\left(\frac X2\right)=\frac14.
+$$
+
+<div class="ex-lesson">When a problem is built in stages, condition on the earlier stage: the conditional distribution is given, while the unconditional one is not.</div>
+</div>
+
+### Part 2 — Properties of conditional expectation
+
+<div class="result-box" markdown="1">
+
+1. **Taking out what's known:** $$E\big(h(X)Y\mid X\big)=h(X)\,E(Y\mid X)$$.
+2. **Dropping what's independent:** if $$X$$ and $$Y$$ are independent, $$E(Y\mid X)=E(Y)$$.
+3. **Adam's law:** $$E\big(E(Y\mid X)\big)=E(Y)$$.
+4. **Residual property:** $$E\Big(\big(Y-E(Y\mid X)\big)h(X)\Big)=0$$ for every function $$h$$.
+
+</div>
+
+Linearity also holds: $$E(Y_1+Y_2\mid X)=E(Y_1\mid X)+E(Y_2\mid X)$$.
+
+- **Property 1.** Given $$X$$, $$h(X)$$ is known, so it acts as a constant and comes out.
+- **Property 2.** The conditional distribution of $$Y$$ given $$X$$ is the same as its unconditional distribution. The converse fails, as $$E(Z\mid Z^2)=0$$ shows.
+- **Property 3.** Its main use is right to left: to find $$E(Y)$$, choose an $$X$$ that makes $$E(Y\mid X)$$ easy, then average. It generalizes the law of total probability.
+- **Property 4.** $$E(Y\mid X)$$ is the prediction of $$Y$$ and $$Y-E(Y\mid X)$$ is the prediction error, called the **residual**. By Adam's law the residual has mean 0, so property 4 says the residual is **uncorrelated with every function of $$X$$**: no function of $$X$$ can predict the error.
+
+**The projection picture.** For those who have seen linear algebra: treat random variables with finite variance as vectors, with inner product $$E(UV)$$. All functions of $$X$$ form a plane through the origin, containing the constants, $$X$$, $$X^2$$, $$e^X$$, and so on. Then $$E(Y\mid X)$$ is the **projection** of $$Y$$ onto that plane: the function of $$X$$ closest to $$Y$$. If $$Y$$ is already a function of $$X$$, it lies in the plane and projects to itself. The residual is the perpendicular from $$Y$$ down to the plane, and property 4 says exactly that it is perpendicular to the plane.
+
+### Part 3 — Proofs
+
+**Property 4 from Adam's law.** Expand by linearity:
+
+$$
+E\Big(\big(Y-E(Y\mid X)\big)h(X)\Big)=E\big(Yh(X)\big)-E\big(E(Y\mid X)h(X)\big).
+$$
+
+In the second term, put back what's known, $$E(Y\mid X)h(X)=E\big(Yh(X)\mid X\big)$$, then apply Adam's law: it equals $$E(Yh(X))$$. The difference is 0. $$\blacksquare$$
+
+**Adam's law, discrete case.** Let $$g(x)=E(Y\mid X=x)$$, so $$E(Y\mid X)=g(X)$$. By LOTUS and the definition of $$g$$,
+
+$$
+E\big(g(X)\big)=\sum_xg(x)P(X=x)=\sum_x\sum_yy\,P(Y=y\mid X=x)P(X=x)=\sum_x\sum_yy\,P(X=x,Y=y).
+$$
+
+Swap the order of summation; $$y$$ does not depend on $$x$$ and comes out:
+
+$$
+\sum_yy\sum_xP(X=x,Y=y)=\sum_yy\,P(Y=y)=E(Y).
+$$
+
+Summing the joint PMF over $$x$$ gives the marginal of $$Y$$. The continuous case is the same with integrals. $$\blacksquare$$
+
+### Part 4 — Conditional variance and Eve's law
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Conditional variance <span class="ex-pill pill-defn">Definition</span></div>
+
+$$
+\boxed{\operatorname{Var}(Y\mid X)=E\Big(\big(Y-E(Y\mid X)\big)^2\ \Big|\ X\Big)=E(Y^2\mid X)-\big(E(Y\mid X)\big)^2.}
+$$
+
+</div>
+
+Every expectation is given $$X$$, so $$\operatorname{Var}(Y\mid X)$$ is a function of $$X$$. Omitting the final "$$\mid X$$" in the first form would turn it into a number, which is wrong. The equality of the two forms follows from the properties above, just as for ordinary variance.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** $$\operatorname{Var}(Y)=\operatorname{Var}(Y\mid X)$$ averaged over $$X$$, that is, $$E(\operatorname{Var}(Y\mid X))$$.
+
+**Correction:** That counts only the variability within each value of $$X$$. The variability of the conditional means, $$\operatorname{Var}(E(Y\mid X))$$, must be added. In the city model, the second term is most of the variance.
+
+</div>
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Eve's law <span class="ex-pill pill-thm">Theorem</span></div>
+
+$$
+\boxed{\operatorname{Var}(Y)=E\big(\operatorname{Var}(Y\mid X)\big)+\operatorname{Var}\big(E(Y\mid X)\big).}
+$$
+
+</div>
+
+The name comes from the order of the operators, E V V E. Adam's law is E E.
+
+**Interpretation.** Picture a population split into groups, with $$X$$ the group of a randomly chosen person and $$Y$$ their height. There are two sources of variability:
+
+- **Within groups.** $$\operatorname{Var}(Y\mid X)$$ is the variance inside the person's group; $$E(\operatorname{Var}(Y\mid X))$$ averages it over groups.
+- **Between groups.** $$E(Y\mid X)$$ replaces each person by their group's mean; $$\operatorname{Var}(E(Y\mid X))$$ measures how much the group means differ.
+
+Eve's law says the total variance is simply the sum of the two.
+
+**Proof.** Let $$g(X)=E(Y\mid X)$$. By Adam's law, $$E(g(X))=E(Y)$$ and
+
+$$
+E\big(\operatorname{Var}(Y\mid X)\big)=E\big(E(Y^2\mid X)-g(X)^2\big)=E(Y^2)-E\big(g(X)^2\big),
+$$
+
+$$
+\operatorname{Var}\big(g(X)\big)=E\big(g(X)^2\big)-\big(E(Y)\big)^2.
+$$
+
+Adding gives $$E(Y^2)-(EY)^2=\operatorname{Var}(Y)$$. $$\blacksquare$$
+
+<div class="example-block" markdown="1">
+<div class="ex-title">The broken stick, continued <span class="ex-pill pill-num">Worked example</span></div>
+
+With $$Y\mid X\sim\operatorname{Unif}(0,X)$$, the conditional mean is $$\frac X2$$ and the conditional variance is $$\frac{X^2}{12}$$. By Eve's law,
+
+$$
+\operatorname{Var}(Y)=E\left(\frac{X^2}{12}\right)+\operatorname{Var}\left(\frac X2\right)=\frac1{12}\cdot\frac13+\frac14\cdot\frac1{12}=\frac1{36}+\frac1{48}=\frac7{144}.
+$$
+
+Check directly: $$E(Y^2)=E\left(E(Y^2\mid X)\right)=E\left(\frac{X^2}3\right)=\frac19$$, and $$\frac19-\frac1{16}=\frac7{144}$$.
+
+</div>
+
+### Part 5 — A random sample from a random city
+
+To study the prevalence of a disease in a state, choose a city at random, then test a random sample of $$n$$ people from that city. Let $$Q$$ be the true proportion infected in the chosen city. It is random, since cities differ. Let $$X$$ be the number infected in the sample. Model
+
+$$
+Q\sim\operatorname{Beta}(a,b),\qquad X\mid Q\sim\operatorname{Bin}(n,Q),
+$$
+
+with $$a,b$$ known. The Beta is flexible on $$(0,1)$$ and conjugate to the Binomial. The Binomial assumes sampling with replacement, or a sample small relative to the city.
+
+**The mean, by Adam's law.**
+
+$$
+E(X)=E\big(E(X\mid Q)\big)=E(nQ)=\frac{na}{a+b}.
+$$
+
+**The variance, by Eve's law.** Given $$Q$$, $$X$$ is Binomial, so $$E(X\mid Q)=nQ$$ and $$\operatorname{Var}(X\mid Q)=nQ(1-Q)$$:
+
+$$
+\operatorname{Var}(X)=E\big(nQ(1-Q)\big)+\operatorname{Var}(nQ)=n\,E\big(Q(1-Q)\big)+n^2\operatorname{Var}(Q).
+$$
+
+The first term is the within-city variability and the second the between-city variability. Both Beta quantities follow from LOTUS, since multiplying by $$q(1-q)$$ keeps the Beta form:
+
+$$
+E\big(Q(1-Q)\big)=\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\cdot\frac{\Gamma(a+1)\Gamma(b+1)}{\Gamma(a+b+2)}=\frac{ab}{(a+b)(a+b+1)},
+\qquad
+\operatorname{Var}(Q)=\frac{\mu(1-\mu)}{a+b+1},
+$$
+
+where $$\mu=\frac a{a+b}$$.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Numbers for the city model <span class="ex-pill pill-num">Worked example</span></div>
+
+Take $$a=2$$, $$b=8$$, $$n=50$$, so $$\mu=0.2$$. Then $$E(X)=10$$, and
+
+$$
+\operatorname{Var}(X)=50\cdot\frac{16}{110}+2500\cdot\frac{0.16}{11}\approx7.27+36.36=43.6.
+$$
+
+A $$\operatorname{Bin}(50,0.2)$$ count would have variance 8. Almost all of the extra variance comes from the differences between cities.
+
+<div class="ex-lesson">Ignoring the variation between groups can badly understate the variability of a count.</div>
+</div>
+
+### Part 6 — Original practice questions
+
+Try these before reading the answers.
+
+1. Let $$X\sim\operatorname{Unif}(-1,1)$$. Find $$E(X\mid X^2)$$ and $$E(X^2\mid X)$$.
+2. In the broken-stick example, find $$E(Y\mid X)$$ and $$E(Y^2)$$ if the second break is made in the piece of length $$1-X$$ instead.
+3. Show that $$E(Y-E(Y\mid X))=0$$.
+4. Use property 4 to show that $$\operatorname{Cov}\big(E(Y\mid X),\,Y-E(Y\mid X)\big)=0$$.
+5. Let $$N\sim\operatorname{Pois}(\lambda)$$ and, given $$N$$, let $$X\sim\operatorname{Bin}(N,p)$$. Find $$E(X)$$ and $$\operatorname{Var}(X)$$ with Adam's and Eve's laws.
+6. Three groups of equal size have mean heights 160, 170, 180 cm and within-group variances 25, 36, 49 cm². Find the variance of a randomly chosen person's height.
+7. In the city model with $$a=b=1$$, find $$E(X)$$ and $$\operatorname{Var}(X)$$ for $$n=10$$.
+8. Show that if $$Y$$ is a function of $$X$$, then $$\operatorname{Var}(Y\mid X)=0$$ and Eve's law reduces to an identity.
+9. Explain why $$E(Y\mid X)=E(Y)$$ does not imply that $$X$$ and $$Y$$ are independent.
+
+### Part 7 — Practice answers
+
+#### 1. Uniform and its square
+
+By symmetry, given $$X^2=a$$, $$X=\pm\sqrt a$$ equally likely, so $$E(X\mid X^2)=0$$. And $$E(X^2\mid X)=X^2$$.
+
+#### 2. Breaking the other piece
+
+$$Y\mid X\sim\operatorname{Unif}(0,1-X)$$, so $$E(Y\mid X)=\frac{1-X}2$$ and $$E(Y)=\frac14$$. $$E(Y^2\mid X)=\frac{(1-X)^2}3$$, so $$E(Y^2)=\frac13\cdot\frac13=\frac19$$, the same as before by symmetry.
+
+#### 3. Residual mean
+
+By linearity and Adam's law, $$E(Y)-E(E(Y\mid X))=E(Y)-E(Y)=0$$.
+
+#### 4. Prediction and error
+
+The residual has mean 0, so the covariance is $$E\big(E(Y\mid X)\,(Y-E(Y\mid X))\big)$$, which is 0 by property 4 with $$h(X)=E(Y\mid X)$$.
+
+#### 5. Thinning a Poisson
+
+$$E(X\mid N)=Np$$ and $$\operatorname{Var}(X\mid N)=Np(1-p)$$. So $$E(X)=\lambda p$$ and $$\operatorname{Var}(X)=E(Np(1-p))+\operatorname{Var}(Np)=\lambda p(1-p)+\lambda p^2=\lambda p$$, consistent with $$X\sim\operatorname{Pois}(\lambda p)$$ from the chicken-egg story.
+
+#### 6. Three groups
+
+Within: $$\frac{25+36+49}3\approx36.7$$. Between: the means $$160,170,180$$ have variance $$\frac{100+0+100}3\approx66.7$$. Total $$\approx103.3$$ cm².
+
+#### 7. A Uniform prior
+
+$$\mu=\frac12$$, $$E(X)=5$$. $$E(Q(1-Q))=\frac1{2\cdot3}=\frac16$$ and $$\operatorname{Var}(Q)=\frac{1/4}3=\frac1{12}$$. So $$\operatorname{Var}(X)=\frac{10}6+\frac{100}{12}=10$$. In fact $$X$$ is uniform on $$\{0,\ldots,10\}$$, whose variance is $$\frac{11^2-1}{12}=10$$.
+
+#### 8. A function of $$X$$
+
+If $$Y=h(X)$$, then $$E(Y\mid X)=Y$$ and the residual is 0, so $$\operatorname{Var}(Y\mid X)=0$$. Eve's law becomes $$\operatorname{Var}(Y)=0+\operatorname{Var}(Y)$$.
+
+#### 9. Mean independence is weaker
+
+$$E(Z\mid Z^2)=0=E(Z)$$ for $$Z\sim\mathcal N(0,1)$$, yet $$Z^2$$ determines $$\lvert Z\rvert$$. Equal conditional means say nothing about the rest of the conditional distribution.
+
+### Part 8 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Taking out what's known | $$E(h(X)Y\mid X)=h(X)E(Y\mid X)$$ |
+| Dropping what's independent | $$X,Y$$ independent: $$E(Y\mid X)=E(Y)$$ |
+| Adam's law | $$E(E(Y\mid X))=E(Y)$$ |
+| Residual | $$Y-E(Y\mid X)$$ is uncorrelated with every $$h(X)$$ |
+| Projection | $$E(Y\mid X)$$ is the closest function of $$X$$ to $$Y$$ |
+| $$E(Z\mid Z^2)$$ | 0: magnitude known, sign not |
+| Broken stick | $$E(Y)=\frac14$$, $$\operatorname{Var}(Y)=\frac7{144}$$ |
+| Conditional variance | $$E(Y^2\mid X)-(E(Y\mid X))^2$$, a function of $$X$$ |
+| Eve's law | $$\operatorname{Var}(Y)=E(\operatorname{Var}(Y\mid X))+\operatorname{Var}(E(Y\mid X))$$ |
+| Within and between | Average within-group variance plus variance of group means |
+| City model mean | $$\frac{na}{a+b}$$ |
+| City model variance | $$nE(Q(1-Q))+n^2\operatorname{Var}(Q)$$ |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Taking out what's known <span class="gcat cat-prop">Property</span></div>
+
+$$E(h(X)Y\mid X)=h(X)E(Y\mid X)$$: a function of the conditioning variable acts as a constant.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Residual <span class="gcat cat-defn">Definition</span></div>
+
+$$Y-E(Y\mid X)$$, the error in predicting $$Y$$ by its conditional expectation. It has mean 0 and is uncorrelated with every function of $$X$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Conditional variance <span class="gcat cat-meas">Measure</span></div>
+
+$$\operatorname{Var}(Y\mid X)=E((Y-E(Y\mid X))^2\mid X)$$, the variance of $$Y$$ computed with $$X$$ treated as known; a function of $$X$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Eve's law <span class="gcat cat-thm">Theorem</span></div>
+
+$$\operatorname{Var}(Y)=E(\operatorname{Var}(Y\mid X))+\operatorname{Var}(E(Y\mid X))$$, also called the law of total variance.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Hierarchical model <span class="gcat cat-defn">Definition</span></div>
+
+A model built in stages, such as a random city proportion $$Q$$ followed by a Binomial count given $$Q$$. Adam's and Eve's laws handle such models by conditioning on the first stage.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 27</span>
+  <span class="ref-tag">Conditional expectation</span>
+  <span class="ref-tag">Adam's law</span>
+  <span class="ref-tag">Eve's law</span>
+  <span class="ref-tag">Projection</span>
+  <span class="ref-tag">Beta-Binomial</span>
+</div>
+
+  </div>
+</div>
+
+
+## Lecture 28 - Inequalities
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-28-toggle" onclick="toggleLecture('lecture-28')" aria-expanded="true" aria-controls="lecture-28-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 28</span>
+      <span>
+        <span class="chapter-title">Lecture 28 - Inequalities</span>
+        <span class="chapter-subtitle">The mean and variance of a random sum, then the Cauchy–Schwarz, Jensen, Markov, and Chebyshev inequalities</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-28-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-28-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+A sum of a random number $$N$$ of independent terms with mean $$\mu$$ and variance $$\sigma^2$$, with $$N$$ independent of the terms, has mean $$\mu E(N)$$ and variance $$\sigma^2E(N)+\mu^2\operatorname{Var}(N)$$; conditioning on $$N$$ makes both easy. Inequalities give guaranteed bounds rather than approximations, which makes them valuable even when crude. Cauchy–Schwarz bounds $$\lvert E(XY)\rvert$$ by marginal second moments and is the statement that correlations lie in $$[-1,1]$$. Jensen says $$E(g(X))\ge g(E(X))$$ for convex $$g$$. Markov bounds a tail by the mean, and Chebyshev, which follows from Markov, bounds the chance of being far from the mean by the variance.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$N$$ | Random number of terms, such as customers in a day |
+| $$X_j$$ | Amount spent by customer $$j$$; mean $$\mu$$, variance $$\sigma^2$$ |
+| $$X=\sum_{j=1}^NX_j$$ | Random sum: total spending |
+| $$g$$ convex | $$g''\ge0$$ where it exists; chords lie above the graph |
+| $$\mu=E(X)$$, $$\sigma=\operatorname{SD}(X)$$ | Mean and standard deviation |
+| $$a>0$$, $$c>0$$ | Constants in tail bounds |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Find the mean and variance of a random sum by conditioning on the number of terms.
+- Distinguish an inequality, a guaranteed bound, from an approximation.
+- State Cauchy–Schwarz and interpret it as the correlation bound.
+- State and prove Jensen's inequality, and apply it to $$x^2$$, $$1/x$$, and $$\log x$$.
+- Prove Markov's inequality with an indicator, and give its intuitive meaning.
+- Derive Chebyshev's inequality from Markov's, and compare it with Normal probabilities.
+
+### Part 1 — A random sum
+
+A store has a random number $$N$$ of customers. Customer $$j$$ spends $$X_j$$, with $$E(X_j)=\mu$$ and $$\operatorname{Var}(X_j)=\sigma^2$$. Assume $$N,X_1,X_2,\ldots$$ are independent: customers do not influence one another, and how many come does not affect how much each spends. Find the mean and variance of the total
+
+$$
+X=\sum_{j=1}^NX_j.
+$$
+
+**A tempting error.** Linearity might suggest $$E(X)=N\mu$$. That is a category error: the left side is a number and the right side is a random variable. It does suggest the remedy, though: if $$N$$ were known, linearity would apply. So condition on $$N$$.
+
+**The mean.** Given $$N=n$$, independence of $$N$$ and the $$X_j$$ lets the condition be dropped, and linearity gives $$E(X\mid N=n)=n\mu$$. So $$E(X\mid N)=\mu N$$, and by Adam's law
+
+$$
+\boxed{E(X)=\mu\,E(N).}
+$$
+
+Written out, this is the law of total probability in expectation form: $$E(X)=\sum_nE(X\mid N=n)P(N=n)=\mu\sum_nnP(N=n)$$.
+
+**The variance.** Given $$N$$, the total is a sum of $$N$$ independent terms, so $$\operatorname{Var}(X\mid N)=N\sigma^2$$. By Eve's law,
+
+$$
+\operatorname{Var}(X)=E(N\sigma^2)+\operatorname{Var}(\mu N)=\boxed{\sigma^2E(N)+\mu^2\operatorname{Var}(N).}
+$$
+
+**Checks.** The mean, average customers times average spending, is intuitive. For units: $$N$$ is a count, $$\mu$$ is in dollars, and $$\sigma^2$$ in square dollars, so both terms of the variance are in square dollars, as they should be. The MGF of $$X$$ can be found the same way: given $$N=n$$, it is the $$n$$th power of the common MGF of the $$X_j$$, and averaging over $$N$$ gives the unconditional MGF.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">A day at the store <span class="ex-pill pill-num">Worked example</span></div>
+
+Suppose $$N\sim\operatorname{Pois}(20)$$, $$\mu=\$30$$, and $$\sigma=\$10$$. Then
+
+$$
+E(X)=30\cdot20=\$600,\qquad\operatorname{Var}(X)=100\cdot20+900\cdot20=20{,}000,\qquad\operatorname{SD}(X)\approx\$141.
+$$
+
+<div class="ex-lesson">Most of the variance, 18,000 of 20,000, comes from not knowing how many customers will arrive, not from how much each one spends.</div>
+</div>
+
+### Part 2 — Inequalities versus approximations
+
+An approximation, such as the Poisson approximation, can be very useful, but "good" has no fixed meaning, and knowing exactly how close it is would amount to knowing the answer. An inequality is a theorem: if a probability is proved to be at most $$0.37$$, nothing more needs defending. A bound in one direction is not an estimate, though. A probability at most $$0.38$$ could be $$0.004$$. Bounds in both directions narrow down the answer. The value of these four inequalities lies in their simplicity and generality, not their sharpness.
+
+### Part 3 — Cauchy–Schwarz
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Cauchy–Schwarz inequality <span class="ex-pill pill-thm">Theorem</span></div>
+
+For random variables $$X,Y$$ with finite variances,
+
+$$
+\boxed{\lvert E(XY)\rvert\le\sqrt{E(X^2)\,E(Y^2)}.}
+$$
+
+</div>
+
+**Why it is useful.** $$E(XY)$$ depends on the joint distribution, through a two-dimensional LOTUS or a transformation. The bound needs only the marginal second moments. If $$X$$ and $$Y$$ are uncorrelated, $$E(XY)=E(X)E(Y)$$ exactly and the bound is not needed.
+
+**Statistical meaning.** If $$X$$ and $$Y$$ have mean 0, then $$\operatorname{Corr}(X,Y)=\frac{E(XY)}{\sqrt{E(X^2)E(Y^2)}}$$, and Cauchy–Schwarz says exactly that $$\lvert\operatorname{Corr}(X,Y)\rvert\le1$$, which was proved in Lecture 21. In linear-algebra terms, $$E(XY)$$ plays the role of a dot product.
+
+### Part 4 — Jensen's inequality
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Jensen's inequality <span class="ex-pill pill-thm">Theorem</span></div>
+
+If $$g$$ is convex, then
+
+$$
+\boxed{E\big(g(X)\big)\ge g\big(E(X)\big).}
+$$
+
+If $$h$$ is concave, the inequality reverses: $$E(h(X))\le h(E(X))$$.
+
+</div>
+
+**Convexity.** If $$g''$$ exists, $$g$$ is convex when $$g''(x)\ge0$$. In general, $$g$$ is convex when every chord between two points of its graph lies on or above the graph, so $$\lvert x\rvert$$, with its corner at 0, is convex too. A function $$h$$ is concave when $$-h$$ is convex, which is why the inequality flips.
+
+**Remembering the direction.** Use $$g(x)=x^2$$: Jensen gives $$E(X^2)\ge(EX)^2$$, which is known because variance is nonnegative.
+
+**Examples**, for $$X>0$$:
+
+| Function | Second derivative | Conclusion |
+|---|---|---|
+| $$1/x$$ | $$2/x^3>0$$, convex | $$E(1/X)\ge1/E(X)$$ |
+| $$\log x$$ | $$-1/x^2<0$$, concave | $$E(\log X)\le\log E(X)$$ |
+
+**Proof.** Let $$\mu=E(X)$$. A convex function lies above its tangent line at any point. Take the line $$a+bx$$ touching the graph at $$(\mu,g(\mu))$$, so $$g(x)\ge a+bx$$ for every $$x$$ and $$a+b\mu=g(\mu)$$. This holds for every value of $$X$$, so $$g(X)\ge a+bX$$ always, and taking expectations,
+
+$$
+E\big(g(X)\big)\ge a+bE(X)=a+b\mu=g(\mu)=g\big(E(X)\big).\qquad\blacksquare
+$$
+
+For strictly convex $$g$$, such as $$x^2$$, equality holds only when $$X$$ is constant.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** $$E(g(X))=g(E(X))$$, moving the expectation inside the function.
+
+**Correction:** That is true for linear $$g$$ only. For convex $$g$$ the left side is larger, as in $$E(2^X)\ge2^{E(X)}$$ for the St. Petersburg game.
+
+</div>
+
+### Part 5 — Markov's inequality
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Markov's inequality <span class="ex-pill pill-thm">Theorem</span></div>
+
+For any random variable $$X$$ and constant $$a>0$$,
+
+$$
+\boxed{P\big(\lvert X\rvert\ge a\big)\le\frac{E\lvert X\rvert}{a}.}
+$$
+
+</div>
+
+**Proof.** Let $$I$$ indicate the event $$\lvert X\rvert\ge a$$. Then
+
+$$
+aI\le\lvert X\rvert\quad\text{always}.
+$$
+
+If $$I=0$$, this says $$0\le\lvert X\rvert$$. If $$I=1$$, it says $$a\le\lvert X\rvert$$, which is exactly what $$I=1$$ means. Taking expectations and using the fundamental bridge, $$aP(\lvert X\rvert\ge a)\le E\lvert X\rvert$$. $$\blacksquare$$
+
+The bound can be useless, for example larger than 1, or infinite if $$E\lvert X\rvert=\infty$$, but it is always true.
+
+**Intuition with ages.** In a group of 100 people, can 95% be younger than the average age? Yes: one extremely old person can pull the mean above almost everyone. Can more than half be older than twice the average age? No: those people alone would already push the total, and so the mean, above its actual value. Likewise at most a third can be older than three times the average. For a nonnegative quantity, Markov's inequality makes this precise: $$P(X\ge c\,E(X))\le\frac1c$$.
+
+### Part 6 — Chebyshev's inequality
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Chebyshev's inequality <span class="ex-pill pill-thm">Theorem</span></div>
+
+If $$X$$ has mean $$\mu$$ and variance $$\sigma^2$$, then for $$a>0$$ and $$c>0$$,
+
+$$
+\boxed{P\big(\lvert X-\mu\rvert\ge a\big)\le\frac{\sigma^2}{a^2},\qquad P\big(\lvert X-\mu\rvert\ge c\sigma\big)\le\frac1{c^2}.}
+$$
+
+</div>
+
+**Proof.** Square both sides of the inequality inside the event, then apply Markov to the nonnegative variable $$(X-\mu)^2$$:
+
+$$
+P\big(\lvert X-\mu\rvert\ge a\big)=P\big((X-\mu)^2\ge a^2\big)\le\frac{E(X-\mu)^2}{a^2}=\frac{\sigma^2}{a^2}.
+$$
+
+The second form takes $$a=c\sigma$$. $$\blacksquare$$
+
+Chebyshev was Markov's doctoral advisor; Chebyshev's inequality follows almost immediately from Markov's.
+
+**Crude but universal.** Chebyshev guarantees that any distribution with finite variance has at most a $$\frac14$$ chance of falling two or more standard deviations from its mean. For a Normal the true chance is about $$0.05$$, by the 68-95-99.7% rule. Chebyshev is weaker but needs no assumption about the shape.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Bounding a tail three ways <span class="ex-pill pill-num">Worked example</span></div>
+
+Let $$X\sim\operatorname{Expo}(1)$$, so $$\mu=\sigma=1$$. Bound $$P(X\ge3)$$.
+
+- **Markov:** $$P(X\ge3)\le\frac13\approx0.333$$.
+- **Chebyshev:** $$P(X\ge3)\le P(\lvert X-1\rvert\ge2)\le\frac14=0.25$$.
+- **Exact:** $$P(X\ge3)=e^{-3}\approx0.050$$.
+
+<div class="ex-lesson">Using more information, the variance as well as the mean, gives a tighter bound, but general bounds can still be far from the truth.</div>
+</div>
+
+### Part 7 — Original practice questions
+
+Try these before reading the answers.
+
+1. Customers arrive with $$N\sim\operatorname{Pois}(\lambda)$$ and each spends an independent $$\operatorname{Expo}(1/\theta)$$ amount, with mean $$\theta$$. Find the mean and variance of the total.
+2. If $$N$$ is a constant $$n$$, check that the random-sum formulas reduce to the familiar ones.
+3. Use Cauchy–Schwarz to show $$(E\lvert X\rvert)^2\le E(X^2)$$.
+4. Use Jensen to compare $$E(e^X)$$ with $$e^{E(X)}$$, and $$E(\sqrt X)$$ with $$\sqrt{E(X)}$$ for $$X\ge0$$.
+5. Let $$X\sim\operatorname{Unif}(1,3)$$. Compute $$E(1/X)$$ and check Jensen against $$1/E(X)$$.
+6. The average salary at a company is \$50,000. What can be said about the fraction of employees earning at least \$200,000?
+7. A random variable has mean 10 and standard deviation 2. Give a lower bound on $$P(6<X<14)$$.
+8. Show that Markov's inequality is an equality for a random variable equal to 0 or $$a$$.
+9. Let $$X\sim\operatorname{Bin}(100,\tfrac12)$$. Use Chebyshev to bound $$P(\lvert X-50\rvert\ge10)$$.
+
+### Part 8 — Practice answers
+
+#### 1. Poisson number of Exponential purchases
+
+$$E(X)=\theta\lambda$$. With $$\sigma^2=\theta^2$$ and $$\operatorname{Var}(N)=\lambda$$: $$\operatorname{Var}(X)=\theta^2\lambda+\theta^2\lambda=2\lambda\theta^2$$.
+
+#### 2. A fixed number of terms
+
+With $$E(N)=n$$ and $$\operatorname{Var}(N)=0$$: mean $$n\mu$$ and variance $$n\sigma^2$$, as for a sum of $$n$$ independent terms.
+
+#### 3. First and second moments
+
+Apply Cauchy–Schwarz to $$\lvert X\rvert$$ and the constant 1: $$E\lvert X\rvert\le\sqrt{E(X^2)\cdot1}$$. Squaring gives the result.
+
+#### 4. Two directions
+
+$$e^x$$ is convex, so $$E(e^X)\ge e^{E(X)}$$. $$\sqrt x$$ is concave, so $$E(\sqrt X)\le\sqrt{E(X)}$$.
+
+#### 5. A reciprocal
+
+$$E(1/X)=\frac12\int_1^3\frac{dx}x=\frac{\log3}2\approx0.549$$, and $$1/E(X)=\frac12$$. Indeed $$0.549\ge0.5$$.
+
+#### 6. Salaries
+
+Salaries are nonnegative, so by Markov at most $$\frac{50{,}000}{200{,}000}=\frac14$$ of employees earn at least \$200,000.
+
+#### 7. Two standard deviations
+
+$$P(\lvert X-10\rvert\ge4)\le\frac{4}{16}=\frac14$$, so $$P(6<X<14)\ge\frac34$$.
+
+#### 8. The sharp case
+
+If $$P(X=a)=q$$ and $$P(X=0)=1-q$$, then $$P(X\ge a)=q$$ and $$E(X)/a=q$$. Markov's bound cannot be improved in general.
+
+#### 9. Coin flips
+
+$$\operatorname{Var}(X)=25$$, so $$P(\lvert X-50\rvert\ge10)\le\frac{25}{100}=\frac14$$. The true value is about $$0.057$$.
+
+### Part 9 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Random sum mean | $$E\left(\sum_{j=1}^NX_j\right)=\mu E(N)$$ |
+| Random sum variance | $$\sigma^2E(N)+\mu^2\operatorname{Var}(N)$$ |
+| Category error | $$E(X)=N\mu$$ mixes a number with a random variable |
+| Inequality vs approximation | A bound is a theorem; an approximation needs a notion of "close" |
+| Cauchy–Schwarz | $$\lvert E(XY)\rvert\le\sqrt{E(X^2)E(Y^2)}$$; correlation in $$[-1,1]$$ |
+| Jensen | Convex $$g$$: $$E(g(X))\ge g(E(X))$$; concave reverses |
+| Direction check | $$E(X^2)\ge(EX)^2$$ |
+| Markov | $$P(\lvert X\rvert\ge a)\le E\lvert X\rvert/a$$ |
+| Markov intuition | At most $$1/c$$ of a nonnegative population exceeds $$c$$ times the mean |
+| Chebyshev | $$P(\lvert X-\mu\rvert\ge c\sigma)\le1/c^2$$ |
+| Two SDs | Chebyshev $$\le0.25$$; Normal about $$0.05$$ |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Random sum <span class="gcat cat-defn">Definition</span></div>
+
+A sum $$\sum_{j=1}^NX_j$$ whose number of terms $$N$$ is itself random.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Convex function <span class="gcat cat-defn">Definition</span></div>
+
+A function whose chords lie on or above its graph; equivalently $$g''\ge0$$ when the second derivative exists.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Cauchy–Schwarz inequality <span class="gcat cat-thm">Theorem</span></div>
+
+$$\lvert E(XY)\rvert\le\sqrt{E(X^2)E(Y^2)}$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Jensen's inequality <span class="gcat cat-thm">Theorem</span></div>
+
+$$E(g(X))\ge g(E(X))$$ for convex $$g$$, and the reverse for concave functions.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Markov's inequality <span class="gcat cat-thm">Theorem</span></div>
+
+$$P(\lvert X\rvert\ge a)\le E\lvert X\rvert/a$$ for any $$a>0$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Chebyshev's inequality <span class="gcat cat-thm">Theorem</span></div>
+
+$$P(\lvert X-\mu\rvert\ge a)\le\sigma^2/a^2$$, Markov's inequality applied to $$(X-\mu)^2$$.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 28</span>
+  <span class="ref-tag">Random sums</span>
+  <span class="ref-tag">Cauchy–Schwarz</span>
+  <span class="ref-tag">Jensen</span>
+  <span class="ref-tag">Markov</span>
+  <span class="ref-tag">Chebyshev</span>
+</div>
+
+  </div>
+</div>
+
+
+## Lecture 29 - Law of Large Numbers and Central Limit Theorem
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-29-toggle" onclick="toggleLecture('lecture-29')" aria-expanded="true" aria-controls="lecture-29-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 29</span>
+      <span>
+        <span class="chapter-title">Lecture 29 - Law of Large Numbers and Central Limit Theorem</span>
+        <span class="chapter-subtitle">The sample mean, the strong and weak laws of large numbers, the central limit theorem with an MGF proof, and the Normal approximation to the Binomial</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-29-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-29-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+For i.i.d. random variables with mean $$\mu$$ and variance $$\sigma^2$$, the two most famous theorems in probability describe the sample mean $$\bar X_n$$. The law of large numbers says $$\bar X_n\to\mu$$ with probability 1; the weak version follows in one line from Chebyshev. It works by swamping, not by compensating for past luck. The central limit theorem says $$\sqrt n(\bar X_n-\mu)/\sigma$$ converges in distribution to $$\mathcal N(0,1)$$, whatever the shape of the original distribution: $$\sqrt n$$ is exactly the scaling that neither kills nor blows up the error. An MGF calculation with two applications of L'Hôpital's rule proves it. As a consequence a Binomial is approximately Normal, best when $$p$$ is near $$\frac12$$, with a continuity correction for discrete values.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$X_1,X_2,\ldots$$ | i.i.d. with mean $$\mu$$ and variance $$\sigma^2<\infty$$ |
+| $$\bar X_n=\frac1n\sum_{j=1}^nX_j$$ | Sample mean of the first $$n$$ |
+| $$S_n=\sum_{j=1}^nX_j$$ | Sum of the first $$n$$ |
+| $$\xrightarrow{\ d\ }$$ | Convergence in distribution: CDFs converge |
+| $$\Phi$$ | Standard Normal CDF |
+| $$M(t)$$ | Common MGF of the $$X_j$$ |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- State the strong and weak laws of large numbers and explain what "with probability 1" means.
+- Explain why the law of large numbers does not support the gambler's fallacy.
+- Prove the weak law of large numbers with Chebyshev's inequality.
+- State the central limit theorem for the sample mean and for the sum, and explain the $$\sqrt n$$ scaling.
+- Prove the central limit theorem with MGFs.
+- Approximate Binomial probabilities with the Normal, compare with the Poisson approximation, and apply the continuity correction.
+
+### Part 1 — The sample mean
+
+Let $$X_1,X_2,\ldots$$ be i.i.d. with mean $$\mu$$ and variance $$\sigma^2$$, both finite. Observed values become data; with a sample of size $$n$$, the natural summary is the **sample mean**
+
+$$
+\bar X_n=\frac{X_1+\cdots+X_n}n.
+$$
+
+It is a random variable, while $$\mu$$ is a constant. By linearity and independence,
+
+$$
+E(\bar X_n)=\mu,\qquad\operatorname{Var}(\bar X_n)=\frac{n\sigma^2}{n^2}=\frac{\sigma^2}n.
+$$
+
+Both theorems in this lecture describe $$\bar X_n$$ as $$n$$ grows.
+
+### Part 2 — The law of large numbers
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Strong law of large numbers <span class="ex-pill pill-thm">Theorem</span></div>
+
+$$
+\boxed{\bar X_n\to\mu\quad\text{as }n\to\infty,\text{ with probability }1.}
+$$
+
+</div>
+
+**Meaning.** Evaluated at an outcome of the experiment, the random variables $$\bar X_1,\bar X_2,\ldots$$ become an ordinary sequence of numbers. The theorem says that, except on an event of probability 0, that sequence converges to $$\mu$$.
+
+**Coin tossing.** With $$X_j\sim\operatorname{Bern}(p)$$, $$\bar X_n$$ is the proportion of heads in $$n$$ tosses, and it converges to $$p$$. A million tosses of a fair coin will not give exactly 500,000 heads, but the proportion approaches $$\frac12$$. Mathematically, HHHH… forever is a possible sequence, which is why the theorem says "with probability 1". Without this result, there would be no justification for estimating an unknown $$p$$ by a long-run proportion.
+
+**Swamping, not compensation.** After ten losses in a row, the gambler's fallacy says a win is "due". The coin has no memory: the next toss is still fair. The law of large numbers works because any finite run of bad luck, a hundred or a million tosses, is swamped by the infinite future, not because later tosses correct it.
+
+**Not a sentence of mediocrity.** The theorem assumes i.i.d. observations whose distribution does not change. Someone who trains and improves does not have an i.i.d. sequence of performances. The theorem is what makes learning from data possible: as the sample size grows, the sample mean converges to the truth.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Weak law of large numbers <span class="ex-pill pill-thm">Theorem</span></div>
+
+For every $$c>0$$,
+
+$$
+\boxed{P\big(\lvert\bar X_n-\mu\rvert>c\big)\to0\quad\text{as }n\to\infty.}
+$$
+
+</div>
+
+Take $$c$$ small, such as 0.001: for large $$n$$, it is very unlikely that the sample mean is more than 0.001 from $$\mu$$. This is **convergence in probability**. It does not by itself give the pointwise convergence of the strong law, but the intuition is the same.
+
+**Proof.** By Chebyshev's inequality,
+
+$$
+P\big(\lvert\bar X_n-\mu\rvert>c\big)\le\frac{\operatorname{Var}(\bar X_n)}{c^2}=\frac{\sigma^2}{nc^2}\to0.\qquad\blacksquare
+$$
+
+### Part 3 — The central limit theorem
+
+The law of large numbers says $$\bar X_n-\mu\to0$$, but not how fast, nor what the distribution of $$\bar X_n$$ looks like. To study the rate, multiply by a power of $$n$$:
+
+- With a large power, $$n^a(\bar X_n-\mu)$$ blows up.
+- With a small positive power, it still goes to 0.
+- At $$a=\frac12$$, it converges to a genuine distribution.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Central limit theorem <span class="ex-pill pill-thm">Theorem</span></div>
+
+As $$n\to\infty$$,
+
+$$
+\boxed{\sqrt n\,\frac{\bar X_n-\mu}{\sigma}\xrightarrow{\ d\ }\mathcal N(0,1),\qquad\text{equivalently}\qquad\frac{S_n-n\mu}{\sqrt n\,\sigma}\xrightarrow{\ d\ }\mathcal N(0,1).}
+$$
+
+</div>
+
+**Convergence in distribution** means the CDFs converge: the CDF of the left side tends to $$\Phi$$ at every point. Unlike the law of large numbers, this is a statement about distributions, not about the random variables converging.
+
+**The two forms** are the same standardization. $$S_n$$ has mean $$n\mu$$ and variance $$n\sigma^2$$, so subtracting $$n\mu$$ (centering) and dividing by $$\sqrt n\sigma$$ gives mean 0 and variance 1; dividing numerator and denominator by $$n$$ gives the sample-mean form.
+
+**Why it is remarkable.** The $$X_j$$ can be discrete or continuous, symmetric or skewed, nice or ugly; only a finite variance is assumed. Their standardized sum always ends up with the same bell-shaped curve. This is a main reason the Normal distribution is so important, and why Normal approximations for averages are used everywhere: for large $$n$$, $$\bar X_n$$ is approximately $$\mathcal N(\mu,\sigma^2/n)$$.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-29-clt-exponential-sums.svg" alt="Densities of the standardized sum of n i.i.d. Exponential(1) variables for n equal to 1, 4, and 30, against the standard Normal density. For n equal to 1 the density is a skewed Exponential shape starting at minus 1; for n equal to 4 it is less skewed; for n equal to 30 it nearly matches the Normal curve." style="display: block; width: 100%; max-width: 700px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes, illustrating Blitzstein and Hwang, <em>Introduction to Probability</em>, Theorem 10.3.1. A sum of Exponentials is Gamma, so these curves are exact standardized Gamma densities. Even from a very skewed start, the shape approaches the Normal.</figcaption>
+</figure>
+
+### Part 4 — Proof with MGFs
+
+The theorem holds whenever the variance is finite. Assume in addition that the MGF $$M(t)$$ of the $$X_j$$ exists, which makes the proof short. The strategy: if MGFs converge to an MGF, the distributions converge to that distribution.
+
+**Simplify.** Standardizing each term separately, $$Y_j=(X_j-\mu)/\sigma$$, gives the same quantity, so assume $$\mu=0$$ and $$\sigma=1$$. Then the goal is to show that $$S_n/\sqrt n$$ has MGF tending to $$e^{t^2/2}$$, the $$\mathcal N(0,1)$$ MGF.
+
+**The MGF of $$S_n/\sqrt n$$.** By independence the expectation of the product splits, and the terms are identical:
+
+$$
+E\left(e^{tS_n/\sqrt n}\right)=E\left(e^{tX_1/\sqrt n}\right)\cdots E\left(e^{tX_n/\sqrt n}\right)=M\left(\frac t{\sqrt n}\right)^n.
+$$
+
+**Take logs.** As $$n\to\infty$$, $$M(t/\sqrt n)\to M(0)=1$$, so this has the indeterminate form $$1^\infty$$. Its log is $$n\log M(t/\sqrt n)=\frac{\log M(t/\sqrt n)}{1/n}$$, of the form $$\frac00$$. To avoid differentiating with respect to an integer, let $$y=1/\sqrt n$$, a real variable tending to 0:
+
+$$
+\lim_{y\to0}\frac{\log M(yt)}{y^2}.
+$$
+
+**Facts about $$M$$.** $$M(0)=1$$, $$M'(0)=E(X)=0$$, and $$M''(0)=E(X^2)=1$$.
+
+**L'Hôpital twice.**
+
+$$
+\lim_{y\to0}\frac{\log M(yt)}{y^2}=\lim_{y\to0}\frac{tM'(yt)}{2yM(yt)}=\frac t2\lim_{y\to0}\frac{M'(yt)}{y}=\frac t2\lim_{y\to0}tM''(yt)=\frac{t^2}2.
+$$
+
+After the first step it is still $$\frac00$$, since $$M'(0)=0$$, and the factor $$M(yt)\to1$$ drops out. Exponentiating, the MGF tends to $$e^{t^2/2}$$. $$\blacksquare$$
+
+### Part 5 — The Normal approximation to the Binomial
+
+Historically the first central limit theorem was for the Binomial. Let $$X\sim\operatorname{Bin}(n,p)$$. Write $$X=X_1+\cdots+X_n$$ with $$X_j$$ i.i.d. $$\operatorname{Bern}(p)$$, a sum of i.i.d. terms. Standardize with mean $$np$$ and standard deviation $$\sqrt{npq}$$, $$q=1-p$$, and apply the CLT:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{P(a\le X\le b)=P\left(\frac{a-np}{\sqrt{npq}}\le\frac{X-np}{\sqrt{npq}}\le\frac{b-np}{\sqrt{npq}}\right)\approx\Phi\left(\frac{b-np}{\sqrt{npq}}\right)-\Phi\left(\frac{a-np}{\sqrt{npq}}\right).}
+$$
+
+</div>
+
+How large $$n$$ must be has no single answer: a common rule of thumb is about 30, and for the Binomial, $$np$$ and $$n(1-p)$$ should both be reasonably large.
+
+**Normal versus Poisson.**
+
+| | Poisson approximation | Normal approximation |
+|---|---|---|
+| Regime | $$n$$ large, $$p$$ small, $$\lambda=np$$ moderate | $$n$$ large, $$p$$ not too close to 0 or 1 |
+| Works best | Many rare events | $$p$$ near $$\frac12$$, where the Binomial is nearly symmetric |
+
+The CLT holds for any fixed $$p$$, but if $$p=0.001$$ the Binomial is very skewed and convergence is slow. The two regimes meet: a Poisson with a large mean is itself approximately Normal.
+
+**Continuity correction.** A continuous approximation gives $$P(X=a)\approx0$$ and ignores whether endpoints are included. Since $$X$$ is an integer, $$\{X=a\}=\{a-\frac12<X<a+\frac12\}$$, and approximating this interval instead gives a useful answer. In general, widen each end by $$\frac12$$:
+
+$$
+P(a\le X\le b)\approx\Phi\left(\frac{b+\frac12-np}{\sqrt{npq}}\right)-\Phi\left(\frac{a-\frac12-np}{\sqrt{npq}}\right).
+$$
+
+<div class="example-block" markdown="1">
+<div class="ex-title">One hundred fair coin tosses <span class="ex-pill pill-num">Worked example</span></div>
+
+Let $$X\sim\operatorname{Bin}(100,\tfrac12)$$, so $$np=50$$ and $$\sqrt{npq}=5$$. Find $$P(40\le X\le60)$$.
+
+- **Without correction:** $$\Phi(2)-\Phi(-2)\approx0.9545$$.
+- **With correction:** $$\Phi(2.1)-\Phi(-2.1)\approx0.9643$$.
+- **Exact:** $$0.9648$$.
+
+For a single value, $$P(X=50)\approx\Phi(0.1)-\Phi(-0.1)\approx0.0797$$, against the exact $$\binom{100}{50}2^{-100}\approx0.0796$$.
+
+<div class="ex-lesson">The continuity correction treats each integer as an interval of width 1, which matters most for narrow ranges and single values.</div>
+</div>
+
+### Part 6 — Original practice questions
+
+Try these before reading the answers.
+
+1. Let $$X_j$$ be i.i.d. $$\operatorname{Unif}(0,1)$$. To what does $$\bar X_n$$ converge, and what is its approximate distribution for large $$n$$?
+2. Use Chebyshev to find $$n$$ such that the proportion of heads in $$n$$ fair tosses is within 0.05 of $$\frac12$$ with probability at least 0.95.
+3. Use the CLT to answer question 2 approximately.
+4. A die is rolled 600 times. Approximate the probability that the total exceeds 2150.
+5. Let $$X\sim\operatorname{Pois}(100)$$. Approximate $$P(X\ge115)$$ with a continuity correction.
+6. Explain why $$n^{1/4}(\bar X_n-\mu)\to0$$ while $$n(\bar X_n-\mu)$$ does not settle down.
+7. After 10 tails in a row with a fair coin, is the 11th toss more likely to be heads? Reconcile your answer with the law of large numbers.
+8. Why can the CLT not apply to i.i.d. Cauchy variables?
+9. Let $$X\sim\operatorname{Bin}(1000,0.002)$$. Which approximation, Normal or Poisson, is more appropriate?
+
+### Part 7 — Practice answers
+
+#### 1. Uniform averages
+
+By the law of large numbers $$\bar X_n\to\frac12$$. By the CLT, $$\bar X_n$$ is approximately $$\mathcal N\left(\frac12,\frac1{12n}\right)$$.
+
+#### 2. A Chebyshev sample size
+
+$$\operatorname{Var}(\bar X_n)=\frac1{4n}$$, so $$P(\lvert\bar X_n-\frac12\rvert\ge0.05)\le\frac{1/(4n)}{0.0025}=\frac{100}n$$. This is at most 0.05 when $$n\ge2000$$.
+
+#### 3. A CLT sample size
+
+Need $$0.05\ge1.96\cdot\frac1{2\sqrt n}$$, so $$\sqrt n\ge19.6$$ and $$n\ge385$$. The CLT, using the shape, needs far fewer tosses than Chebyshev's guarantee.
+
+#### 4. Dice total
+
+Each roll has mean 3.5 and variance $$35/12$$. The total has mean 2100 and standard deviation $$\sqrt{600\cdot35/12}\approx41.8$$. $$P(S>2150)\approx1-\Phi\left(\frac{50}{41.8}\right)\approx1-\Phi(1.20)\approx0.12$$.
+
+#### 5. A Poisson with a large mean
+
+A $$\operatorname{Pois}(100)$$ is a sum of 100 i.i.d. $$\operatorname{Pois}(1)$$, so it is approximately $$\mathcal N(100,100)$$. $$P(X\ge115)\approx1-\Phi\left(\frac{114.5-100}{10}\right)=1-\Phi(1.45)\approx0.074$$.
+
+#### 6. The right scaling
+
+$$n^{1/4}(\bar X_n-\mu)=n^{-1/4}\cdot\sqrt n(\bar X_n-\mu)$$, and the second factor is approximately $$\mathcal N(0,\sigma^2)$$, so the product goes to 0. With $$n=\sqrt n\cdot\sqrt n$$, the extra $$\sqrt n$$ makes the spread grow without bound.
+
+#### 7. The gambler's fallacy
+
+No: the coin is memoryless, and the probability is still $$\frac12$$. The law of large numbers holds because the first 10 tosses are swamped by infinitely many later ones, not because heads become more likely.
+
+#### 8. No finite variance
+
+The CLT requires a finite variance, and the Cauchy has no mean at all. The average of i.i.d. Cauchy variables is again Cauchy, so it never becomes Normal.
+
+#### 9. Rare events
+
+$$np=2$$ is small, and $$p$$ is tiny, so the Binomial is very skewed. The Poisson approximation $$\operatorname{Pois}(2)$$ is appropriate.
+
+### Part 8 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Sample mean | $$E(\bar X_n)=\mu$$, $$\operatorname{Var}(\bar X_n)=\sigma^2/n$$ |
+| Strong LLN | $$\bar X_n\to\mu$$ with probability 1 |
+| Weak LLN | $$P(\lvert\bar X_n-\mu\rvert>c)\to0$$; one line from Chebyshev |
+| Swamping | Past luck is not corrected, only outweighed |
+| CLT, mean form | $$\sqrt n(\bar X_n-\mu)/\sigma\xrightarrow{d}\mathcal N(0,1)$$ |
+| CLT, sum form | $$(S_n-n\mu)/(\sqrt n\sigma)\xrightarrow{d}\mathcal N(0,1)$$ |
+| Scaling | $$\sqrt n$$: larger powers blow up, smaller ones go to 0 |
+| Assumption | Finite variance; any shape |
+| Proof | $$M(t/\sqrt n)^n$$, take logs, L'Hôpital twice, limit $$t^2/2$$ |
+| Binomial | $$\approx\mathcal N(np,npq)$$; best for $$p$$ near $$\frac12$$ |
+| Poisson regime | $$n$$ large, $$p$$ small |
+| Continuity correction | $$P(X=a)=P(a-\frac12<X<a+\frac12)$$ |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Sample mean <span class="gcat cat-meas">Measure</span></div>
+
+$$\bar X_n=\frac1n\sum_{j=1}^nX_j$$, a random variable with mean $$\mu$$ and variance $$\sigma^2/n$$ for i.i.d. data.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Law of large numbers <span class="gcat cat-thm">Theorem</span></div>
+
+For i.i.d. variables with finite mean, the sample mean converges to the true mean: with probability 1 (strong law) or in probability (weak law).
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Convergence in distribution <span class="gcat cat-defn">Definition</span></div>
+
+A sequence of random variables converges in distribution when their CDFs converge to a limiting CDF.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Central limit theorem <span class="gcat cat-thm">Theorem</span></div>
+
+For i.i.d. variables with finite variance, the standardized sum or sample mean converges in distribution to $$\mathcal N(0,1)$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Continuity correction <span class="gcat cat-prop">Technique</span></div>
+
+Replacing each integer value $$a$$ of a discrete variable by the interval $$(a-\frac12,a+\frac12)$$ before using a continuous approximation.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Gambler's fallacy <span class="gcat cat-defn">Misconception</span></div>
+
+The belief that independent trials compensate for past outcomes, so that a win becomes "due" after losses.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 29</span>
+  <span class="ref-tag">Law of large numbers</span>
+  <span class="ref-tag">Central limit theorem</span>
+  <span class="ref-tag">Normal approximation</span>
+  <span class="ref-tag">Continuity correction</span>
+</div>
+
+  </div>
+</div>
+
+
+## Lecture 30 - Chi-Square, Student-t, and Multivariate Normal
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-30-toggle" onclick="toggleLecture('lecture-30')" aria-expanded="true" aria-controls="lecture-30-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 30</span>
+      <span>
+        <span class="chapter-title">Lecture 30 - Chi-Square, Student-t, and Multivariate Normal</span>
+        <span class="chapter-subtitle">Distributions built from Normals: the Chi-Square as a Gamma, the Student-t and its heavy tails, and the Multivariate Normal with its MGF and the uncorrelated-implies-independent property</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-30-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-30-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+The last named distributions are all built from Normals. A sum of $$n$$ squared i.i.d. standard Normals is Chi-Square with $$n$$ degrees of freedom, which is the same as $$\operatorname{Gamma}(n/2,1/2)$$. A standard Normal divided by the square root of an independent Chi-Square over its degrees of freedom is Student-t. The t is symmetric, has heavier tails than the Normal, reduces to the Cauchy for one degree of freedom, and approaches the Normal as the degrees of freedom grow, by the law of large numbers. A random vector is Multivariate Normal when every linear combination of its components is Normal. Its MGF follows from the one-dimensional Normal MGF, and within a Multivariate Normal, uncorrelated components are independent.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$Z,Z_1,Z_2,\ldots$$ | i.i.d. $$\mathcal N(0,1)$$ |
+| $$V\sim\chi^2_n$$ | $$Z_1^2+\cdots+Z_n^2$$, Chi-Square with $$n$$ degrees of freedom |
+| $$T\sim t_n$$ | $$Z\big/\sqrt{V/n}$$ with $$Z$$ independent of $$V\sim\chi^2_n$$ |
+| $$\mathbf X=(X_1,\ldots,X_k)$$ | Random vector |
+| $$\mathbf t'\mathbf X=t_1X_1+\cdots+t_kX_k$$ | Linear combination of the components |
+| $$\mu_j=E(X_j)$$ | Mean of component $$j$$ |
+| MVN | Multivariate Normal |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Define the Chi-Square distribution and identify it as a Gamma distribution.
+- Define the Student-t distribution and derive its symmetry, its mean, and its relation to the Cauchy.
+- Explain why $$t_n$$ approaches $$\mathcal N(0,1)$$ as $$n\to\infty$$.
+- Find even Normal moments through the Chi-Square and Gamma.
+- Define the Multivariate Normal through linear combinations, with an example and a non-example.
+- Derive the MVN joint MGF and use the fact that uncorrelated components of an MVN are independent.
+
+### Part 1 — The Chi-Square distribution
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Chi-Square distribution <span class="ex-pill pill-defn">Definition</span></div>
+
+If $$Z_1,\ldots,Z_n$$ are i.i.d. $$\mathcal N(0,1)$$, then
+
+$$
+V=Z_1^2+\cdots+Z_n^2\sim\chi^2_n,
+$$
+
+the **Chi-Square distribution** with $$n$$ **degrees of freedom**.
+
+</div>
+
+Sums of squares appear throughout statistics, which is why the Chi-Square, and tests based on it, are used so widely.
+
+**A Gamma in disguise.** For one degree of freedom, a change of variables shows
+
+$$
+\chi^2_1=\operatorname{Gamma}\left(\tfrac12,\tfrac12\right).
+$$
+
+Since $$z^2$$ is not one-to-one, the derivation goes through the CDF. Lecture 22 found the density $$\frac1{\sqrt{2\pi y}}e^{-y/2}$$ for $$y>0$$, which is the $$\operatorname{Gamma}(\frac12,\frac12)$$ density since $$\Gamma(\frac12)=\sqrt\pi$$. Adding $$n$$ independent Gammas with the same rate adds their first parameters, so
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{\chi^2_n=\operatorname{Gamma}\left(\tfrac n2,\tfrac12\right),\qquad E(V)=n,\qquad\operatorname{Var}(V)=2n.}
+$$
+
+</div>
+
+So the Chi-Square is a special Gamma with its own name, and everything known about the Gamma applies.
+
+**Even Normal moments, again.** Since $$Z^2\sim\operatorname{Gamma}(\frac12,\frac12)$$, the Gamma moment formula, rescaled, gives
+
+$$
+E(Z^{2n})=E\big((Z^2)^n\big)=2^n\frac{\Gamma(n+\frac12)}{\Gamma(\frac12)}=1\cdot3\cdot5\cdots(2n-1),
+$$
+
+matching the MGF result from Lecture 18: $$E(Z^2)=1$$, $$E(Z^4)=3$$, $$E(Z^6)=15$$.
+
+### Part 2 — The Student-t distribution
+
+The t distribution was introduced in 1908 by William Gosset, a statistician working for the Guinness brewery, who published as "Student", reportedly because Guinness did not want competitors to know it employed a statistician.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Student-t distribution <span class="ex-pill pill-defn">Definition</span></div>
+
+If $$Z\sim\mathcal N(0,1)$$ and $$V\sim\chi^2_n$$ are independent, then
+
+$$
+\boxed{T=\frac Z{\sqrt{V/n}}\sim t_n,}
+$$
+
+the **Student-t distribution** with $$n$$ degrees of freedom.
+
+</div>
+
+The PDF can be found with a Jacobian, but the properties below follow directly from the definition.
+
+**Properties.**
+
+1. **Symmetric.** $$-Z$$ is also $$\mathcal N(0,1)$$ and is still independent of $$V$$, so $$-T$$ has the same distribution as $$T$$.
+2. **One degree of freedom is Cauchy.** With $$n=1$$, $$T=Z/\lvert Z_1\rvert$$. By symmetry the absolute value does not change the distribution, so $$t_1$$ is the ratio of two i.i.d. standard Normals: the Cauchy. In particular $$t_1$$ has no mean.
+3. **Mean 0 for $$n\ge2$$.** By independence, $$E(T)=E(Z)\,E\left(\frac1{\sqrt{V/n}}\right)=0$$, provided the second factor is finite, which it is for $$n\ge2$$. For $$n=1$$ that factor is infinite, and "infinity times 0" is not 0.
+4. **Limited moments.** $$t_n$$ has moments only of order less than $$n$$: $$t_1$$ has no mean, $$t_2$$ no variance, and so on. It has no MGF. Moments that exist come from Normal moments times moments of a power of a Gamma, by independence.
+5. **Heavier tails than the Normal.** Extreme values are relatively more likely, especially for small $$n$$. The Cauchy density decays like $$1/x^2$$, while the Normal decays like $$e^{-x^2/2}$$.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-30-student-t-densities.svg" alt="Student-t densities with 1, 3, and 30 degrees of freedom against the standard Normal density. The t with 1 degree of freedom, the Cauchy, is lowest at the center and highest in the tails; with 3 degrees of freedom it is closer; with 30 it nearly coincides with the Normal." style="display: block; width: 100%; max-width: 700px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes, illustrating Blitzstein and Hwang, <em>Introduction to Probability</em>, Definition 10.4.4 and Theorem 10.4.5. Small degrees of freedom give heavy tails; large degrees of freedom give nearly a Normal.</figcaption>
+</figure>
+
+**Approaching the Normal.** Construct $$T_n=Z\big/\sqrt{V_n/n}$$ with $$V_n=Z_1^2+\cdots+Z_n^2$$, using the same $$Z$$ and the same sequence $$Z_1,Z_2,\ldots$$ for every $$n$$; this is allowed, since only the distribution of $$T_n$$ matters. Now $$V_n/n$$ is the sample mean of i.i.d. $$Z_j^2$$, each with mean 1, so by the law of large numbers $$V_n/n\to1$$ with probability 1, and so does its square root. Hence $$T_n\to Z$$ with probability 1, and
+
+$$
+\boxed{t_n\xrightarrow{\ d\ }\mathcal N(0,1)\quad\text{as }n\to\infty.}
+$$
+
+For large degrees of freedom, around 30 or more, the t looks very much like a standard Normal.
+
+### Part 3 — The Multivariate Normal
+
+The Multinomial is the most important discrete multivariate distribution; the Multivariate Normal is the most important continuous one. Independent Normals stacked into a vector are easy. The interesting case allows correlation.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Multivariate Normal distribution <span class="ex-pill pill-defn">Definition</span></div>
+
+A random vector $$\mathbf X=(X_1,\ldots,X_k)$$ is **Multivariate Normal** if every linear combination
+
+$$
+t_1X_1+\cdots+t_kX_k
+$$
+
+has a Normal distribution, for every choice of constants $$t_1,\ldots,t_k$$. A constant counts as a Normal with variance 0. For $$k=2$$ it is called **Bivariate Normal**.
+
+</div>
+
+The definition reduces a vector question back to the one-dimensional Normal.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">An example and a non-example <span class="ex-pill pill-ex">Worked example</span></div>
+
+**Example.** Let $$Z,W$$ be i.i.d. $$\mathcal N(0,1)$$. Then $$(Z+2W,\ 3Z+5W)$$ is Bivariate Normal: for any $$s,t$$,
+
+$$
+s(Z+2W)+t(3Z+5W)=(s+3t)Z+(2s+5t)W,
+$$
+
+a sum of independent Normals, hence Normal. More generally, any vector of linear combinations of i.i.d. Normals is MVN.
+
+**Non-example.** Let $$Z\sim\mathcal N(0,1)$$ and let $$S$$ be a random sign, $$\pm1$$ with probability $$\frac12$$ each, independent of $$Z$$. Then $$SZ\sim\mathcal N(0,1)$$ by symmetry, so both $$Z$$ and $$SZ$$ are Normal. But $$(Z,SZ)$$ is not Bivariate Normal: the combination $$Z+SZ$$ equals 0 with probability $$\frac12$$, which no Normal does.
+
+<div class="ex-lesson">Components that are each Normal do not make a vector Multivariate Normal. Every linear combination must be Normal.</div>
+</div>
+
+**The joint MGF.** For a random vector, the MGF uses one argument per component:
+
+$$
+M(\mathbf t)=E\left(e^{\mathbf t'\mathbf X}\right)=E\left(e^{t_1X_1+\cdots+t_kX_k}\right).
+$$
+
+If $$\mathbf X$$ is MVN, the exponent $$W=\mathbf t'\mathbf X$$ is Normal. A Normal $$W$$ has $$E(e^W)=e^{E(W)+\frac12\operatorname{Var}(W)}$$, from the univariate MGF $$E(e^{sW})=e^{s\mu+\frac12s^2\sigma^2}$$ at $$s=1$$. So
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{M(\mathbf t)=\exp\left(t_1\mu_1+\cdots+t_k\mu_k+\tfrac12\operatorname{Var}(t_1X_1+\cdots+t_kX_k)\right),}
+$$
+
+</div>
+
+where the variance expands into variances and covariances by bilinearity. The joint MGF determines the joint distribution, so an MVN is determined by its means, variances, and covariances.
+
+### Part 4 — Uncorrelated implies independent within an MVN
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Uncorrelated components of an MVN <span class="ex-pill pill-thm">Theorem</span></div>
+
+Split a Multivariate Normal vector as $$\mathbf X=(\mathbf X_1,\mathbf X_2)$$. If every component of $$\mathbf X_1$$ is uncorrelated with every component of $$\mathbf X_2$$, then $$\mathbf X_1$$ and $$\mathbf X_2$$ are independent.
+
+</div>
+
+In general, independent implies uncorrelated but not conversely. Within an MVN the converse also holds; it can be proved by factoring the joint MGF. The non-example shows why the MVN assumption matters: $$Z$$ and $$SZ$$ are uncorrelated, since $$E(SZ^2)=E(S)E(Z^2)=0$$, but clearly dependent.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Sum and difference of i.i.d. Normals <span class="ex-pill pill-ex">Worked example</span></div>
+
+Let $$X,Y$$ be i.i.d. $$\mathcal N(0,1)$$. The pair $$(X+Y,\ X-Y)$$ is Bivariate Normal, since any combination of them is a combination of $$X$$ and $$Y$$. Their covariance is
+
+$$
+\operatorname{Cov}(X+Y,X-Y)=\operatorname{Var}(X)-\operatorname{Cov}(X,Y)+\operatorname{Cov}(Y,X)-\operatorname{Var}(Y)=1-1=0.
+$$
+
+So $$X+Y$$ and $$X-Y$$ are independent. This is special to the Normal: if i.i.d. $$X,Y$$ have independent sum and difference, they must be Normal, a much harder theorem.
+
+<div class="ex-lesson">Inside an MVN, checking independence reduces to computing covariances.</div>
+</div>
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** Two Normal random variables with zero correlation are independent.
+
+**Correction:** This needs them to be jointly Bivariate Normal. $$Z$$ and $$SZ$$ are each Normal and uncorrelated, but dependent.
+
+</div>
+
+### Part 5 — Original practice questions
+
+Try these before reading the answers.
+
+1. Find the mean and variance of $$\chi^2_n$$ from its Gamma form.
+2. Let $$Z_1,Z_2$$ be i.i.d. $$\mathcal N(0,1)$$. Show that $$Z_1^2+Z_2^2\sim\operatorname{Expo}(\frac12)$$.
+3. Use the Chi-Square to compute $$E(Z^6)$$.
+4. If $$T\sim t_n$$, express $$T^2$$ as a ratio of two independent Chi-Square variables, each divided by its degrees of freedom.
+5. For $$T\sim t_n$$ with $$n>2$$, find $$\operatorname{Var}(T)$$ using $$E(1/V)=\frac1{n-2}$$ for $$V\sim\chi^2_n$$.
+6. Let $$Z,W$$ be i.i.d. $$\mathcal N(0,1)$$. Is $$(Z,\ Z+W,\ Z-2W)$$ Multivariate Normal? Find $$\operatorname{Cov}(Z+W,\,Z-2W)$$.
+7. In question 6, find $$a$$ so that $$Z+W$$ and $$Z+aW$$ are independent.
+8. Write down the joint MGF of $$(X+Y,X-Y)$$ for i.i.d. $$\mathcal N(0,1)$$ $$X,Y$$, and use it to confirm independence.
+9. Explain why $$t_1$$ has no mean but $$t_3$$ does.
+
+### Part 6 — Practice answers
+
+#### 1. Chi-Square moments
+
+$$\operatorname{Gamma}(a,\lambda)$$ has mean $$a/\lambda$$ and variance $$a/\lambda^2$$. With $$a=\frac n2$$, $$\lambda=\frac12$$: mean $$n$$, variance $$2n$$.
+
+#### 2. Two degrees of freedom
+
+$$\chi^2_2=\operatorname{Gamma}(1,\tfrac12)=\operatorname{Expo}(\tfrac12)$$.
+
+#### 3. A sixth moment
+
+$$E(Z^6)=E((Z^2)^3)$$. For $$Y\sim\operatorname{Gamma}(\frac12,\frac12)$$, $$E(Y^3)=2^3\frac{\Gamma(\frac72)}{\Gamma(\frac12)}=8\cdot\frac52\cdot\frac32\cdot\frac12=15$$.
+
+#### 4. The square of a t
+
+$$T^2=\frac{Z^2/1}{V/n}$$, a ratio of a $$\chi^2_1$$ over 1 and an independent $$\chi^2_n$$ over $$n$$. Such a ratio has an F distribution, here with $$(1,n)$$ degrees of freedom (supplementary; the F is not covered in this course).
+
+#### 5. Variance of a t
+
+$$E(T)=0$$, so $$\operatorname{Var}(T)=E(T^2)=E(Z^2)\,E\left(\frac nV\right)=\frac n{n-2}$$. It exceeds 1, reflecting the heavier tails.
+
+#### 6. A three-dimensional MVN
+
+Yes: every linear combination of the three is a linear combination of the independent $$Z,W$$. $$\operatorname{Cov}(Z+W,Z-2W)=1-2=-1$$.
+
+#### 7. Choosing independence
+
+$$\operatorname{Cov}(Z+W,Z+aW)=1+a=0$$ when $$a=-1$$. The pair is MVN, so $$Z+W$$ and $$Z-W$$ are then independent.
+
+#### 8. MGF factorization
+
+$$t_1(X+Y)+t_2(X-Y)$$ has mean 0 and variance $$(t_1+t_2)^2+(t_1-t_2)^2=2t_1^2+2t_2^2$$. So $$M(t_1,t_2)=e^{t_1^2}e^{t_2^2}$$, a product of two $$\mathcal N(0,2)$$ MGFs: the components are independent.
+
+#### 9. Existence of the mean
+
+$$t_1$$ is Cauchy, and $$E\lvert T\rvert=\infty$$. For $$t_3$$, $$E\left(1/\sqrt{V/3}\right)<\infty$$, so $$E(T)=E(Z)E\left(1/\sqrt{V/3}\right)=0$$.
+
+### Part 7 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Chi-Square | $$\chi^2_n=Z_1^2+\cdots+Z_n^2$$ |
+| Gamma form | $$\chi^2_n=\operatorname{Gamma}(n/2,1/2)$$; mean $$n$$, variance $$2n$$ |
+| One degree | $$\chi^2_1=\operatorname{Gamma}(\frac12,\frac12)$$ |
+| Student-t | $$T=Z/\sqrt{V/n}$$, $$Z$$ independent of $$V\sim\chi^2_n$$ |
+| Symmetry | $$-T$$ has the same distribution as $$T$$ |
+| $$t_1$$ | Cauchy; no mean |
+| Mean | 0 for $$n\ge2$$ |
+| Tails | Heavier than Normal; moments only below order $$n$$ |
+| Limit | $$t_n\to\mathcal N(0,1)$$ by the law of large numbers |
+| MVN | Every linear combination is Normal |
+| Non-example | $$(Z,SZ)$$: each Normal, not jointly |
+| MVN MGF | $$\exp(\sum t_j\mu_j+\frac12\operatorname{Var}(\sum t_jX_j))$$ |
+| Independence | Within an MVN, uncorrelated implies independent |
+| Sum and difference | i.i.d. Normals: $$X+Y$$ and $$X-Y$$ independent |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Chi-Square distribution <span class="gcat cat-defn">Definition</span></div>
+
+The distribution of a sum of $$n$$ squared i.i.d. standard Normals, equal to $$\operatorname{Gamma}(n/2,1/2)$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Degrees of freedom <span class="gcat cat-notn">Notation</span></div>
+
+The parameter $$n$$ of the Chi-Square and Student-t: the number of squared standard Normals in the Chi-Square.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Student-t distribution <span class="gcat cat-defn">Definition</span></div>
+
+The distribution of $$Z/\sqrt{V/n}$$ with $$Z\sim\mathcal N(0,1)$$ independent of $$V\sim\chi^2_n$$; symmetric and heavy-tailed, approaching $$\mathcal N(0,1)$$ as $$n$$ grows.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Multivariate Normal distribution <span class="gcat cat-defn">Definition</span></div>
+
+The distribution of a random vector every linear combination of whose components is Normal.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Joint MGF <span class="gcat cat-notn">Notation</span></div>
+
+$$M(\mathbf t)=E(e^{t_1X_1+\cdots+t_kX_k})$$, which determines the joint distribution of a random vector.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 30</span>
+  <span class="ref-tag">Chi-Square</span>
+  <span class="ref-tag">Student-t</span>
+  <span class="ref-tag">Multivariate Normal</span>
+  <span class="ref-tag">Joint MGF</span>
+</div>
+
+  </div>
+</div>
+
+
+## Lecture 31 - Markov Chains
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-31-toggle" onclick="toggleLecture('lecture-31')" aria-expanded="true" aria-controls="lecture-31-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 31</span>
+      <span>
+        <span class="chapter-title">Lecture 31 - Markov Chains</span>
+        <span class="chapter-subtitle">Stochastic processes, the Markov property, transition matrices, multi-step probabilities as matrix powers, and the definition of a stationary distribution</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-31-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-31-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+A Markov chain is a sequence of random states, one step beyond i.i.d.: the next state may depend on the current state, but given the present, the past is irrelevant. Past and future are conditionally independent given the present. A homogeneous chain on finitely many states is described by a transition matrix $$Q$$ whose $$(i,j)$$ entry is the probability of moving from $$i$$ to $$j$$, with each row summing to 1. If the current distribution is the row vector $$\mathbf s$$, then the distribution $$m$$ steps later is $$\mathbf sQ^m$$, and the $$m$$-step transition probabilities are the entries of $$Q^m$$. A distribution with $$\mathbf sQ=\mathbf s$$ is stationary: a chain that starts there stays there.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$X_0,X_1,X_2,\ldots$$ | State of the chain at times $$0,1,2,\ldots$$ |
+| $$\{1,\ldots,M\}$$ | Finite state space |
+| $$q_{ij}=P(X_{n+1}=j\mid X_n=i)$$ | Transition probability from $$i$$ to $$j$$ |
+| $$Q=(q_{ij})$$ | $$M\times M$$ transition matrix; rows sum to 1 |
+| $$\mathbf s=(s_1,\ldots,s_M)$$ | Distribution of a state, written as a row vector |
+| $$Q^m$$ | $$m$$-step transition matrix |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Describe a stochastic process and where Markov chains sit between i.i.d. sequences and general dependence.
+- State the Markov property as conditional independence of past and future given the present.
+- Draw a chain as a diagram and write its transition matrix.
+- Show that the distribution one step later is $$\mathbf sQ$$ and that $$m$$-step probabilities are entries of $$Q^m$$.
+- Define a stationary distribution and state the questions it raises.
+- Describe the two main uses of Markov chains, modeling and Markov chain Monte Carlo, and Markov's original motivation.
+
+### Part 1 — Stochastic processes and the Markov property
+
+A **stochastic process** is a collection of random variables evolving over time, such as $$X_0,X_1,X_2,\ldots$$, where $$X_n$$ is the state of a system at time $$n$$. If the $$X_n$$ are i.i.d., the process restarts afresh at each step. If they may depend on each other in arbitrary ways, the process can be hopelessly complicated. Markov chains are a compromise, one step beyond i.i.d.
+
+Here time is discrete and the states form a finite set, numbered $$1,\ldots,M$$ by convention. Continuous time and continuous or infinite state spaces lead to other processes, studied in a course on stochastic processes.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Markov chain <span class="ex-pill pill-defn">Definition</span></div>
+
+$$X_0,X_1,X_2,\ldots$$ is a **Markov chain** if, for all $$n$$ and all states,
+
+$$
+\boxed{P(X_{n+1}=j\mid X_n=i,X_{n-1}=i_{n-1},\ldots,X_0=i_0)=P(X_{n+1}=j\mid X_n=i).}
+$$
+
+It is **homogeneous** when this probability does not depend on $$n$$; call it $$q_{ij}$$. All chains in these notes are homogeneous.
+
+</div>
+
+**Interpretation.** Think of $$X_n$$ as now, $$X_{n+1}$$ as tomorrow, and $$X_0,\ldots,X_{n-1}$$ as the past. To predict the future, only the current state matters, not the path that led to it. In the language used throughout the course: **past and future are conditionally independent given the present**. They need not be independent: without knowing $$X_n$$, the past can still help predict $$X_{n+1}$$, and $$X_{n-1}$$ cannot be discarded.
+
+Whether a real system, such as the weather or a stock price, is Markov is an empirical question. The assumption is less restrictive than it looks: a chain whose next state depends on the last two states can be rewritten as an ordinary Markov chain on pairs of states.
+
+### Part 2 — Diagrams and the transition matrix
+
+A chain can be drawn as states joined by arrows labeled with transition probabilities. A particle wanders from state to state, following arrows.
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-31-four-state-chain.svg" alt="A four-state Markov chain diagram. State 1 stays with probability 1/3 and moves to 2 with probability 2/3. State 2 moves to 1 or 3 with probability 1/2 each. State 3 always moves to 4. State 4 moves to 1 with probability 1/2, to 3 with probability 1/4, and stays with probability 1/4." style="display: block; width: 100%; max-width: 520px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes, illustrating Blitzstein and Hwang, <em>Introduction to Probability</em>, Definitions 11.1.1–11.1.2. The four-state chain used throughout this lecture.</figcaption>
+</figure>
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Transition matrix <span class="ex-pill pill-defn">Definition</span></div>
+
+The **transition matrix** is $$Q=(q_{ij})$$, where row $$i$$ lists the probabilities of moving from state $$i$$ to each state. For the chain in the figure,
+
+$$
+Q=\begin{pmatrix}
+1/3&2/3&0&0\\
+1/2&0&1/2&0\\
+0&0&0&1\\
+1/2&0&1/4&1/4
+\end{pmatrix}.
+$$
+
+</div>
+
+Each row sums to 1, since from state $$i$$ the chain must go somewhere; columns need not. Conversely, any square matrix with nonnegative entries and row sums 1 is a valid transition matrix. Some books use the transpose, with columns summing to 1.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** In a Markov chain, the future is independent of the past.
+
+**Correction:** The future is independent of the past only **given the present**. Unconditionally, the past carries information about the present state and hence about the future.
+
+</div>
+
+### Part 3 — Distributions over time: powers of $$Q$$
+
+**One step.** Suppose $$X_n$$ has PMF $$\mathbf s$$, written as a $$1\times M$$ row vector: $$s_i=P(X_n=i)$$. By the law of total probability, conditioning on the current state,
+
+$$
+P(X_{n+1}=j)=\sum_iP(X_{n+1}=j\mid X_n=i)P(X_n=i)=\sum_is_iq_{ij}.
+$$
+
+That sum is the $$j$$th entry of the matrix product $$\mathbf sQ$$: a row of $$\mathbf s$$ dotted with column $$j$$ of $$Q$$.
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{\text{distribution of }X_{n+1}=\mathbf sQ,\qquad\text{distribution of }X_{n+m}=\mathbf sQ^m.}
+$$
+
+</div>
+
+Each step forward in time multiplies on the right by $$Q$$.
+
+**Two steps.** Condition on the missing middle state, then use the Markov property to drop $$X_n$$ from the first factor:
+
+$$
+P(X_{n+2}=j\mid X_n=i)=\sum_kP(X_{n+2}=j\mid X_{n+1}=k)P(X_{n+1}=k\mid X_n=i)=\sum_kq_{ik}q_{kj},
+$$
+
+the $$(i,j)$$ entry of $$Q^2$$. Repeating the argument,
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{P(X_{n+m}=j\mid X_n=i)=\big(Q^m\big)_{ij}.}
+$$
+
+</div>
+
+Powers of a single matrix give every multi-step transition probability.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Two steps in the four-state chain <span class="ex-pill pill-num">Worked example</span></div>
+
+From state 1, what is the chance of being at state 3 two steps later? The paths are $$1\to2\to3$$, with probability $$\frac23\cdot\frac12=\frac13$$, and no others, since from state 1 the chain goes to 1 or 2 and only state 2 leads to 3. So $$(Q^2)_{13}=\frac13$$.
+
+Row 1 of $$Q^2$$ is $$\left(\frac49,\frac29,\frac13,0\right)$$: state 4 cannot be reached from state 1 in two steps.
+
+<div class="ex-lesson">Entries of $$Q^m$$ add up the probabilities of all paths of length $$m$$ between two states.</div>
+</div>
+
+### Part 4 — Stationary distributions
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Stationary distribution <span class="ex-pill pill-defn">Definition</span></div>
+
+A probability row vector $$\mathbf s$$, with nonnegative entries summing to 1, is a **stationary distribution** for the chain if
+
+$$
+\boxed{\mathbf sQ=\mathbf s.}
+$$
+
+</div>
+
+**Why "stationary".** If $$X_n$$ has distribution $$\mathbf s$$, then so does $$X_{n+1}$$, since $$\mathbf sQ=\mathbf s$$, and so does every later state. A chain started at its stationary distribution keeps that distribution forever. For readers who know linear algebra, $$\mathbf s$$ is a left eigenvector of $$Q$$ with eigenvalue 1, or equivalently an eigenvector of $$Q'$$.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Solving for the four-state chain <span class="ex-pill pill-num">Worked example</span></div>
+
+Write $$\mathbf s=(s_1,s_2,s_3,s_4)$$. The column equations of $$\mathbf sQ=\mathbf s$$ are
+
+$$
+s_2=\tfrac23s_1,\qquad s_3=\tfrac12s_2+\tfrac14s_4,\qquad s_4=s_3+\tfrac14s_4,
+$$
+
+with the first column redundant. The last equation gives $$s_3=\frac34s_4$$. Substituting into the middle one, $$\frac34s_4=\frac12s_2+\frac14s_4$$, so $$s_2=s_4$$. With $$s_2=\frac23s_1$$, all are multiples of $$s_1$$: $$\mathbf s\propto(1,\frac23,\frac12,\frac23)\propto(6,4,3,4)$$. Normalizing,
+
+$$
+\mathbf s=\left(\frac6{17},\frac4{17},\frac3{17},\frac4{17}\right).
+$$
+
+Check the first column: $$\frac6{17}\cdot\frac13+\frac4{17}\cdot\frac12+\frac4{17}\cdot\frac12=\frac6{17}$$.
+
+<div class="ex-lesson">For a small chain, solve the linear equations and normalize. For large chains, Lecture 32 gives better routes.</div>
+</div>
+
+**Questions to answer.** Does a stationary distribution exist, as a vector with nonnegative entries? Is it unique? Does the chain converge to it, so that it describes long-run behavior? And how can it be computed efficiently? Solving $$\mathbf sQ=\mathbf s$$ directly is a linear system, which can be enormous. Lecture 32 answers these questions.
+
+### Part 5 — Uses and origins
+
+**Two kinds of use.**
+
+1. **Modeling.** Treat a real system, in the physical, biological, or social sciences, as a Markov chain, exactly or approximately.
+2. **Markov chain Monte Carlo (MCMC).** Build your own chain on a computer, designed so that it converges to a distribution you want to study but cannot compute directly. Run it for a long time and use its states as approximate draws from that distribution. Since you constructed the chain, whether it is "really" Markov is not in question. MCMC has transformed scientific computing and is used in almost every field.
+
+**Markov's motivation.** Markov introduced chains around 1906. The law of large numbers had recently been proved for i.i.d. variables, and some argued that because human behavior is not i.i.d., free will escapes it. Markov answered by going one step beyond i.i.d.: he proved a law of large numbers for chains, showing that independence is not necessary. His first example was a chain on two states, vowel and consonant, estimated from the letters of a Russian novel.
+
+### Part 6 — Original practice questions
+
+Try these before reading the answers.
+
+1. Is a sequence of i.i.d. random variables on $$\{1,\ldots,M\}$$ a Markov chain? What is its transition matrix?
+2. Explain in words why the Markov property does not make $$X_{n+1}$$ independent of $$X_{n-1}$$.
+3. Weather is sunny or rainy. A sunny day is followed by a sunny day with probability 0.8, and a rainy day by a rainy day with probability 0.6. Write the transition matrix.
+4. In question 3, if today is sunny, find the probability of rain two days from now.
+5. Find the stationary distribution of the weather chain.
+6. A chain starts in state 1 of the four-state chain. Find the distribution of $$X_1$$ and $$X_2$$.
+7. Check that $$\mathbf s=(\frac12,\frac12)$$ is stationary for $$Q=\begin{pmatrix}0&1\\1&0\end{pmatrix}$$, and describe how the chain moves.
+8. For the two-state chain $$Q=\begin{pmatrix}1-a&a\\b&1-b\end{pmatrix}$$ with $$a+b>0$$, find the stationary distribution.
+9. Show that if $$\mathbf s$$ is stationary then $$\mathbf sQ^m=\mathbf s$$ for every $$m$$.
+
+### Part 7 — Practice answers
+
+#### 1. i.i.d. as a special case
+
+Yes. If each $$X_n$$ has PMF $$\mathbf p$$, the future ignores the present too, and every row of $$Q$$ equals $$\mathbf p$$.
+
+#### 2. Conditional, not unconditional
+
+The past affects the present, which affects the future. Without knowing $$X_n$$, the value of $$X_{n-1}$$ is informative about $$X_n$$ and hence about $$X_{n+1}$$. Only once $$X_n$$ is known does $$X_{n-1}$$ become irrelevant.
+
+#### 3. Weather matrix
+
+With states sunny, rainy: $$Q=\begin{pmatrix}0.8&0.2\\0.4&0.6\end{pmatrix}$$.
+
+#### 4. Two days ahead
+
+$$(Q^2)_{SR}=0.8\cdot0.2+0.2\cdot0.6=0.28$$.
+
+#### 5. Weather in the long run
+
+$$s_S=0.8s_S+0.4s_R$$ gives $$0.2s_S=0.4s_R$$, so $$s_S=2s_R$$ and $$\mathbf s=(\frac23,\frac13)$$.
+
+#### 6. Starting at state 1
+
+$$X_1$$: row 1 of $$Q$$, $$(\frac13,\frac23,0,0)$$. $$X_2$$: row 1 of $$Q^2$$, $$(\frac49,\frac29,\frac13,0)$$.
+
+#### 7. A flip-flop chain
+
+$$(\frac12,\frac12)Q=(\frac12,\frac12)$$. The chain alternates deterministically between the two states. It has a stationary distribution, but started at state 1 its distribution does not converge.
+
+#### 8. General two-state chain
+
+Balance between the states: $$s_1a=s_2b$$. So $$\mathbf s=\left(\frac b{a+b},\frac a{a+b}\right)$$. Question 5 is the case $$a=0.2$$, $$b=0.4$$.
+
+#### 9. Stationary forever
+
+By induction, $$\mathbf sQ^m=(\mathbf sQ)Q^{m-1}=\mathbf sQ^{m-1}=\cdots=\mathbf s$$.
+
+### Part 8 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Stochastic process | Random variables evolving over time |
+| Markov property | Given the present, the past is irrelevant to the future |
+| Conditional independence | Past and future are conditionally independent given the present |
+| Homogeneous | $$q_{ij}$$ does not depend on time |
+| Transition matrix | $$Q=(q_{ij})$$; nonnegative, rows sum to 1 |
+| One step | Distribution $$\mathbf s\mapsto\mathbf sQ$$ |
+| $$m$$ steps | $$\mathbf sQ^m$$; $$P(X_{n+m}=j\mid X_n=i)=(Q^m)_{ij}$$ |
+| Stationary | $$\mathbf sQ=\mathbf s$$, $$\mathbf s$$ a probability vector |
+| Four-state example | $$\mathbf s=(6,4,3,4)/17$$ |
+| Open questions | Existence, uniqueness, convergence, computation |
+| Uses | Modeling and Markov chain Monte Carlo |
+| Origin | Markov, about 1906: a law of large numbers beyond i.i.d. |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Stochastic process <span class="gcat cat-defn">Definition</span></div>
+
+A collection of random variables indexed by time, describing a system that evolves randomly.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Markov property <span class="gcat cat-prop">Property</span></div>
+
+The future is conditionally independent of the past given the present state.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Transition matrix <span class="gcat cat-defn">Definition</span></div>
+
+The matrix $$Q$$ of one-step transition probabilities $$q_{ij}=P(X_{n+1}=j\mid X_n=i)$$, with rows summing to 1.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Stationary distribution <span class="gcat cat-defn">Definition</span></div>
+
+A probability row vector $$\mathbf s$$ with $$\mathbf sQ=\mathbf s$$, preserved by every step of the chain.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Markov chain Monte Carlo <span class="gcat cat-defn">Definition</span></div>
+
+Computing with a purpose-built Markov chain that converges to a target distribution, using its long-run states as approximate draws.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 31</span>
+  <span class="ref-tag">Markov chains</span>
+  <span class="ref-tag">Transition matrix</span>
+  <span class="ref-tag">Stationary distribution</span>
+  <span class="ref-tag">MCMC</span>
+</div>
+
+  </div>
+</div>
+
+
+## Lecture 32 - Markov Chains Continued
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-32-toggle" onclick="toggleLecture('lecture-32')" aria-expanded="true" aria-controls="lecture-32-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 32</span>
+      <span>
+        <span class="chapter-title">Lecture 32 - Markov Chains Continued</span>
+        <span class="chapter-subtitle">Irreducible, recurrent, transient, and periodic behavior; existence, uniqueness, and convergence of the stationary distribution; reversibility; and random walk on an undirected network</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-32-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-32-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+A chain is irreducible if every state can be reached from every other. A state is recurrent if the chain, started there, returns with probability 1, and transient otherwise; absorbing states trap the chain, and periodic chains cycle. For an irreducible chain on finitely many states, a stationary distribution exists, is unique, and satisfies $$s_i=1/r_i$$, where $$r_i$$ is the expected return time to $$i$$. If some power of $$Q$$ has all positive entries, the chain converges to it from any start. Computing it can still be hard. Reversible chains, those with $$s_iq_{ij}=s_jq_{ji}$$ for all $$i,j$$, make it easy, since such an $$\mathbf s$$ is automatically stationary. For a random walk on an undirected network, the stationary probability of each node is proportional to its degree.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$Q=(q_{ij})$$ | Transition matrix |
+| $$\mathbf s$$ | Stationary distribution, $$\mathbf sQ=\mathbf s$$ |
+| $$r_i$$ | Expected number of steps to return to $$i$$, starting from $$i$$ |
+| $$\mathbf t$$ | Any initial distribution |
+| $$s_iq_{ij}=s_jq_{ji}$$ | Reversibility condition, also called detailed balance |
+| $$d_i$$ | Degree of node $$i$$: the number of edges at $$i$$ |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Classify chains as irreducible or reducible, and states as recurrent, transient, or absorbing.
+- Recognize periodic behavior and explain why it must be ruled out for convergence.
+- State the existence, uniqueness, return-time, and convergence results for stationary distributions.
+- Define reversibility and prove that it implies stationarity.
+- Find the stationary distribution of a random walk on an undirected network.
+
+### Part 1 — Classifying chains and states
+
+Four small chains show the main behaviors. In each, from a state the chain follows one of its outgoing arrows.
+
+| Chain | Picture | Behavior |
+|---|---|---|
+| A | States 1, 2, 3; arrows $$1\to1$$, $$1\to2$$, $$2\to3$$, $$3\to1$$, $$3\to2$$, $$3\to3$$ | Every state reachable from every other |
+| B | Two copies of chain A on $$\{1,2,3\}$$ and $$\{4,5,6\}$$, with no arrows between them | Two separate worlds |
+| C | States $$0,1,2,3$$; from 1 or 2 step left or right; 0 and 3 lead only to themselves | Trapped at an end |
+| D | $$1\to2\to3\to1$$ with probability 1 | Cycles like a clock |
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Irreducible, recurrent, transient <span class="ex-pill pill-defn">Definition</span></div>
+
+- A chain is **irreducible** if for any states $$i,j$$ it is possible, with positive probability, to get from $$i$$ to $$j$$ in some finite number of steps. Otherwise it is **reducible**.
+- A state $$i$$ is **recurrent** if, starting from $$i$$, the chain returns to $$i$$ with probability 1. Otherwise it is **transient**.
+- A state is **absorbing** if the chain, once there, stays there forever.
+
+</div>
+
+**The four chains.**
+
+- **A** is irreducible, and all its states are recurrent.
+- **B** is reducible: you can never move between the two groups. It is really two separate chains, which can be studied one at a time; this is why irreducible chains are the main case. All its states are still recurrent: started at state 4, the chain stays in $$\{4,5,6\}$$ and keeps returning.
+- **C** is reducible, and is the gambler's ruin drawn as a chain. States 0 and 3 are absorbing, hence recurrent. States 1 and 2 are transient: eventually the chain hits an end and never comes back.
+- **D** is irreducible and recurrent but **periodic**: started at 1, it is at state 3 exactly at times that are multiples of 3.
+
+**Recurrence repeats.** If a state is recurrent, the chain returns with probability 1; after returning, by the Markov property, the same holds again. So it returns infinitely often. A transient state is visited only finitely many times.
+
+**Anything possible eventually happens.** In a finite irreducible chain, every state is recurrent: however unlikely a return is on any one excursion, it has positive probability, so it eventually happens.
+
+**A transient example.** Add one arrow $$3\to6$$ to chain B. Then states 1, 2, 3 become transient: the chain may wander among them for a long time, but once it crosses to 6 it can never return.
+
+### Part 2 — The main theorem on stationary distributions
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Stationary distributions of irreducible chains <span class="ex-pill pill-thm">Theorem</span></div>
+
+Let $$X_0,X_1,\ldots$$ be an irreducible Markov chain on finitely many states, with transition matrix $$Q$$.
+
+1. **Existence.** A stationary distribution $$\mathbf s$$ exists.
+2. **Uniqueness.** It is unique.
+3. **Return times.** $$\boxed{s_i=\dfrac1{r_i}}$$, where $$r_i$$ is the expected number of steps to return to $$i$$, starting from $$i$$.
+4. **Convergence.** If, in addition, $$Q^m$$ has all entries positive for some $$m$$, then for any initial distribution $$\mathbf t$$,
+
+$$
+\mathbf tQ^n\to\mathbf s\quad\text{as }n\to\infty;\qquad\text{equivalently}\quad P(X_n=i)\to s_i.
+$$
+
+</div>
+
+The proofs need more linear algebra than these notes cover, but the meaning is clear.
+
+- $$s_i$$ is the **long-run fraction of time** spent at state $$i$$. If the chain spends a tenth of its time at $$i$$, it takes on average 10 steps to return to $$i$$, which is the return-time formula. The inverse relation makes sense; that it is exact is a theorem.
+- The positivity condition rules out periodic behavior. In chain D, the powers of $$Q$$ shift their zeros around forever and never become all positive. Positivity of some $$Q^m$$ also implies irreducibility.
+- Hence the other names for $$\mathbf s$$: steady state, equilibrium, long-run distribution.
+
+The theorem does not say how to compute $$\mathbf s$$. Solving $$\mathbf sQ=\mathbf s$$ can be a huge computation, and the return-time formula needs $$r_i$$, which is just as hard.
+
+### Part 3 — Reversible chains
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Reversibility <span class="ex-pill pill-defn">Definition</span></div>
+
+A chain with transition matrix $$Q$$ is **reversible** if there is a probability vector $$\mathbf s$$ such that
+
+$$
+\boxed{s_iq_{ij}=s_jq_{ji}\quad\text{for all states }i,j.}
+$$
+
+</div>
+
+**Intuition.** $$s_iq_{ij}$$ is the long-run rate of moves from $$i$$ to $$j$$. Reversibility says each pair of states exchanges probability equally in both directions. If a chain started at $$\mathbf s$$ were filmed and the film played backward, no one could tell the direction of time. In physics this condition is called **detailed balance**.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Reversible implies stationary <span class="ex-pill pill-thm">Theorem</span></div>
+
+If $$s_iq_{ij}=s_jq_{ji}$$ for all $$i,j$$, then $$\mathbf s$$ is stationary.
+
+</div>
+
+**Proof.** Sum both sides over $$i$$:
+
+$$
+\sum_is_iq_{ij}=\sum_is_jq_{ji}=s_j\sum_iq_{ji}=s_j,
+$$
+
+since row $$j$$ of $$Q$$ sums to 1. The left side is the $$j$$th entry of $$\mathbf sQ$$, so $$\mathbf sQ=\mathbf s$$. $$\blacksquare$$
+
+Finding an $$\mathbf s$$ that satisfies the reversibility equations takes insight rather than routine elimination, but when it can be done, no matrix equations need solving, and the answer often works for chains of any size.
+
+### Part 4 — Random walk on an undirected network
+
+An **undirected network** has nodes joined by edges that work in both directions. A **random walk** on it moves, at each step, along one of the edges at the current node, chosen uniformly at random. Assume the network is connected, so the walk is irreducible, and has no loops from a node to itself. Let $$d_i$$ be the **degree** of node $$i$$, the number of edges at $$i$$.
+
+**Claim.** $$d_iq_{ij}=d_jq_{ji}$$ for all $$i,j$$.
+
+- If $$i=j$$, both sides are equal trivially.
+- If $$i$$ and $$j$$ are not joined, both sides are 0. Here the undirected assumption matters: $$q_{ij}=0$$ exactly when $$q_{ji}=0$$.
+- If they are joined, $$q_{ij}=1/d_i$$ and $$q_{ji}=1/d_j$$, so both sides equal 1.
+
+Normalizing gives a reversible, hence stationary, distribution:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{s_i=\frac{d_i}{\sum_jd_j}.}
+$$
+
+</div>
+
+The walk spends time at each node in proportion to the node's number of connections. The argument works for a network with four nodes or four billion.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">A four-node network <span class="ex-pill pill-num">Worked example</span></div>
+
+Nodes 1, 2, 3, 4 with edges $$\{1,2\}$$, $$\{1,3\}$$, $$\{2,3\}$$, $$\{3,4\}$$. The degrees are $$d=(2,2,3,1)$$, summing to 8, so
+
+$$
+\mathbf s=\left(\frac28,\frac28,\frac38,\frac18\right).
+$$
+
+The expected return time to node 4 is $$r_4=1/s_4=8$$ steps.
+
+<div class="ex-lesson">For a random walk on an undirected network, read off the degrees and normalize; no matrix is needed.</div>
+</div>
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** Every Markov chain is reversible with respect to its stationary distribution.
+
+**Correction:** Every irreducible finite chain has a stationary distribution, but most chains are not reversible. Chain D, the clock, has stationary distribution $$(\frac13,\frac13,\frac13)$$, yet $$s_1q_{12}=\frac13$$ while $$s_2q_{21}=0$$. Run backward, the clock would visibly turn the other way.
+
+</div>
+
+### Part 5 — Original practice questions
+
+Try these before reading the answers.
+
+1. Classify the states of the gambler's ruin chain on $$\{0,1,\ldots,N\}$$.
+2. Explain why a finite irreducible chain cannot have a transient state.
+3. For chain D, the three-state clock, find the stationary distribution and the expected return time to each state. Does $$\mathbf tQ^n$$ converge from $$\mathbf t=(1,0,0)$$?
+4. Show that the two-state chain $$Q=\begin{pmatrix}1-a&a\\b&1-b\end{pmatrix}$$ is reversible, and use that to find $$\mathbf s$$.
+5. A random walk on a star network has one center joined to $$k$$ outer nodes. Find the stationary distribution and the expected return time to the center.
+6. A random walk moves on the corners of a square, to either neighbor with probability $$\frac12$$. Find $$\mathbf s$$. Does the chain converge to it from a fixed start?
+7. Find the expected return time to a corner of a $$3\times3$$ grid of nodes, with edges between horizontal and vertical neighbors.
+8. Show that if $$Q$$ is symmetric, $$q_{ij}=q_{ji}$$, then the uniform distribution is stationary.
+9. Explain why a chain with two absorbing states does not have a unique stationary distribution.
+
+### Part 6 — Practice answers
+
+#### 1. Gambler's ruin
+
+States 0 and $$N$$ are absorbing, hence recurrent. States $$1,\ldots,N-1$$ are transient, since with positive probability the chain is absorbed and never returns. The chain is reducible.
+
+#### 2. No transient states
+
+In a finite chain some state is visited infinitely often. By irreducibility, every state can be reached from it with positive probability, and repeated chances make each state visited infinitely often. So all states are recurrent.
+
+#### 3. The clock
+
+$$\mathbf s=(\frac13,\frac13,\frac13)$$, and each return takes exactly 3 steps, matching $$1/s_i=3$$. From $$(1,0,0)$$, $$\mathbf tQ^n$$ cycles through $$(1,0,0)$$, $$(0,1,0)$$, $$(0,0,1)$$ and does not converge; no power of $$Q$$ is all positive.
+
+#### 4. Two states
+
+The only condition with $$i\ne j$$ is $$s_1a=s_2b$$. With $$s_1+s_2=1$$: $$\mathbf s=\left(\frac b{a+b},\frac a{a+b}\right)$$. Every two-state chain is reversible.
+
+#### 5. A star
+
+The center has degree $$k$$ and each outer node degree 1, total $$2k$$. So $$s_{\text{center}}=\frac12$$, each outer node has $$\frac1{2k}$$, and the expected return time to the center is 2, as it must be: every walk alternates between center and outside.
+
+#### 6. A square
+
+All degrees are 2, so $$\mathbf s=(\frac14,\frac14,\frac14,\frac14)$$. The walk alternates between the two pairs of opposite corners, so it is periodic and does not converge from a fixed start.
+
+#### 7. A grid
+
+Degrees: 4 corners of degree 2, 4 edge midpoints of degree 3, 1 center of degree 4; total $$8+12+4=24$$. A corner has $$s=\frac2{24}=\frac1{12}$$, so the expected return time is 12.
+
+#### 8. Symmetric matrices
+
+With $$s_i=\frac1M$$ for all $$i$$, $$s_iq_{ij}=\frac{q_{ij}}M=\frac{q_{ji}}M=s_jq_{ji}$$. So the uniform distribution is reversible, hence stationary.
+
+#### 9. Two traps
+
+The chain is reducible. Point mass at either absorbing state is stationary, and so is any mixture of the two; uniqueness requires irreducibility.
+
+### Part 7 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Irreducible | Every state reachable from every state |
+| Recurrent | Return with probability 1, hence infinitely often |
+| Transient | Positive probability of never returning |
+| Absorbing | Once entered, never left |
+| Periodic | Cycles deterministically in time; blocks convergence |
+| Finite irreducible | All states recurrent |
+| Existence and uniqueness | Finite irreducible chains have exactly one stationary $$\mathbf s$$ |
+| Return time | $$s_i=1/r_i$$ |
+| Convergence | If some $$Q^m>0$$: $$\mathbf tQ^n\to\mathbf s$$ for every start |
+| Interpretation | $$s_i$$ is the long-run fraction of time at $$i$$ |
+| Reversible | $$s_iq_{ij}=s_jq_{ji}$$ for all $$i,j$$ |
+| Reversible implies stationary | Sum over $$i$$ |
+| Undirected network | $$s_i\propto d_i$$ |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Irreducible chain <span class="gcat cat-defn">Definition</span></div>
+
+A chain in which every state can be reached from every other state with positive probability in some number of steps.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Recurrent and transient states <span class="gcat cat-defn">Definition</span></div>
+
+A state is recurrent if the chain started there returns with probability 1, and transient otherwise.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Absorbing state <span class="gcat cat-defn">Definition</span></div>
+
+A state with $$q_{ii}=1$$, which the chain never leaves once it arrives.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Periodic chain <span class="gcat cat-defn">Definition</span></div>
+
+A chain whose returns to a state can occur only at multiples of some integer greater than 1, preventing convergence of its distribution.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Reversibility <span class="gcat cat-prop">Property</span></div>
+
+The condition $$s_iq_{ij}=s_jq_{ji}$$ for all $$i,j$$, also called detailed balance; it implies that $$\mathbf s$$ is stationary.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Degree <span class="gcat cat-meas">Measure</span></div>
+
+The number of edges at a node of a network. A random walk on an undirected network has stationary probabilities proportional to degree.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 32</span>
+  <span class="ref-tag">Markov chains</span>
+  <span class="ref-tag">Recurrence</span>
+  <span class="ref-tag">Stationary distribution</span>
+  <span class="ref-tag">Reversibility</span>
+  <span class="ref-tag">Random walk</span>
+</div>
+
+  </div>
+</div>
+
+
+## Lecture 33 - Markov Chains Continued Further
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-33-toggle" onclick="toggleLecture('lecture-33')" aria-expanded="true" aria-controls="lecture-33-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 33</span>
+      <span>
+        <span class="chapter-title">Lecture 33 - Markov Chains Continued Further</span>
+        <span class="chapter-subtitle">Random walks on weighted undirected networks, why every reversible chain is one, and Google PageRank as the stationary distribution of a non-reversible chain</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-33-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-33-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+Put symmetric weights $$w_{ij}=w_{ji}$$ on the edges of an undirected network and move from $$i$$ to $$j$$ with probability proportional to $$w_{ij}$$. This weighted random walk is reversible, and its stationary probability at $$i$$ is proportional to the total weight $$\sum_kw_{ik}$$ at $$i$$, the weighted degree. Conversely, every reversible chain is such a walk, with $$w_{ij}=s_iq_{ij}$$. Google PageRank is a non-reversible example: a page's importance is the stationary probability of a random web surfer who follows links, jumps to a random page from pages without links, and with probability 0.15 teleports to a random page at each step. Teleportation makes the chain irreducible with all transition probabilities positive, so PageRank exists, is unique, and can be computed by running the chain, using the sparsity of the link matrix.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$w_{ij}=w_{ji}\ge0$$ | Edge weight; 0 when there is no edge |
+| $$\sum_kw_{ik}$$ | Weighted degree of node $$i$$ |
+| $$Q$$ | Link-following matrix of the web |
+| $$J$$ | $$M\times M$$ matrix of all 1's |
+| $$G=\alpha Q+(1-\alpha)J/M$$ | Google matrix, with $$\alpha=0.85$$ originally |
+| $$\mathbf s$$ | PageRank vector: stationary distribution of $$G$$ |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- Find the stationary distribution of a random walk on a weighted undirected network.
+- Show that every reversible chain is a weighted random walk on an undirected network.
+- Explain the idea behind PageRank and write it as a stationary-distribution equation.
+- Explain why teleportation is added and what it guarantees.
+- Describe how PageRank is computed by running the chain, and why sparsity makes that feasible.
+
+### Part 1 — Weighted undirected networks
+
+Start with an undirected network, possibly with loops, and put a weight $$w_{ij}\ge0$$ on each edge, with $$w_{ij}=0$$ when there is no edge. Because edges work in both directions,
+
+$$
+w_{ij}=w_{ji}.
+$$
+
+The **weighted random walk** moves from $$i$$ to $$j$$ with probability proportional to $$w_{ij}$$:
+
+$$
+q_{ij}=\frac{w_{ij}}{\sum_kw_{ik}},
+$$
+
+assuming every node has some positive weight. With all weights equal to 1, this is the unweighted walk of Lecture 32, where $$\sum_kw_{ik}=d_i$$. A loop at a node counts once toward that node's degree.
+
+**Reversibility.** Multiply $$q_{ij}$$ by its denominator and use symmetry:
+
+$$
+\left(\sum_kw_{ik}\right)q_{ij}=w_{ij}=w_{ji}=\left(\sum_kw_{jk}\right)q_{ji}.
+$$
+
+This is the reversibility condition with $$s_i$$ proportional to the weighted degree:
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{s_i=\frac{\sum_kw_{ik}}{\sum_j\sum_kw_{jk}}.}
+$$
+
+</div>
+
+<div class="example-block" markdown="1">
+<div class="ex-title">A weighted triangle <span class="ex-pill pill-num">Worked example</span></div>
+
+Nodes 1, 2, 3 with $$w_{12}=1$$, $$w_{13}=2$$, $$w_{23}=3$$. The weighted degrees are $$1+2=3$$, $$1+3=4$$, and $$2+3=5$$, totaling 12, so
+
+$$
+\mathbf s=\left(\frac3{12},\frac4{12},\frac5{12}\right).
+$$
+
+Check one reversibility equation: $$s_1q_{13}=\frac3{12}\cdot\frac23=\frac16$$ and $$s_3q_{31}=\frac5{12}\cdot\frac25=\frac16$$.
+
+</div>
+
+### Part 2 — Every reversible chain is a weighted walk
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Representation of reversible chains <span class="ex-pill pill-thm">Theorem</span></div>
+
+Any reversible Markov chain is a random walk on some weighted undirected network.
+
+</div>
+
+**Proof.** Let the chain have transition matrix $$Q$$ and satisfy $$s_iq_{ij}=s_jq_{ji}$$, with all $$s_i>0$$; states with $$s_i=0$$ can be removed. Use the states as nodes and define
+
+$$
+w_{ij}=s_iq_{ij}.
+$$
+
+By reversibility, $$w_{ij}=s_jq_{ji}=w_{ji}$$, so the weights are symmetric. The weighted walk on this network moves from $$i$$ to $$j$$ with probability
+
+$$
+\frac{w_{ij}}{\sum_kw_{ik}}=\frac{s_iq_{ij}}{s_i\sum_kq_{ik}}=\frac{q_{ij}}1=q_{ij},
+$$
+
+since row $$i$$ of $$Q$$ sums to 1. This is exactly the original chain. $$\blacksquare$$
+
+So weighted random walks on undirected networks are, in a sense, the entire theory of reversible chains. The difficulty for a given chain is finding the $$s_i$$ in the first place. Non-reversible chains correspond to directed networks, where weights may differ in the two directions, and are much harder.
+
+### Part 3 — PageRank: the idea
+
+A search engine must order the pages that match a query: with millions of matches, which comes first? Early approaches used human curation, or counted how often a page used the query word, which is easy to abuse and a poor measure of quality. Later engines used the link structure: a page is important if many pages link to it. That too can be gamed, with thousands of dummy pages, and a link from an unimportant page should count for little.
+
+The insight of PageRank, from Sergey Brin and Larry Page in 1998: **a page is important if important pages link to it.** That definition looks circular, but it is an equation. Let $$s_j$$ be the score of page $$j$$. Page $$i$$ divides its score equally among its outgoing links, since a page that links to a thousand others recommends each one less. So
+
+$$
+s_j=\sum_is_iq_{ij},\qquad q_{ij}=\frac1{\#\text{links on page }i}\ \text{if }i\text{ links to }j.
+$$
+
+A page with no links would make its row of $$Q$$ all zeros; replace that row by $$1/M$$ in every entry, as if the page linked to everything.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">A four-page web <span class="ex-pill pill-ex">Worked example</span></div>
+
+Page 1 links to 2 and 3; page 2 links to 1 and 3; page 3 links to 4; page 4 has no links. Then
+
+$$
+Q=\begin{pmatrix}
+0&1/2&1/2&0\\
+1/2&0&1/2&0\\
+0&0&0&1\\
+1/4&1/4&1/4&1/4
+\end{pmatrix}.
+$$
+
+</div>
+
+**The random surfer.** $$Q$$ is the transition matrix of a person surfing the web at random: on each page, click a random link; on a page with no links, open a random page. The score equation $$\mathbf s=\mathbf sQ$$ says that $$\mathbf s$$, once normalized, is the **stationary distribution** of this chain. A page's importance is the long-run fraction of time the random surfer spends there.
+
+For the four-page web, solving $$\mathbf sQ=\mathbf s$$ gives $$\mathbf s=\left(\frac2{11},\frac2{11},\frac3{11},\frac4{11}\right)$$. Page 4 ranks highest: everything reaching page 3 flows on to it.
+
+This chain is **not reversible**: page 3 links to 4, and page 4 sends only a quarter of its weight back. So the stationary distribution cannot be read off as in Part 1.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** PageRank ranks pages by how many links point to them.
+
+**Correction:** Each incoming link is weighted by the score of the page it comes from, divided among that page's outgoing links. Page 4 has a single incoming link but ranks highest, because page 3 passes it all of its score.
+
+</div>
+
+<figure>
+  <img src="/assets/img/statistic-101/lecture-33-pagerank.svg" alt="Left: the four-page web, with pages 1 and 2 linking to each other and to page 3, page 3 linking to page 4, and page 4 having no links. Right: the probabilities of being at each page after n steps of the Google chain started at page 1; after oscillating for a few steps, they settle by about step 10 at roughly 0.19, 0.19, 0.27, and 0.34." style="display: block; width: 100%; max-width: 780px; height: auto; margin: 0 auto;">
+  <figcaption>Original figure for these notes, illustrating Blitzstein and Hwang, <em>Introduction to Probability</em>, Section 11.4. Running the Google chain from a fixed start converges quickly to the PageRank vector.</figcaption>
+</figure>
+
+### Part 4 — The Google matrix and teleportation
+
+On the real web it is unclear whether every page can be reached from every other by following links, and convergence could be slow. Brin and Page's paper used instead
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{G=\alpha Q+(1-\alpha)\frac JM,}
+$$
+
+</div>
+
+where $$J$$ is the matrix of all 1's, $$M$$ the number of pages, and $$0<\alpha<1$$; the original paper suggested $$\alpha=0.85$$. $$J/M$$ is itself a valid transition matrix: jump to a uniformly random page.
+
+**Interpretation.** At each step the surfer flips a coin: with probability $$\alpha$$, follow the link structure, using $$Q$$; with probability $$1-\alpha$$, **teleport** to a uniformly random page.
+
+**Why teleport.** Every entry of $$G$$ is at least $$(1-\alpha)/M>0$$. Though tiny when $$M$$ is in the billions, it is positive. So $$G$$ is irreducible with $$G^1$$ all positive, and the main theorem of Lecture 32 applies: the stationary distribution, the **PageRank** vector, exists, is unique, and the chain converges to it from any start. The chain is still not reversible.
+
+For the four-page web with $$\alpha=0.85$$, the PageRank vector is approximately $$(0.192,\,0.192,\,0.273,\,0.343)$$. Teleportation pulls the scores slightly toward uniform.
+
+### Part 5 — Computing PageRank by running the chain
+
+Solving $$\mathbf sG=\mathbf s$$ by Gaussian elimination takes on the order of $$M^3$$ operations. With $$M=10^{10}$$ pages, that is about $$10^{30}$$, impossible even on fast computers. Instead, use convergence: start from any initial distribution $$\mathbf t$$, such as uniform or all mass on page 1, and compute
+
+$$
+\mathbf tG,\quad\mathbf tG^2,\quad\mathbf tG^3,\ \ldots,
+$$
+
+each from the previous by one multiplication, until the vector stops changing.
+
+**Each step is cheap.**
+
+$$
+\mathbf tG=\alpha\,\mathbf tQ+(1-\alpha)\frac{\mathbf tJ}M.
+$$
+
+- **$$\mathbf tQ$$:** $$Q$$ is enormous but **sparse**: a typical page has a handful of links, so almost all entries are 0. Storing and multiplying only the nonzero entries is fast, given good data structures.
+- **$$\mathbf tJ$$:** each entry is the sum of the entries of $$\mathbf t$$, which is 1. So $$\mathbf tJ$$ is the vector of all 1's, and $$\mathbf tJ/M$$ is the uniform vector, at no cost.
+
+How many steps are needed is a hard question for a chain this large; in practice the iteration runs until the vector appears to have stabilized, which gives an approximate PageRank.
+
+**Core idea:** The Markov chain view gives PageRank both its meaning, the long-run time a random surfer spends on each page, and a practical way to compute it, by simulating the chain's distribution forward.
+
+### Part 6 — Original practice questions
+
+Try these before reading the answers.
+
+1. A weighted network has nodes 1, 2, 3, 4 in a path with $$w_{12}=1$$, $$w_{23}=2$$, $$w_{34}=1$$. Find the stationary distribution of the weighted walk.
+2. Add a loop of weight 2 at node 1 in question 1. Find the new stationary distribution.
+3. Find weights that represent the two-state chain $$Q=\begin{pmatrix}1-a&a\\b&1-b\end{pmatrix}$$ as a weighted walk.
+4. Verify that $$\mathbf s=(\frac2{11},\frac2{11},\frac3{11},\frac4{11})$$ is stationary for the four-page $$Q$$.
+5. Write the second row of the Google matrix $$G$$ for the four-page web with $$\alpha=0.85$$.
+6. Explain why $$J/M$$ is a valid transition matrix, and why $$\mathbf tJ/M$$ is uniform for any probability vector $$\mathbf t$$.
+7. What happens to PageRank as $$\alpha\to0$$? As $$\alpha\to1$$?
+8. Why does PageRank resist inflating a page's score with many dummy pages linking to it?
+9. Show that the PageRank chain on the four-page web is not reversible.
+
+### Part 7 — Practice answers
+
+#### 1. A weighted path
+
+Weighted degrees: $$1,\ 3,\ 3,\ 1$$, total 8. $$\mathbf s=(\frac18,\frac38,\frac38,\frac18)$$.
+
+#### 2. Adding a loop
+
+Node 1's weighted degree becomes 3, total 10: $$\mathbf s=(\frac3{10},\frac3{10},\frac3{10},\frac1{10})$$.
+
+#### 3. Two states as a network
+
+With $$\mathbf s=(\frac b{a+b},\frac a{a+b})$$: $$w_{11}=s_1(1-a)$$, $$w_{22}=s_2(1-b)$$, and $$w_{12}=w_{21}=\frac{ab}{a+b}$$.
+
+#### 4. Checking PageRank without teleportation
+
+Column 1: $$\frac2{11}\cdot\frac12+\frac4{11}\cdot\frac14=\frac2{11}$$. Column 2: the same, $$\frac2{11}$$. Column 3: $$\frac2{11}\cdot\frac12+\frac2{11}\cdot\frac12+\frac4{11}\cdot\frac14=\frac3{11}$$. Column 4: $$\frac3{11}+\frac4{11}\cdot\frac14=\frac4{11}$$.
+
+#### 5. A row of $$G$$
+
+$$0.85\,(\frac12,0,\frac12,0)+0.0375\,(1,1,1,1)=(0.4625,\ 0.0375,\ 0.4625,\ 0.0375)$$.
+
+#### 6. Uniform teleportation
+
+Every entry of $$J/M$$ is $$\frac1M\ge0$$ and each row sums to 1. The $$j$$th entry of $$\mathbf tJ$$ is $$\sum_it_i=1$$, so $$\mathbf tJ/M=(\frac1M,\ldots,\frac1M)$$.
+
+#### 7. The teleportation weight
+
+As $$\alpha\to0$$, the surfer always teleports and PageRank becomes uniform, ignoring links. As $$\alpha\to1$$, it approaches the stationary distribution of $$Q$$ alone, which may fail to exist uniquely or converge slowly on the real web.
+
+#### 8. Dummy pages
+
+Dummy pages that nobody links to receive little PageRank themselves, roughly only the teleportation share, so their recommendations carry little weight.
+
+#### 9. Not reversible
+
+Under $$G$$, $$s_3g_{34}$$ involves $$g_{34}=0.85+0.0375=0.8875$$, while $$s_4g_{43}=s_4\cdot0.25$$. With $$s_3\approx0.273$$ and $$s_4\approx0.343$$: $$0.242\ne0.086$$.
+
+### Part 8 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Weighted walk | $$q_{ij}=w_{ij}/\sum_kw_{ik}$$, with $$w_{ij}=w_{ji}$$ |
+| Stationary | $$s_i\propto\sum_kw_{ik}$$ |
+| Unweighted case | $$s_i\propto d_i$$ |
+| Reversible chains | All are weighted walks, with $$w_{ij}=s_iq_{ij}$$ |
+| PageRank idea | Important pages are linked to by important pages |
+| Score equation | $$\mathbf s=\mathbf sQ$$: stationary distribution of the random surfer |
+| Dangling page | Row replaced by $$1/M$$ |
+| Google matrix | $$G=\alpha Q+(1-\alpha)J/M$$, $$\alpha=0.85$$ |
+| Teleportation | Makes every entry positive: existence, uniqueness, convergence |
+| Not reversible | Links are one-way |
+| Computation | Iterate $$\mathbf t\mapsto\mathbf tG$$; $$Q$$ sparse, $$\mathbf tJ$$ trivial |
+| Four-page example | About $$(0.19,0.19,0.27,0.34)$$ |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Weighted random walk <span class="gcat cat-defn">Definition</span></div>
+
+A walk on a network with symmetric edge weights that moves along each edge with probability proportional to its weight.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Weighted degree <span class="gcat cat-meas">Measure</span></div>
+
+The total weight $$\sum_kw_{ik}$$ of the edges at node $$i$$; the stationary probability of a weighted walk is proportional to it.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">PageRank <span class="gcat cat-defn">Definition</span></div>
+
+The stationary distribution of the Google chain, used to rank web pages by the long-run fraction of time a random surfer spends on them.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Teleportation <span class="gcat cat-defn">Definition</span></div>
+
+Jumping to a uniformly random page, with probability $$1-\alpha$$ at each step, which makes the Google chain irreducible with all transition probabilities positive.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Sparse matrix <span class="gcat cat-defn">Definition</span></div>
+
+A matrix with mostly zero entries, such as the web's link matrix, which can be stored and multiplied efficiently.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 33</span>
+  <span class="ref-tag">Weighted networks</span>
+  <span class="ref-tag">Reversibility</span>
+  <span class="ref-tag">PageRank</span>
+  <span class="ref-tag">Markov chains</span>
+</div>
+
+  </div>
+</div>
+
+
+## Lecture 34 - A Look Ahead
+
+<div class="chapter-block">
+  <button type="button" class="chapter-toggle" id="lecture-34-toggle" onclick="toggleLecture('lecture-34')" aria-expanded="true" aria-controls="lecture-34-body">
+    <span class="chapter-toggle-left">
+      <span class="chapter-badge">Lecture 34</span>
+      <span>
+        <span class="chapter-title">Lecture 34 - A Look Ahead</span>
+        <span class="chapter-subtitle">Ten central ideas of the course, the regression slope from Adam's law, the Horvitz–Thompson estimator, and Basu's elephant</span>
+      </span>
+    </span>
+    <span class="chapter-arrow open" id="lecture-34-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="chapter-body open" id="lecture-34-body" markdown="1">
+
+<div class="note-abstract" markdown="1">
+
+Ten ideas carry most of the course: conditioning, symmetry, random variables and their distributions, stories, linearity, indicator random variables, LOTUS, the law of large numbers, the central limit theorem, and Markov chains. They group into three themes: how to think about randomness, how to compute expectations, and long-run behavior. Two applications show the tools beyond probability. In linear regression $$Y=\beta_0+\beta_1X+\varepsilon$$ with $$E(\varepsilon\mid X)=0$$, taking covariances and using Adam's law gives the slope $$\beta_1=\operatorname{Cov}(X,Y)/\operatorname{Var}(X)$$. In survey sampling, dividing each observation by its probability of being sampled gives the unbiased Horvitz–Thompson estimator of a population total, proved with indicators and linearity. Basu's elephant shows that unbiasedness alone does not make an estimator good.
+
+</div>
+
+### Notation at a Glance
+
+<div class="notation-panel" markdown="1">
+
+| Symbol | Meaning |
+|---|---|
+| $$Y=\beta_0+\beta_1X+\varepsilon$$ | Simple linear regression model |
+| $$\beta_0,\beta_1$$ | Unknown intercept and slope |
+| $$\varepsilon$$ | Error term, with $$E(\varepsilon\mid X)=0$$ |
+| $$y_1,\ldots,y_N$$ | Fixed values for a finite population of size $$N$$ |
+| $$p_j$$ | Known probability that unit $$j$$ is included in the sample |
+| $$I_j$$ | Indicator that unit $$j$$ is in the sample |
+| $$\hat\tau$$ | Horvitz–Thompson estimator of $$\tau=\sum_jy_j$$ |
+
+</div>
+
+### Learning objectives
+
+After studying these notes, you should be able to:
+
+- List the ten central ideas of the course and group them by theme.
+- Derive the population regression slope from covariance properties and Adam's law.
+- Explain the difference between probability and statistical inference.
+- Define the Horvitz–Thompson estimator and prove that it is unbiased.
+- Use Basu's elephant to explain why unbiasedness is not enough.
+
+### Part 1 — Ten central ideas
+
+| Theme | Idea | What it does |
+|---|---|---|
+| Thinking about randomness | 1. Conditioning | Conditional probability and expectation, Bayes' rule, conditional independence, Markov chains |
+| | 2. Symmetry | Collapses long calculations to one line, but must actually be present |
+| | 3. Random variables and their distributions | The objects of study, kept distinct from each other |
+| | 4. Stories | Explain why the named distributions matter and how they connect |
+| Computing expectations | 5. Linearity | Holds with or without independence |
+| | 6. Indicator random variables | Turn counts into sums and expectations into probabilities |
+| | 7. LOTUS | Expectations of functions without finding their distributions |
+| Long-run behavior | 8. Law of large numbers | Sample means converge to the true mean |
+| | 9. Central limit theorem | Standardized sums become Normal |
+| | 10. Markov chains | Long-run behavior one step beyond i.i.d. |
+
+Expectations reach beyond averages: variances, covariances, and probabilities (by the fundamental bridge) are all expectations.
+
+**Probability and inference.** Probability starts from a model, such as $$\operatorname{Pois}(\lambda)$$ with $$\lambda$$ known, and asks what data are likely. **Statistical inference** goes the other way: from observed data, estimate unknown parameters or predict future data. Inference needs probability for both its language and its theorems.
+
+### Part 2 — The regression slope from Adam's law
+
+Simple linear regression models how $$X$$ predicts $$Y$$:
+
+$$
+Y=\beta_0+\beta_1X+\varepsilon,\qquad E(\varepsilon\mid X)=0.
+$$
+
+The error $$\varepsilon$$ is often assumed Normal, but only the conditional mean assumption is needed here: no value of $$X$$ makes the errors systematically positive or negative.
+
+**Step 1: the error has mean 0.** By Adam's law, $$E(\varepsilon)=E\big(E(\varepsilon\mid X)\big)=0$$.
+
+**Step 2: the error is uncorrelated with $$X$$.** Since $$E(\varepsilon)=0$$, $$\operatorname{Cov}(\varepsilon,X)=E(\varepsilon X)$$. Condition on $$X$$ and take out what's known:
+
+$$
+E(\varepsilon X)=E\big(E(\varepsilon X\mid X)\big)=E\big(X\,E(\varepsilon\mid X)\big)=E(X\cdot0)=0.
+$$
+
+**Step 3: take the covariance of both sides with $$X$$.** The constant drops out, and by bilinearity,
+
+$$
+\operatorname{Cov}(Y,X)=\beta_1\operatorname{Var}(X)+\operatorname{Cov}(\varepsilon,X)=\beta_1\operatorname{Var}(X).
+$$
+
+<div class="result-box" markdown="1">
+
+$$
+\boxed{\beta_1=\frac{\operatorname{Cov}(X,Y)}{\operatorname{Var}(X)},\qquad\beta_0=E(Y)-\beta_1E(X).}
+$$
+
+</div>
+
+The intercept follows by taking expectations of both sides of the model. These are the population versions. The familiar sample formulas, with sums of $$(x_i-\bar x)(y_i-\bar y)$$, estimate them, and much of regression and econometrics rests on conditional expectation, Adam's law, and Eve's law, often viewed geometrically as projection.
+
+### Part 3 — Survey sampling and the Horvitz–Thompson estimator
+
+A finite population has $$N$$ units, such as people, each with a fixed but unknown value $$y_j$$: a height, an income, an opinion. Here the $$y_j$$ are constants, not random. The goal is the total $$\tau=\sum_{j=1}^Ny_j$$, or equivalently the mean $$\tau/N$$.
+
+A sample of size $$n$$ is drawn by some scheme in which unit $$j$$ is included with known probability $$p_j>0$$. In a simple random sample all $$p_j$$ are equal, but in practice some people are easier to reach than others. The randomness comes only from the sampling. Let $$I_j$$ indicate that unit $$j$$ is in the sample.
+
+<div class="example-block" markdown="1">
+<div class="ex-title">Horvitz–Thompson estimator <span class="ex-pill pill-defn">Definition</span></div>
+
+Divide each sampled value by its inclusion probability and add:
+
+$$
+\boxed{\hat\tau=\sum_{j\in\text{sample}}\frac{y_j}{p_j}=\sum_{j=1}^N\frac{y_j}{p_j}I_j.}
+$$
+
+</div>
+
+If the sampled values are 5, 10, and 15 with inclusion probabilities $$a$$, $$b$$, $$c$$, the estimate is $$\frac5a+\frac{10}b+\frac{15}c$$.
+
+**Unbiasedness.** Written over the sample, the denominators are random, since which units appear is random. Written with indicators over the whole population, the denominators are constants, and linearity with the fundamental bridge finishes the proof:
+
+$$
+E(\hat\tau)=\sum_{j=1}^N\frac{y_j}{p_j}E(I_j)=\sum_{j=1}^N\frac{y_j}{p_j}p_j=\sum_{j=1}^Ny_j=\tau.\qquad\blacksquare
+$$
+
+This idea, also called **inverse probability weighting**, is used very widely. A unit that was unlikely to be sampled stands in for many similar units, so its value is weighted up.
+
+### Part 4 — Basu's elephant: unbiased is not enough
+
+A circus owner wants the total weight of 50 elephants. Weighing elephants is hard, so he proposes to weigh one typical elephant, Stampy, and multiply by 50. A statistician objects that this is biased and insists on the Horvitz–Thompson estimator. The owner wants to weigh Stampy, and the method allows any positive inclusion probabilities, so they choose Stampy with probability $$0.99$$ and each of the other 49 elephants with probability $$\frac{0.01}{49}=\frac1{4900}$$.
+
+They draw Stampy, as expected. The Horvitz–Thompson estimate is
+
+$$
+\hat\tau=\frac{\text{Stampy's weight}}{0.99}\approx1.01\times\text{Stampy's weight},
+$$
+
+about the weight of a single elephant, as an estimate for fifty. Had another elephant been drawn, the estimate would have been 4900 times its weight. Averaged over the sampling, the estimator is unbiased, yet in every outcome it is absurd.
+
+<div class="misconception-block" markdown="1">
+
+**Incorrect:** An unbiased estimator is a good estimator.
+
+**Correction:** Unbiasedness is about the average over hypothetical repetitions. An estimator can be unbiased and still be wildly wrong every time, with enormous variance. What makes an estimator good, and how frequentist and Bayesian approaches answer that, are central questions of statistical inference.
+
+</div>
+
+### Part 5 — Original practice questions
+
+Try these before reading the answers.
+
+1. In the regression model, show that $$\beta_0=E(Y)-\beta_1E(X)$$.
+2. If $$\operatorname{Var}(X)=4$$, $$\operatorname{Var}(Y)=9$$, and $$\operatorname{Corr}(X,Y)=0.5$$, find the regression slope of $$Y$$ on $$X$$.
+3. Show that $$\beta_1=\operatorname{Corr}(X,Y)\dfrac{\operatorname{SD}(Y)}{\operatorname{SD}(X)}$$.
+4. Use Eve's law to show $$\operatorname{Var}(Y)=\beta_1^2\operatorname{Var}(X)+E(\operatorname{Var}(\varepsilon\mid X))$$ in the regression model.
+5. In a simple random sample of $$n$$ from $$N$$, every $$p_j=n/N$$. Write the Horvitz–Thompson estimator of the total and of the mean.
+6. A population has values $$y=(2,4,6)$$. One unit is sampled, unit $$j$$ with probability $$p=(0.5,0.3,0.2)$$. List the possible estimates and verify unbiasedness.
+7. In question 6, find the variance of $$\hat\tau$$, and compare with sampling uniformly.
+8. In Basu's elephant, suppose every elephant weighs exactly $$w$$. Find the possible estimates and their probabilities, and check that the mean is $$50w$$.
+9. Which of the ten central ideas are used in the Horvitz–Thompson proof?
+
+### Part 6 — Practice answers
+
+#### 1. The intercept
+
+Take expectations: $$E(Y)=\beta_0+\beta_1E(X)+E(\varepsilon)$$, and $$E(\varepsilon)=0$$.
+
+#### 2. A slope
+
+$$\operatorname{Cov}(X,Y)=0.5\cdot2\cdot3=3$$, so $$\beta_1=\frac34$$.
+
+#### 3. Slope and correlation
+
+$$\beta_1=\frac{\operatorname{Corr}(X,Y)\operatorname{SD}(X)\operatorname{SD}(Y)}{\operatorname{SD}(X)^2}=\operatorname{Corr}(X,Y)\frac{\operatorname{SD}(Y)}{\operatorname{SD}(X)}$$.
+
+#### 4. Decomposing the variance
+
+$$E(Y\mid X)=\beta_0+\beta_1X$$ and $$\operatorname{Var}(Y\mid X)=\operatorname{Var}(\varepsilon\mid X)$$. Eve's law gives $$\operatorname{Var}(Y)=E(\operatorname{Var}(\varepsilon\mid X))+\beta_1^2\operatorname{Var}(X)$$: unexplained plus explained variance.
+
+#### 5. Equal probabilities
+
+$$\hat\tau=\frac Nn\sum_{j\in\text{sample}}y_j$$, and dividing by $$N$$ gives the sample mean.
+
+#### 6. One draw
+
+Estimates: $$\frac2{0.5}=4$$, $$\frac4{0.3}\approx13.33$$, $$\frac6{0.2}=30$$. Mean: $$0.5(4)+0.3(13.33)+0.2(30)=2+4+6=12=\tau$$.
+
+#### 7. Variance depends on the design
+
+$$E(\hat\tau^2)=0.5(16)+0.3(177.8)+0.2(900)\approx241.3$$, so $$\operatorname{Var}\approx241.3-144=97.3$$. With uniform $$p_j=\frac13$$, the estimates are $$6,12,18$$, with variance $$24$$. Probabilities that ran opposite to the sizes of the $$y_j$$ made the estimator much worse.
+
+#### 8. Identical elephants
+
+With probability 0.99 the estimate is $$w/0.99$$; with probability 0.01 it is $$4900w$$. Mean $$=w+49w=50w$$. Unbiased, but the estimate is either about $$w$$ or $$4900w$$, never close to $$50w$$.
+
+#### 9. Ideas at work
+
+Indicator random variables, linearity, and the fundamental bridge, which connects expectations of indicators to probabilities.
+
+### Part 7 — Quick revision sheet
+
+| Concept | Essential fact |
+|---|---|
+| Ten ideas | Conditioning, symmetry, random variables and distributions, stories, linearity, indicators, LOTUS, LLN, CLT, Markov chains |
+| Three themes | Randomness; computing expectations; long-run behavior |
+| Inference | From data to unknown parameters and predictions |
+| Regression model | $$Y=\beta_0+\beta_1X+\varepsilon$$, $$E(\varepsilon\mid X)=0$$ |
+| Key step | $$\operatorname{Cov}(\varepsilon,X)=E(X\,E(\varepsilon\mid X))=0$$ |
+| Slope | $$\beta_1=\operatorname{Cov}(X,Y)/\operatorname{Var}(X)$$ |
+| Intercept | $$\beta_0=E(Y)-\beta_1E(X)$$ |
+| Horvitz–Thompson | $$\hat\tau=\sum y_j/p_j$$ over the sample |
+| Unbiasedness proof | Rewrite with indicators; linearity; $$E(I_j)=p_j$$ |
+| Basu's elephant | Unbiased yet absurd; unbiasedness is not enough |
+
+### Term Glossary
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Statistical inference <span class="gcat cat-defn">Definition</span></div>
+
+Using observed data to estimate unknown parameters or predict future observations, the reverse direction from probability.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Linear regression <span class="gcat cat-defn">Definition</span></div>
+
+A model $$Y=\beta_0+\beta_1X+\varepsilon$$ with $$E(\varepsilon\mid X)=0$$, so that $$E(Y\mid X)$$ is linear in $$X$$.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Unbiased estimator <span class="gcat cat-defn">Definition</span></div>
+
+An estimator whose expected value equals the quantity it estimates.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Horvitz–Thompson estimator <span class="gcat cat-defn">Definition</span></div>
+
+The estimator $$\sum y_j/p_j$$ of a population total, summing each sampled value divided by its inclusion probability; also called inverse probability weighting.
+
+</div>
+
+<div class="glossary-entry" markdown="1">
+<div class="gterm">Basu's elephant <span class="gcat cat-defn">Misconception</span></div>
+
+A story showing that an unbiased estimator can give absurd estimates in every outcome, so unbiasedness alone does not make an estimator good.
+
+</div>
+
+<div class="ref-tags">
+  <span class="ref-tag">Statistics 110</span>
+  <span class="ref-tag">Lecture 34</span>
+  <span class="ref-tag">Course summary</span>
+  <span class="ref-tag">Regression</span>
+  <span class="ref-tag">Survey sampling</span>
+  <span class="ref-tag">Horvitz–Thompson</span>
+  <span class="ref-tag">Unbiasedness</span>
 </div>
 
   </div>
