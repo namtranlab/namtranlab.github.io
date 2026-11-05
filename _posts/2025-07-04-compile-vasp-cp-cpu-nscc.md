@@ -6,7 +6,7 @@ tags: Tutorial
 giscus_comments: true
 date: 2025-05-4
 featured: true
-thumbnail: https://github.com/yuanyue-liu-group/CP-VASP/blob/main/CP-VASP.jpg
+thumbnail: https://sites.utexas.edu/yuanyue-liu/wp-content/uploads/sites/4346/2024/10/CP-VASP-1536x1053.jpg
 images:
   lightbox2: true
   photoswipe: true
