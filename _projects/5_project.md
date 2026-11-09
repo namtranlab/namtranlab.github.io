@@ -7,8 +7,6 @@ importance: 1
 category: Research
 ---
 
-<span class="badge badge-pill badge-warning">New · ongoing</span>
-
 Computational catalysis follows a familiar loop: read what others have done, propose a candidate, build and run the calculations, analyze the results, learn from them, and try again. Most of a researcher's time goes into the repetitive middle of this loop, such as preparing inputs, babysitting HPC jobs, and parsing outputs, rather than into the decisions that matter.
 
 In this new project, we are building an **AI research agent** that runs this loop on its own. The idea grew out of an experiment where an LLM agent searched for trading signals around the clock, guided by a rulebook in code and a lab notebook of lessons (see the blog post [Can an AI Do Research While I Sleep?](/blog/2026/can-an-ai-do-research/)). We are now bringing the same design to computational modeling.
