@@ -33,7 +33,7 @@ I don't mean answering a question or writing a function when asked. I mean the w
 
 > have an idea → test it → look at the result → learn something → have a better idea → repeat
 
-It sounds simple, but it asks a lot from the AI. It has to remember what it already tried, not fool itself with lucky results, know when to give up on a dead end, and keep going for hours without someone holding its hand.
+It sounds simple, but it asks a lot from the AI. It has to remember what it already tried, not fool itself with lucky results, know when to give up on a dead end, and keep going for hours without someone holding its hand. The original idea was inspired by the karpathy/autoresearch repository.
 
 So I wanted a playground where I could try this for real, with real feedback, real limits, and real consequences.
 
