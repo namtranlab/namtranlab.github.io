@@ -2,7 +2,7 @@
 layout: page
 title: Accelerating Single-Atom Catalyst Design through Multiscale Modeling and Machine Learning
 description: Combining grand-canonical DFT, kinetic Monte Carlo, and machine learning to understand and design single-atom catalysts for CO<sub>2</sub> electroreduction.
-img: assets/img/publication_preview/TOC_angewandte_2024.jpeg
+img: https://onlinelibrary.wiley.com/cms/asset/42906240-8917-4454-991d-6b8493fc047d/advs202102886-fig-0002-m.png
 importance: 1
 category: Research
 ---
@@ -30,17 +30,9 @@ Using GC-DFT and KMC, we proposed a **dual-side adsorption mechanism**, inspired
     Fig. 1. Dynamic adaptation of the Fe active site driven by dual-side adsorption during CO<sub>2</sub> electroreduction [1].
 </div>
 
-<div class="row justify-content-sm-center">
-    <div class="col-sm-10 mt-3 mt-md-0">
-        {% include figure.html path="https://onlinelibrary.wiley.com/cms/asset/42906240-8917-4454-991d-6b8493fc047d/advs202102886-fig-0002-m.png" title="SACs for CO2RR" alt="Schematic of single-atom catalysts for CO2 reduction" class="img-fluid rounded z-depth-1" zoomable=true %}
-    </div>
-</div>
-<div class="caption">
-    Fig. 2. Overview of single-atom catalysts for CO<sub>2</sub>RR [2].
-</div>
 
 ### References
 
-[1] N. V. Tran<sup>†</sup>, J. Liu<sup>†</sup>, S. Li, "Dynamic Adaptation of Active Site Driven by Dual-side Adsorption in Single-Atomic Catalysts During CO<sub>2</sub> Electroreduction," *Angew. Chem. Int. Ed.* **2024**, 63, e202411765. [doi:10.1002/anie.202411765](https://doi.org/10.1002/anie.202411765)
+[1] N. V. Tran<sup>†</sup>, J. Liu<sup>†</sup>, S. Li, "Dynamic Adaptation of Active Site Driven by Dual-side Adsorption in Single-Atomic Catalysts During CO<sub>2</sub> Electroreduction," *Angew. Chem. Int. Ed.* **2024**, 63, e202411765.
 
-[2] S. Liang, L. Huang, Y. Gao, Q. Wang, B. Liu, "Electrochemical Reduction of CO<sub>2</sub> to CO over Transition Metal/N-Doped Carbon Catalysts: The Active Sites and Reaction Mechanism," *Adv. Sci.* **2021**, 8, 2102886. [doi:10.1002/advs.202102886](https://doi.org/10.1002/advs.202102886)
+[2] S. Liang, L. Huang, Y. Gao, Q. Wang, B. Liu, “Electrochemical Reduction of CO2 to CO over Transition Metal/N-Doped Carbon Catalysts: The Active Sites and Reaction Mechanism,” Adv. Sci. 2021, 8, 2102886.
