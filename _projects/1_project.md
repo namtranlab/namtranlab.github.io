@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Accelerating Single-Atom Catalyst Design through Multiscale Modeling and Machine Learning
-description: Combining grand-canonical DFT, kinetic Monte Carlo, and machine learning to understand and design single-atom catalysts for CO<sub>2</sub> electroreduction.
+description: Combining grand-canonical DFT, kinetic Monte Carlo, and machine learning to understand and design single-atom catalysts for electrochemical reactions.
 img: https://onlinelibrary.wiley.com/cms/asset/42906240-8917-4454-991d-6b8493fc047d/advs202102886-fig-0002-m.png
 importance: 1
 category: Research
