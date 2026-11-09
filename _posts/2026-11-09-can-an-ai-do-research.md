@@ -36,6 +36,11 @@ It sounds simple, but it asks a lot from the AI. It has to remember what it alre
 
 So I wanted a playground where I could try this for real, with real feedback, real limits, and real consequences.
 
+Before we start you can find all the codes/kills used for this test in this repo here:
+
+[https://github.com/namtranlab/WQBrainResearch](https://github.com/namtranlab/WQBrainResearch)
+
+
 ## Why trading signals? {#why-trading-signals}
 
 I picked a fun one: **finding alphas on WorldQuant BRAIN.**
