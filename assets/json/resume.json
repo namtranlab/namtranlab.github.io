@@ -25,21 +25,28 @@
             "name":"School of Materials Science and Engineering, Nanyang Technological University, Singapore",
             "position":"Research Fellow ",
             "startDate":"2022-08",
-            "summary":"",
-            "highlights":
-                ["Application of Grand-canonical DFT and kinetic Monte-carlo modeling to design single atomic catalyst (SAC)",
-                "Application of ab initio molecular dynamics and advanced sampling techniques to study water structure at electrode-electrolyte Interface and its effects on catalysis processes",
-                "Develop Deep Neural Network Potential to simulate tribological properties of water/diamond interface for nano-/micro-electromechanical devices",
-                "Write scientific papers, grants, and mentor graduate students"]
+            "summary":"I develop and apply multiscale simulation and machine-learning methods to understand reaction mechanisms at electrochemical interfaces and to design catalysts and energy materials, working with Prof. Li Shuzhou.",
+            "highlights":[
+                "<b>Electrocatalysis under realistic conditions:</b> combined grand-canonical DFT and kinetic Monte Carlo to show that the active site of single-atom catalysts adapts dynamically during electrochemical reactions (<i>Angew. Chem. Int. Ed.</i> 2024).",
+                "<b>Electrode/electrolyte interfaces:</b> use ab initio molecular dynamics and machine-learning potentials to study how potential-dependent water structure and cations affect reactant transport, reaction kinetics and catalyst stability.",
+                "<b>Energy storage:</b> use first-principles simulations to understand the reaction mechanisms and interfacial chemistry behind battery performance and degradation (<i>Energy Storage Materials</i> 2026).",
+                "<b>ML potentials for alloys:</b> co-lead (corresponding author) of collaborative work with the University of Wollongong on active-learning ML interatomic potentials for refractory high-entropy alloys (<i>J. Mater. Sci. Technol.</i> 2025, <i>Materials &amp; Design</i> 2024).",
+                "<b>AI-driven research:</b> building LLM-based research agents that run the hypothesis → simulation → analysis loop on HPC on their own.",
+                "<b>Grant writing:</b> drafted and submitted a research proposal on behalf of my supervisor (PI), which was awarded about S$1 million in funding from the Singapore Ministry of Education (MOE).",
+                "Collaborate closely with experimental groups to connect computed mechanisms with measured performance."
+                ]
         },
         
         {
             "name":"Faculty of Engineering and Information Sciences, University of Wollongong, Australia",
             "position":"Visiting Research Fellow",
             "startDate":"2021-10",
-            "summary":"",
-            "highlights":["Application of first-principles simulations to study the effect of vacancies on the thermal and mechanical properties of FeCrVW High Entropy Alloys (HEA",
-                "Develop Deep Neural Network Potential to simulate radiational damage of FeCrVW HEA"
+            "summary":"Co-lead the computational side of a collaboration with A/Prof. Hongtao Zhu on refractory high- and medium-entropy alloys for nuclear and high-temperature applications.",
+            "highlights":[
+                "<b>ML interatomic potentials:</b> developed active-learning Deep Potential models to study chemical short-range order, mechanical strength and radiation damage in FeCrV- and CrTaTiMo-based alloys (<i>J. Mater. Sci. Technol.</i> 2025).",
+                "<b>Oxidation and corrosion:</b> used DFT and AIMD to reveal oxidation mechanisms in these alloys (<i>Materials &amp; Design</i> 2024, <i>Langmuir</i> 2025, <i>Corrosion Science</i> 2025).",
+                "<b>Irradiation resistance:</b> combined first-principles calculations with experiments to explain how W doping and vacancies affect irradiation resistance and mechanical properties (<i>J. Alloys Compd.</i> 2023, <i>Comput. Mater. Sci.</i> 2025).",
+                "Corresponding author on joint papers, and co-supervise PhD students' computational work."
             ]
         },
         
@@ -48,11 +55,12 @@
             "position":"Research Fellow",
             "startDate":"2021-08",
             "endDate":"2022-08",
-            "summary":"",
+            "summary":"Worked with Prof. M. C. Righi on first-principles modeling of tribochemistry and superlubricity in carbon-based materials.",
             "highlights":[
-                "Application of first-principles simulations to understand lubrication mechanism of silica on diamond surfaces",
-                "Designed and executed DFT and AIMD simulations to investigate the chemical reaction mechanism of H2, O2 and H2O with diamond surfaces",
-                "Write scientific papers and mentor undergraduate students"
+                "<b>Surface chemistry of diamond:</b> designed and ran DFT and AIMD simulations to reveal how H₂, H₂O and O₂ react with and passivate diamond surfaces, which controls adhesion and friction (<i>Carbon</i> 2022).",
+                "<b>Wear and friction mechanisms:</b> studied atomistic wear in diamond and the lubrication mechanism of oxidized diamond/silica interfaces (<i>Langmuir</i> 2023, <i>ACS Appl. Nano Mater.</i> 2023).",
+                "<b>Green lubrication:</b> contributed simulations to a collaboration with École Centrale de Lyon showing superlubricity from naturally derived aromatic molecules (<i>Carbon</i> 2024).",
+                "Wrote scientific papers and mentored undergraduate students."
                 ]
         },
         
