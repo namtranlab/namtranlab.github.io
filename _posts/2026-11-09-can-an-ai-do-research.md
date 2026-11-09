@@ -209,9 +209,9 @@ But it is really just three simple ideas added together:
 
 | Legs | What they look at | Direction | Share of weight |
 |---|---|---|---|
-| L1 to L5 | Expected price impact of five kinds of news (technical analysis, price moves, society, analyst price targets, investor relations), averaged over 60 days | Favor | ≈ 69% |
-| L6, L7 | Stocks near their 10-day high that rose today; closes creeping toward the top of the daily range | Bet against | ≈ 17% |
-| L8 | How smoothly the price has moved over about two years | Favor | ≈ 14% |
+| L1 to L5 | It uses slow news-related signals. It compares stocks with similar recent returns, so the signal is less likely to be just a bet on recent winners. The hypothesis is that the market absorbs news content slowly, so stocks with better news than their price move suggests may keep outperforming | Favor | ≈ 69% |
+| L6, L7 | It adds short-term contrarian price signals. These compare stocks with similar five-day returns and tend to favor weaker recent price-strength readings. The idea is to reduce exposure to short-term overreaction. | Bet against | ≈ 17% |
+| L8 | It includes a long-term price-persistence signal. This is intended to favor stocks with more persistent price behavior and may help the strategy work more consistently across stock sizes and liquidity levels. | Favor | ≈ 14% |
 
 In plain words:
 
