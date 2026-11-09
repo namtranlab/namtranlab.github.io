@@ -32,6 +32,4 @@ In this new project, we are building an **AI research agent** that runs this loo
 
 As a first test case, the agent will search for **single-atom catalysts (SACs) for the hydrogen evolution reaction (HER)**. HER is a good starting point because it has a simple, well-established activity descriptor: the hydrogen adsorption free energy, ΔG<sub>H*</sub>, should be close to zero. At the same time, the design space is large, covering the choice of metal center, coordinating atoms, and carbon support, which is too much to explore by hand.
 
-The agent will combine this descriptor with the potential-dependent, grand-canonical DFT methods from our [single-atom catalyst work](/projects/1_project/), and check candidates for stability as well as activity. As always, the researcher stays in charge of choosing the problem and of the final check before any result leaves the lab.
-
 We will share progress and results here as the project develops.
