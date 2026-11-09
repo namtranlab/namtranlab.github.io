@@ -173,7 +173,7 @@ You can jump in any time: *"Why this dataset?"*, *"Try analyst revisions next."*
 
 ## What I found {#what-i-found}
 
-- **It workded** The loop helped me find a bunch of alphas and reach Gold level in just 5 days. BRAIN caps points at 2k per day, and Gold needs 10k.
+- **It workded.** The loop helped me find a bunch of alphas and reach Gold level in just 5 days. BRAIN caps points at 2k per day, and Gold needs 10k.
 
 - **The agent can be lazy, or less creative.** Once it found a good strategy, it kept sticking with it. For example, it kept sorting stocks into ten groups by their recent return and then ranking the signal inside each group, like this:
 
