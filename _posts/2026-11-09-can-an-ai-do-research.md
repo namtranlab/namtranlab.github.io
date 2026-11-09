@@ -6,6 +6,7 @@ tags: AI Autoresearch
 giscus_comments: true
 date: 2026-11-09
 featured: true
+thumbnail: https://media.warriortrading.com/2018/06/blog_alpha.jpg
 
 authors:
   - name: Nam Tran
